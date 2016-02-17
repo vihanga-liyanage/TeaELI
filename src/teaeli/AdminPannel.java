@@ -95,6 +95,11 @@ public class AdminPannel extends javax.swing.JFrame {
 
         addNewOrderBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         addNewOrderBtn.setText("Add New Perchase Order");
+        addNewOrderBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addNewOrderBtnActionPerformed(evt);
+            }
+        });
 
         orderListTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -492,6 +497,15 @@ public class AdminPannel extends javax.swing.JFrame {
         addNewProduct.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
      
     }//GEN-LAST:event_addProductBtnActionPerformed
+
+    private void addNewOrderBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addNewOrderBtnActionPerformed
+        AddNewOrder newOrder = new AddNewOrder();
+        newOrder.setVisible(true);
+        newOrder.tblMasterPlanScrollPane.setVisible(false);
+        newOrder.btnCancelOrder.setVisible(false);
+        newOrder.btnCnfirmOrder.setVisible(false);
+        newOrder.setDefaultCloseOperation(HIDE_ON_CLOSE);
+    }//GEN-LAST:event_addNewOrderBtnActionPerformed
 
     /**
      * @param args the command line arguments
