@@ -314,6 +314,11 @@ public class AdminPannel extends javax.swing.JFrame {
         jLabel3.setText("Start typing product name to search");
 
         addProductBtn.setText("Add New Product");
+        addProductBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addProductBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -391,6 +396,13 @@ public class AdminPannel extends javax.swing.JFrame {
         addItem.setVisible(true);
         addItem.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
     }//GEN-LAST:event_addItemBtnActionPerformed
+
+    private void addProductBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addProductBtnActionPerformed
+        AddNewProduct addNewProduct = new AddNewProduct();
+        addNewProduct.setVisible(true);
+        addNewProduct.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+     
+    }//GEN-LAST:event_addProductBtnActionPerformed
 
     /**
      * @param args the command line arguments
