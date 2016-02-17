@@ -47,7 +47,7 @@ public class AdminPannel extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("System Name");
 
-        addNewOrderBtn.setText("Add New Perchase Order");
+        addNewOrderBtn.setText("Add New Purchase Order");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);

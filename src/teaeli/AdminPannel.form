@@ -90,7 +90,7 @@
           <SubComponents>
             <Component class="javax.swing.JButton" name="addNewOrderBtn">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Add New Perchase Order"/>
+                <Property name="text" type="java.lang.String" value="Add New Purchase Order"/>
               </Properties>
             </Component>
           </SubComponents>
