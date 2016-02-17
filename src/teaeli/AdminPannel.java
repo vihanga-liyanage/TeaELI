@@ -82,8 +82,11 @@ public class AdminPannel extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         addProductBtn = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
+        newUserBtn = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        userTable = new javax.swing.JTable();
+        jLabel4 = new javax.swing.JLabel();
         logoLabel = new javax.swing.JLabel();
         timeLabel = new javax.swing.JLabel();
 
@@ -94,7 +97,7 @@ public class AdminPannel extends javax.swing.JFrame {
         jTabbedPane1.setFont(new java.awt.Font("Segoe UI Symbol", 0, 15)); // NOI18N
 
         addNewOrderBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        addNewOrderBtn.setText("Add New Perchase Order");
+        addNewOrderBtn.setText("Add New Purchase Order");
 
         orderListTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -276,6 +279,11 @@ public class AdminPannel extends javax.swing.JFrame {
         jLabel5.setText("Start typing item name to search");
 
         searchItemBtn.setText("Go");
+        searchItemBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchItemBtnActionPerformed(evt);
+            }
+        });
 
         addItemBtn.setText("Add Item");
         addItemBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -415,7 +423,18 @@ public class AdminPannel extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Products", jPanel4);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        newUserBtn.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        newUserBtn.setText("Add New User");
+        newUserBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                newUserBtnActionPerformed(evt);
+            }
+        });
+
+        jButton2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton2.setText("Remove User");
+
+        userTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -423,26 +442,54 @@ public class AdminPannel extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "User ID", "Username", "Firstname", "Lastname"
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, true, true, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        userTable.setRowHeight(20);
+        jScrollPane1.setViewportView(userTable);
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI Semibold", 0, 16)); // NOI18N
+        jLabel4.setText("Current Users");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(500, Short.MAX_VALUE)
+                .addComponent(newUserBtn)
+                .addGap(34, 34, 34)
+                .addComponent(jButton2)
+                .addGap(28, 28, 28))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 774, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 774, Short.MAX_VALUE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(84, 84, 84)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 357, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(26, 26, 26)
+                .addComponent(jLabel4)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(44, 44, 44)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(newUserBtn)
+                    .addComponent(jButton2))
+                .addContainerGap(179, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Users", jPanel2);
@@ -493,6 +540,18 @@ public class AdminPannel extends javax.swing.JFrame {
      
     }//GEN-LAST:event_addProductBtnActionPerformed
 
+    private void newUserBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newUserBtnActionPerformed
+        AddNewUser addNewUser = new AddNewUser();
+        addNewUser.setVisible(true);
+        addNewUser.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+    }//GEN-LAST:event_newUserBtnActionPerformed
+
+    private void searchItemBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchItemBtnActionPerformed
+        ItemDetails itemDetails = new ItemDetails();
+        itemDetails.setVisible(true);
+        itemDetails.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+    }//GEN-LAST:event_searchItemBtnActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -532,9 +591,11 @@ public class AdminPannel extends javax.swing.JFrame {
     private javax.swing.JButton addItemBtn;
     private javax.swing.JButton addNewOrderBtn;
     private javax.swing.JButton addProductBtn;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
@@ -549,9 +610,9 @@ public class AdminPannel extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JLabel logoLabel;
+    private javax.swing.JButton newUserBtn;
     private javax.swing.JTable orderDetailsTable;
     private javax.swing.JTable orderListTable;
     private javax.swing.JTable productTable;
@@ -563,6 +624,7 @@ public class AdminPannel extends javax.swing.JFrame {
     private javax.swing.JTextField searchStockTxt;
     private javax.swing.JTable stockTable;
     private javax.swing.JLabel timeLabel;
+    private javax.swing.JTable userTable;
     // End of variables declaration//GEN-END:variables
     private javax.swing.JTable flavourTable;
 }
