@@ -5,16 +5,8 @@ public class TeaELI {
 
     public static void main(String[] args) {
         LoginFrame loginFrame = new LoginFrame();
-        loginFrame.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
-        //loginFrame.setVisible(true);
-        
-        AdminPannel adminPannel = new AdminPannel();
-        
-        //Keep the window fullscreen
-        adminPannel.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
-        
-        adminPannel.setVisible(true);
-        adminPannel.updateStockPanel.setVisible(false);
+        loginFrame.setVisible(true);
+        loginFrame.setSize(740,400);
     }
     
 }

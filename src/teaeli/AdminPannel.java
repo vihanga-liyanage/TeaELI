@@ -812,6 +812,11 @@ public class AdminPannel extends javax.swing.JFrame {
         logoutBtn.setText("Log Out");
 
         profileBtn.setText("Profile");
+        profileBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                profileBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -908,6 +913,12 @@ public class AdminPannel extends javax.swing.JFrame {
     private void updateItemUnitPriceTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateItemUnitPriceTxtActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_updateItemUnitPriceTxtActionPerformed
+
+    private void profileBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profileBtnActionPerformed
+        EditProfile editProfile = new EditProfile();
+        editProfile.setVisible(true);
+        editProfile.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+    }//GEN-LAST:event_profileBtnActionPerformed
 
 
     /**
