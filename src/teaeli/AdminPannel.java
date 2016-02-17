@@ -64,6 +64,12 @@ public class AdminPannel extends javax.swing.JFrame {
         searchProductBtn = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         addProductBtn = new javax.swing.JButton();
+        jPanel5 = new javax.swing.JPanel();
+        jPanel6 = new javax.swing.JPanel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        userTable = new javax.swing.JTable();
+        addUserBtn = new javax.swing.JButton();
+        removeBtn = new javax.swing.JButton();
         logoLabel = new javax.swing.JLabel();
         timeLabel = new javax.swing.JLabel();
 
@@ -213,7 +219,7 @@ public class AdminPannel extends javax.swing.JFrame {
                     .addComponent(searchStockTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(searchStockBtn))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 443, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 459, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -266,6 +272,7 @@ public class AdminPannel extends javax.swing.JFrame {
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 535, Short.MAX_VALUE)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(jLabel5)
@@ -314,6 +321,11 @@ public class AdminPannel extends javax.swing.JFrame {
         jLabel3.setText("Start typing product name to search");
 
         addProductBtn.setText("Add New Product");
+        addProductBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addProductBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -352,6 +364,97 @@ public class AdminPannel extends javax.swing.JFrame {
         );
 
         jTabbedPane1.addTab("Products", jPanel4);
+
+        jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder("Current Users"));
+        jPanel6.setToolTipText("");
+
+        userTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "UserID", "Username", "Firstname", "Lastname", "Designation"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        userTable.setRowHeight(25);
+        jScrollPane5.setViewportView(userTable);
+        if (userTable.getColumnModel().getColumnCount() > 0) {
+            userTable.getColumnModel().getColumn(0).setHeaderValue("UserID");
+            userTable.getColumnModel().getColumn(1).setHeaderValue("Username");
+            userTable.getColumnModel().getColumn(2).setHeaderValue("Firstname");
+            userTable.getColumnModel().getColumn(3).setHeaderValue("Lastname");
+            userTable.getColumnModel().getColumn(4).setHeaderValue("Designation");
+        }
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 697, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(32, Short.MAX_VALUE))
+        );
+
+        addUserBtn.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        addUserBtn.setText("Add New User");
+
+        removeBtn.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        removeBtn.setText("Remove User");
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(addUserBtn)
+                .addGap(39, 39, 39)
+                .addComponent(removeBtn)
+                .addGap(35, 35, 35))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(50, 50, 50)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(removeBtn)
+                    .addComponent(addUserBtn))
+                .addContainerGap(208, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Users", jPanel5);
 
         logoLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/teaeli/logo-new (Custom).png"))); // NOI18N
 
@@ -392,6 +495,13 @@ public class AdminPannel extends javax.swing.JFrame {
         addItem.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
     }//GEN-LAST:event_addItemBtnActionPerformed
 
+    private void addProductBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addProductBtnActionPerformed
+        AddNewProduct addNewProduct = new AddNewProduct();
+        addNewProduct.setVisible(true);
+        addNewProduct.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+     
+    }//GEN-LAST:event_addProductBtnActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -431,6 +541,7 @@ public class AdminPannel extends javax.swing.JFrame {
     private javax.swing.JButton addItemBtn;
     private javax.swing.JButton addNewOrderBtn;
     private javax.swing.JButton addProductBtn;
+    private javax.swing.JButton addUserBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -440,6 +551,8 @@ public class AdminPannel extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -452,6 +565,7 @@ public class AdminPannel extends javax.swing.JFrame {
     private javax.swing.JTable orderDetailsTable;
     private javax.swing.JTable orderListTable;
     private javax.swing.JTable productTable;
+    private javax.swing.JButton removeBtn;
     private javax.swing.JButton searchItemBtn;
     private javax.swing.JTextField searchItemTxt;
     private javax.swing.JButton searchProductBtn;
@@ -459,6 +573,7 @@ public class AdminPannel extends javax.swing.JFrame {
     private javax.swing.JButton searchStockBtn;
     private javax.swing.JTextField searchStockTextField;
     private javax.swing.JLabel timeLabel;
+    private javax.swing.JTable userTable;
     // End of variables declaration//GEN-END:variables
     private javax.swing.JTable flavourTable;
 }
