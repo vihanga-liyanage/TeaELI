@@ -14,6 +14,7 @@ public class TeaELI {
         adminPannel.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
         
         adminPannel.setVisible(true);
+        adminPannel.updateStockPanel.setVisible(false);
     }
     
 }
