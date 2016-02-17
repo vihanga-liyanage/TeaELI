@@ -47,6 +47,7 @@ public class AddNewProduct extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Add New Product");
 
         jLabel1.setText("Product Name");
 
