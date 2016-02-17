@@ -70,7 +70,7 @@ public class AdminPannel extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("System Name");
 
-        addNewOrderBtn.setText("Add New Perchase Order");
+        addNewOrderBtn.setText("Add New Purchase Order");
 
         orderListTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
