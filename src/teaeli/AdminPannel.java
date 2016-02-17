@@ -105,7 +105,13 @@ public class AdminPannel extends javax.swing.JFrame {
         jTabbedPane1.setFont(new java.awt.Font("Segoe UI Symbol", 0, 15)); // NOI18N
 
         addNewOrderBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
         addNewOrderBtn.setText("Add New Purchase Order");
+        addNewOrderBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addNewOrderBtnActionPerformed(evt);
+            }
+        });
 
         orderListTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -625,6 +631,15 @@ public class AdminPannel extends javax.swing.JFrame {
         itemDetails.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
     }//GEN-LAST:event_searchItemBtnActionPerformed
 
+    private void addNewOrderBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addNewOrderBtnActionPerformed
+        AddNewOrder newOrder = new AddNewOrder();
+        newOrder.setVisible(true);
+        newOrder.tblMasterPlanScrollPane.setVisible(false);
+        newOrder.btnCancelOrder.setVisible(false);
+        newOrder.btnCnfirmOrder.setVisible(false);
+        newOrder.setDefaultCloseOperation(HIDE_ON_CLOSE);
+    }//GEN-LAST:event_addNewOrderBtnActionPerformed
+
     private void updateStockQuantityTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateStockQuantityTxtActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_updateStockQuantityTxtActionPerformed
@@ -632,6 +647,7 @@ public class AdminPannel extends javax.swing.JFrame {
     private void searchStockBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchStockBtnActionPerformed
         updateStockPanel.setVisible(true);
     }//GEN-LAST:event_searchStockBtnActionPerformed
+
 
     /**
      * @param args the command line arguments
