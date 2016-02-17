@@ -665,6 +665,11 @@ public class AdminPannel extends javax.swing.JFrame {
         logoutBtn.setText("Log Out");
 
         profileBtn.setText("Profile");
+        profileBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                profileBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -749,6 +754,12 @@ public class AdminPannel extends javax.swing.JFrame {
     private void searchStockBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchStockBtnActionPerformed
         updateStockPanel.setVisible(true);
     }//GEN-LAST:event_searchStockBtnActionPerformed
+
+    private void profileBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profileBtnActionPerformed
+        EditProfile editProfile = new EditProfile();
+        editProfile.setVisible(true);
+        editProfile.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+    }//GEN-LAST:event_profileBtnActionPerformed
 
 
     /**

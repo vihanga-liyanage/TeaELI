@@ -16,6 +16,7 @@ public class UpdateProduct extends javax.swing.JFrame {
      */
     public UpdateProduct() {
         initComponents();
+        
     }
 
     /**
