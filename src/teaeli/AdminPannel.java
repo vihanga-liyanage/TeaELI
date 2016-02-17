@@ -935,9 +935,9 @@ public class AdminPannel extends javax.swing.JFrame {
     }//GEN-LAST:event_updateItemUnitPriceTxtActionPerformed
 
     private void profileBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profileBtnActionPerformed
-        /*EditProfile editProfile = new EditProfile();
+        EditProfile editProfile = new EditProfile();
         editProfile.setVisible(true);
-        editProfile.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);*/
+        editProfile.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
     }//GEN-LAST:event_profileBtnActionPerformed
 
 

@@ -5,6 +5,11 @@
  */
 package teaeli;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+
 /**
  *
  * @author ASHI
@@ -15,6 +20,12 @@ public class AddNewUser extends javax.swing.JFrame {
      * Creates new form AddNewUser
      */
     public AddNewUser() {
+        //Add windows look and feel
+        try {
+            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+            Logger.getLogger(AdminPannel.class.getName()).log(Level.SEVERE, null, ex);
+        }
         initComponents();
     }
 
