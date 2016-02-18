@@ -536,13 +536,12 @@ public class AdminPannel extends javax.swing.JFrame {
         jLabel10.setText("Item  Name");
 
         updateItemCancelBtn.setText("Cancel");
-		
         updateItemCancelBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 updateItemCancelBtnActionPerformed(evt);
             }
         });
-		
+
         updateItemSaveBtn.setText("Save");
 
         updateItemNameTxt.addActionListener(new java.awt.event.ActionListener() {
@@ -851,6 +850,11 @@ public class AdminPannel extends javax.swing.JFrame {
         jLabel9.setText("Hello Mr. Dushantha");
 
         logoutBtn.setText("Log Out");
+        logoutBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logoutBtnActionPerformed(evt);
+            }
+        });
 
         profileBtn.setText("Profile");
         profileBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -956,7 +960,9 @@ public class AdminPannel extends javax.swing.JFrame {
     }//GEN-LAST:event_profileBtnActionPerformed
 
     private void addUserBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addUserBtnActionPerformed
-        // TODO add your handling code here:
+        AddNewUser newUser = new AddNewUser();
+        newUser.setVisible(true);
+        newUser.setDefaultCloseOperation(HIDE_ON_CLOSE);
     }//GEN-LAST:event_addUserBtnActionPerformed
 
 	
@@ -975,6 +981,13 @@ public class AdminPannel extends javax.swing.JFrame {
     private void updateStockCancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateStockCancelBtnActionPerformed
         this.updateStockPanel.setVisible(false);
     }//GEN-LAST:event_updateStockCancelBtnActionPerformed
+
+    private void logoutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutBtnActionPerformed
+        this.setVisible(false);
+        LoginFrame lf = new LoginFrame();
+        lf.setVisible(true);
+        lf.setSize(740,400);
+    }//GEN-LAST:event_logoutBtnActionPerformed
 
 
 
