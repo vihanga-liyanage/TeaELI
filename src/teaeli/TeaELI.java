@@ -7,6 +7,7 @@ public class TeaELI {
         LoginFrame loginFrame = new LoginFrame();
         loginFrame.setVisible(true);
         loginFrame.setSize(740,400);
+        
     }
     
 }
