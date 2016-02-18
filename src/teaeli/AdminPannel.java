@@ -87,12 +87,9 @@ public class AdminPannel extends javax.swing.JFrame {
 
         mainTabbedPane = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
-        jLabel8 = new javax.swing.JLabel();
         jScrollPane7 = new javax.swing.JScrollPane();
         orderListTable = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        orderBlendsTable = new javax.swing.JTable();
         addNewBlendsBtn = new javax.swing.JButton();
         searchOrderBtn = new javax.swing.JButton();
         searchOrderTxt = new javax.swing.JTextField();
@@ -158,9 +155,6 @@ public class AdminPannel extends javax.swing.JFrame {
 
         mainTabbedPane.setFont(new java.awt.Font("Segoe UI Symbol", 0, 15)); // NOI18N
 
-        jLabel8.setFont(new java.awt.Font("Segoe UI Semibold", 0, 16)); // NOI18N
-        jLabel8.setText("Blends");
-
         orderListTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null}
@@ -192,30 +186,9 @@ public class AdminPannel extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 16)); // NOI18N
         jLabel1.setText("Raw Material Orders");
-
-        orderBlendsTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null}
-            },
-            new String [] {
-                "Blend", "Quantity"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        orderBlendsTable.setRowHeight(20);
-        jScrollPane2.setViewportView(orderBlendsTable);
-        if (orderBlendsTable.getColumnModel().getColumnCount() > 0) {
-            orderBlendsTable.getColumnModel().getColumn(0).setPreferredWidth(350);
-            orderBlendsTable.getColumnModel().getColumn(1).setResizable(false);
-            orderBlendsTable.getColumnModel().getColumn(1).setPreferredWidth(120);
-        }
+        jLabel1.setMaximumSize(new java.awt.Dimension(31, 14));
+        jLabel1.setMinimumSize(new java.awt.Dimension(31, 14));
+        jLabel1.setPreferredSize(new java.awt.Dimension(31, 14));
 
         addNewBlendsBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         addNewBlendsBtn.setText("Add New Blends");
@@ -242,28 +215,20 @@ public class AdminPannel extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 906, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(addNewBlendsBtn))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(addNewBlendsBtn)
+                        .addGap(10, 10, 10))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 553, Short.MAX_VALUE)
+                            .addComponent(jLabel15)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel15)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(searchOrderTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(searchOrderBtn))
-                                    .addComponent(jLabel1))
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel8)
-                                .addGap(276, 276, 276))
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))))
-                .addContainerGap())
+                                .addComponent(searchOrderTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(searchOrderBtn))
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -273,9 +238,7 @@ public class AdminPannel extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(addNewBlendsBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(33, 33, 33)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel8)))
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -283,9 +246,7 @@ public class AdminPannel extends javax.swing.JFrame {
                             .addComponent(searchOrderTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(searchOrderBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -421,16 +382,14 @@ public class AdminPannel extends javax.swing.JFrame {
                     .addComponent(jLabel11))
                 .addGap(18, 18, 18)
                 .addGroup(updateStockPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(updateStockPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel16)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel16)
                     .addGroup(updateStockPanelLayout.createSequentialGroup()
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addGroup(updateStockPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(updateStockSaveBtn)
-                            .addComponent(updateStockCancelBtn))
-                        .addContainerGap(33, Short.MAX_VALUE))))
+                            .addComponent(updateStockCancelBtn))))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
@@ -1074,7 +1033,6 @@ public class AdminPannel extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -1083,7 +1041,6 @@ public class AdminPannel extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
@@ -1096,7 +1053,6 @@ public class AdminPannel extends javax.swing.JFrame {
     private javax.swing.JLabel logoLabel;
     private javax.swing.JButton logoutBtn;
     private javax.swing.JTabbedPane mainTabbedPane;
-    private javax.swing.JTable orderBlendsTable;
     private javax.swing.JTable orderListTable;
     private javax.swing.JTable productTable;
     private javax.swing.JButton profileBtn;
