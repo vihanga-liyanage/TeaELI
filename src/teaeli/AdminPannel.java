@@ -871,6 +871,11 @@ public class AdminPannel extends javax.swing.JFrame {
         jLabel9.setText("Hello Mr. Dushantha");
 
         logoutBtn.setText("Log Out");
+        logoutBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logoutBtnActionPerformed(evt);
+            }
+        });
 
         profileBtn.setText("Profile");
         profileBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -928,7 +933,7 @@ public class AdminPannel extends javax.swing.JFrame {
     }//GEN-LAST:event_addItemBtnActionPerformed
 
     private void addProductBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addProductBtnActionPerformed
-        AddNewProduct addNewProduct = new AddNewProduct();
+        AddNewBlend addNewProduct = new AddNewBlend();
         addNewProduct.setVisible(true);
         addNewProduct.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
      
@@ -977,7 +982,9 @@ public class AdminPannel extends javax.swing.JFrame {
     }//GEN-LAST:event_profileBtnActionPerformed
 
     private void addUserBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addUserBtnActionPerformed
-        // TODO add your handling code here:
+        AddNewUser newUser = new AddNewUser();
+        newUser.setVisible(true);
+        newUser.setDefaultCloseOperation(HIDE_ON_CLOSE);
     }//GEN-LAST:event_addUserBtnActionPerformed
 
 	
@@ -988,7 +995,7 @@ public class AdminPannel extends javax.swing.JFrame {
     }//GEN-LAST:event_updateItemCancelBtnActionPerformed
 
     private void searchProductBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchProductBtnActionPerformed
-        UpdateProduct updateProduct = new UpdateProduct();
+        UpdateBlend updateProduct = new UpdateBlend();
         updateProduct.setVisible(true);
         updateProduct.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
     }//GEN-LAST:event_searchProductBtnActionPerformed
@@ -997,11 +1004,20 @@ public class AdminPannel extends javax.swing.JFrame {
         this.updateStockPanel.setVisible(false);
     }//GEN-LAST:event_updateStockCancelBtnActionPerformed
 
+
+    private void logoutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutBtnActionPerformed
+        this.setVisible(false);
+        LoginFrame lf = new LoginFrame();
+        lf.setVisible(true);
+        lf.setSize(740,400);
+    }//GEN-LAST:event_logoutBtnActionPerformed
+
     private void searchOrderBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchOrderBtnActionPerformed
         OrderDetails orderDetails = new OrderDetails();
         orderDetails.setVisible(true);
         orderDetails.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
     }//GEN-LAST:event_searchOrderBtnActionPerformed
+
 
 
 
