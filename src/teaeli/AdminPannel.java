@@ -85,7 +85,7 @@ public class AdminPannel extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        mainTabbedPane = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jScrollPane7 = new javax.swing.JScrollPane();
@@ -151,7 +151,7 @@ public class AdminPannel extends javax.swing.JFrame {
         setTitle("System Name");
         setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
 
-        jTabbedPane1.setFont(new java.awt.Font("Segoe UI Symbol", 0, 15)); // NOI18N
+        mainTabbedPane.setFont(new java.awt.Font("Segoe UI Symbol", 0, 15)); // NOI18N
 
         jLabel8.setFont(new java.awt.Font("Segoe UI Semibold", 0, 16)); // NOI18N
         jLabel8.setText("Available Orders");
@@ -302,7 +302,7 @@ public class AdminPannel extends javax.swing.JFrame {
                 .addGap(17, 17, 17))
         );
 
-        jTabbedPane1.addTab("Orders", jPanel1);
+        mainTabbedPane.addTab("Orders", jPanel1);
 
         searchStockBtn.setText("Go");
         searchStockBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -373,6 +373,11 @@ public class AdminPannel extends javax.swing.JFrame {
         });
 
         updateStockCancelBtn.setText("Cancel");
+        updateStockCancelBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateStockCancelBtnActionPerformed(evt);
+            }
+        });
 
         updateStockSaveBtn.setText("Save");
 
@@ -461,7 +466,7 @@ public class AdminPannel extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab("Stock", jPanel5);
+        mainTabbedPane.addTab("Stock", jPanel5);
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel5.setText("Start typing item name to search");
@@ -533,6 +538,11 @@ public class AdminPannel extends javax.swing.JFrame {
         jLabel10.setText("Item  Name");
 
         updateItemCancelBtn.setText("Cancel");
+        updateItemCancelBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateItemCancelBtnActionPerformed(evt);
+            }
+        });
 
         updateItemSaveBtn.setText("Save");
 
@@ -653,7 +663,7 @@ public class AdminPannel extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab("Items", jPanel3);
+        mainTabbedPane.addTab("Items", jPanel3);
 
         productTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -702,6 +712,11 @@ public class AdminPannel extends javax.swing.JFrame {
         }
 
         searchProductBtn.setText("Go");
+        searchProductBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchProductBtnActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel3.setText("Start typing product name to search");
@@ -750,7 +765,7 @@ public class AdminPannel extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab("Products", jPanel4);
+        mainTabbedPane.addTab("Products", jPanel4);
 
         userTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -829,7 +844,7 @@ public class AdminPannel extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab("Users", jPanel2);
+        mainTabbedPane.addTab("Users", jPanel2);
 
         logoLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/teaeli/logo-new (Custom).png"))); // NOI18N
 
@@ -865,7 +880,7 @@ public class AdminPannel extends javax.swing.JFrame {
                         .addComponent(logoutBtn))
                     .addComponent(timeLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
-            .addComponent(jTabbedPane1)
+            .addComponent(mainTabbedPane)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -881,7 +896,7 @@ public class AdminPannel extends javax.swing.JFrame {
                             .addComponent(logoutBtn)
                             .addComponent(profileBtn))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTabbedPane1))
+                .addComponent(mainTabbedPane))
         );
 
         pack();
@@ -944,6 +959,24 @@ public class AdminPannel extends javax.swing.JFrame {
     private void addUserBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addUserBtnActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_addUserBtnActionPerformed
+
+	
+    private void updateItemCancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateItemCancelBtnActionPerformed
+        this.updateItemNameTxt.setText(null);
+        this.updateItemSupplierTxt.setText(null);
+        this.updateItemUnitPriceTxt.setText(null);
+    }//GEN-LAST:event_updateItemCancelBtnActionPerformed
+
+    private void searchProductBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchProductBtnActionPerformed
+        UpdateProduct updateProduct = new UpdateProduct();
+        updateProduct.setVisible(true);
+        updateProduct.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+    }//GEN-LAST:event_searchProductBtnActionPerformed
+
+    private void updateStockCancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateStockCancelBtnActionPerformed
+        this.updateStockPanel.setVisible(false);
+    }//GEN-LAST:event_updateStockCancelBtnActionPerformed
+
 
 
     /**
@@ -1012,11 +1045,11 @@ public class AdminPannel extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
-    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable3;
     private javax.swing.JLabel logoLabel;
     private javax.swing.JButton logoutBtn;
+    private javax.swing.JTabbedPane mainTabbedPane;
     private javax.swing.JTable orderDetailsTable;
     private javax.swing.JTable orderListTable;
     private javax.swing.JTable orderListTable1;
