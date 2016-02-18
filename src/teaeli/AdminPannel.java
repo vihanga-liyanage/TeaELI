@@ -531,6 +531,11 @@ public class AdminPannel extends javax.swing.JFrame {
         jLabel10.setText("Item  Name");
 
         updateItemCancelBtn.setText("Cancel");
+        updateItemCancelBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateItemCancelBtnActionPerformed(evt);
+            }
+        });
 
         updateItemSaveBtn.setText("Save");
 
@@ -942,6 +947,12 @@ public class AdminPannel extends javax.swing.JFrame {
     private void addUserBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addUserBtnActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_addUserBtnActionPerformed
+
+    private void updateItemCancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateItemCancelBtnActionPerformed
+        this.updateItemNameTxt.setText(null);
+        this.updateItemSupplierTxt.setText(null);
+        this.updateItemUnitPriceTxt.setText(null);
+    }//GEN-LAST:event_updateItemCancelBtnActionPerformed
 
 
     /**
