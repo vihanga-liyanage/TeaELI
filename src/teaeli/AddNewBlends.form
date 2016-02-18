@@ -10,7 +10,7 @@
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
-    <Property name="title" type="java.lang.String" value="Add New Order"/>
+    <Property name="title" type="java.lang.String" value="Add New Blends"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -112,7 +112,7 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace min="-2" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel3" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
@@ -123,25 +123,25 @@
                       <Component id="jLabel5" min="-2" pref="25" max="-2" attributes="0"/>
                       <Component id="lblDate" alignment="0" min="-2" pref="25" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace min="-2" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jComboBoxProduct" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                       <Component id="jComboBoxWeight" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                       <Component id="btnAdd" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                       <Component id="jTextField1" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
                   <Component id="jScrollPane1" min="-2" pref="234" max="-2" attributes="0"/>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
                   <Component id="jButton1" min="-2" pref="30" max="-2" attributes="0"/>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="tblMasterPlanScrollPane" min="-2" pref="233" max="-2" attributes="0"/>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
+                  <Component id="tblMasterPlanScrollPane" pref="233" max="32767" attributes="0"/>
+                  <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="btnCnfirmOrder" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
                       <Component id="btnCancelOrder" min="-2" pref="30" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -229,9 +229,14 @@
             <Component class="javax.swing.JTable" name="tblOrder">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="3" rowCount="1">
+                  <Table columnCount="8" rowCount="1">
                     <Column editable="false" title="Blend Name" type="java.lang.Object"/>
-                    <Column editable="true" title="Quantity" type="java.lang.Object"/>
+                    <Column editable="false" title="Qty Required" type="java.lang.Object"/>
+                    <Column editable="false" title="Qty in stock(g)" type="java.lang.Object"/>
+                    <Column editable="false" title="Qty in pending stock(g)" type="java.lang.Object"/>
+                    <Column editable="false" title="Balance Qty Required(g)" type="java.lang.Object"/>
+                    <Column editable="true" title="Excess Qty Required(g)" type="java.lang.Object"/>
+                    <Column editable="false" title="Final Order Qty(g)" type="java.lang.Object"/>
                     <Column editable="false" title="" type="java.lang.Object"/>
                   </Table>
                 </Property>
@@ -247,7 +252,32 @@
                       <Editor/>
                       <Renderer/>
                     </Column>
-                    <Column maxWidth="-1" minWidth="-1" prefWidth="20" resizable="false">
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="20" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                       <Title/>
                       <Editor/>
                       <Renderer/>
@@ -284,19 +314,25 @@
             <Component class="javax.swing.JTable" name="tblMasterPlan">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="7" rowCount="1">
+                  <Table columnCount="8" rowCount="1">
                     <Column editable="false" title="Ingredient" type="java.lang.Object"/>
                     <Column editable="false" title="Qty needed (g)" type="java.lang.Object"/>
-                    <Column editable="false" title="Qty In Stock (g)" type="java.lang.Object"/>
-                    <Column editable="true" title="Qty In Pending Stock (g)" type="java.lang.Object"/>
-                    <Column editable="false" title="Qty Required (g)" type="java.lang.Object"/>
+                    <Column editable="false" title="Qty in Stock (g)" type="java.lang.Object"/>
+                    <Column editable="false" title="Qty in Pending Stock (g)" type="java.lang.Object"/>
+                    <Column editable="false" title="Balance Qty Required (g)" type="java.lang.Object"/>
+                    <Column editable="true" title="Excess Qty Required(g)" type="java.lang.Object"/>
                     <Column editable="false" title="Supplier Name" type="java.lang.Object"/>
-                    <Column editable="true" title="Final Order Qty (g)" type="java.lang.Object"/>
+                    <Column editable="false" title="Final Order Qty (g)" type="java.lang.Object"/>
                   </Table>
                 </Property>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                   <TableColumnModel selectionModel="0">
-                    <Column maxWidth="-1" minWidth="-1" prefWidth="200" resizable="false">
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="200" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                       <Title/>
                       <Editor/>
                       <Renderer/>
