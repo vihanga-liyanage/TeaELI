@@ -5,6 +5,8 @@
  */
 package teaeli;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.UIManager;
@@ -27,6 +29,15 @@ public class AddNewUser extends javax.swing.JFrame {
             Logger.getLogger(AdminPannel.class.getName()).log(Level.SEVERE, null, ex);
         }
         initComponents();
+        
+        Dimension screenSize,frameSize;
+        int x,y;
+        screenSize=Toolkit.getDefaultToolkit().getScreenSize();
+        frameSize=getSize();
+        x=(screenSize.width-frameSize.width)/4;
+        y=(screenSize.height-frameSize.height)/4;
+        setLocation(x, y);
+        setResizable(false);
     }
 
     /**
@@ -68,10 +79,10 @@ public class AddNewUser extends javax.swing.JFrame {
         passwordLbl.setText("Password");
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel2.setText("Firstname");
+        jLabel2.setText("First Name");
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel3.setText("Lastname");
+        jLabel3.setText("Last Name");
 
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel4.setText("Designation");
@@ -91,7 +102,7 @@ public class AddNewUser extends javax.swing.JFrame {
         jLabel6.setForeground(java.awt.Color.red);
         jLabel6.setText("* Password must be 8 characters long");
 
-        addUserDesignationCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        addUserDesignationCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Manager", "Admin" }));
 
         jLabel7.setFont(new java.awt.Font("Segoe UI Semibold", 0, 16)); // NOI18N
         jLabel7.setText("Add New User");

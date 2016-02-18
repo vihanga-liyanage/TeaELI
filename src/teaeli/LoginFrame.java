@@ -8,7 +8,6 @@ package teaeli;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Graphics;
 import java.awt.Toolkit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
