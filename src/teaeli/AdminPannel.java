@@ -909,7 +909,7 @@ public class AdminPannel extends javax.swing.JFrame {
     }//GEN-LAST:event_addItemBtnActionPerformed
 
     private void addProductBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addProductBtnActionPerformed
-        AddNewProduct addNewProduct = new AddNewProduct();
+        AddNewBlend addNewProduct = new AddNewBlend();
         addNewProduct.setVisible(true);
         addNewProduct.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
      
@@ -968,7 +968,7 @@ public class AdminPannel extends javax.swing.JFrame {
     }//GEN-LAST:event_updateItemCancelBtnActionPerformed
 
     private void searchProductBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchProductBtnActionPerformed
-        UpdateProduct updateProduct = new UpdateProduct();
+        UpdateBlend updateProduct = new UpdateBlend();
         updateProduct.setVisible(true);
         updateProduct.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
     }//GEN-LAST:event_searchProductBtnActionPerformed
