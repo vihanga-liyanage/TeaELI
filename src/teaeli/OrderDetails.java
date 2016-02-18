@@ -89,11 +89,9 @@ public class OrderDetails extends javax.swing.JFrame {
         blendLabel.setFont(new java.awt.Font("Segoe UI Semibold", 0, 16)); // NOI18N
         blendLabel.setText("Blends");
 
+        blendTable.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         blendTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
                 {null, null, null}
             },
             new String [] {

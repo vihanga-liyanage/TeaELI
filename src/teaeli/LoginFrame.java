@@ -143,7 +143,6 @@ public class LoginFrame extends javax.swing.JFrame {
         adminPannel.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
         
         adminPannel.setVisible(true);
-        adminPannel.updateStockPanel.setVisible(false);
         this.setVisible(false);
     }//GEN-LAST:event_btnSubmitActionPerformed
 
