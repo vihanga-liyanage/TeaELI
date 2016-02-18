@@ -72,6 +72,7 @@ public class AddNewBlends extends javax.swing.JFrame {
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel2.setText("Quantity");
 
+        jComboBoxProduct.setEditable(true);
         jComboBoxProduct.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBoxProduct.setSelectedIndex(-1);
 
@@ -298,6 +299,8 @@ public class AddNewBlends extends javax.swing.JFrame {
 
     private void btnCancelOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelOrderActionPerformed
         this.tblMasterPlanScrollPane.setVisible(false);
+        btnCancelOrder.setVisible(false);
+        btnCnfirmOrder.setVisible(false);
     }//GEN-LAST:event_btnCancelOrderActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
