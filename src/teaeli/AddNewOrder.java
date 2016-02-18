@@ -300,7 +300,9 @@ public class AddNewOrder extends javax.swing.JFrame {
     }//GEN-LAST:event_tblMasterPlanPropertyChange
 
     private void btnCnfirmOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCnfirmOrderActionPerformed
-        // TODO add your handling code here:
+        OrderConfirmation oc = new OrderConfirmation();
+        oc.setVisible(true);
+        oc.setDefaultCloseOperation(HIDE_ON_CLOSE);
     }//GEN-LAST:event_btnCnfirmOrderActionPerformed
 
     private void btnCancelOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelOrderActionPerformed
