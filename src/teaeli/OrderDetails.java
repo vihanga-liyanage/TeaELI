@@ -6,6 +6,9 @@
 
 package teaeli;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
+
 /**
  *
  * @author Vihanga Liyanage
@@ -17,6 +20,15 @@ public class OrderDetails extends javax.swing.JFrame {
      */
     public OrderDetails() {
         initComponents();
+        
+        Dimension screenSize,frameSize;
+        int x,y;
+        screenSize=Toolkit.getDefaultToolkit().getScreenSize();
+        frameSize=getSize();
+        x=(screenSize.width-frameSize.width)/4;
+        y=(screenSize.height-frameSize.height)/4;
+        setLocation(x, y);
+        setResizable(false);
     }
 
     /**
@@ -33,6 +45,9 @@ public class OrderDetails extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(620, 620));
+
+        jScrollPane3.setPreferredSize(new java.awt.Dimension(620, 620));
 
         orderDetailsTable.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         orderDetailsTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -40,11 +55,11 @@ public class OrderDetails extends javax.swing.JFrame {
                 {null, null, null, null, null}
             },
             new String [] {
-                "Item Description", "Quantity", "Unit Price", "Sub Total", "Remarks"
+                "Item Description", "Quantity", "Unit Price", "Remarks", "Sub Total"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, true
+                false, false, false, true, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -55,13 +70,13 @@ public class OrderDetails extends javax.swing.JFrame {
         jScrollPane3.setViewportView(orderDetailsTable);
         if (orderDetailsTable.getColumnModel().getColumnCount() > 0) {
             orderDetailsTable.getColumnModel().getColumn(0).setResizable(false);
-            orderDetailsTable.getColumnModel().getColumn(0).setPreferredWidth(200);
+            orderDetailsTable.getColumnModel().getColumn(0).setPreferredWidth(220);
             orderDetailsTable.getColumnModel().getColumn(1).setResizable(false);
-            orderDetailsTable.getColumnModel().getColumn(1).setPreferredWidth(80);
+            orderDetailsTable.getColumnModel().getColumn(1).setPreferredWidth(100);
             orderDetailsTable.getColumnModel().getColumn(2).setResizable(false);
-            orderDetailsTable.getColumnModel().getColumn(2).setPreferredWidth(80);
-            orderDetailsTable.getColumnModel().getColumn(3).setPreferredWidth(80);
-            orderDetailsTable.getColumnModel().getColumn(4).setPreferredWidth(80);
+            orderDetailsTable.getColumnModel().getColumn(2).setPreferredWidth(100);
+            orderDetailsTable.getColumnModel().getColumn(3).setPreferredWidth(100);
+            orderDetailsTable.getColumnModel().getColumn(4).setPreferredWidth(100);
         }
 
         jLabel2.setFont(new java.awt.Font("Segoe UI Semibold", 0, 16)); // NOI18N
@@ -73,12 +88,12 @@ public class OrderDetails extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 869, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 663, Short.MAX_VALUE)
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(380, 380, 380)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel2)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(293, 293, 293))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

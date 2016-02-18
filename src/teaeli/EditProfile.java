@@ -5,6 +5,8 @@
  */
 package teaeli;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.UIManager;
@@ -27,6 +29,15 @@ public class EditProfile extends javax.swing.JFrame {
             Logger.getLogger(AdminPannel.class.getName()).log(Level.SEVERE, null, ex);
         }
         initComponents();
+        
+        Dimension screenSize,frameSize;
+        int x,y;
+        screenSize=Toolkit.getDefaultToolkit().getScreenSize();
+        frameSize=getSize();
+        x=(screenSize.width-frameSize.width)/4;
+        y=(screenSize.height-frameSize.height)/4;
+        setLocation(x, y);
+        setResizable(false);
     }
 
     /**

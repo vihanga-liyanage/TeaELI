@@ -490,7 +490,7 @@ public class ManagerPannel extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addNewOrderBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addNewOrderBtnActionPerformed
-        AddNewOrder newOrder = new AddNewOrder();
+        AddNewBlends newOrder = new AddNewBlends();
         newOrder.setVisible(true);
         newOrder.tblMasterPlanScrollPane.setVisible(false);
         newOrder.btnCancelOrder.setVisible(false);

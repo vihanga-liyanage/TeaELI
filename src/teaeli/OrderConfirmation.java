@@ -5,6 +5,9 @@
  */
 package teaeli;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
+
 /**
  *
  * @author Janith
@@ -17,6 +20,8 @@ public class OrderConfirmation extends javax.swing.JFrame {
     public OrderConfirmation() {
         initComponents();
         this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
+        
+        setResizable(false);
     }
 
     /**

@@ -907,12 +907,13 @@ public class AdminPannel extends javax.swing.JFrame {
     }//GEN-LAST:event_searchItemBtnActionPerformed
 
     private void addNewBlendsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addNewBlendsBtnActionPerformed
-        AddNewOrder newOrder = new AddNewOrder();
-        newOrder.setVisible(true);
-        newOrder.tblMasterPlanScrollPane.setVisible(false);
-        newOrder.btnCancelOrder.setVisible(false);
-        newOrder.btnCnfirmOrder.setVisible(false);
-        newOrder.setDefaultCloseOperation(HIDE_ON_CLOSE);
+        AddNewBlends addNewBlends = new AddNewBlends();
+        addNewBlends.setVisible(true);
+        addNewBlends.tblMasterPlanScrollPane.setVisible(false);
+        addNewBlends.btnCancelOrder.setVisible(false);
+        addNewBlends.btnCnfirmOrder.setVisible(false);
+        addNewBlends.setDefaultCloseOperation(HIDE_ON_CLOSE);
+        addNewBlends.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
     }//GEN-LAST:event_addNewBlendsBtnActionPerformed
 
     private void updateStockQuantityTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateStockQuantityTxtActionPerformed
