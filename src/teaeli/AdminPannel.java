@@ -531,11 +531,13 @@ public class AdminPannel extends javax.swing.JFrame {
         jLabel10.setText("Item  Name");
 
         updateItemCancelBtn.setText("Cancel");
+		/*
         updateItemCancelBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 updateItemCancelBtnActionPerformed(evt);
             }
         });
+		*/
 
         updateItemSaveBtn.setText("Save");
 
@@ -702,6 +704,11 @@ public class AdminPannel extends javax.swing.JFrame {
         }
 
         searchProductBtn.setText("Go");
+        searchProductBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchProductBtnActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel3.setText("Start typing product name to search");
@@ -948,11 +955,19 @@ public class AdminPannel extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_addUserBtnActionPerformed
 
+	/*
     private void updateItemCancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateItemCancelBtnActionPerformed
         this.updateItemNameTxt.setText(null);
         this.updateItemSupplierTxt.setText(null);
         this.updateItemUnitPriceTxt.setText(null);
     }//GEN-LAST:event_updateItemCancelBtnActionPerformed
+*/
+    private void searchProductBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchProductBtnActionPerformed
+        UpdateProduct updateProduct = new UpdateProduct();
+        updateProduct.setVisible(true);
+        updateProduct.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+    }//GEN-LAST:event_searchProductBtnActionPerformed
+
 
 
     /**
