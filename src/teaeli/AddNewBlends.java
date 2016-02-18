@@ -65,7 +65,7 @@ public class AddNewBlends extends javax.swing.JFrame {
         jLabel1.setText("jLabel1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Add New Order");
+        setTitle("Add New Blends");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -107,14 +107,14 @@ public class AddNewBlends extends javax.swing.JFrame {
 
         tblOrder.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null}
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Blend Name", "Quantity", ""
+                "Blend Name", "Qty Required", "Qty in stock(g)", "Qty in pending stock(g)", "Balance Qty Required(g)", "Excess Qty Required(g)", "Final Order Qty(g)", ""
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, true, false
+                false, false, false, false, false, true, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -129,7 +129,6 @@ public class AddNewBlends extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tblOrder);
         if (tblOrder.getColumnModel().getColumnCount() > 0) {
-            tblOrder.getColumnModel().getColumn(2).setResizable(false);
             tblOrder.getColumnModel().getColumn(2).setPreferredWidth(20);
         }
 
@@ -142,14 +141,14 @@ public class AddNewBlends extends javax.swing.JFrame {
 
         tblMasterPlan.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Ingredient", "Qty needed (g)", "Qty In Stock (g)", "Qty In Pending Stock (g)", "Qty Required (g)", "Supplier Name", "Final Order Qty (g)"
+                "Ingredient", "Qty needed (g)", "Qty in Stock (g)", "Qty in Pending Stock (g)", "Balance Qty Required (g)", "Excess Qty Required(g)", "Supplier Name", "Final Order Qty (g)"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, true, false, false, true
+                false, false, false, false, false, true, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -164,7 +163,6 @@ public class AddNewBlends extends javax.swing.JFrame {
         });
         tblMasterPlanScrollPane.setViewportView(tblMasterPlan);
         if (tblMasterPlan.getColumnModel().getColumnCount() > 0) {
-            tblMasterPlan.getColumnModel().getColumn(0).setResizable(false);
             tblMasterPlan.getColumnModel().getColumn(0).setPreferredWidth(200);
         }
 
@@ -246,12 +244,12 @@ public class AddNewBlends extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(tblMasterPlanScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(tblMasterPlanScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnCnfirmOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCancelOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
