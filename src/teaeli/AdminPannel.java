@@ -372,6 +372,11 @@ public class AdminPannel extends javax.swing.JFrame {
         });
 
         updateStockCancelBtn.setText("Cancel");
+        updateStockCancelBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateStockCancelBtnActionPerformed(evt);
+            }
+        });
 
         updateStockSaveBtn.setText("Save");
 
@@ -531,7 +536,13 @@ public class AdminPannel extends javax.swing.JFrame {
         jLabel10.setText("Item  Name");
 
         updateItemCancelBtn.setText("Cancel");
-
+		
+        updateItemCancelBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateItemCancelBtnActionPerformed(evt);
+            }
+        });
+		
         updateItemSaveBtn.setText("Save");
 
         updateItemNameTxt.addActionListener(new java.awt.event.ActionListener() {
@@ -948,11 +959,23 @@ public class AdminPannel extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_addUserBtnActionPerformed
 
+	
+    private void updateItemCancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateItemCancelBtnActionPerformed
+        this.updateItemNameTxt.setText(null);
+        this.updateItemSupplierTxt.setText(null);
+        this.updateItemUnitPriceTxt.setText(null);
+    }//GEN-LAST:event_updateItemCancelBtnActionPerformed
+
     private void searchProductBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchProductBtnActionPerformed
         UpdateProduct updateProduct = new UpdateProduct();
         updateProduct.setVisible(true);
         updateProduct.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
     }//GEN-LAST:event_searchProductBtnActionPerformed
+
+    private void updateStockCancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateStockCancelBtnActionPerformed
+        this.updateStockPanel.setVisible(false);
+    }//GEN-LAST:event_updateStockCancelBtnActionPerformed
+
 
 
     /**
