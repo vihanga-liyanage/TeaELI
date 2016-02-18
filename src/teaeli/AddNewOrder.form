@@ -68,31 +68,29 @@
                       <Component id="jScrollPane1" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="jComboBoxProduct" pref="125" max="32767" attributes="0"/>
+                              <Component id="jComboBoxProduct" pref="190" max="32767" attributes="0"/>
                               <Component id="jLabel3" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jLabel2" min="-2" pref="125" max="-2" attributes="0"/>
-                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jComboBoxQuantity" min="-2" pref="125" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+                              <Component id="jLabel2" min="-2" pref="125" max="-2" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
+                                  <Component id="jTextField1" min="-2" pref="101" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="jComboBoxWeight" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                                   <Component id="btnAdd" min="-2" pref="60" max="-2" attributes="0"/>
-                                  <EmptySpace pref="108" max="32767" attributes="0"/>
-                                  <Component id="jLabel4" min="-2" pref="68" max="-2" attributes="0"/>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="lblOrderNo" min="-2" pref="57" max="-2" attributes="0"/>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="jLabel5" min="-2" pref="50" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
-                                  <Component id="lblDate" min="-2" pref="133" max="-2" attributes="0"/>
                               </Group>
                           </Group>
+                          <EmptySpace pref="71" max="32767" attributes="0"/>
+                          <Component id="jLabel4" min="-2" pref="68" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="lblOrderNo" min="-2" pref="57" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
+                          <Component id="jLabel5" min="-2" pref="50" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="lblDate" min="-2" pref="133" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -122,10 +120,10 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jComboBoxProduct" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
-                          <Component id="jComboBoxQuantity" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                           <Component id="jComboBoxWeight" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                           <Component id="btnAdd" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                           <Component id="jLabel4" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                          <Component id="jTextField1" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                       </Group>
                       <Component id="lblOrderNo" min="-2" pref="25" max="-2" attributes="0"/>
                       <Component id="jLabel5" min="-2" pref="25" max="-2" attributes="0"/>
@@ -138,9 +136,9 @@
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="tblMasterPlanScrollPane" min="-2" pref="233" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="btnCancelOrder" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="btnCnfirmOrder" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
+                      <Component id="btnCancelOrder" min="-2" pref="30" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -173,19 +171,6 @@
             <Property name="text" type="java.lang.String" value="Product"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="jComboBoxQuantity">
-          <Properties>
-            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="4">
-                <StringItem index="0" value="Item 1"/>
-                <StringItem index="1" value="Item 2"/>
-                <StringItem index="2" value="Item 3"/>
-                <StringItem index="3" value="Item 4"/>
-              </StringArray>
-            </Property>
-            <Property name="selectedIndex" type="int" value="-1"/>
-          </Properties>
-        </Component>
         <Component class="javax.swing.JComboBox" name="jComboBoxWeight">
           <Properties>
             <Property name="maximumRowCount" type="int" value="2"/>
@@ -210,17 +195,16 @@
         <Component class="javax.swing.JLabel" name="lblOrderNo">
           <Properties>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-              <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
-                <LineBorder/>
-              </Border>
-            </Property>
+            <Property name="text" type="java.lang.String" value="order_no"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="btnAdd">
           <Properties>
             <Property name="text" type="java.lang.String" value="Add"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel5">
           <Properties>
@@ -231,11 +215,7 @@
         <Component class="javax.swing.JLabel" name="lblDate">
           <Properties>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-              <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
-                <LineBorder/>
-              </Border>
-            </Property>
+            <Property name="text" type="java.lang.String" value="date"/>
           </Properties>
         </Component>
         <Container class="javax.swing.JScrollPane" name="jScrollPane1">
@@ -379,6 +359,8 @@
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
           </AuxValues>
+        </Component>
+        <Component class="javax.swing.JTextField" name="jTextField1">
         </Component>
       </SubComponents>
     </Container>
