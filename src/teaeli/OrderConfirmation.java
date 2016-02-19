@@ -45,7 +45,7 @@ public class OrderConfirmation extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Order Confirmation");
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Order Confirmation"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Order Confirmation", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
 
         tblMasterPlanEditingView.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
