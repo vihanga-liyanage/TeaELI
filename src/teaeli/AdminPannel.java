@@ -244,7 +244,7 @@ public class AdminPannel extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        mainTabbedPane.addTab("Orders", jPanel1);
+        mainTabbedPane.addTab("Order Handling", jPanel1);
 
         searchStockBtn.setText("Go");
         searchStockBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -343,7 +343,7 @@ public class AdminPannel extends javax.swing.JFrame {
         mainTabbedPane.addTab("Inventory Management", jPanel5);
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel5.setText("Start typing item name to search");
+        jLabel5.setText("Start typing ingredient name to search");
 
         searchItemBtn.setText("Go");
         searchItemBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -353,7 +353,7 @@ public class AdminPannel extends javax.swing.JFrame {
         });
 
         addItemBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        addItemBtn.setText("Add New Item");
+        addItemBtn.setText("Add New Ingredient");
         addItemBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addItemBtnActionPerformed(evt);
@@ -385,7 +385,7 @@ public class AdminPannel extends javax.swing.JFrame {
                 {null, null, null}
             },
             new String [] {
-                "Item Name", "Supplier", "Unit Price"
+                "Ingredient Name", "Supplier", "Unit Price"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -409,7 +409,7 @@ public class AdminPannel extends javax.swing.JFrame {
         updateStockPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel10.setText("Item  Name");
+        jLabel10.setText("Ingredient  Name");
 
         updateItemCancelBtn.setText("Cancel");
         updateItemCancelBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -459,7 +459,7 @@ public class AdminPannel extends javax.swing.JFrame {
                         .addGroup(updateStockPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(updateStockPanel1Layout.createSequentialGroup()
                                 .addGap(20, 20, 20)
-                                .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, 69, Short.MAX_VALUE))
+                                .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, updateStockPanel1Layout.createSequentialGroup()
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(updateStockPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -508,7 +508,7 @@ public class AdminPannel extends javax.swing.JFrame {
                                 .addComponent(searchItemTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(searchItemBtn)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 554, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 520, Short.MAX_VALUE)
                         .addComponent(addItemBtn))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jScrollPane5)
@@ -563,7 +563,7 @@ public class AdminPannel extends javax.swing.JFrame {
                 {null, null, null}
             },
             new String [] {
-                "Product Code", "Product Name", "Base Composition"
+                "Blend Code", "Blend Name", "Base Composition"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -593,7 +593,7 @@ public class AdminPannel extends javax.swing.JFrame {
         });
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel3.setText("Start typing product name to search");
+        jLabel3.setText("Start typing blend name to search");
 
         addProductBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         addProductBtn.setText("Add New Blend");
@@ -718,6 +718,7 @@ public class AdminPannel extends javax.swing.JFrame {
 
         jButton1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jButton1.setText("Delete User");
+        jButton1.setMinimumSize(new java.awt.Dimension(200, 25));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -726,13 +727,17 @@ public class AdminPannel extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 926, Short.MAX_VALUE)
-                    .addComponent(addUserBtn))
-                .addContainerGap())
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 926, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(addUserBtn)
+                        .addContainerGap())))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(18, 18, 18))
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -741,9 +746,9 @@ public class AdminPannel extends javax.swing.JFrame {
                 .addComponent(addUserBtn)
                 .addGap(26, 26, 26)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(48, 48, 48)
+                .addGap(45, 45, 45)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(79, Short.MAX_VALUE))
+                .addContainerGap(82, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Users", jPanel2);

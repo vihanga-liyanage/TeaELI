@@ -87,27 +87,23 @@ public class ManagerPannel extends javax.swing.JFrame {
 
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
-        addNewOrderBtn = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        orderListTable = new javax.swing.JTable();
+        jLabel15 = new javax.swing.JLabel();
+        searchOrderTxt = new javax.swing.JTextField();
+        searchOrderBtn = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        orderDetailsTable = new javax.swing.JTable();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        orderListTable = new javax.swing.JTable();
+        addNewBlendsBtn = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
-        searchStockBtn = new javax.swing.JButton();
-        searchStockTxt = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
+        searchStockTxt = new javax.swing.JTextField();
+        searchStockBtn = new javax.swing.JButton();
+        inventoryIngredientsLbl = new javax.swing.JLabel();
         jScrollPane6 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
-        updateStockPanel = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        updateStockQuantityTxt = new javax.swing.JTextField();
-        updateStockCancelBtn = new javax.swing.JButton();
-        updateStockSaveBtn = new javax.swing.JButton();
-        updateStockItemNameLbl = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
+        inventryIngredientTable = new javax.swing.JTable();
+        inventoryBlendLbl = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        inventoryBlendTable = new javax.swing.JTable();
         logoLabel = new javax.swing.JLabel();
         timeLabel = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -120,35 +116,24 @@ public class ManagerPannel extends javax.swing.JFrame {
 
         jTabbedPane1.setFont(new java.awt.Font("Segoe UI Symbol", 0, 15)); // NOI18N
 
-        addNewOrderBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        addNewOrderBtn.setText("Add New Purchase Order");
-        addNewOrderBtn.addActionListener(new java.awt.event.ActionListener() {
+        jLabel15.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel15.setText("Start typing order ID to search");
+
+        searchOrderBtn.setText("Go");
+        searchOrderBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addNewOrderBtnActionPerformed(evt);
+                searchOrderBtnActionPerformed(evt);
             }
         });
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 16)); // NOI18N
+        jLabel1.setText("Raw Material Orders");
+        jLabel1.setMaximumSize(new java.awt.Dimension(31, 14));
+        jLabel1.setMinimumSize(new java.awt.Dimension(31, 14));
+        jLabel1.setPreferredSize(new java.awt.Dimension(31, 14));
+
         orderListTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
                 {null, null, null, null}
             },
             new String [] {
@@ -164,76 +149,15 @@ public class ManagerPannel extends javax.swing.JFrame {
             }
         });
         orderListTable.setRowHeight(20);
-        jScrollPane2.setViewportView(orderListTable);
-        if (orderListTable.getColumnModel().getColumnCount() > 0) {
-            orderListTable.getColumnModel().getColumn(0).setResizable(false);
-            orderListTable.getColumnModel().getColumn(0).setPreferredWidth(40);
-            orderListTable.getColumnModel().getColumn(1).setResizable(false);
-            orderListTable.getColumnModel().getColumn(1).setPreferredWidth(50);
-            orderListTable.getColumnModel().getColumn(2).setResizable(false);
-            orderListTable.getColumnModel().getColumn(2).setPreferredWidth(80);
-            orderListTable.getColumnModel().getColumn(3).setResizable(false);
-            orderListTable.getColumnModel().getColumn(3).setPreferredWidth(200);
-        }
+        jScrollPane7.setViewportView(orderListTable);
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 16)); // NOI18N
-        jLabel1.setText("Available Orders");
-
-        jLabel2.setFont(new java.awt.Font("Segoe UI Semibold", 0, 16)); // NOI18N
-        jLabel2.setText("Order Details");
-
-        orderDetailsTable.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        orderDetailsTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
-            },
-            new String [] {
-                "Item Description", "Quantity", "Discount", "Unit Price", "Sub Total", "Remarks"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, true
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
+        addNewBlendsBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        addNewBlendsBtn.setText("Add New Blends");
+        addNewBlendsBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addNewBlendsBtnActionPerformed(evt);
             }
         });
-        orderDetailsTable.setRowHeight(20);
-        jScrollPane3.setViewportView(orderDetailsTable);
-        if (orderDetailsTable.getColumnModel().getColumnCount() > 0) {
-            orderDetailsTable.getColumnModel().getColumn(0).setResizable(false);
-            orderDetailsTable.getColumnModel().getColumn(0).setPreferredWidth(200);
-            orderDetailsTable.getColumnModel().getColumn(1).setResizable(false);
-            orderDetailsTable.getColumnModel().getColumn(1).setPreferredWidth(40);
-            orderDetailsTable.getColumnModel().getColumn(2).setResizable(false);
-            orderDetailsTable.getColumnModel().getColumn(2).setPreferredWidth(40);
-            orderDetailsTable.getColumnModel().getColumn(3).setResizable(false);
-            orderDetailsTable.getColumnModel().getColumn(3).setPreferredWidth(60);
-            orderDetailsTable.getColumnModel().getColumn(4).setResizable(false);
-            orderDetailsTable.getColumnModel().getColumn(4).setPreferredWidth(60);
-            orderDetailsTable.getColumnModel().getColumn(5).setResizable(false);
-            orderDetailsTable.getColumnModel().getColumn(5).setPreferredWidth(60);
-        }
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -242,38 +166,46 @@ public class ManagerPannel extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 830, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(addNewOrderBtn))
+                        .addComponent(addNewBlendsBtn)
+                        .addGap(10, 10, 10))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addComponent(jLabel15)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(0, 206, Short.MAX_VALUE)))))
-                .addContainerGap())
+                                .addComponent(searchOrderTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(searchOrderBtn)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(addNewOrderBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 370, Short.MAX_VALUE)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(addNewBlendsBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(searchOrderTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(searchOrderBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 469, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab("Orders", jPanel1);
+        jTabbedPane1.addTab("Order Handling", jPanel1);
+
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel6.setText("Start typing stock item name to search");
 
         searchStockBtn.setText("Go");
         searchStockBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -282,35 +214,15 @@ public class ManagerPannel extends javax.swing.JFrame {
             }
         });
 
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel6.setText("Start typing stock item name to search");
+        inventoryIngredientsLbl.setFont(new java.awt.Font("Segoe UI Semibold", 0, 16)); // NOI18N
+        inventoryIngredientsLbl.setText("Ingredients");
 
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+        inventryIngredientTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
                 {null, null}
             },
             new String [] {
-                "Item Name", "Quantity in Stock"
+                "Ingredient Name", "Quantity in Stock"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -321,96 +233,44 @@ public class ManagerPannel extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane6.setViewportView(jTable3);
-        if (jTable3.getColumnModel().getColumnCount() > 0) {
-            jTable3.getColumnModel().getColumn(0).setResizable(false);
-            jTable3.getColumnModel().getColumn(0).setPreferredWidth(250);
-            jTable3.getColumnModel().getColumn(1).setResizable(false);
-            jTable3.getColumnModel().getColumn(1).setPreferredWidth(150);
-        }
+        jScrollPane6.setViewportView(inventryIngredientTable);
 
-        updateStockPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        inventoryBlendLbl.setFont(new java.awt.Font("Segoe UI Semibold", 0, 16)); // NOI18N
+        inventoryBlendLbl.setText("Blends");
 
-        jLabel4.setText("Item  Name");
-
-        jLabel7.setText("Qty in Stock");
-
-        updateStockQuantityTxt.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                updateStockQuantityTxtActionPerformed(evt);
+        inventoryBlendTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "Blend Name", "Quantity in Stock"
             }
-        });
-
-        updateStockCancelBtn.setText("Cancel");
-
-        updateStockSaveBtn.setText("Save");
-
-        updateStockItemNameLbl.setText("Item 001");
-
-        jLabel11.setText("Grams");
-
-        javax.swing.GroupLayout updateStockPanelLayout = new javax.swing.GroupLayout(updateStockPanel);
-        updateStockPanel.setLayout(updateStockPanelLayout);
-        updateStockPanelLayout.setHorizontalGroup(
-            updateStockPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(updateStockPanelLayout.createSequentialGroup()
-                .addGroup(updateStockPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(updateStockPanelLayout.createSequentialGroup()
-                        .addGap(56, 56, 56)
-                        .addComponent(updateStockCancelBtn)
-                        .addGap(18, 18, 18)
-                        .addComponent(updateStockSaveBtn))
-                    .addGroup(updateStockPanelLayout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addGroup(updateStockPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addGroup(updateStockPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(updateStockItemNameLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(updateStockPanelLayout.createSequentialGroup()
-                                .addComponent(updateStockQuantityTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel11)
-                                .addGap(0, 0, Short.MAX_VALUE)))))
-                .addContainerGap())
-        );
-        updateStockPanelLayout.setVerticalGroup(
-            updateStockPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(updateStockPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(updateStockPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(updateStockItemNameLbl, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE))
-                .addGap(16, 16, 16)
-                .addGroup(updateStockPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(updateStockQuantityTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel11))
-                .addGap(36, 36, 36)
-                .addGroup(updateStockPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(updateStockCancelBtn)
-                    .addComponent(updateStockSaveBtn))
-                .addContainerGap(20, Short.MAX_VALUE))
-        );
+        ));
+        jScrollPane2.setViewportView(inventoryBlendTable);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel6)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(searchStockTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(searchStockBtn))
+                        .addContainerGap()
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6)
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addComponent(searchStockTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(searchStockBtn))
+                            .addComponent(inventoryIngredientsLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 479, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 404, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(57, 57, 57)
-                        .addComponent(updateStockPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(inventoryBlendLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 341, Short.MAX_VALUE)))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -421,14 +281,18 @@ public class ManagerPannel extends javax.swing.JFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(searchStockTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(searchStockBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(updateStockPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(17, Short.MAX_VALUE))
+                    .addComponent(inventoryBlendLbl, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(inventoryIngredientsLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap(224, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Stock", jPanel5);
+        jTabbedPane1.addTab("Inventory Management", jPanel5);
 
         logoLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/teaeli/logo-new (Custom).png"))); // NOI18N
 
@@ -489,28 +353,33 @@ public class ManagerPannel extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void addNewOrderBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addNewOrderBtnActionPerformed
-        AddNewBlends newOrder = new AddNewBlends();
-        newOrder.setVisible(true);
-        newOrder.tblMasterPlanScrollPane.setVisible(false);
-        newOrder.btnCancelOrder.setVisible(false);
-        newOrder.btnCnfirmOrder.setVisible(false);
-        newOrder.setDefaultCloseOperation(HIDE_ON_CLOSE);
-    }//GEN-LAST:event_addNewOrderBtnActionPerformed
-
-    private void updateStockQuantityTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateStockQuantityTxtActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_updateStockQuantityTxtActionPerformed
-
-    private void searchStockBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchStockBtnActionPerformed
-        updateStockPanel.setVisible(true);
-    }//GEN-LAST:event_searchStockBtnActionPerformed
-
     private void profileBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profileBtnActionPerformed
         EditProfile editProfile = new EditProfile();
         editProfile.setVisible(true);
         editProfile.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
     }//GEN-LAST:event_profileBtnActionPerformed
+
+    private void searchOrderBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchOrderBtnActionPerformed
+        OrderDetails orderDetails = new OrderDetails();
+        orderDetails.setVisible(true);
+        orderDetails.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+    }//GEN-LAST:event_searchOrderBtnActionPerformed
+
+    private void addNewBlendsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addNewBlendsBtnActionPerformed
+        AddNewBlends addNewBlends = new AddNewBlends();
+        addNewBlends.setVisible(true);
+        addNewBlends.tblMasterPlanScrollPane.setVisible(false);
+        addNewBlends.btnCancelOrder.setVisible(false);
+        addNewBlends.btnCnfirmOrder.setVisible(false);
+        addNewBlends.setDefaultCloseOperation(HIDE_ON_CLOSE);
+        addNewBlends.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
+    }//GEN-LAST:event_addNewBlendsBtnActionPerformed
+
+    private void searchStockBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchStockBtnActionPerformed
+        UpdateStock updateStock = new UpdateStock();
+        updateStock.setVisible(true);
+        updateStock.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+    }//GEN-LAST:event_searchStockBtnActionPerformed
 
 
     /**
@@ -549,34 +418,30 @@ public class ManagerPannel extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton addNewOrderBtn;
+    private javax.swing.JButton addNewBlendsBtn;
+    private javax.swing.JLabel inventoryBlendLbl;
+    private javax.swing.JTable inventoryBlendTable;
+    private javax.swing.JLabel inventoryIngredientsLbl;
+    private javax.swing.JTable inventryIngredientTable;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable3;
     private javax.swing.JLabel logoLabel;
     private javax.swing.JButton logoutBtn;
-    private javax.swing.JTable orderDetailsTable;
     private javax.swing.JTable orderListTable;
     private javax.swing.JButton profileBtn;
+    private javax.swing.JButton searchOrderBtn;
+    private javax.swing.JTextField searchOrderTxt;
     private javax.swing.JButton searchStockBtn;
     private javax.swing.JTextField searchStockTxt;
     private javax.swing.JLabel timeLabel;
-    private javax.swing.JButton updateStockCancelBtn;
-    private javax.swing.JLabel updateStockItemNameLbl;
-    public javax.swing.JPanel updateStockPanel;
-    private javax.swing.JTextField updateStockQuantityTxt;
-    private javax.swing.JButton updateStockSaveBtn;
     // End of variables declaration//GEN-END:variables
     private javax.swing.JTable flavourTable;
 
