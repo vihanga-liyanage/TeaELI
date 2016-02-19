@@ -127,11 +127,11 @@ public class AdminPannel extends javax.swing.JFrame {
         inventryIngredientTable = new javax.swing.JTable();
         inventoryManagementBlendPanel = new javax.swing.JPanel();
         inventoryBlendLbl = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
         searchStockBlendsTxt = new javax.swing.JTextField();
         searchStockBlendsBtn = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         inventoryBlendTable = new javax.swing.JTable();
+        jLabel7 = new javax.swing.JLabel();
         settingsPanel = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel3 = new javax.swing.JPanel();
@@ -141,15 +141,6 @@ public class AdminPannel extends javax.swing.JFrame {
         addItemBtn = new javax.swing.JButton();
         jScrollPane5 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
-        updateStockPanel1 = new javax.swing.JPanel();
-        jLabel10 = new javax.swing.JLabel();
-        updateItemCancelBtn = new javax.swing.JButton();
-        updateItemSaveBtn = new javax.swing.JButton();
-        updateItemNameTxt = new javax.swing.JTextField();
-        jLabel12 = new javax.swing.JLabel();
-        updateItemSupplierTxt = new javax.swing.JTextField();
-        jLabel14 = new javax.swing.JLabel();
-        updateItemUnitPriceTxt = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         productTable = new javax.swing.JTable();
@@ -217,7 +208,7 @@ public class AdminPannel extends javax.swing.JFrame {
         jLabel1.setPreferredSize(new java.awt.Dimension(31, 14));
 
         addNewBlendsBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        addNewBlendsBtn.setText("Add New Blends");
+        addNewBlendsBtn.setText("New RM Order");
         addNewBlendsBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addNewBlendsBtnActionPerformed(evt);
@@ -232,7 +223,7 @@ public class AdminPannel extends javax.swing.JFrame {
         });
 
         jLabel15.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel15.setText("Start typing order ID to search");
+        jLabel15.setText("Start typing order ID to view details");
 
         javax.swing.GroupLayout orderHandlingPanelLayout = new javax.swing.GroupLayout(orderHandlingPanel);
         orderHandlingPanel.setLayout(orderHandlingPanelLayout);
@@ -242,23 +233,21 @@ public class AdminPannel extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(orderHandlingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(orderHandlingPanelLayout.createSequentialGroup()
-                        .addComponent(jScrollPane7)
-                        .addContainerGap())
-                    .addGroup(orderHandlingPanelLayout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, orderHandlingPanelLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(addNewBlendsBtn)
-                        .addGap(10, 10, 10))
                     .addGroup(orderHandlingPanelLayout.createSequentialGroup()
                         .addGroup(orderHandlingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel15)
+                            .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 1244, Short.MAX_VALUE)
                             .addGroup(orderHandlingPanelLayout.createSequentialGroup()
-                                .addComponent(searchOrderTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(searchOrderBtn)))
-                        .addContainerGap(1003, Short.MAX_VALUE))))
+                                .addGroup(orderHandlingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(orderHandlingPanelLayout.createSequentialGroup()
+                                        .addComponent(searchOrderTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(searchOrderBtn))
+                                    .addComponent(jLabel15))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(addNewBlendsBtn)))
+                        .addContainerGap())))
         );
         orderHandlingPanelLayout.setVerticalGroup(
             orderHandlingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -288,13 +277,14 @@ public class AdminPannel extends javax.swing.JFrame {
         inventoryManagementSplitPane.setDividerSize(0);
         inventoryManagementSplitPane.setResizeWeight(0.5);
 
+        inventoryManagementIngredientPanel.setBackground(new java.awt.Color(255, 255, 255));
         inventoryManagementIngredientPanel.setPreferredSize(new java.awt.Dimension(715, 498));
 
         inventoryIngredientsLbl.setFont(new java.awt.Font("Segoe UI Semibold", 0, 16)); // NOI18N
         inventoryIngredientsLbl.setText("Ingredients");
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel6.setText("Start typing ingredient name to search");
+        jLabel6.setText("Start typing ingredient name to update stock");
 
         searchStockIngBtn.setText("Go");
         searchStockIngBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -325,49 +315,43 @@ public class AdminPannel extends javax.swing.JFrame {
         inventoryManagementIngredientPanel.setLayout(inventoryManagementIngredientPanelLayout);
         inventoryManagementIngredientPanelLayout.setHorizontalGroup(
             inventoryManagementIngredientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 650, Short.MAX_VALUE)
-            .addGroup(inventoryManagementIngredientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(inventoryManagementIngredientPanelLayout.createSequentialGroup()
-                    .addGap(7, 7, 7)
-                    .addGroup(inventoryManagementIngredientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 643, Short.MAX_VALUE)
-                        .addGroup(inventoryManagementIngredientPanelLayout.createSequentialGroup()
-                            .addGroup(inventoryManagementIngredientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel6)
-                                .addGroup(inventoryManagementIngredientPanelLayout.createSequentialGroup()
-                                    .addComponent(searchStockIngTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(searchStockIngBtn))
-                                .addComponent(inventoryIngredientsLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addContainerGap()))))
+            .addGroup(inventoryManagementIngredientPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(inventoryManagementIngredientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 619, Short.MAX_VALUE)
+                    .addGroup(inventoryManagementIngredientPanelLayout.createSequentialGroup()
+                        .addGroup(inventoryManagementIngredientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(inventoryIngredientsLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(inventoryManagementIngredientPanelLayout.createSequentialGroup()
+                                .addComponent(searchStockIngTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(searchStockIngBtn))
+                            .addComponent(jLabel6))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         inventoryManagementIngredientPanelLayout.setVerticalGroup(
             inventoryManagementIngredientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 498, Short.MAX_VALUE)
-            .addGroup(inventoryManagementIngredientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(inventoryManagementIngredientPanelLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(inventoryIngredientsLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(18, 18, 18)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addGroup(inventoryManagementIngredientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(searchStockIngTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(searchStockIngBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 381, Short.MAX_VALUE)
-                    .addGap(1, 1, 1)))
+            .addGroup(inventoryManagementIngredientPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(inventoryIngredientsLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(11, 11, 11)
+                .addGroup(inventoryManagementIngredientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(searchStockIngTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(searchStockIngBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE))
         );
 
         inventoryManagementSplitPane.setLeftComponent(inventoryManagementIngredientPanel);
 
+        inventoryManagementBlendPanel.setBackground(new java.awt.Color(255, 255, 255));
         inventoryManagementBlendPanel.setPreferredSize(new java.awt.Dimension(615, 498));
 
         inventoryBlendLbl.setFont(new java.awt.Font("Segoe UI Semibold", 0, 16)); // NOI18N
         inventoryBlendLbl.setText("Blends");
-
-        jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel7.setText("Start typing blend name to search");
 
         searchStockBlendsBtn.setText("Go");
         searchStockBlendsBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -395,6 +379,9 @@ public class AdminPannel extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(inventoryBlendTable);
 
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel7.setText("Start typing blend name to update stock");
+
         javax.swing.GroupLayout inventoryManagementBlendPanelLayout = new javax.swing.GroupLayout(inventoryManagementBlendPanel);
         inventoryManagementBlendPanel.setLayout(inventoryManagementBlendPanelLayout);
         inventoryManagementBlendPanelLayout.setHorizontalGroup(
@@ -402,12 +389,12 @@ public class AdminPannel extends javax.swing.JFrame {
             .addGroup(inventoryManagementBlendPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(inventoryManagementBlendPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 594, Short.MAX_VALUE)
                     .addGroup(inventoryManagementBlendPanelLayout.createSequentialGroup()
                         .addComponent(searchStockBlendsTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(searchStockBlendsBtn)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 605, Short.MAX_VALUE)
                     .addGroup(inventoryManagementBlendPanelLayout.createSequentialGroup()
                         .addGroup(inventoryManagementBlendPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(inventoryBlendLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -419,14 +406,14 @@ public class AdminPannel extends javax.swing.JFrame {
             .addGroup(inventoryManagementBlendPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(inventoryBlendLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(14, 14, 14)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(11, 11, 11)
                 .addGroup(inventoryManagementBlendPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(searchStockBlendsTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(searchStockBlendsBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(11, 11, 11)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 381, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE))
         );
 
         inventoryManagementSplitPane.setRightComponent(inventoryManagementBlendPanel);
@@ -496,102 +483,10 @@ public class AdminPannel extends javax.swing.JFrame {
             jTable2.getColumnModel().getColumn(2).setPreferredWidth(130);
         }
 
-        updateStockPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel10.setText("Ingredient  Name");
-
-        updateItemCancelBtn.setText("Cancel");
-        updateItemCancelBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                updateItemCancelBtnActionPerformed(evt);
-            }
-        });
-
-        updateItemSaveBtn.setText("Update");
-
-        updateItemNameTxt.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                updateItemNameTxtActionPerformed(evt);
-            }
-        });
-
-        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel12.setText("Supplier");
-
-        updateItemSupplierTxt.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                updateItemSupplierTxtActionPerformed(evt);
-            }
-        });
-
-        jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel14.setText("Unit Price");
-
-        updateItemUnitPriceTxt.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                updateItemUnitPriceTxtActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout updateStockPanel1Layout = new javax.swing.GroupLayout(updateStockPanel1);
-        updateStockPanel1.setLayout(updateStockPanel1Layout);
-        updateStockPanel1Layout.setHorizontalGroup(
-            updateStockPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, updateStockPanel1Layout.createSequentialGroup()
-                .addGroup(updateStockPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(updateStockPanel1Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(updateItemCancelBtn)
-                        .addGap(18, 18, 18)
-                        .addComponent(updateItemSaveBtn))
-                    .addGroup(updateStockPanel1Layout.createSequentialGroup()
-                        .addGroup(updateStockPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(updateStockPanel1Layout.createSequentialGroup()
-                                .addGap(20, 20, 20)
-                                .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, updateStockPanel1Layout.createSequentialGroup()
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(updateStockPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel14, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(18, 18, 18)
-                        .addGroup(updateStockPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(updateItemNameTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(updateItemSupplierTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(updateItemUnitPriceTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(20, 20, 20))
-        );
-        updateStockPanel1Layout.setVerticalGroup(
-            updateStockPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(updateStockPanel1Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(updateStockPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(updateItemNameTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(updateStockPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel12)
-                    .addComponent(updateItemSupplierTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(7, 7, 7)
-                .addGroup(updateStockPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel14)
-                    .addComponent(updateItemUnitPriceTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(updateStockPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(updateItemCancelBtn)
-                    .addComponent(updateItemSaveBtn))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jScrollPane5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(updateStockPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -599,25 +494,25 @@ public class AdminPannel extends javax.swing.JFrame {
                         .addComponent(searchItemTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(searchItemBtn)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 833, Short.MAX_VALUE)
                 .addComponent(addItemBtn))
+            .addComponent(jScrollPane5)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel5))
                     .addComponent(addItemBtn))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(searchItemTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(searchItemBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(updateStockPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(83, Short.MAX_VALUE))
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 389, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(82, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Ingredients", jPanel3);
@@ -730,23 +625,24 @@ public class AdminPannel extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(searchProductTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(searchProductBtn)))
+                .addComponent(searchProductTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(searchProductBtn)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(addProductBtn))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(addProductBtn)
-                    .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel3))
+                    .addComponent(addProductBtn))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(searchProductTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(searchProductBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -905,7 +801,7 @@ public class AdminPannel extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addItemBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addItemBtnActionPerformed
-        AddItem addItem = new AddItem();
+        AddIngredient addItem = new AddIngredient();
         addItem.setVisible(true);
         addItem.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
     }//GEN-LAST:event_addItemBtnActionPerformed
@@ -918,13 +814,13 @@ public class AdminPannel extends javax.swing.JFrame {
     }//GEN-LAST:event_addProductBtnActionPerformed
 
     private void searchItemBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchItemBtnActionPerformed
-        ItemDetails itemDetails = new ItemDetails();
+        IngredientDetails itemDetails = new IngredientDetails();
         itemDetails.setVisible(true);
         itemDetails.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
     }//GEN-LAST:event_searchItemBtnActionPerformed
 
     private void addNewBlendsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addNewBlendsBtnActionPerformed
-        AddNewBlends addNewBlends = new AddNewBlends();
+        AddNewRMOrder addNewBlends = new AddNewRMOrder();
         addNewBlends.setVisible(true);
         addNewBlends.tblMasterPlanScrollPane.setVisible(false);
         addNewBlends.btnCancelOrder.setVisible(false);
@@ -932,18 +828,6 @@ public class AdminPannel extends javax.swing.JFrame {
         addNewBlends.setDefaultCloseOperation(HIDE_ON_CLOSE);
         addNewBlends.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
     }//GEN-LAST:event_addNewBlendsBtnActionPerformed
-
-    private void updateItemSupplierTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateItemSupplierTxtActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_updateItemSupplierTxtActionPerformed
-
-    private void updateItemNameTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateItemNameTxtActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_updateItemNameTxtActionPerformed
-
-    private void updateItemUnitPriceTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateItemUnitPriceTxtActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_updateItemUnitPriceTxtActionPerformed
 
     private void profileBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profileBtnActionPerformed
         EditProfile editProfile = new EditProfile();
@@ -958,14 +842,8 @@ public class AdminPannel extends javax.swing.JFrame {
     }//GEN-LAST:event_addUserBtnActionPerformed
 
 	
-    private void updateItemCancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateItemCancelBtnActionPerformed
-        this.updateItemNameTxt.setText(null);
-        this.updateItemSupplierTxt.setText(null);
-        this.updateItemUnitPriceTxt.setText(null);
-    }//GEN-LAST:event_updateItemCancelBtnActionPerformed
-
     private void searchProductBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchProductBtnActionPerformed
-        UpdateBlend updateProduct = new UpdateBlend();
+        BlendDetails updateProduct = new BlendDetails();
         updateProduct.setVisible(true);
         updateProduct.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
     }//GEN-LAST:event_searchProductBtnActionPerformed
@@ -985,13 +863,15 @@ public class AdminPannel extends javax.swing.JFrame {
     }//GEN-LAST:event_searchOrderBtnActionPerformed
 
     private void searchStockIngBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchStockIngBtnActionPerformed
-        UpdateStock updateStock = new UpdateStock();
+        UpdateIngStock updateStock = new UpdateIngStock();
         updateStock.setVisible(true);
         updateStock.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
     }//GEN-LAST:event_searchStockIngBtnActionPerformed
 
     private void searchStockBlendsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchStockBlendsBtnActionPerformed
-        // TODO add your handling code here:
+        UpdateBlendStock updateBlendStock = new UpdateBlendStock();
+        updateBlendStock.setVisible(true);
+        updateBlendStock.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
     }//GEN-LAST:event_searchStockBlendsBtnActionPerformed
 
 
@@ -1048,9 +928,6 @@ public class AdminPannel extends javax.swing.JFrame {
     private javax.swing.JTable inventryIngredientTable;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
@@ -1089,12 +966,6 @@ public class AdminPannel extends javax.swing.JFrame {
     private javax.swing.JTextField searchStockIngTxt;
     private javax.swing.JPanel settingsPanel;
     private javax.swing.JLabel timeLabel;
-    private javax.swing.JButton updateItemCancelBtn;
-    private javax.swing.JTextField updateItemNameTxt;
-    private javax.swing.JButton updateItemSaveBtn;
-    private javax.swing.JTextField updateItemSupplierTxt;
-    private javax.swing.JTextField updateItemUnitPriceTxt;
-    public javax.swing.JPanel updateStockPanel1;
     private javax.swing.JTable userTable;
     // End of variables declaration//GEN-END:variables
     private javax.swing.JTable flavourTable;

@@ -447,7 +447,7 @@ public class ManagerPannel extends javax.swing.JFrame {
     }//GEN-LAST:event_searchOrderBtnActionPerformed
 
     private void addNewBlendsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addNewBlendsBtnActionPerformed
-        AddNewBlends addNewBlends = new AddNewBlends();
+        AddNewRMOrder addNewBlends = new AddNewRMOrder();
         addNewBlends.setVisible(true);
         addNewBlends.tblMasterPlanScrollPane.setVisible(false);
         addNewBlends.btnCancelOrder.setVisible(false);
@@ -457,7 +457,7 @@ public class ManagerPannel extends javax.swing.JFrame {
     }//GEN-LAST:event_addNewBlendsBtnActionPerformed
 
     private void searchStockBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchStockBtnActionPerformed
-        UpdateStock updateStock = new UpdateStock();
+        UpdateIngStock updateStock = new UpdateIngStock();
         updateStock.setVisible(true);
         updateStock.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
     }//GEN-LAST:event_searchStockBtnActionPerformed
