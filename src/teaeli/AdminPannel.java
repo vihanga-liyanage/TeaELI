@@ -857,6 +857,7 @@ public class AdminPannel extends javax.swing.JFrame {
     private void searchStockBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchStockBtnActionPerformed
         UpdateStock updateStock = new UpdateStock();
         updateStock.setVisible(true);
+        updateStock.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
     }//GEN-LAST:event_searchStockBtnActionPerformed
 
     private void updateItemSupplierTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateItemSupplierTxtActionPerformed
