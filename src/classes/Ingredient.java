@@ -5,7 +5,7 @@ package classes;
 public class Ingredient {
     // attributes
     private int ingID ,ingCategoryID ,visibleStock ,orderedStock , invisibleStock ,supID;
-    private int orderReqQty , orderExessQty ;
+    private int orderReqQty , orderExcessQty ;
     private String ingName ;
     private float unitPrice; 
     
@@ -20,7 +20,7 @@ public class Ingredient {
         this.supID = 0;
         this.unitPrice =  0.0f;
         this.orderReqQty =  0;
-        this.orderExessQty =  0;
+        this.orderExcessQty =  0;
     }
     
     //getters and setters
@@ -97,11 +97,11 @@ public class Ingredient {
     }
 
     public int getOrderExessQty() {
-        return orderExessQty;
+        return orderExcessQty;
     }
 
     public void setOrderExessQty(int orderExessQty) {
-        this.orderExessQty = orderExessQty;
+        this.orderExcessQty = orderExessQty;
     }
     
      // Start of methods
