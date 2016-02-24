@@ -6,7 +6,7 @@
 
 package teaeli;
 
-import classes.Ingredient;
+import classes.User;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -70,7 +70,12 @@ public class AdminPannel extends javax.swing.JFrame {
         
         );
         
-        
+        User user = new User();
+        try{
+          user.viewUser();  
+        }catch(Exception e){
+            
+        }
 
     }
     
@@ -1100,7 +1105,7 @@ public class AdminPannel extends javax.swing.JFrame {
     private javax.swing.JTabbedPane settingsTabbedPane;
     private javax.swing.JPanel settingsUserPanel;
     private javax.swing.JLabel timeLabel;
-    private javax.swing.JTable userTable;
+    public javax.swing.JTable userTable;
     // End of variables declaration//GEN-END:variables
     private javax.swing.JTable flavourTable;
 
