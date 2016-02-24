@@ -59,23 +59,23 @@
                   <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
                   <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="jComboBoxProduct" min="-2" pref="200" max="-2" attributes="0"/>
+                  <Component id="ingCombo" min="-2" pref="200" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jTextField5" min="-2" pref="50" max="-2" attributes="0"/>
+                  <Component id="ingPerTxt" min="-2" pref="50" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jButton3" min="-2" max="-2" attributes="0"/>
+                  <Component id="ingPerAddBtn" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
                   <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="jComboBoxProduct1" min="-2" pref="200" max="-2" attributes="0"/>
+                  <Component id="flavourCombo" min="-2" pref="200" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jTextField4" min="-2" pref="50" max="-2" attributes="0"/>
+                  <Component id="flavourPerTxt" min="-2" pref="50" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jButton4" min="-2" max="-2" attributes="0"/>
+                  <Component id="flavourPerAddBtn" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
               <Group type="102" attributes="0">
@@ -88,7 +88,7 @@
                           <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
                           <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jTextField2" min="-2" pref="200" max="-2" attributes="0"/>
+                          <Component id="blendNameTxt" min="-2" pref="200" max="-2" attributes="0"/>
                       </Group>
                       <Component id="jScrollPane4" min="-2" pref="418" max="-2" attributes="0"/>
                   </Group>
@@ -97,14 +97,14 @@
                           <EmptySpace min="-2" pref="88" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" attributes="0">
                               <Group type="102" alignment="1" attributes="0">
-                                  <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="cancelBtn" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+                                  <Component id="addNewBlendBtn" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
                                   <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
-                                  <Component id="jTextField3" min="-2" pref="200" max="-2" attributes="0"/>
+                                  <Component id="baseCompositionTxt" min="-2" pref="200" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace max="32767" attributes="0"/>
@@ -124,11 +124,11 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel1" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
-                      <Component id="jTextField2" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                      <Component id="blendNameTxt" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                       <Component id="jLabel2" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                       <Component id="blendCodeTxt" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                       <Component id="jLabel5" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
-                      <Component id="jTextField3" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                      <Component id="baseCompositionTxt" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
@@ -136,20 +136,20 @@
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel3" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                               <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jButton3" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
-                              <Component id="jTextField5" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
-                              <Component id="jComboBoxProduct" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                              <Component id="ingPerAddBtn" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                              <Component id="ingPerTxt" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                              <Component id="ingCombo" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="jScrollPane4" min="-2" pref="333" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jTextField4" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                              <Component id="flavourPerTxt" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                               <Component id="jLabel4" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                               <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jButton4" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
-                              <Component id="jComboBoxProduct1" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                              <Component id="flavourPerAddBtn" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                              <Component id="flavourCombo" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="jScrollPane3" pref="0" max="32767" attributes="0"/>
@@ -157,8 +157,8 @@
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jButton2" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
-                      <Component id="jButton1" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                      <Component id="addNewBlendBtn" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                      <Component id="cancelBtn" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="29" max="32767" attributes="0"/>
               </Group>
@@ -166,12 +166,12 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JButton" name="jButton1">
+        <Component class="javax.swing.JButton" name="cancelBtn">
           <Properties>
             <Property name="text" type="java.lang.String" value="Cancel"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cancelBtnActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel4">
@@ -201,9 +201,9 @@
             <Property name="text" type="java.lang.String" value="Blend Name"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField2">
+        <Component class="javax.swing.JTextField" name="blendNameTxt">
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField2ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="blendNameTxtActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">
@@ -215,12 +215,12 @@
             <Property name="text" type="java.lang.String" value="Blend Code"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField4">
+        <Component class="javax.swing.JTextField" name="flavourPerTxt">
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField4ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="flavourPerTxtActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField5">
+        <Component class="javax.swing.JTextField" name="ingPerTxt">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel7">
           <Properties>
@@ -232,19 +232,22 @@
             <Property name="text" type="java.lang.String" value="%"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton3">
+        <Component class="javax.swing.JButton" name="ingPerAddBtn">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Add"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ingPerAddBtnActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="flavourPerAddBtn">
           <Properties>
             <Property name="text" type="java.lang.String" value="Add"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton4">
+        <Component class="javax.swing.JButton" name="addNewBlendBtn">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Add"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JButton" name="jButton2">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Add"/>
+            <Property name="text" type="java.lang.String" value="Add New"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="blendCodeTxt">
@@ -252,7 +255,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="blendCodeTxtActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JComboBox" name="jComboBoxProduct">
+        <Component class="javax.swing.JComboBox" name="ingCombo">
           <Properties>
             <Property name="editable" type="boolean" value="true"/>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
@@ -266,7 +269,7 @@
             <Property name="selectedIndex" type="int" value="-1"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="jComboBoxProduct1">
+        <Component class="javax.swing.JComboBox" name="flavourCombo">
           <Properties>
             <Property name="editable" type="boolean" value="true"/>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
@@ -280,9 +283,9 @@
             <Property name="selectedIndex" type="int" value="-1"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField3">
+        <Component class="javax.swing.JTextField" name="baseCompositionTxt">
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField3ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="baseCompositionTxtActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel5">

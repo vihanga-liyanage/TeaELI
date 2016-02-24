@@ -450,8 +450,8 @@ public class ManagerPannel extends javax.swing.JFrame {
         CreateNewBlendOrder addNewBlends = new CreateNewBlendOrder();
         addNewBlends.setVisible(true);
         addNewBlends.tblMasterPlanScrollPane.setVisible(false);
-        addNewBlends.btnCancelOrder.setVisible(false);
-        addNewBlends.btnCnfirmOrder.setVisible(false);
+        addNewBlends.cancelBtn.setVisible(false);
+        addNewBlends.confirmBtn.setVisible(false);
         addNewBlends.setDefaultCloseOperation(HIDE_ON_CLOSE);
         addNewBlends.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
     }//GEN-LAST:event_addNewBlendsBtnActionPerformed

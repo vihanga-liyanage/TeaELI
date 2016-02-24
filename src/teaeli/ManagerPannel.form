@@ -417,9 +417,6 @@
                   <Font name="Segoe UI" size="14" style="0"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Start typing blend name to search"/>
-                <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[208, 20]"/>
-                </Property>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="blendTxt">
