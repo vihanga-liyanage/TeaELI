@@ -1,9 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package simz1;
+package classes;
 
 import java.awt.EventQueue;
 import java.awt.event.ItemEvent;
@@ -18,22 +13,17 @@ import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
-import static simz1.LoginFrame1.mhp;
-import static simz1.LoginFrame1.spi;
-import sun.util.calendar.CalendarUtils;
 
 class AutoSuggest {
 
-    DBOperations dbOps = new DBOperations();
     Vector<String> v = new Stack<String>();
     private boolean hide_flag = false;
     JTextField tx;
 
-    public void autoSuggest(final JComboBox Search) {
+    public void autoSuggest(final JComboBox Search, ResultSet rst) {
 
         Search.removeAllItems();
         try {
-            ResultSet rst = dbOps.getTodayProducts();
             rst.first();
             if (Search.getItemCount() == 0) {
                 do {
@@ -86,8 +76,8 @@ class AutoSuggest {
                 String txt = tx.getText();
                 int code = ke.getKeyCode();
                 if (code == KeyEvent.VK_F2) {
-                    mhp.txtCash.requestFocusInWindow();
-                    spi.txtCash.requestFocusInWindow();
+                    //mhp.txtCash.requestFocusInWindow();
+                    //spi.txtCash.requestFocusInWindow();
                 }
                 if (code == KeyEvent.VK_ESCAPE) {
                     hide_flag = true;
@@ -95,18 +85,18 @@ class AutoSuggest {
                     for (int i = 0; i < v.size(); i++) {
                         String str = (String) v.elementAt(i);
                         if(txt.equals("")){
-                            mhp.amount.requestFocusInWindow();
-                            spi.amount.requestFocusInWindow();
+                            //mhp.amount.requestFocusInWindow();
+                            //spi.amount.requestFocusInWindow();
                             return;
                         }else if (str.toLowerCase().startsWith(txt)) {
                             tx.setText(str);
-                            mhp.amount.requestFocusInWindow();
-                            spi.amount.requestFocusInWindow();
+                            //mhp.amount.requestFocusInWindow();
+                            //spi.amount.requestFocusInWindow();
                             return;
 
                         } else if (str.equals(tx.getText())) {
-                            mhp.amount.requestFocusInWindow();
-                            spi.amount.requestFocusInWindow();
+                            //mhp.amount.requestFocusInWindow();
+                            //spi.amount.requestFocusInWindow();
                             return;
                         }
                     }
