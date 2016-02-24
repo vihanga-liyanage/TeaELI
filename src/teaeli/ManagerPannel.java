@@ -447,7 +447,7 @@ public class ManagerPannel extends javax.swing.JFrame {
     }//GEN-LAST:event_searchOrderBtnActionPerformed
 
     private void addNewBlendsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addNewBlendsBtnActionPerformed
-        AddNewRMOrder addNewBlends = new AddNewRMOrder();
+        CreateNewBlendOrder addNewBlends = new CreateNewBlendOrder();
         addNewBlends.setVisible(true);
         addNewBlends.tblMasterPlanScrollPane.setVisible(false);
         addNewBlends.btnCancelOrder.setVisible(false);

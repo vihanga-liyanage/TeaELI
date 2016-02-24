@@ -16,12 +16,12 @@ import javax.swing.UnsupportedLookAndFeelException;
  *
  * @author Janith
  */
-public class AddNewRMOrder extends javax.swing.JFrame {
+public class CreateNewBlendOrder extends javax.swing.JFrame {
 
     /**
      * Creates new form AddNewOrder
      */
-    public AddNewRMOrder() {
+    public CreateNewBlendOrder() {
         //Add windows look and feel
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
@@ -30,7 +30,6 @@ public class AddNewRMOrder extends javax.swing.JFrame {
         }
         initComponents();
         this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
-        setResizable(false);
     }
 
     /**
@@ -70,7 +69,7 @@ public class AddNewRMOrder extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("New RM Order");
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, " New RM Order ", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI Semibold", 0, 16))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, " Create New Blend Order ", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI Semibold", 0, 16))); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -103,14 +102,14 @@ public class AddNewRMOrder extends javax.swing.JFrame {
 
         tblOrder.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null}
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Blend Name", "Qty Required", "Qty in stock(g)", "Balance Qty Required(g)", "Excess Qty Required(g)", "Final Order Qty(g)"
+                "Blend Name", "Qty Required (g)", "Visible Stock (g)", "Invisible Stock (g)", "Balance Qty Required(g)", "Excess Qty (g)", "Final Qty (g)"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, true, false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -125,7 +124,20 @@ public class AddNewRMOrder extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tblOrder);
         if (tblOrder.getColumnModel().getColumnCount() > 0) {
-            tblOrder.getColumnModel().getColumn(2).setPreferredWidth(20);
+            tblOrder.getColumnModel().getColumn(0).setResizable(false);
+            tblOrder.getColumnModel().getColumn(0).setPreferredWidth(200);
+            tblOrder.getColumnModel().getColumn(1).setResizable(false);
+            tblOrder.getColumnModel().getColumn(1).setPreferredWidth(180);
+            tblOrder.getColumnModel().getColumn(2).setResizable(false);
+            tblOrder.getColumnModel().getColumn(2).setPreferredWidth(180);
+            tblOrder.getColumnModel().getColumn(3).setResizable(false);
+            tblOrder.getColumnModel().getColumn(3).setPreferredWidth(180);
+            tblOrder.getColumnModel().getColumn(4).setResizable(false);
+            tblOrder.getColumnModel().getColumn(4).setPreferredWidth(180);
+            tblOrder.getColumnModel().getColumn(5).setResizable(false);
+            tblOrder.getColumnModel().getColumn(5).setPreferredWidth(180);
+            tblOrder.getColumnModel().getColumn(6).setResizable(false);
+            tblOrder.getColumnModel().getColumn(6).setPreferredWidth(180);
         }
 
         jButton1.setText("Create Order");
@@ -137,14 +149,14 @@ public class AddNewRMOrder extends javax.swing.JFrame {
 
         tblMasterPlan.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Ingredient", "Qty needed (g)", "Qty in Stock (g)", "Balance Qty Required (g)", "Excess Qty Required(g)", "Supplier Name", "Final Order Qty (g)"
+                "Ingredient", "Qty Required (g)", "Visible Stock (g)", "Invisible Stock (g)", "Balance Qty Required (g)", "Excess Qty (g)", "Final Qty (g)", "Supplier Name"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, true
+                false, false, false, false, false, false, true, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -159,7 +171,17 @@ public class AddNewRMOrder extends javax.swing.JFrame {
         });
         tblMasterPlanScrollPane.setViewportView(tblMasterPlan);
         if (tblMasterPlan.getColumnModel().getColumnCount() > 0) {
+            tblMasterPlan.getColumnModel().getColumn(0).setResizable(false);
             tblMasterPlan.getColumnModel().getColumn(0).setPreferredWidth(200);
+            tblMasterPlan.getColumnModel().getColumn(1).setResizable(false);
+            tblMasterPlan.getColumnModel().getColumn(2).setResizable(false);
+            tblMasterPlan.getColumnModel().getColumn(3).setResizable(false);
+            tblMasterPlan.getColumnModel().getColumn(4).setResizable(false);
+            tblMasterPlan.getColumnModel().getColumn(4).setPreferredWidth(120);
+            tblMasterPlan.getColumnModel().getColumn(5).setResizable(false);
+            tblMasterPlan.getColumnModel().getColumn(6).setResizable(false);
+            tblMasterPlan.getColumnModel().getColumn(7).setResizable(false);
+            tblMasterPlan.getColumnModel().getColumn(7).setPreferredWidth(200);
         }
 
         btnCnfirmOrder.setText("Confirm");
@@ -260,13 +282,13 @@ public class AddNewRMOrder extends javax.swing.JFrame {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE)
+                                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jComboBoxWeight, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jComboBoxWeight, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(btnAdd, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE))))
+                                        .addComponent(btnAdd))))
                             .addComponent(jLabel15))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -383,20 +405,20 @@ public class AddNewRMOrder extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AddNewRMOrder.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CreateNewBlendOrder.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AddNewRMOrder.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CreateNewBlendOrder.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AddNewRMOrder.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CreateNewBlendOrder.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AddNewRMOrder.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CreateNewBlendOrder.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AddNewRMOrder().setVisible(true);
+                new CreateNewBlendOrder().setVisible(true);
             }
         });
     }

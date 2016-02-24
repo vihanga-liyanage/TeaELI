@@ -115,7 +115,7 @@ public class OrderConfirmation extends javax.swing.JFrame {
         jLabel3.setMinimumSize(new java.awt.Dimension(31, 14));
         jLabel3.setPreferredSize(new java.awt.Dimension(31, 14));
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         jLabel1.setText("Click on each supplier to view order details");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
