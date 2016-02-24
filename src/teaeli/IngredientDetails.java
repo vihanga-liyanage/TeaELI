@@ -78,6 +78,11 @@ public class IngredientDetails extends javax.swing.JFrame {
         jLabel1.setText("Ingredient Name");
 
         itemNameTxt.setText("Aloe Vera C/cut ");
+        itemNameTxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemNameTxtActionPerformed(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -194,6 +199,10 @@ public class IngredientDetails extends javax.swing.JFrame {
     private void itemTypeComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemTypeComboActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_itemTypeComboActionPerformed
+
+    private void itemNameTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemNameTxtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_itemNameTxtActionPerformed
 
     /**
      * @param args the command line arguments
