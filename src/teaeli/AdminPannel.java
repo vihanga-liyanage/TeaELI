@@ -127,17 +127,17 @@ public class AdminPannel extends javax.swing.JFrame {
         inventoryManagementIngredientPanel = new javax.swing.JPanel();
         inventoryIngredientsLbl = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        searchStockIngTxt = new javax.swing.JTextField();
         searchStockIngBtn = new javax.swing.JButton();
         jScrollPane6 = new javax.swing.JScrollPane();
         inventryIngredientTable = new javax.swing.JTable();
+        searchStockIngComboBox = new javax.swing.JComboBox();
         inventoryManagementBlendPanel = new javax.swing.JPanel();
         inventoryBlendLbl = new javax.swing.JLabel();
-        searchStockBlendsTxt = new javax.swing.JTextField();
         searchStockBlendsBtn = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         inventoryBlendTable = new javax.swing.JTable();
         jLabel7 = new javax.swing.JLabel();
+        searchStockBlendsComboBox = new javax.swing.JComboBox();
         settingsPanel = new javax.swing.JPanel();
         settingsTabbedPane = new javax.swing.JTabbedPane();
         settingsIngPanel = new javax.swing.JPanel();
@@ -323,6 +323,8 @@ public class AdminPannel extends javax.swing.JFrame {
         });
         jScrollPane6.setViewportView(inventryIngredientTable);
 
+        searchStockIngComboBox.setEditable(true);
+
         javax.swing.GroupLayout inventoryManagementIngredientPanelLayout = new javax.swing.GroupLayout(inventoryManagementIngredientPanel);
         inventoryManagementIngredientPanel.setLayout(inventoryManagementIngredientPanelLayout);
         inventoryManagementIngredientPanelLayout.setHorizontalGroup(
@@ -330,12 +332,12 @@ public class AdminPannel extends javax.swing.JFrame {
             .addGroup(inventoryManagementIngredientPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(inventoryManagementIngredientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 619, Short.MAX_VALUE)
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 630, Short.MAX_VALUE)
                     .addGroup(inventoryManagementIngredientPanelLayout.createSequentialGroup()
                         .addGroup(inventoryManagementIngredientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(inventoryIngredientsLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(inventoryManagementIngredientPanelLayout.createSequentialGroup()
-                                .addComponent(searchStockIngTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(searchStockIngComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(searchStockIngBtn))
                             .addComponent(jLabel6))
@@ -351,8 +353,8 @@ public class AdminPannel extends javax.swing.JFrame {
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(11, 11, 11)
                 .addGroup(inventoryManagementIngredientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(searchStockIngTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(searchStockIngBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(searchStockIngBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(searchStockIngComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE))
         );
@@ -394,6 +396,8 @@ public class AdminPannel extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel7.setText("Start typing blend name to update stock");
 
+        searchStockBlendsComboBox.setEditable(true);
+
         javax.swing.GroupLayout inventoryManagementBlendPanelLayout = new javax.swing.GroupLayout(inventoryManagementBlendPanel);
         inventoryManagementBlendPanel.setLayout(inventoryManagementBlendPanelLayout);
         inventoryManagementBlendPanelLayout.setHorizontalGroup(
@@ -402,11 +406,11 @@ public class AdminPannel extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(inventoryManagementBlendPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(inventoryManagementBlendPanelLayout.createSequentialGroup()
-                        .addComponent(searchStockBlendsTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(searchStockBlendsComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(searchStockBlendsBtn)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 605, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 594, Short.MAX_VALUE)
                     .addGroup(inventoryManagementBlendPanelLayout.createSequentialGroup()
                         .addGroup(inventoryManagementBlendPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(inventoryBlendLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -422,8 +426,8 @@ public class AdminPannel extends javax.swing.JFrame {
                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(11, 11, 11)
                 .addGroup(inventoryManagementBlendPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(searchStockBlendsTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(searchStockBlendsBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(searchStockBlendsBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(searchStockBlendsComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE))
         );
@@ -1002,9 +1006,7 @@ public class AdminPannel extends javax.swing.JFrame {
         updateBlendStock.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
     }//GEN-LAST:event_searchStockBlendsBtnActionPerformed
 
-
-
-
+    
     /**
      * @param args the command line arguments
      */
@@ -1089,9 +1091,9 @@ public class AdminPannel extends javax.swing.JFrame {
     private javax.swing.JButton searchProductBtn;
     private javax.swing.JTextField searchProductTxt;
     private javax.swing.JButton searchStockBlendsBtn;
-    private javax.swing.JTextField searchStockBlendsTxt;
+    private javax.swing.JComboBox searchStockBlendsComboBox;
     private javax.swing.JButton searchStockIngBtn;
-    private javax.swing.JTextField searchStockIngTxt;
+    private javax.swing.JComboBox searchStockIngComboBox;
     private javax.swing.JPanel settingsBlendHistoryPanel;
     private javax.swing.JPanel settingsBlendPanel;
     private javax.swing.JPanel settingsIngHistoryPanel;

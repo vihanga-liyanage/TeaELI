@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package classes;
 
 import java.awt.EventQueue;
@@ -27,11 +23,12 @@ class AutoSuggest {
     JTextField tx;
 
     public void autoSuggest(final JComboBox Search, ResultSet rst) {
-        
+
+            
+        //ResultSet rst = dbOps.getTodayProducts();   *** get the method
+
         Search.removeAllItems();
         try {
-            
-            //ResultSet rst = dbOps.getTodayProducts();   *** get the method
             rst.first();
             if (Search.getItemCount() == 0) {
                 do {
