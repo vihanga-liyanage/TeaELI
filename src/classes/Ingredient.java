@@ -2,6 +2,10 @@
 package classes;
 
 // attributes
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+
 public class Ingredient {
     // attributes
     private int ingID ,ingCategoryID ,visibleStock ,orderedStock , invisibleStock ,supID;
@@ -104,8 +108,39 @@ public class Ingredient {
         this.orderExcessQty = orderExessQty;
     }
     
-     // Start of methods
-    
+    // Start of methods
+    public void populateIngredientTable(){
+        DBConnection dbConn = new DBConnection();
+        Connection connection = null;
+        ResultSet resultSet = null;
+        
+        try{
+            String query = "SELECT ingName,visibleStock,invisibleStock FROM ingredient";
+            
+            connection = dbConn.setConnection();
+            resultSet = dbConn.getResult(query, connection);
+            
+            //inventryIngredientTable.setModel(DbUtils.resultSetToTableModel(resultSet));
+            
+        }catch(Exception e){
+            System.err.println("err : " + e);
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (Exception e) {
+                    System.err.println("Resultset close error : " + e);
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (Exception e) {
+                    System.err.println("Connection close error : " + e);
+                }
+            }
+        }
+    }
 }
 
 

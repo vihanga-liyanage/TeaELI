@@ -15,7 +15,7 @@ public class TeaELI {
         loginFrame.setSize(740, 400);
 
         /* for temp */
-        DBConnection dbConn = new DBConnection();
+        /*DBConnection dbConn = new DBConnection();
         Connection connection = dbConn.setConnection();
 
         String query = "SELECT * FROM supplier";
@@ -43,7 +43,7 @@ public class TeaELI {
                     System.err.println("Connection close error : " + e);
                 }
             }
-        }
+        }*/
 
     }
 
