@@ -6,10 +6,12 @@
 
 package teaeli;
 
+import classes.Ingredient;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.nio.channels.SeekableByteChannel;
+import java.sql.ResultSet;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.logging.Level;
@@ -22,6 +24,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import net.proteanit.sql.DbUtils;
 
 
 /**
@@ -34,6 +37,7 @@ public class AdminPannel extends javax.swing.JFrame {
      * Creates new form AdminPannel
      */
     public AdminPannel() {
+        
         try
         {
             setUIFont(new javax.swing.plaf.FontUIResource("Segoe UI", Font.PLAIN, 14));
