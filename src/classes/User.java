@@ -1,5 +1,14 @@
 package classes;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.util.Vector;
+import javax.swing.table.DefaultTableModel;
+import static teaeli.LoginFrame.adminPannel;
+import static teaeli.TeaELI.resultSet;
+
 public class User {
     private String userName, Password, firstName, lastName, designation;
 
@@ -49,6 +58,53 @@ public class User {
 
     public void setDesignation(String designation) {
         this.designation = designation;
+    }
+    
+    //Method to add the result set of the user table in the DB to the user table in the Admin Pannel
+    public static void updateTableModelData(DefaultTableModel tModel, ResultSet rs) throws Exception {
+        tModel.setRowCount(0);
+        ResultSetMetaData metaData = rs.getMetaData();
+
+        while (rs.next()) {
+            Vector newRow = new Vector();
+            for (int i = 1; i <= 5; i++) {
+                newRow.addElement(rs.getObject(i));
+            }
+            tModel.addRow(newRow);
+        }
+    }
+    
+    //Set user details to the users table in the Admin Pannel
+    public void viewUser() throws SQLException, Exception{
+        DBConnection dbConn = new DBConnection();
+        Connection connection = dbConn.setConnection();
+
+        String query = "SELECT userID, username, firstname, lastname FROM user";
+        
+        try {
+            
+            resultSet = dbConn.getResult(query, connection);
+            
+        } catch (Exception e) {
+            System.err.println("err : " + e);
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    System.err.println("Resultset close error : " + e);
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    System.err.println("Connection close error : " + e);
+                }
+            }
+        }            
+        
+        updateTableModelData((DefaultTableModel) adminPannel.userTable.getModel(), resultSet);
     }
     
 }

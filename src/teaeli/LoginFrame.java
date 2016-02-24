@@ -20,9 +20,8 @@ import javax.swing.UnsupportedLookAndFeelException;
  */
 public class LoginFrame extends javax.swing.JFrame {
     
-    /**
-     * Creates new form LoginFrame
-     */
+    public static AdminPannel adminPannel = new AdminPannel();
+            
     public LoginFrame() {
         //Add windows look and feel
         try {
@@ -137,8 +136,6 @@ public class LoginFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_txtUsernameActionPerformed
 
     private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
-        AdminPannel adminPannel = new AdminPannel();
-        
         //Keep the window fullscreen
         adminPannel.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
         
