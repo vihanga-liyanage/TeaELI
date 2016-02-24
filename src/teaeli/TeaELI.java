@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 public class TeaELI {
 
-    public static ResultSet resultSet;          //for temp
+    public static ResultSet resultSet = null;          //for temp
 
     public static void main(String[] args) throws SQLException {
         LoginFrame loginFrame = new LoginFrame();
