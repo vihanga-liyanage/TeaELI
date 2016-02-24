@@ -948,8 +948,8 @@ public class AdminPannel extends javax.swing.JFrame {
         CreateNewBlendOrder createNewBlendOrder  = new CreateNewBlendOrder();
         createNewBlendOrder.setVisible(true);
         createNewBlendOrder.tblMasterPlanScrollPane.setVisible(false);
-        createNewBlendOrder.btnCancelOrder.setVisible(false);
-        createNewBlendOrder.btnCnfirmOrder.setVisible(false);
+        createNewBlendOrder.cancelBtn.setVisible(false);
+        createNewBlendOrder.confirmBtn.setVisible(false);
         createNewBlendOrder.setDefaultCloseOperation(HIDE_ON_CLOSE);
     }//GEN-LAST:event_addNewBlendsBtnActionPerformed
 
