@@ -214,7 +214,7 @@ public class AdminPannel extends javax.swing.JFrame {
         jLabel1.setPreferredSize(new java.awt.Dimension(31, 14));
 
         addNewBlendsBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        addNewBlendsBtn.setText("New RM Order");
+        addNewBlendsBtn.setText("Create New Blend Order");
         addNewBlendsBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addNewBlendsBtnActionPerformed(evt);
@@ -928,13 +928,12 @@ public class AdminPannel extends javax.swing.JFrame {
     }//GEN-LAST:event_searchItemBtnActionPerformed
 
     private void addNewBlendsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addNewBlendsBtnActionPerformed
-        AddNewRMOrder addNewBlends = new AddNewRMOrder();
-        addNewBlends.setVisible(true);
-        addNewBlends.tblMasterPlanScrollPane.setVisible(false);
-        addNewBlends.btnCancelOrder.setVisible(false);
-        addNewBlends.btnCnfirmOrder.setVisible(false);
-        addNewBlends.setDefaultCloseOperation(HIDE_ON_CLOSE);
-        addNewBlends.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
+        CreateNewBlendOrder createNewBlendOrder  = new CreateNewBlendOrder();
+        createNewBlendOrder.setVisible(true);
+        createNewBlendOrder.tblMasterPlanScrollPane.setVisible(false);
+        createNewBlendOrder.btnCancelOrder.setVisible(false);
+        createNewBlendOrder.btnCnfirmOrder.setVisible(false);
+        createNewBlendOrder.setDefaultCloseOperation(HIDE_ON_CLOSE);
     }//GEN-LAST:event_addNewBlendsBtnActionPerformed
 
     private void profileBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profileBtnActionPerformed
