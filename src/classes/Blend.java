@@ -73,5 +73,4 @@ public class Blend {
     public void setInvisibleStock(int invisibleStock) {
         this.invisibleStock = invisibleStock;
     }
-   
 }

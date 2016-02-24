@@ -5,10 +5,11 @@
  */
 package classes;
 
-/**
- *
- * @author ASHI
- */
+import java.util.*;
+
 public class Order {
+    //attributes
+    private int orderID,placedBy,orderStatus,blendID;//blendid,blendname,
+    private String username;
     
 }
