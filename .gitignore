@@ -16,8 +16,8 @@ hs_err_pid*
 /build/
 /src/test/
 
-/src/classes/DBConnection.java
-<<<<<<< HEAD
-=======
 
->>>>>>> 541110fa443aa451cfdf91c90354070152dc8496
+/srs/classes/DBConnection.java
+
+
+/src/classes/DBConnection.java
