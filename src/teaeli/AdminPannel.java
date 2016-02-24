@@ -274,7 +274,7 @@ public class AdminPannel extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        mainTabbedPane.addTab("Order Handling", orderHandlingPanel);
+        mainTabbedPane.addTab("    Order Handling    ", orderHandlingPanel);
 
         inventoryPanel.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -301,14 +301,14 @@ public class AdminPannel extends javax.swing.JFrame {
 
         inventryIngredientTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null}
+                {null, null, null}
             },
             new String [] {
-                "Ingredient Name", "Quantity in Stock"
+                "Ingredient Name", "Visible Stock (g)", "Invisible Stock (g)"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false
+                false, true, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -368,15 +368,15 @@ public class AdminPannel extends javax.swing.JFrame {
 
         inventoryBlendTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null}
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Blend Name", "Quantity in Stock"
+                "Blend Name", "Visible Stock (g)", "Invisible Stock (g)"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false
+                false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -439,7 +439,7 @@ public class AdminPannel extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        mainTabbedPane.addTab("Inventory Management", inventoryPanel);
+        mainTabbedPane.addTab("    Inventory Management    ", inventoryPanel);
 
         settingsPanel.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -526,7 +526,7 @@ public class AdminPannel extends javax.swing.JFrame {
                 .addContainerGap(74, Short.MAX_VALUE))
         );
 
-        settingsTabbedPane.addTab("Ingredients", settingsIngPanel);
+        settingsTabbedPane.addTab("    Ingredients    ", settingsIngPanel);
 
         settingsBlendPanel.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -643,9 +643,7 @@ public class AdminPannel extends javax.swing.JFrame {
                                 .addComponent(searchProductTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(searchProductBtn))
-                            .addGroup(settingsBlendPanelLayout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addGap(12, 12, 12)))
+                            .addComponent(jLabel3))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(addProductBtn)))
                 .addContainerGap())
@@ -673,7 +671,7 @@ public class AdminPannel extends javax.swing.JFrame {
                 .addGap(79, 79, 79))
         );
 
-        settingsTabbedPane.addTab("Blends", settingsBlendPanel);
+        settingsTabbedPane.addTab("    Blends    ", settingsBlendPanel);
 
         settingsIngHistoryPanel.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -726,7 +724,7 @@ public class AdminPannel extends javax.swing.JFrame {
                 .addContainerGap(69, Short.MAX_VALUE))
         );
 
-        settingsTabbedPane.addTab("Ingredient Stock History", settingsIngHistoryPanel);
+        settingsTabbedPane.addTab("    Ingredient Stock History    ", settingsIngHistoryPanel);
 
         settingsBlendHistoryPanel.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -779,7 +777,7 @@ public class AdminPannel extends javax.swing.JFrame {
                 .addContainerGap(69, Short.MAX_VALUE))
         );
 
-        settingsTabbedPane.addTab("Blend Stock History", settingsBlendHistoryPanel);
+        settingsTabbedPane.addTab("    Blend Stock History    ", settingsBlendHistoryPanel);
 
         settingsUserPanel.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -841,7 +839,7 @@ public class AdminPannel extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        settingsTabbedPane.addTab("Users", settingsUserPanel);
+        settingsTabbedPane.addTab("    Users    ", settingsUserPanel);
 
         javax.swing.GroupLayout settingsPanelLayout = new javax.swing.GroupLayout(settingsPanel);
         settingsPanel.setLayout(settingsPanelLayout);
@@ -859,7 +857,7 @@ public class AdminPannel extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        mainTabbedPane.addTab("Settings", settingsPanel);
+        mainTabbedPane.addTab("    Settings    ", settingsPanel);
 
         logoLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/teaeli/logo-new (Custom).png"))); // NOI18N
 

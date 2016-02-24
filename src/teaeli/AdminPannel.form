@@ -97,8 +97,8 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="Order Handling">
-                <Property name="tabTitle" type="java.lang.String" value="Order Handling"/>
+              <JTabbedPaneConstraints tabName="    Order Handling    ">
+                <Property name="tabTitle" type="java.lang.String" value="    Order Handling    "/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
@@ -265,8 +265,8 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="Inventory Management">
-                <Property name="tabTitle" type="java.lang.String" value="Inventory Management"/>
+              <JTabbedPaneConstraints tabName="    Inventory Management    ">
+                <Property name="tabTitle" type="java.lang.String" value="    Inventory Management    "/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
@@ -396,10 +396,30 @@
                         <Component class="javax.swing.JTable" name="inventryIngredientTable">
                           <Properties>
                             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                              <Table columnCount="2" rowCount="1">
+                              <Table columnCount="3" rowCount="1">
                                 <Column editable="false" title="Ingredient Name" type="java.lang.Object"/>
-                                <Column editable="false" title="Quantity in Stock" type="java.lang.Object"/>
+                                <Column editable="true" title="Visible Stock (g)" type="java.lang.Object"/>
+                                <Column editable="true" title="Invisible Stock (g)" type="java.lang.Object"/>
                               </Table>
+                            </Property>
+                            <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
+                              <TableColumnModel selectionModel="0">
+                                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                                  <Title/>
+                                  <Editor/>
+                                  <Renderer/>
+                                </Column>
+                                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                                  <Title/>
+                                  <Editor/>
+                                  <Renderer/>
+                                </Column>
+                                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                                  <Title/>
+                                  <Editor/>
+                                  <Renderer/>
+                                </Column>
+                              </TableColumnModel>
                             </Property>
                             <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
                               <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
@@ -496,10 +516,30 @@
                         <Component class="javax.swing.JTable" name="inventoryBlendTable">
                           <Properties>
                             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                              <Table columnCount="2" rowCount="2">
+                              <Table columnCount="3" rowCount="2">
                                 <Column editable="false" title="Blend Name" type="java.lang.Object"/>
-                                <Column editable="false" title="Quantity in Stock" type="java.lang.Object"/>
+                                <Column editable="false" title="Visible Stock (g)" type="java.lang.Object"/>
+                                <Column editable="false" title="Invisible Stock (g)" type="java.lang.Object"/>
                               </Table>
+                            </Property>
+                            <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
+                              <TableColumnModel selectionModel="0">
+                                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                                  <Title/>
+                                  <Editor/>
+                                  <Renderer/>
+                                </Column>
+                                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                                  <Title/>
+                                  <Editor/>
+                                  <Renderer/>
+                                </Column>
+                                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                                  <Title/>
+                                  <Editor/>
+                                  <Renderer/>
+                                </Column>
+                              </TableColumnModel>
                             </Property>
                             <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
                               <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
@@ -530,8 +570,8 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="Settings">
-                <Property name="tabTitle" type="java.lang.String" value="Settings"/>
+              <JTabbedPaneConstraints tabName="    Settings    ">
+                <Property name="tabTitle" type="java.lang.String" value="    Settings    "/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
@@ -573,8 +613,8 @@
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-                      <JTabbedPaneConstraints tabName="Ingredients">
-                        <Property name="tabTitle" type="java.lang.String" value="Ingredients"/>
+                      <JTabbedPaneConstraints tabName="    Ingredients    ">
+                        <Property name="tabTitle" type="java.lang.String" value="    Ingredients    "/>
                       </JTabbedPaneConstraints>
                     </Constraint>
                   </Constraints>
@@ -705,8 +745,8 @@
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-                      <JTabbedPaneConstraints tabName="Blends">
-                        <Property name="tabTitle" type="java.lang.String" value="Blends"/>
+                      <JTabbedPaneConstraints tabName="    Blends    ">
+                        <Property name="tabTitle" type="java.lang.String" value="    Blends    "/>
                       </JTabbedPaneConstraints>
                     </Constraint>
                   </Constraints>
@@ -735,10 +775,7 @@
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Component id="searchProductBtn" min="-2" max="-2" attributes="0"/>
                                           </Group>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace min="12" pref="12" max="-2" attributes="0"/>
-                                          </Group>
+                                          <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace max="32767" attributes="0"/>
                                       <Component id="addProductBtn" min="-2" max="-2" attributes="0"/>
@@ -981,8 +1018,8 @@
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-                      <JTabbedPaneConstraints tabName="Ingredient Stock History">
-                        <Property name="tabTitle" type="java.lang.String" value="Ingredient Stock History"/>
+                      <JTabbedPaneConstraints tabName="    Ingredient Stock History    ">
+                        <Property name="tabTitle" type="java.lang.String" value="    Ingredient Stock History    "/>
                       </JTabbedPaneConstraints>
                     </Constraint>
                   </Constraints>
@@ -1078,8 +1115,8 @@
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-                      <JTabbedPaneConstraints tabName="Blend Stock History">
-                        <Property name="tabTitle" type="java.lang.String" value="Blend Stock History"/>
+                      <JTabbedPaneConstraints tabName="    Blend Stock History    ">
+                        <Property name="tabTitle" type="java.lang.String" value="    Blend Stock History    "/>
                       </JTabbedPaneConstraints>
                     </Constraint>
                   </Constraints>
@@ -1175,8 +1212,8 @@
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-                      <JTabbedPaneConstraints tabName="Users">
-                        <Property name="tabTitle" type="java.lang.String" value="Users"/>
+                      <JTabbedPaneConstraints tabName="    Users    ">
+                        <Property name="tabTitle" type="java.lang.String" value="    Users    "/>
                       </JTabbedPaneConstraints>
                     </Constraint>
                   </Constraints>
