@@ -19,8 +19,9 @@ public class TeaELI {
         Connection connection = dbConn.setConnection();
 
         String query = "SELECT * FROM supplier";
-
+        
         try {
+            
             resultSet = dbConn.getResult(query, connection);
             while (resultSet.next()) {
                 System.out.println("results: " + resultSet.getString(1));
