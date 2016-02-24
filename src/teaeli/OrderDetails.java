@@ -49,6 +49,8 @@ public class OrderDetails extends javax.swing.JFrame {
         blendTable = new javax.swing.JTable();
         updateOrderBtn = new javax.swing.JButton();
         cancelBtn = new javax.swing.JButton();
+        orderReceivedBtn = new javax.swing.JButton();
+        orderCompletedBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -110,6 +112,10 @@ public class OrderDetails extends javax.swing.JFrame {
 
         cancelBtn.setText("Cancel");
 
+        orderReceivedBtn.setText("Order Received");
+
+        orderCompletedBtn.setText("Order Completed");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -128,6 +134,10 @@ public class OrderDetails extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(cancelBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(orderCompletedBtn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(orderReceivedBtn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(updateOrderBtn)))
                 .addContainerGap())
         );
@@ -145,7 +155,9 @@ public class OrderDetails extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(updateOrderBtn)
-                    .addComponent(cancelBtn))
+                    .addComponent(cancelBtn)
+                    .addComponent(orderReceivedBtn)
+                    .addComponent(orderCompletedBtn))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
 
@@ -211,7 +223,9 @@ public class OrderDetails extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JButton orderCompletedBtn;
     private javax.swing.JTable orderDetailsTable;
+    private javax.swing.JButton orderReceivedBtn;
     private javax.swing.JLabel rawMaterialLbl;
     private javax.swing.JButton updateOrderBtn;
     // End of variables declaration//GEN-END:variables
