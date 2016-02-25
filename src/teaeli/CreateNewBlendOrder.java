@@ -19,6 +19,8 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.event.PopupMenuEvent;
+import javax.swing.event.PopupMenuListener;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -73,9 +75,24 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
         //set focus to blendCombo
         blendsCombo.requestFocus();
         
+        //test
+        blendsCombo.addPopupMenuListener(new PopupMenuListener() {
+
+            @Override
+            public void popupMenuCanceled(PopupMenuEvent e) {}
+
+            @Override
+            public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
+                blendsQtyTxt.requestFocus();
+            }
+
+            @Override
+            public void popupMenuWillBecomeVisible(PopupMenuEvent e) {}
+        });
+        
         deleteBtn.setEnabled(false);
         
-        //enabling delete button on row select
+        //enabling delete button and update excess qty on row select
         final ListSelectionModel mod = blendListTbl.getSelectionModel();
         mod.addListSelectionListener(new ListSelectionListener() {
 
@@ -92,6 +109,7 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
         });
     }
 
+    //method to reset excess qty
     private void setExcessQty(int row){
         int requiredQty = Integer.parseInt(blendListTbl.getValueAt(row, 4).toString());
         int finalQty = Integer.parseInt(blendListTbl.getValueAt(row, 6).toString());
