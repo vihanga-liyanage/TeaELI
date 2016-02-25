@@ -6,6 +6,13 @@
 
 package teaeli;
 
+import classes.Blend;
+import classes.Ingredient;
+import classes.DBConnection;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import classes.User;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -69,8 +76,21 @@ public class AdminPannel extends javax.swing.JFrame {
         );
                
         user.viewUser((DefaultTableModel) userTable.getModel());
+        
+        /* populate inventryIngredientTable in inventory management*/
+        Ingredient ingredient = new Ingredient();
+        ingredient.populateIngredientTable((DefaultTableModel) inventryIngredientTable.getModel());
 
+        /* populate inventryBlendTable in inventory management*/
+        Blend blend = new Blend();
+        blend.populateBlendTable((DefaultTableModel) inventoryBlendTable.getModel());
     }
+    
+    DBConnection dbcon = new DBConnection();
+    Connection con = null;
+    PreparedStatement pst = null;
+    ResultSet rs = null;
+    Statement st = null;
     
     //Setting default font
     public static void setUIFont(javax.swing.plaf.FontUIResource f)
@@ -310,7 +330,7 @@ public class AdminPannel extends javax.swing.JFrame {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, true, true
+                false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -372,15 +392,15 @@ public class AdminPannel extends javax.swing.JFrame {
 
         inventoryBlendTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Blend Name", "Visible Stock (g)", "Invisible Stock (g)"
+                "Blend Category", "Blend Name", "Visible Stock (g)", "Invisible Stock (g)"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -966,6 +986,13 @@ public class AdminPannel extends javax.swing.JFrame {
         EditProfile editProfile = new EditProfile();
         editProfile.setVisible(true);
         editProfile.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        
+        
+        //String UserName = new LoginFrame().user;
+        
+        
+        
+        
     }//GEN-LAST:event_profileBtnActionPerformed
 
     private void addUserBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addUserBtnActionPerformed

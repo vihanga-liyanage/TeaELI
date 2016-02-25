@@ -75,7 +75,6 @@ public class User {
         
         try {
             tModel.setRowCount(0);
-            ResultSetMetaData metaData = resultSet.getMetaData();
             
             while (resultSet.next()) {
                 Vector newRow = new Vector();

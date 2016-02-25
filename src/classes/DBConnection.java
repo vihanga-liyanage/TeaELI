@@ -1,3 +1,4 @@
+
 package classes;
 
 import java.sql.Connection;
@@ -11,13 +12,14 @@ public class DBConnection {
     public Connection connection;
     public PreparedStatement pstStatement;
     public ResultSet resultSet;
-
+    
     public DBConnection() {
     }
 
     public Connection setConnection() throws SQLException {
         try {
             Class.forName("com.mysql.jdbc.Driver");
+
             connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/leafspice", "teaeli", "teaeli");
         } catch (ClassNotFoundException e) {
             System.err.println("Couldn't find database driver : " + e.getMessage());
