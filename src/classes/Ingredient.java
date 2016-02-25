@@ -344,9 +344,40 @@ public class Ingredient {
    //end of view all details of a ingredient
     
     //start of update ingredient method
-    public void updateIngredient(String ingredientName){
+    public void updateIngredient(String ingredientName,String ingCategory, String SupName,String unitPrice) throws SQLException{
+       /*
+        Connection connection = dbConn.setConnection();
+        ResultSet resultSet = null;
         
-    }
+        //set name of the ingredient
+        
+
+        String query = "Update ingredient";
+        try {
+            resultSet = dbConn.getResult(query, connection);
+            while (resultSet.next()) {
+                
+            }
+        } catch (Exception e) {
+            System.err.println("err : " + e);
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (Exception e) {
+                    System.err.println("Resultset close error : " + e);
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (Exception e) {
+                    System.err.println("Connection close error : " + e);
+                }
+            }
+        }
+    }*/
+    }      
     
     //end of update ingredient method
 }
