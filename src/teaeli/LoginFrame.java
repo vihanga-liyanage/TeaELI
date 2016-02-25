@@ -18,6 +18,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -26,10 +27,11 @@ import javax.swing.UnsupportedLookAndFeelException;
  *
  * @author CHAM PC
  */
+
 public class LoginFrame extends javax.swing.JFrame {
     
     public static AdminPannel adminPannel = new AdminPannel();
-            
+    public String user;        
     public LoginFrame() {
         //Add windows look and feel
         try {
@@ -48,6 +50,7 @@ public class LoginFrame extends javax.swing.JFrame {
         y=(screenSize.height-frameSize.height)/4;
         setLocation(x, y);
         setResizable(false);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
     
     DBConnection dbcon = new DBConnection();
@@ -58,7 +61,7 @@ public class LoginFrame extends javax.swing.JFrame {
     
     String userName,password;
     int passwrdCount =0;
-    public String user;
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -161,48 +164,54 @@ public class LoginFrame extends javax.swing.JFrame {
          userName = txtUsername.getText();
          password = txtPassword.getText();
          
+         /*
+         changed due to inconvinience on testing, original code below
          if (checkLogin(userName, password)==1){
+         Vihanga
+         */
+         
+         if (1==1){
              
-                AdminPannel adminPannel = new AdminPannel();//the provided username & password matched
-                adminPannel.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);//Keep the window fullscreen
-                adminPannel.setVisible(true);
-                user =userName;
-                this.setVisible(false);
-                
-            }else if (checkLogin(userName, password)==2){
-                
-                ManagerPannel managerPannel = new ManagerPannel();//the provided username & password matched
-                managerPannel.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);//Keep the window fullscreen
-                managerPannel.setVisible(true);
-                user =userName;
-                this.setVisible(false);
-                
-            /*}else if (checkLogin(userName, password)==3){
-                
-                if (passwrdCount !=3){
-                JOptionPane.showMessageDialog(this, "Wrong user name or password");//the provided password does not exist in the db
-                txtUsername.setText("");
-                txtPassword.setText("");
-                txtUsername.requestFocusInWindow();
-                passwrdCount++;
-                }else if (passwrdCount==3){
-                    JOptionPane.showMessageDialog(this, "ERROR!!! System will close!");
-                    this.dispose();
-                }*/
-                
-            }else if (checkLogin(userName, password)== 4 | checkLogin(userName, password)==3){
-                
-                if (passwrdCount !=3){
-                JOptionPane.showMessageDialog(this, "Wrong user name or password");//the provided password does not exist in the db
-                txtUsername.setText("");
-                txtPassword.setText("");
-                txtUsername.requestFocusInWindow();
-                passwrdCount++;
-                }else if (passwrdCount==3){
-                    JOptionPane.showMessageDialog(this, "ERROR!!! System will close!");
-                    this.dispose();
-                }
+            AdminPannel adminPannel = new AdminPannel();//the provided username & password matched
+            adminPannel.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);//Keep the window fullscreen
+            adminPannel.setVisible(true);
+            user =userName;
+            this.setVisible(false);
+
+        }else if (checkLogin(userName, password)==2){
+
+            ManagerPannel managerPannel = new ManagerPannel();//the provided username & password matched
+            managerPannel.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);//Keep the window fullscreen
+            managerPannel.setVisible(true);
+            user =userName;
+            this.setVisible(false);
+
+        /*}else if (checkLogin(userName, password)==3){
+
+            if (passwrdCount !=3){
+            JOptionPane.showMessageDialog(this, "Wrong user name or password");//the provided password does not exist in the db
+            txtUsername.setText("");
+            txtPassword.setText("");
+            txtUsername.requestFocusInWindow();
+            passwrdCount++;
+            }else if (passwrdCount==3){
+                JOptionPane.showMessageDialog(this, "ERROR!!! System will close!");
+                this.dispose();
+            }*/
+
+        }else if (checkLogin(userName, password)== 4 | checkLogin(userName, password)==3){
+
+            if (passwrdCount !=3){
+            JOptionPane.showMessageDialog(this, "Wrong user name or password");//the provided password does not exist in the db
+            txtUsername.setText("");
+            txtPassword.setText("");
+            txtUsername.requestFocusInWindow();
+            passwrdCount++;
+            }else if (passwrdCount==3){
+                JOptionPane.showMessageDialog(this, "ERROR!!! System will close!");
+                this.dispose();
             }
+        }
 
     }//GEN-LAST:event_btnSubmitActionPerformed
 
@@ -263,7 +272,7 @@ public class LoginFrame extends javax.swing.JFrame {
             con = dbcon.setConnection();//get the connection
             String query = "SELECT username,designation FROM user where password = sha1('"+password+"') and username = ('"+userName+"')";
             ResultSet rs =dbcon.getResult(query, con);
-            
+            System.out.println("Login result came\n");
             while (rs.next()) {
                 if (rs.getString(2).equals("Admin")) {
                     return 1;     

@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package teaeli;
 
 import java.awt.Dimension;
@@ -12,10 +8,7 @@ import java.util.logging.Logger;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-/**
- *
- * @author ASHI
- */
+
 public class IngredientDetails extends javax.swing.JFrame {
 
     /**
@@ -242,8 +235,8 @@ public class IngredientDetails extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelBtn;
     private javax.swing.JButton deleteItemBtn;
-    private javax.swing.JTextField itemNameTxt;
-    private javax.swing.JComboBox itemTypeCombo;
+    public static javax.swing.JTextField itemNameTxt;
+    public static javax.swing.JComboBox itemTypeCombo;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -251,8 +244,8 @@ public class IngredientDetails extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField supplierNameTxt;
-    private javax.swing.JTextField unitPriceTxt;
+    public static javax.swing.JTextField supplierNameTxt;
+    public static javax.swing.JTextField unitPriceTxt;
     private javax.swing.JButton updateItemBtn;
     // End of variables declaration//GEN-END:variables
 }

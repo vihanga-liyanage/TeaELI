@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Vector;
+import javax.swing.JComboBox;
 import javax.swing.table.DefaultTableModel;
 
 public class Blend {
@@ -163,7 +164,42 @@ public class Blend {
             }
         }
     }
-    /* end of populateBlendTable method */
+    /* end */
+    
+    /* start of initializing blend combo in CreateNewBlendOrder */
+    public void initBlendCombo(JComboBox blendsCombo){
+        Connection conn = null;
+        ResultSet resultSet = null;
+        AutoSuggest autoSuggest = new AutoSuggest();
+        
+        try{
+            String query = "SELECT blendName FROM blend ORDER BY blendName";
+            
+            conn = dbConn.setConnection();
+            resultSet = dbConn.getResult(query, conn);
+            
+            autoSuggest.setAutoSuggest(blendsCombo, resultSet);
+            
+        }catch(Exception e){
+            System.err.println("err : " + e);
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (Exception e) {
+                    System.err.println("Resultset close error : " + e);
+                }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (Exception e) {
+                    System.err.println("Connection close error : " + e);
+                }
+            }
+        }
+    }
+    /* end */
     
     /* start of loadNameForSearchStockBlendsComboBox method*/
     public ResultSet loadNameForsearchStockBlendsComboBox(){
@@ -172,15 +208,44 @@ public class Blend {
         
         try{
             connection = dbConn.setConnection();
-            
             String query = "SELECT blendName FROM blend";
-            
             resultSet = dbConn.getResult(query, connection);
-            
         } catch(Exception e){
             System.err.println("");
         }
         return resultSet; 
     }
-    /* end of loadNameForSearchStockBlendsComboBox method */
+    /* end */
+    
+    /* Get blend data when blend name is given */
+    public ResultSet getBlendDataByBlendName(String blendName){
+        Connection conn = null;
+        ResultSet resultSet = null;
+        
+        try{
+            String query = "SELECT * FROM blend WHERE blendName='" + blendName + "'";
+            conn = dbConn.setConnection();
+            resultSet = dbConn.getResult(query, conn);
+            return resultSet;
+        }catch(Exception e){
+            System.err.println("err : " + e);
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (Exception e) {
+                    System.err.println("Resultset close error : " + e);
+                }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (Exception e) {
+                    System.err.println("Connection close error : " + e);
+                }
+            }
+        }
+        return null;
+    }
+    /* end */
 }

@@ -5,10 +5,18 @@
  */
 package teaeli;
 
+import classes.Blend;
+import classes.Validation;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -30,6 +38,35 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
         }
         initComponents();
         this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
+        
+        //Initialize blendCombo
+        Blend blend = new Blend();
+        blend.initBlendCombo(blendsCombo);
+        
+        //Validation on qty, when key released
+        blendsQtyTxt.addKeyListener(new KeyAdapter() {
+            public void keyReleased(KeyEvent e) {
+                String qty = blendsQtyTxt.getText();
+                if (qty.length() > 0) {
+                    if (!(new Validation().isInt(qty))) {
+                        JOptionPane.showMessageDialog(blendsQtyTxt, "Blend quantity must be a valid number!");
+                        blendsQtyTxt.setText(qty.substring(0, qty.length() - 1));
+                    } else if (Integer.parseInt(qty) < 0) {
+                        JOptionPane.showMessageDialog(blendsQtyTxt, "Blend quantity cannot be less than 0!");
+                        blendsQtyTxt.setText(qty.substring(0, qty.length() - 1));
+                    }
+                }
+            }
+
+            public void keyTyped(KeyEvent e) {
+            }
+
+            public void keyPressed(KeyEvent e) {
+            }
+        });
+        
+        //set focus to blendCombo
+        blendsCombo.requestFocus();
     }
 
     /**
@@ -47,7 +84,7 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
         blendsCombo = new javax.swing.JComboBox();
         jLabel3 = new javax.swing.JLabel();
         weightCombo = new javax.swing.JComboBox();
-        blendQtyAddBtn = new javax.swing.JButton();
+        blendAddBtn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblOrder = new javax.swing.JTable();
         createOrderBtn = new javax.swing.JButton();
@@ -78,6 +115,11 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
         blendsCombo.setEditable(true);
         blendsCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         blendsCombo.setSelectedIndex(-1);
+        blendsCombo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                blendsComboActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -92,11 +134,11 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
             }
         });
 
-        blendQtyAddBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        blendQtyAddBtn.setText("Add");
-        blendQtyAddBtn.addActionListener(new java.awt.event.ActionListener() {
+        blendAddBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        blendAddBtn.setText("Add");
+        blendAddBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                blendQtyAddBtnActionPerformed(evt);
+                blendAddBtnActionPerformed(evt);
             }
         });
 
@@ -198,6 +240,12 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
             }
         });
 
+        blendsQtyTxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                blendsQtyTxtActionPerformed(evt);
+            }
+        });
+
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         lblDate.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -276,7 +324,7 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(blendsCombo, 0, 190, Short.MAX_VALUE)
+                                    .addComponent(blendsCombo, 0, 250, Short.MAX_VALUE)
                                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(28, 28, 28)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -286,7 +334,7 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(weightCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(blendQtyAddBtn))))
+                                        .addComponent(blendAddBtn))))
                             .addComponent(jLabel15))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -317,7 +365,7 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(blendsCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(blendQtyAddBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(blendAddBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(blendsQtyTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(weightCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -384,10 +432,20 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
         confirmBtn.setVisible(false);
     }//GEN-LAST:event_cancelBtnActionPerformed
 
-    private void blendQtyAddBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blendQtyAddBtnActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_blendQtyAddBtnActionPerformed
+    private void blendAddBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blendAddBtnActionPerformed
+        String blendName = (String) blendsCombo.getSelectedItem();
+        
+    }//GEN-LAST:event_blendAddBtnActionPerformed
 
+    private void blendsQtyTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blendsQtyTxtActionPerformed
+        blendAddBtn.requestFocus();
+    }//GEN-LAST:event_blendsQtyTxtActionPerformed
+
+    private void blendsComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blendsComboActionPerformed
+
+    }//GEN-LAST:event_blendsComboActionPerformed
+
+    
     /**
      * @param args the command line arguments
      */
@@ -424,7 +482,7 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton blendQtyAddBtn;
+    private javax.swing.JButton blendAddBtn;
     private javax.swing.JComboBox blendsCombo;
     private javax.swing.JTextField blendsQtyTxt;
     public javax.swing.JButton cancelBtn;
