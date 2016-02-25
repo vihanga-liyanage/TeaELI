@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6cfbb79b768ca4ec609dcbed938199399aa0a025
 package classes;
 
 import java.sql.Connection;
@@ -6,7 +9,10 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6cfbb79b768ca4ec609dcbed938199399aa0a025
 
 public class DBConnection {
 
@@ -22,11 +28,15 @@ public class DBConnection {
             Class.forName("com.mysql.jdbc.Driver");
 
             connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/leafspice", "teaeli", "teaeli");
+
         } catch (ClassNotFoundException e) {
             System.err.println("Couldn't find database driver : " + e.getMessage());
         }
+<<<<<<< HEAD
         
 
+=======
+>>>>>>> 6cfbb79b768ca4ec609dcbed938199399aa0a025
         return connection;
     }
 

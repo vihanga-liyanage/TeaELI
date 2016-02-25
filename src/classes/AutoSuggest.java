@@ -14,7 +14,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 
-class AutoSuggest {
+public class AutoSuggest {
 
     Vector<String> v = new Stack<String>();
     private boolean hide_flag = false;
@@ -42,7 +42,7 @@ class AutoSuggest {
                 Search.addItem("");
             }
         } catch (SQLException e) {
-            
+            System.err.println("SQLException : " + e);
         }
 
         tx = (JTextField) Search.getEditor().getEditorComponent();
