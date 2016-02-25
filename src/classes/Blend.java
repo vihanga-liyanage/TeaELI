@@ -1,6 +1,10 @@
 package classes;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Vector;
+import javax.swing.table.DefaultTableModel;
 
 public class Blend {
     
@@ -118,6 +122,47 @@ public class Blend {
     }
     /* End of setters and getters */
     
-    
+    /* start of populateBlendTable method */
+    public void populateBlendTable(DefaultTableModel tableModel){
+        
+        Connection connection = null;
+        ResultSet resultSet = null;
+        
+        try{
+            String query = "SELECT blendCategory,blendName,visibleStock,invisibleStock FROM blend ORDER BY blendCategory";
+            
+            connection = dbConn.setConnection();
+            resultSet = dbConn.getResult(query, connection);
+            
+            tableModel.setRowCount(0);
+            
+            while (resultSet.next()) {
+                Vector newRow = new Vector();
+                for (int i = 1; i <= 4; i++) {
+                    newRow.addElement(resultSet.getObject(i));
+                }
+                tableModel.addRow(newRow);
+            }
+            
+        }catch(Exception e){
+            System.err.println("err : " + e);
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (Exception e) {
+                    System.err.println("Resultset close error : " + e);
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (Exception e) {
+                    System.err.println("Connection close error : " + e);
+                }
+            }
+        }
+    }
+    /* end of populateBlendTable method */
     
 }

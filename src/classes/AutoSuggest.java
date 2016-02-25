@@ -6,7 +6,6 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -24,9 +23,6 @@ class AutoSuggest {
 
     public void autoSuggest(final JComboBox Search, ResultSet rst) {
 
-            
-        //ResultSet rst = dbOps.getTodayProducts();   *** get the method
-
         Search.removeAllItems();
         try {
             rst.first();
@@ -39,7 +35,6 @@ class AutoSuggest {
                         public void itemStateChanged(ItemEvent ie) {
                             if (ie.getStateChange() == ItemEvent.SELECTED) {
                                 Search.getSelectedIndex();
-
                             }
                         }
                     });
