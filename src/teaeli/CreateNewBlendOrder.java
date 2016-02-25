@@ -482,31 +482,57 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
             blendsQtyTxt.requestFocus();
         } else {
             String blendName = (String) blendsCombo.getSelectedItem();
-            List<List<String>> res = blend.getBlendDataByBlendName(blendName);
-            Vector newRow = new Vector();
-            newRow.addElement(res.get(0).get(1));
-            newRow.addElement(blendsQtyTxt.getText());
-            newRow.addElement(res.get(0).get(3));
-            newRow.addElement(res.get(0).get(5));
-
-            //calculating qty required
-            int blendQty = Integer.parseInt(blendsQtyTxt.getText());
-            int visible = Integer.parseInt(res.get(0).get(3));
-            int invisible = Integer.parseInt(res.get(0).get(5));
-            int balance = 0;
-            balance = blendQty - visible;
-            if (balance > 0) {
-                balance = blendQty - visible - invisible;
+            boolean isNew = true;
+            //Search if the blend is already added
+            int rowCount = blendListTbl.getRowCount();
+            for (int i = 0; i < rowCount; i++) {
+                if (blendName.equals(blendListTbl.getValueAt(i, 0))) {
+                    //calculating qty required
+                    int blendQty = Integer.parseInt(blendsQtyTxt.getText()) + Integer.parseInt(blendListTbl.getValueAt(i, 1).toString());
+                    blendListTbl.setValueAt(blendQty, i, 1);
+                    int visible = Integer.parseInt(blendListTbl.getValueAt(i, 2).toString());
+                    int invisible = Integer.parseInt(blendListTbl.getValueAt(i, 3).toString());
+                    int balance = 0;
+                    balance = blendQty - visible;
+                    if (balance > 0) {
+                        balance = blendQty - visible - invisible;
+                    }
+                    if (balance < 0) {
+                        balance = 0;
+                    }
+                    blendListTbl.setValueAt(balance, i, 4);
+                    int excess = Integer.parseInt(blendListTbl.getValueAt(i, 5).toString());
+                    blendListTbl.setValueAt(excess + balance, i, 6);
+                    isNew = false;
+                    break;
+                }
             }
-            if (balance < 0) {
-                balance = 0;
-            }
-            newRow.addElement(balance);
-            newRow.addElement(0);
-            newRow.addElement(balance);
-            DefaultTableModel model = (DefaultTableModel) blendListTbl.getModel();
-            model.addRow(newRow);
+            if (isNew) {
+                List<List<String>> res = blend.getBlendDataByBlendName(blendName);
+                Vector newRow = new Vector();
+                newRow.addElement(res.get(0).get(1));
+                newRow.addElement(blendsQtyTxt.getText());
+                newRow.addElement(res.get(0).get(3));
+                newRow.addElement(res.get(0).get(5));
 
+                //calculating qty required
+                int blendQty = Integer.parseInt(blendsQtyTxt.getText());
+                int visible = Integer.parseInt(res.get(0).get(3));
+                int invisible = Integer.parseInt(res.get(0).get(5));
+                int balance = 0;
+                balance = blendQty - visible;
+                if (balance > 0) {
+                    balance = blendQty - visible - invisible;
+                }
+                if (balance < 0) {
+                    balance = 0;
+                }
+                newRow.addElement(balance);
+                newRow.addElement(0);
+                newRow.addElement(balance);
+                DefaultTableModel model = (DefaultTableModel) blendListTbl.getModel();
+                model.addRow(newRow);
+            }
             //blendsCombo.remove(blendsCombo.getSelectedIndex());
             blendsCombo.requestFocus();
         }
