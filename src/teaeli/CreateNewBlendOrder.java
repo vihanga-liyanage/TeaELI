@@ -336,6 +336,11 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
         jLabel6.setText("Please edit final qty column to add excess amounts.");
 
         deleteBtn.setText("Delete");
+        deleteBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -469,34 +474,42 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
     }//GEN-LAST:event_cancelBtnActionPerformed
 
     private void blendAddBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blendAddBtnActionPerformed
-        String blendName = (String) blendsCombo.getSelectedItem();
-        List<List<String>> res = blend.getBlendDataByBlendName(blendName);
-        Vector newRow = new Vector();
-        newRow.addElement(res.get(0).get(1));
-        newRow.addElement(blendsQtyTxt.getText());
-        newRow.addElement(res.get(0).get(3));
-        newRow.addElement(res.get(0).get(5));
-        
-        //calculating qty required
-        int blendQty = Integer.parseInt(blendsQtyTxt.getText());
-        int visible = Integer.parseInt(res.get(0).get(3));
-        int invisible = Integer.parseInt(res.get(0).get(5));
-        int balance = 0;
-        balance = blendQty - visible;
-        if (balance > 0) {
-            balance = blendQty - visible - invisible;
+        if (blendsCombo.getSelectedItem().equals("")){
+            JOptionPane.showMessageDialog(blendsCombo, "Please select a blend to add.");
+            blendsCombo.requestFocus();
+        } else if (blendsQtyTxt.getText().equals("")) {
+            JOptionPane.showMessageDialog(blendsQtyTxt, "Please enter blend quantity to add.");
+            blendsQtyTxt.requestFocus();
+        } else {
+            String blendName = (String) blendsCombo.getSelectedItem();
+            List<List<String>> res = blend.getBlendDataByBlendName(blendName);
+            Vector newRow = new Vector();
+            newRow.addElement(res.get(0).get(1));
+            newRow.addElement(blendsQtyTxt.getText());
+            newRow.addElement(res.get(0).get(3));
+            newRow.addElement(res.get(0).get(5));
+
+            //calculating qty required
+            int blendQty = Integer.parseInt(blendsQtyTxt.getText());
+            int visible = Integer.parseInt(res.get(0).get(3));
+            int invisible = Integer.parseInt(res.get(0).get(5));
+            int balance = 0;
+            balance = blendQty - visible;
+            if (balance > 0) {
+                balance = blendQty - visible - invisible;
+            }
+            if (balance < 0) {
+                balance = 0;
+            }
+            newRow.addElement(balance);
+            newRow.addElement(0);
+            newRow.addElement(balance);
+            DefaultTableModel model = (DefaultTableModel) blendListTbl.getModel();
+            model.addRow(newRow);
+
+            //blendsCombo.remove(blendsCombo.getSelectedIndex());
+            blendsCombo.requestFocus();
         }
-        if (balance < 0) {
-            balance = 0;
-        }
-        newRow.addElement(balance);
-        newRow.addElement(0);
-        newRow.addElement(balance);
-        DefaultTableModel model = (DefaultTableModel) blendListTbl.getModel();
-        model.addRow(newRow);
-        
-        //blendsCombo.remove(blendsCombo.getSelectedIndex());
-        blendsCombo.requestFocus();
     }//GEN-LAST:event_blendAddBtnActionPerformed
 
     private void blendsQtyTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blendsQtyTxtActionPerformed
@@ -506,6 +519,12 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
     private void blendsComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blendsComboActionPerformed
 
     }//GEN-LAST:event_blendsComboActionPerformed
+
+    private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
+        DefaultTableModel model = (DefaultTableModel)blendListTbl.getModel();
+        model.removeRow(blendListTbl.getSelectedRow());
+        deleteBtn.setEnabled(false);
+    }//GEN-LAST:event_deleteBtnActionPerformed
 
     
     /**
