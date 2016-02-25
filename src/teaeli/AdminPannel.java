@@ -7,6 +7,7 @@
 package teaeli;
 
 import classes.Ingredient;
+import classes.StockHistory;
 import classes.DBConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -78,6 +79,9 @@ public class AdminPannel extends javax.swing.JFrame {
         
         Ingredient ingredient = new Ingredient();
         ingredient.populateIngredientTable((DefaultTableModel) inventryIngredientTable.getModel());
+        
+        StockHistory ingredientStock = new StockHistory ();
+        ingredientStock.populateStockIngredientHistoryTable((DefaultTableModel) ingStockHistoryTbl.getModel());
 
     }
     
@@ -170,7 +174,7 @@ public class AdminPannel extends javax.swing.JFrame {
         inventoryBlendLbl1 = new javax.swing.JLabel();
         settingsIngHistoryPanel = new javax.swing.JPanel();
         jScrollPane8 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
+        ingStockHistoryTbl = new javax.swing.JTable();
         settingsBlendHistoryPanel = new javax.swing.JPanel();
         jScrollPane9 = new javax.swing.JScrollPane();
         jTable4 = new javax.swing.JTable();
@@ -696,7 +700,7 @@ public class AdminPannel extends javax.swing.JFrame {
 
         settingsIngHistoryPanel.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+        ingStockHistoryTbl.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
@@ -715,17 +719,17 @@ public class AdminPannel extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane8.setViewportView(jTable3);
-        if (jTable3.getColumnModel().getColumnCount() > 0) {
-            jTable3.getColumnModel().getColumn(0).setResizable(false);
-            jTable3.getColumnModel().getColumn(1).setResizable(false);
-            jTable3.getColumnModel().getColumn(1).setPreferredWidth(200);
-            jTable3.getColumnModel().getColumn(2).setResizable(false);
-            jTable3.getColumnModel().getColumn(3).setResizable(false);
-            jTable3.getColumnModel().getColumn(4).setResizable(false);
-            jTable3.getColumnModel().getColumn(4).setPreferredWidth(400);
-            jTable3.getColumnModel().getColumn(5).setResizable(false);
-            jTable3.getColumnModel().getColumn(5).setPreferredWidth(200);
+        jScrollPane8.setViewportView(ingStockHistoryTbl);
+        if (ingStockHistoryTbl.getColumnModel().getColumnCount() > 0) {
+            ingStockHistoryTbl.getColumnModel().getColumn(0).setResizable(false);
+            ingStockHistoryTbl.getColumnModel().getColumn(1).setResizable(false);
+            ingStockHistoryTbl.getColumnModel().getColumn(1).setPreferredWidth(200);
+            ingStockHistoryTbl.getColumnModel().getColumn(2).setResizable(false);
+            ingStockHistoryTbl.getColumnModel().getColumn(3).setResizable(false);
+            ingStockHistoryTbl.getColumnModel().getColumn(4).setResizable(false);
+            ingStockHistoryTbl.getColumnModel().getColumn(4).setPreferredWidth(400);
+            ingStockHistoryTbl.getColumnModel().getColumn(5).setResizable(false);
+            ingStockHistoryTbl.getColumnModel().getColumn(5).setPreferredWidth(200);
         }
 
         javax.swing.GroupLayout settingsIngHistoryPanelLayout = new javax.swing.GroupLayout(settingsIngHistoryPanel);
@@ -1102,6 +1106,7 @@ public class AdminPannel extends javax.swing.JFrame {
     private javax.swing.JButton addProductBtn;
     private javax.swing.JButton addUserBtn;
     private javax.swing.JButton deleteUserBtn;
+    private javax.swing.JTable ingStockHistoryTbl;
     private javax.swing.JLabel inventoryBlendLbl;
     private javax.swing.JLabel inventoryBlendLbl1;
     private javax.swing.JTable inventoryBlendTable;
@@ -1129,7 +1134,6 @@ public class AdminPannel extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
-    private javax.swing.JTable jTable3;
     private javax.swing.JTable jTable4;
     private javax.swing.JLabel logoLabel;
     private javax.swing.JButton logoutBtn;
