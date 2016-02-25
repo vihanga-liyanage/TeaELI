@@ -24,6 +24,7 @@ public class DBConnection {
         } catch (ClassNotFoundException e) {
             System.err.println("Couldn't find database driver : " + e.getMessage());
         }
+
         return connection;
     }
 

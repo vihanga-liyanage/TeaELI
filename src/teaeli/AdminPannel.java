@@ -27,6 +27,8 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
+import static teaeli.TeaELI.loginFrame;
+
 
 public class AdminPannel extends javax.swing.JFrame {
 
@@ -999,11 +1001,52 @@ public class AdminPannel extends javax.swing.JFrame {
     }//GEN-LAST:event_addNewBlendsBtnActionPerformed
 
     private void profileBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profileBtnActionPerformed
+
         EditProfile editProfile = new EditProfile();
         editProfile.setVisible(true);
         editProfile.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 
         //String UserName = new LoginFrame().user;
+
+
+        
+        String userName = loginFrame.user;
+        
+        try {
+            con = dbcon.setConnection();//get the connection
+            String query = "SELECT username,firstname,lastname FROM user where username = ('"+userName+"')";
+            ResultSet rs =dbcon.getResult(query, con);
+            
+            while (rs.next()) {
+                user.setUserName(rs.getString(1));
+                user.setFirstName(rs.getString(2));
+                user.setLastName(rs.getString(3));
+            }
+            
+            
+            
+        } catch (SQLException e) {
+            System.out.println(e);//an error occured while executing
+            
+        } finally {
+            try {
+                if (pst != null) {
+                    pst.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            }catch (SQLException e) {
+
+            }
+        }
+            
+            editProfile.setVisible(true);
+            editProfile.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE); 
+            editProfile.lblUserName.setText(user.getUserName());
+            editProfile.txtFirstName.setText(user.getFirstName());
+            editProfile.txtLastName.setText(user.getLastName());
+        
 
     }//GEN-LAST:event_profileBtnActionPerformed
 
