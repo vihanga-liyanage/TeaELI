@@ -1,15 +1,23 @@
-
 package classes;
 
 // attributes
 
 import java.sql.Connection;
+import java.sql.SQLException;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
+import teaeli.LoginFrame;
+import static teaeli.LoginFrame.adminPannel;
 import java.sql.ResultSet;
 import java.util.Vector;
-import javax.swing.table.DefaultTableModel;
+
+
+
 
 public class Ingredient {
+
     // attributes
+
     private int ingID ,ingCategoryID ,visibleStock ,orderedStock , invisibleStock ,supID;
     private int orderReqQty , orderExcessQty ;
     private String ingName ;
@@ -17,6 +25,7 @@ public class Ingredient {
     
     DBConnection dbConn = new DBConnection();
     
+
     //constructor
     public Ingredient() {
         this.ingID = 0;
@@ -26,13 +35,12 @@ public class Ingredient {
         this.invisibleStock = 0;
         this.ingName = null;
         this.supID = 0;
-        this.unitPrice =  0.0f;
-        this.orderReqQty =  0;
-        this.orderExcessQty =  0;
+        this.unitPrice = 0.0f;
+        this.orderReqQty = 0;
+        this.orderExcessQty = 0;
     }
-    
-    //getters and setters
 
+    //getters and setters
     public int getIngID() {
         return ingID;
     }
@@ -96,6 +104,7 @@ public class Ingredient {
     public void setUnitPrice(float unitPrice) {
         this.unitPrice = unitPrice;
     }
+
     public int getOrderReqQty() {
         return orderReqQty;
     }
@@ -111,6 +120,7 @@ public class Ingredient {
     public void setOrderExessQty(int orderExessQty) {
         this.orderExcessQty = orderExessQty;
     }
+
     
     /* start of populateIngredientTable method */
     public void populateIngredientTable(DefaultTableModel tableModel){
@@ -154,9 +164,69 @@ public class Ingredient {
         }
     }
     /* end of populateIngredientTable method */
+
+    
+    /* start of loadNameForSearchStockIngComboBox method*/
+    public ResultSet loadNameForSearchStockIngComboBox(){
+        Connection connection = null;
+        ResultSet resultSet = null;
+        
+        try{
+            connection = dbConn.setConnection();
+            
+            String query = "SELECT ingName FROM ingredient";
+            
+            resultSet = dbConn.getResult(query, connection);
+            
+        } catch(Exception e){
+            System.err.println("");
+        }
+        return resultSet; 
+    }
+    /* end of loadNameForSearchStockIngComboBox method */
+
+
+
+
+
+
+
+    // Start of methods
+    //start of view all ingredients method
+   public void viewAllIngredients() throws SQLException {
+
+        DBConnection dbConn = new DBConnection();
+        Connection connection = dbConn.setConnection();
+        ResultSet resultSet = null;
+        String query = "SELECT ingName,unitPrice,supName FROM ingredient,supplier where ingredient.supID = supplier.supID";
+        try {
+            resultSet = dbConn.getResult(query, connection);
+            
+            while (resultSet.next()) {                
+                DefaultTableModel model = (DefaultTableModel) adminPannel.settingsIngredientTable.getModel();
+                model.addRow(new Object[]{resultSet.getString(1),resultSet.getString(3),resultSet.getString(2)});    
+            }
+
+        } catch (Exception e) {
+            System.err.println("err : " + e);
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (Exception e) {
+                    System.err.println("Resultset close error : " + e);
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (Exception e) {
+                    System.err.println("Connection close error : " + e);
+                }
+            }
+        }
+
+    }
+
+    //end of view all ingredients method
 }
-
-
-
-
-

@@ -396,8 +396,8 @@
                             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                               <Table columnCount="3" rowCount="1">
                                 <Column editable="false" title="Ingredient Name" type="java.lang.Object"/>
-                                <Column editable="true" title="Visible Stock (g)" type="java.lang.Object"/>
-                                <Column editable="true" title="Invisible Stock (g)" type="java.lang.Object"/>
+                                <Column editable="false" title="Visible Stock (g)" type="java.lang.Object"/>
+                                <Column editable="false" title="Invisible Stock (g)" type="java.lang.Object"/>
                               </Table>
                             </Property>
                             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -423,6 +423,9 @@
                               <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                             </Property>
                           </Properties>
+                          <AuxValues>
+                            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+                          </AuxValues>
                         </Component>
                       </SubComponents>
                     </Container>
@@ -458,7 +461,7 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
-                                      <Component id="searchStockBlendsComboBox" min="-2" pref="212" max="-2" attributes="0"/>
+                                      <Component id="searchStockBlendsComboBox" min="-2" pref="245" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="searchStockBlendsBtn" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="32767" attributes="0"/>
@@ -520,7 +523,8 @@
                         <Component class="javax.swing.JTable" name="inventoryBlendTable">
                           <Properties>
                             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                              <Table columnCount="3" rowCount="2">
+                              <Table columnCount="4" rowCount="2">
+                                <Column editable="false" title="Blend Category" type="java.lang.Object"/>
                                 <Column editable="false" title="Blend Name" type="java.lang.Object"/>
                                 <Column editable="false" title="Visible Stock (g)" type="java.lang.Object"/>
                                 <Column editable="false" title="Invisible Stock (g)" type="java.lang.Object"/>
@@ -528,6 +532,11 @@
                             </Property>
                             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                               <TableColumnModel selectionModel="0">
+                                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                                  <Title/>
+                                  <Editor/>
+                                  <Renderer/>
+                                </Column>
                                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                                   <Title/>
                                   <Editor/>
@@ -634,10 +643,10 @@
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
+                          <Group type="102" alignment="1" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jScrollPane5" pref="1219" max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Component id="jScrollPane10" max="32767" attributes="0"/>
                                   <Group type="102" attributes="0">
                                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                           <Component id="jLabel5" max="32767" attributes="0"/>
@@ -647,7 +656,7 @@
                                               <Component id="searchItemBtn" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
-                                      <EmptySpace max="32767" attributes="0"/>
+                                      <EmptySpace pref="813" max="32767" attributes="0"/>
                                       <Component id="addItemBtn" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
@@ -668,9 +677,9 @@
                                   <Component id="searchItemTxt" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                                   <Component id="searchItemBtn" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="jScrollPane5" min="-2" pref="379" max="-2" attributes="0"/>
-                              <EmptySpace pref="74" max="32767" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="jScrollPane10" min="-2" pref="389" max="-2" attributes="0"/>
+                              <EmptySpace pref="80" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -705,35 +714,35 @@
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addItemBtnActionPerformed"/>
                       </Events>
                     </Component>
-                    <Container class="javax.swing.JScrollPane" name="jScrollPane5">
+                    <Container class="javax.swing.JScrollPane" name="jScrollPane10">
                       <AuxValues>
                         <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
                       </AuxValues>
 
                       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                       <SubComponents>
-                        <Component class="javax.swing.JTable" name="jTable2">
+                        <Component class="javax.swing.JTable" name="settingsIngredientTable">
                           <Properties>
                             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                              <Table columnCount="3" rowCount="1">
-                                <Column editable="false" title="Ingredient Name" type="java.lang.Object"/>
-                                <Column editable="false" title="Supplier" type="java.lang.Object"/>
-                                <Column editable="false" title="Unit Price" type="java.lang.Object"/>
+                              <Table columnCount="3" rowCount="0">
+                                <Column editable="true" title="IngredientName" type="java.lang.Object"/>
+                                <Column editable="true" title="Supplier" type="java.lang.Object"/>
+                                <Column editable="true" title="Unit Price" type="java.lang.Object"/>
                               </Table>
                             </Property>
                             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                               <TableColumnModel selectionModel="0">
-                                <Column maxWidth="-1" minWidth="-1" prefWidth="400" resizable="false">
+                                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                                   <Title/>
                                   <Editor/>
                                   <Renderer/>
                                 </Column>
-                                <Column maxWidth="-1" minWidth="-1" prefWidth="550" resizable="false">
+                                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                                   <Title/>
                                   <Editor/>
                                   <Renderer/>
                                 </Column>
-                                <Column maxWidth="-1" minWidth="-1" prefWidth="130" resizable="false">
+                                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                                   <Title/>
                                   <Editor/>
                                   <Renderer/>
@@ -744,6 +753,9 @@
                               <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                             </Property>
                           </Properties>
+                          <AuxValues>
+                            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+                          </AuxValues>
                         </Component>
                       </SubComponents>
                     </Container>
@@ -1274,7 +1286,7 @@
                         <Component class="javax.swing.JTable" name="userTable">
                           <Properties>
                             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                              <Table columnCount="4" rowCount="1">
+                              <Table columnCount="4" rowCount="0">
                                 <Column editable="false" title="User ID" type="java.lang.Object"/>
                                 <Column editable="true" title="Username" type="java.lang.Object"/>
                                 <Column editable="true" title="Firstname" type="java.lang.Object"/>

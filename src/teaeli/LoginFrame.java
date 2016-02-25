@@ -26,10 +26,11 @@ import javax.swing.UnsupportedLookAndFeelException;
  *
  * @author CHAM PC
  */
+
 public class LoginFrame extends javax.swing.JFrame {
     
     public static AdminPannel adminPannel = new AdminPannel();
-            
+    public String user;        
     public LoginFrame() {
         //Add windows look and feel
         try {
@@ -58,7 +59,7 @@ public class LoginFrame extends javax.swing.JFrame {
     
     String userName,password;
     int passwrdCount =0;
-    public String user;
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
