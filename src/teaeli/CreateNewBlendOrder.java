@@ -83,11 +83,20 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
             public void valueChanged(ListSelectionEvent lse) {
                 if (!mod.isSelectionEmpty()) {
                     deleteBtn.setEnabled(true);
+                    int count = blendListTbl.getRowCount();
+                    for (int i=0; i<count; i++) {
+                        setExcessQty(i);
+                    }
                 }
             }
         });
     }
 
+    private void setExcessQty(int row){
+        int requiredQty = Integer.parseInt(blendListTbl.getValueAt(row, 4).toString());
+        int finalQty = Integer.parseInt(blendListTbl.getValueAt(row, 6).toString());
+        blendListTbl.setValueAt(finalQty - requiredQty, row, 5);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
