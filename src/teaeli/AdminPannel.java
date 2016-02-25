@@ -35,6 +35,7 @@ public class AdminPannel extends javax.swing.JFrame {
     User user = new User();
     Ingredient ingredient = new Ingredient();
     Blend blend = new Blend();
+    public static IngredientDetails ingredientDetails = new IngredientDetails();
 
     /**
      * Creates new form AdminPannel

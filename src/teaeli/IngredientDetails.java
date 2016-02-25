@@ -1,14 +1,14 @@
-
 package teaeli;
 
+import classes.Ingredient;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-
 
 public class IngredientDetails extends javax.swing.JFrame {
 
@@ -23,13 +23,13 @@ public class IngredientDetails extends javax.swing.JFrame {
             Logger.getLogger(AdminPannel.class.getName()).log(Level.SEVERE, null, ex);
         }
         initComponents();
-        
-        Dimension screenSize,frameSize;
-        int x,y;
-        screenSize=Toolkit.getDefaultToolkit().getScreenSize();
-        frameSize=getSize();
-        x=(screenSize.width-frameSize.width)/4;
-        y=(screenSize.height-frameSize.height)/4;
+
+        Dimension screenSize, frameSize;
+        int x, y;
+        screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        frameSize = getSize();
+        x = (screenSize.width - frameSize.width) / 10;
+        y = (screenSize.height - frameSize.height) /10;
         setLocation(x, y);
         setResizable(false);
         this.pack();
@@ -223,7 +223,24 @@ public class IngredientDetails extends javax.swing.JFrame {
     }//GEN-LAST:event_unitPriceTxtActionPerformed
 
     private void updateItemBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateItemBtnActionPerformed
-        
+        Ingredient ingredient = new Ingredient();
+        int response = JOptionPane.showConfirmDialog(null, "Are you sure you need to update the ingredient? ", "Confirm Update",
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (response == JOptionPane.NO_OPTION) {
+            System.out.println("No button clicked");
+        } else if (response == JOptionPane.YES_OPTION) {
+            try {
+                System.out.println("get sup id");
+                System.out.println("this.supplierNameTxt.getText()" +this.supplierNameTxt.getText());
+                
+                ingredient.getSupplierIDByName(this.supplierNameTxt.getText());
+            } catch (SQLException ex) {
+                Logger.getLogger(IngredientDetails.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            //ingredient.updateIngredient(null, null, null, null);
+        } else if (response == JOptionPane.CLOSED_OPTION) {
+            System.out.println("JOptionPane closed");
+        }
     }//GEN-LAST:event_updateItemBtnActionPerformed
 
     /**
