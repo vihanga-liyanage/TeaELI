@@ -789,7 +789,7 @@ public class AdminPannel extends javax.swing.JFrame {
 
         userTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null}
+
             },
             new String [] {
                 "User ID", "Username", "Firstname", "Lastname"
@@ -1025,8 +1025,8 @@ public class AdminPannel extends javax.swing.JFrame {
 
                 int rst = user.removeUser(id);
                 if (rst == 1) {
-                    JOptionPane.showMessageDialog(this, "User successfully deleted");
                     user.viewUser((DefaultTableModel) userTable.getModel());
+                    JOptionPane.showMessageDialog(this, "User successfully deleted");
                 } else {
                     JOptionPane.showMessageDialog(this, "Error occured! User couldn't be deleted");
                 }
