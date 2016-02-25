@@ -7,23 +7,28 @@ package teaeli;
 
 import classes.Blend;
 import classes.Validation;
-import java.awt.Dimension;
-import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.List;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Janith
  */
 public class CreateNewBlendOrder extends javax.swing.JFrame {
-
+    
+    private Blend blend;
+    
     /**
      * Creates new form AddNewOrder
      */
@@ -37,8 +42,10 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
         initComponents();
         this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
         
+        //Loading required class objects
+        blend = new Blend();
+        
         //Initialize blendCombo
-        Blend blend = new Blend();
         blend.initBlendCombo(blendsCombo);
         
         //Validation on qty, when key released
@@ -62,6 +69,23 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
             public void keyPressed(KeyEvent e) {
             }
         });
+        
+        //set focus to blendCombo
+        blendsCombo.requestFocus();
+        
+        deleteBtn.setEnabled(false);
+        
+        //enabling delete button on row select
+        final ListSelectionModel mod = blendListTbl.getSelectionModel();
+        mod.addListSelectionListener(new ListSelectionListener() {
+
+            @Override
+            public void valueChanged(ListSelectionEvent lse) {
+                if (!mod.isSelectionEmpty()) {
+                    deleteBtn.setEnabled(true);
+                }
+            }
+        });
     }
 
     /**
@@ -79,9 +103,9 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
         blendsCombo = new javax.swing.JComboBox();
         jLabel3 = new javax.swing.JLabel();
         weightCombo = new javax.swing.JComboBox();
-        blendQtyAddBtn = new javax.swing.JButton();
+        blendAddBtn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblOrder = new javax.swing.JTable();
+        blendListTbl = new javax.swing.JTable();
         createOrderBtn = new javax.swing.JButton();
         tblMasterPlanScrollPane = new javax.swing.JScrollPane();
         tblMasterPlan = new javax.swing.JTable();
@@ -95,6 +119,8 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
         lblOrderNo = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        deleteBtn = new javax.swing.JButton();
 
         jLabel1.setText("jLabel1");
 
@@ -110,6 +136,11 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
         blendsCombo.setEditable(true);
         blendsCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         blendsCombo.setSelectedIndex(-1);
+        blendsCombo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                blendsComboActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -124,52 +155,52 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
             }
         });
 
-        blendQtyAddBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        blendQtyAddBtn.setText("Add");
-        blendQtyAddBtn.addActionListener(new java.awt.event.ActionListener() {
+        blendAddBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        blendAddBtn.setText("Add");
+        blendAddBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                blendQtyAddBtnActionPerformed(evt);
+                blendAddBtnActionPerformed(evt);
             }
         });
 
-        tblOrder.setModel(new javax.swing.table.DefaultTableModel(
+        blendListTbl.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null}
+
             },
             new String [] {
                 "Blend Name", "Qty Required (g)", "Visible Stock (g)", "Invisible Stock (g)", "Balance Qty Required(g)", "Excess Qty (g)", "Final Qty (g)"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, true, false, false, true
+                false, false, false, false, false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        tblOrder.setRowHeight(20);
-        tblOrder.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+        blendListTbl.setRowHeight(24);
+        blendListTbl.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                tblOrderPropertyChange(evt);
+                blendListTblPropertyChange(evt);
             }
         });
-        jScrollPane1.setViewportView(tblOrder);
-        if (tblOrder.getColumnModel().getColumnCount() > 0) {
-            tblOrder.getColumnModel().getColumn(0).setResizable(false);
-            tblOrder.getColumnModel().getColumn(0).setPreferredWidth(200);
-            tblOrder.getColumnModel().getColumn(1).setResizable(false);
-            tblOrder.getColumnModel().getColumn(1).setPreferredWidth(180);
-            tblOrder.getColumnModel().getColumn(2).setResizable(false);
-            tblOrder.getColumnModel().getColumn(2).setPreferredWidth(180);
-            tblOrder.getColumnModel().getColumn(3).setResizable(false);
-            tblOrder.getColumnModel().getColumn(3).setPreferredWidth(180);
-            tblOrder.getColumnModel().getColumn(4).setResizable(false);
-            tblOrder.getColumnModel().getColumn(4).setPreferredWidth(180);
-            tblOrder.getColumnModel().getColumn(5).setResizable(false);
-            tblOrder.getColumnModel().getColumn(5).setPreferredWidth(180);
-            tblOrder.getColumnModel().getColumn(6).setResizable(false);
-            tblOrder.getColumnModel().getColumn(6).setPreferredWidth(180);
+        jScrollPane1.setViewportView(blendListTbl);
+        if (blendListTbl.getColumnModel().getColumnCount() > 0) {
+            blendListTbl.getColumnModel().getColumn(0).setResizable(false);
+            blendListTbl.getColumnModel().getColumn(0).setPreferredWidth(250);
+            blendListTbl.getColumnModel().getColumn(1).setResizable(false);
+            blendListTbl.getColumnModel().getColumn(1).setPreferredWidth(180);
+            blendListTbl.getColumnModel().getColumn(2).setResizable(false);
+            blendListTbl.getColumnModel().getColumn(2).setPreferredWidth(180);
+            blendListTbl.getColumnModel().getColumn(3).setResizable(false);
+            blendListTbl.getColumnModel().getColumn(3).setPreferredWidth(180);
+            blendListTbl.getColumnModel().getColumn(4).setResizable(false);
+            blendListTbl.getColumnModel().getColumn(4).setPreferredWidth(180);
+            blendListTbl.getColumnModel().getColumn(5).setResizable(false);
+            blendListTbl.getColumnModel().getColumn(5).setPreferredWidth(180);
+            blendListTbl.getColumnModel().getColumn(6).setResizable(false);
+            blendListTbl.getColumnModel().getColumn(6).setPreferredWidth(180);
         }
 
         createOrderBtn.setText("Create Order");
@@ -301,6 +332,11 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
         jLabel15.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel15.setText("Add blends to generate RO order");
 
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel6.setText("Please edit final qty column to add excess amounts.");
+
+        deleteBtn.setText("Delete");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -322,22 +358,25 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(blendsQtyTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(weightCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(weightCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(blendQtyAddBtn))))
+                                        .addComponent(blendAddBtn))))
                             .addComponent(jLabel15))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(createOrderBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(cancelBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(confirmBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addComponent(cancelBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(confirmBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(deleteBtn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(createOrderBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -355,14 +394,21 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(blendsCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(blendQtyAddBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(blendAddBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(blendsQtyTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(weightCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(createOrderBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(createOrderBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(deleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel6)))
                 .addGap(40, 40, 40)
                 .addComponent(tblMasterPlanScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
@@ -396,9 +442,9 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_weightComboActionPerformed
 
-    private void tblOrderPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_tblOrderPropertyChange
+    private void blendListTblPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_blendListTblPropertyChange
         // TODO add your handling code here:
-    }//GEN-LAST:event_tblOrderPropertyChange
+    }//GEN-LAST:event_blendListTblPropertyChange
 
     private void createOrderBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createOrderBtnActionPerformed
         tblMasterPlanScrollPane.setVisible(true);
@@ -422,13 +468,44 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
         confirmBtn.setVisible(false);
     }//GEN-LAST:event_cancelBtnActionPerformed
 
-    private void blendQtyAddBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blendQtyAddBtnActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_blendQtyAddBtnActionPerformed
+    private void blendAddBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blendAddBtnActionPerformed
+        String blendName = (String) blendsCombo.getSelectedItem();
+        List<List<String>> res = blend.getBlendDataByBlendName(blendName);
+        Vector newRow = new Vector();
+        newRow.addElement(res.get(0).get(1));
+        newRow.addElement(blendsQtyTxt.getText());
+        newRow.addElement(res.get(0).get(3));
+        newRow.addElement(res.get(0).get(5));
+        
+        //calculating qty required
+        int blendQty = Integer.parseInt(blendsQtyTxt.getText());
+        int visible = Integer.parseInt(res.get(0).get(3));
+        int invisible = Integer.parseInt(res.get(0).get(5));
+        int balance = 0;
+        balance = blendQty - visible;
+        if (balance > 0) {
+            balance = blendQty - visible - invisible;
+        }
+        if (balance < 0) {
+            balance = 0;
+        }
+        newRow.addElement(balance);
+        newRow.addElement(0);
+        newRow.addElement(balance);
+        DefaultTableModel model = (DefaultTableModel) blendListTbl.getModel();
+        model.addRow(newRow);
+        
+        //blendsCombo.remove(blendsCombo.getSelectedIndex());
+        blendsCombo.requestFocus();
+    }//GEN-LAST:event_blendAddBtnActionPerformed
 
     private void blendsQtyTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blendsQtyTxtActionPerformed
-        
+        blendAddBtn.requestFocus();
     }//GEN-LAST:event_blendsQtyTxtActionPerformed
+
+    private void blendsComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blendsComboActionPerformed
+
+    }//GEN-LAST:event_blendsComboActionPerformed
 
     
     /**
@@ -467,18 +544,21 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton blendQtyAddBtn;
+    private javax.swing.JButton blendAddBtn;
+    private javax.swing.JTable blendListTbl;
     private javax.swing.JComboBox blendsCombo;
     private javax.swing.JTextField blendsQtyTxt;
     public javax.swing.JButton cancelBtn;
     public javax.swing.JButton confirmBtn;
     private javax.swing.JButton createOrderBtn;
+    private javax.swing.JButton deleteBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -487,7 +567,6 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
     private javax.swing.JLabel lblOrderNo;
     public javax.swing.JTable tblMasterPlan;
     public javax.swing.JScrollPane tblMasterPlanScrollPane;
-    private javax.swing.JTable tblOrder;
     private javax.swing.JComboBox weightCombo;
     // End of variables declaration//GEN-END:variables
 }

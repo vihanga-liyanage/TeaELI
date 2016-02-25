@@ -2,6 +2,7 @@ package teaeli;
 
 import classes.Blend;
 import classes.Ingredient;
+import classes.StockHistory;
 import classes.DBConnection;
 import classes.AutoSuggest;
 import java.sql.Connection;
@@ -56,6 +57,7 @@ public class AdminPannel extends javax.swing.JFrame {
         initComponents();
 
         startClock();
+        
         final ListSelectionModel mod = productTable.getSelectionModel();
         mod.addListSelectionListener(new ListSelectionListener() {
 
@@ -66,9 +68,7 @@ public class AdminPannel extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, productTable.getValueAt(row, 0));
                 }
             }
-
-        }
-        );
+        });
 
         user.viewUser((DefaultTableModel) userTable.getModel());
 
@@ -90,8 +90,19 @@ public class AdminPannel extends javax.swing.JFrame {
         
         /* populate inventryIngredientTable in inventory management*/
         ingredient.populateIngredientTable((DefaultTableModel) inventryIngredientTable.getModel());
+        
+        /*Populate ingredientstock history*/
+        StockHistory ingredientHistoryStock = new StockHistory ();
+        ingredientHistoryStock.populateStockIngredientHistoryTable((DefaultTableModel) ingStockHistoryTbl.getModel());
+
+        /*Populate ingredientstock history*/
+        StockHistory blendHistoryStock = new StockHistory ();
+        blendHistoryStock.populateStockBlendHistoryTable((DefaultTableModel) blendStockHistoryTbl.getModel());
+
+
         AutoSuggest searchStockIngComboBoxAutoSuggest = new AutoSuggest();
         searchStockIngComboBoxAutoSuggest.setAutoSuggest(searchStockIngComboBox, ingredient.loadNameForSearchStockIngComboBox());
+
 
         /* populate inventryBlendTable in inventory management*/
         Blend blend = new Blend();
@@ -191,10 +202,10 @@ public class AdminPannel extends javax.swing.JFrame {
         inventoryBlendLbl1 = new javax.swing.JLabel();
         settingsIngHistoryPanel = new javax.swing.JPanel();
         jScrollPane8 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
+        ingStockHistoryTbl = new javax.swing.JTable();
         settingsBlendHistoryPanel = new javax.swing.JPanel();
         jScrollPane9 = new javax.swing.JScrollPane();
-        jTable4 = new javax.swing.JTable();
+        blendStockHistoryTbl = new javax.swing.JTable();
         settingsUserPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         userTable = new javax.swing.JTable();
@@ -429,6 +440,12 @@ public class AdminPannel extends javax.swing.JFrame {
             }
         });
         jScrollPane2.setViewportView(inventoryBlendTable);
+        if (inventoryBlendTable.getColumnModel().getColumnCount() > 0) {
+            inventoryBlendTable.getColumnModel().getColumn(1).setResizable(false);
+            inventoryBlendTable.getColumnModel().getColumn(1).setPreferredWidth(200);
+            inventoryBlendTable.getColumnModel().getColumn(2).setResizable(false);
+            inventoryBlendTable.getColumnModel().getColumn(3).setResizable(false);
+        }
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel7.setText("Start typing blend name to update stock");
@@ -708,7 +725,7 @@ public class AdminPannel extends javax.swing.JFrame {
 
         settingsIngHistoryPanel.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+        ingStockHistoryTbl.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
@@ -727,17 +744,17 @@ public class AdminPannel extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane8.setViewportView(jTable3);
-        if (jTable3.getColumnModel().getColumnCount() > 0) {
-            jTable3.getColumnModel().getColumn(0).setResizable(false);
-            jTable3.getColumnModel().getColumn(1).setResizable(false);
-            jTable3.getColumnModel().getColumn(1).setPreferredWidth(200);
-            jTable3.getColumnModel().getColumn(2).setResizable(false);
-            jTable3.getColumnModel().getColumn(3).setResizable(false);
-            jTable3.getColumnModel().getColumn(4).setResizable(false);
-            jTable3.getColumnModel().getColumn(4).setPreferredWidth(400);
-            jTable3.getColumnModel().getColumn(5).setResizable(false);
-            jTable3.getColumnModel().getColumn(5).setPreferredWidth(200);
+        jScrollPane8.setViewportView(ingStockHistoryTbl);
+        if (ingStockHistoryTbl.getColumnModel().getColumnCount() > 0) {
+            ingStockHistoryTbl.getColumnModel().getColumn(0).setResizable(false);
+            ingStockHistoryTbl.getColumnModel().getColumn(1).setResizable(false);
+            ingStockHistoryTbl.getColumnModel().getColumn(1).setPreferredWidth(200);
+            ingStockHistoryTbl.getColumnModel().getColumn(2).setResizable(false);
+            ingStockHistoryTbl.getColumnModel().getColumn(3).setResizable(false);
+            ingStockHistoryTbl.getColumnModel().getColumn(4).setResizable(false);
+            ingStockHistoryTbl.getColumnModel().getColumn(4).setPreferredWidth(400);
+            ingStockHistoryTbl.getColumnModel().getColumn(5).setResizable(false);
+            ingStockHistoryTbl.getColumnModel().getColumn(5).setPreferredWidth(200);
         }
 
         javax.swing.GroupLayout settingsIngHistoryPanelLayout = new javax.swing.GroupLayout(settingsIngHistoryPanel);
@@ -761,7 +778,7 @@ public class AdminPannel extends javax.swing.JFrame {
 
         settingsBlendHistoryPanel.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTable4.setModel(new javax.swing.table.DefaultTableModel(
+        blendStockHistoryTbl.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
@@ -780,17 +797,17 @@ public class AdminPannel extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane9.setViewportView(jTable4);
-        if (jTable4.getColumnModel().getColumnCount() > 0) {
-            jTable4.getColumnModel().getColumn(0).setResizable(false);
-            jTable4.getColumnModel().getColumn(1).setResizable(false);
-            jTable4.getColumnModel().getColumn(1).setPreferredWidth(200);
-            jTable4.getColumnModel().getColumn(2).setResizable(false);
-            jTable4.getColumnModel().getColumn(3).setResizable(false);
-            jTable4.getColumnModel().getColumn(4).setResizable(false);
-            jTable4.getColumnModel().getColumn(4).setPreferredWidth(400);
-            jTable4.getColumnModel().getColumn(5).setResizable(false);
-            jTable4.getColumnModel().getColumn(5).setPreferredWidth(200);
+        jScrollPane9.setViewportView(blendStockHistoryTbl);
+        if (blendStockHistoryTbl.getColumnModel().getColumnCount() > 0) {
+            blendStockHistoryTbl.getColumnModel().getColumn(0).setResizable(false);
+            blendStockHistoryTbl.getColumnModel().getColumn(1).setResizable(false);
+            blendStockHistoryTbl.getColumnModel().getColumn(1).setPreferredWidth(200);
+            blendStockHistoryTbl.getColumnModel().getColumn(2).setResizable(false);
+            blendStockHistoryTbl.getColumnModel().getColumn(3).setResizable(false);
+            blendStockHistoryTbl.getColumnModel().getColumn(4).setResizable(false);
+            blendStockHistoryTbl.getColumnModel().getColumn(4).setPreferredWidth(400);
+            blendStockHistoryTbl.getColumnModel().getColumn(5).setResizable(false);
+            blendStockHistoryTbl.getColumnModel().getColumn(5).setPreferredWidth(200);
         }
 
         javax.swing.GroupLayout settingsBlendHistoryPanelLayout = new javax.swing.GroupLayout(settingsBlendHistoryPanel);
@@ -1164,7 +1181,9 @@ public class AdminPannel extends javax.swing.JFrame {
     private javax.swing.JButton addNewBlendsBtn;
     private javax.swing.JButton addProductBtn;
     private javax.swing.JButton addUserBtn;
+    private javax.swing.JTable blendStockHistoryTbl;
     private javax.swing.JButton deleteUserBtn;
+    private javax.swing.JTable ingStockHistoryTbl;
     private javax.swing.JLabel inventoryBlendLbl;
     private javax.swing.JLabel inventoryBlendLbl1;
     private javax.swing.JTable inventoryBlendTable;
@@ -1191,8 +1210,6 @@ public class AdminPannel extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable3;
-    private javax.swing.JTable jTable4;
     private javax.swing.JLabel logoLabel;
     private javax.swing.JButton logoutBtn;
     private javax.swing.JTabbedPane mainTabbedPane;

@@ -2,7 +2,9 @@ package classes;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 import javax.swing.JComboBox;
 import javax.swing.table.DefaultTableModel;
@@ -208,15 +210,58 @@ public class Blend {
         
         try{
             connection = dbConn.setConnection();
-            
             String query = "SELECT blendName FROM blend";
-            
             resultSet = dbConn.getResult(query, connection);
-            
         } catch(Exception e){
             System.err.println("");
         }
         return resultSet; 
+    }
+    /* end */
+    
+    /* Get blend data when blend name is given */
+    public List<List<String>> getBlendDataByBlendName(String blendName){
+        Connection conn = null;
+        ResultSet resultSet = null;
+        try{
+            String query = "SELECT * FROM blend WHERE blendName='" + blendName + "'";
+            conn = dbConn.setConnection();
+            resultSet = dbConn.getResult(query, conn);
+
+            List<List<String>> result = new ArrayList<>();  // List of list, one per row
+            ResultSetMetaData rsmd = resultSet.getMetaData();
+            int numcols = rsmd.getColumnCount();
+            
+            while (resultSet.next()) { 
+                List<String> row = new ArrayList<>(numcols); // new list per row
+                int i = 1;
+                while (i <= numcols) {  // don't skip the last column, use <=
+                    row.add(resultSet.getString(i++));
+                }
+                result.add(row); // add it to the result
+            }
+            
+            return result;
+            
+        }catch(Exception e){
+            System.err.println("err : " + e);
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (Exception e) {
+                    System.err.println("Resultset close error : " + e);
+                }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (Exception e) {
+                    System.err.println("Connection close error : " + e);
+                }
+            }
+        }
+        return null;
     }
     /* end */
 }

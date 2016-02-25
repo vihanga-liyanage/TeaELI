@@ -114,6 +114,38 @@ public class Ingredient {
         this.orderExcessQty = orderExessQty;
     }
 
+    /* Get ingredient data when blend name is given */
+    public ResultSet getIngDataByIngName(String ingName){
+        Connection conn = null;
+        ResultSet resultSet = null;
+        
+        try{
+            String query = "SELECT * FROM ingredient WHERE ingName='" + ingName + "'";
+            conn = dbConn.setConnection();
+            resultSet = dbConn.getResult(query, conn);
+            return resultSet;
+        }catch(Exception e){
+            System.err.println("err : " + e);
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (Exception e) {
+                    System.err.println("Resultset close error : " + e);
+                }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (Exception e) {
+                    System.err.println("Connection close error : " + e);
+                }
+            }
+        }
+        return null;
+    }
+    /* end */
+    
     /* start of populateIngredientTable method */
     public void populateIngredientTable(DefaultTableModel tableModel) {
 
@@ -224,13 +256,11 @@ public class Ingredient {
         String query = "SELECT categoryName,supName,unitPrice  FROM ingredient I,supplier S,ingredientcategory IC where I.ingName = '" + ingredientName + "' and I.supID = S.supID and I.ingCategoryID = IC.ingCategoryID;";
         try {
             resultSet = dbConn.getResult(query, connection);
-
             while (resultSet.next()) {
                 for (int i = 1; i<=3; i++) {
                     resultArray[i] = resultSet.getString(i);
                 }
             }
-            
         } catch (Exception e) {
             System.err.println("err : " + e);
         } finally {
