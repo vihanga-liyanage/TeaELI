@@ -220,7 +220,7 @@ public class AddIngredient extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Enter valid price");
             } else {
 
-                try {
+                /*try {
                     con = dbcon.setConnection();
                     String query = "INSERT INTO productdetails VALUES(?,?,?,?,?,?,?,?,?)";
                     pst = (PreparedStatement) con.prepareStatement(query);
@@ -241,7 +241,7 @@ public class AddIngredient extends javax.swing.JFrame {
                     } catch (SQLException e) {
                         System.out.println(e);
                     }
-                }
+                }*/
 
             }
 
