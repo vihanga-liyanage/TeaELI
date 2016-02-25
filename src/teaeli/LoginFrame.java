@@ -6,11 +6,19 @@
 
 package teaeli;
 
+import classes.DBConnection;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -20,9 +28,8 @@ import javax.swing.UnsupportedLookAndFeelException;
  */
 public class LoginFrame extends javax.swing.JFrame {
     
-    /**
-     * Creates new form LoginFrame
-     */
+    public static AdminPannel adminPannel = new AdminPannel();
+            
     public LoginFrame() {
         //Add windows look and feel
         try {
@@ -42,7 +49,16 @@ public class LoginFrame extends javax.swing.JFrame {
         setLocation(x, y);
         setResizable(false);
     }
-
+    
+    DBConnection dbcon = new DBConnection();
+    Connection con = null;
+    PreparedStatement pst = null;
+    ResultSet rs = null;
+    Statement st = null;
+    
+    String userName,password;
+    int passwrdCount =0;
+    public String user;
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -53,18 +69,16 @@ public class LoginFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        txtPassword = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         txtUsername = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         btnSubmit = new javax.swing.JButton();
+        txtPassword = new javax.swing.JPasswordField();
         jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("User Login");
         getContentPane().setLayout(null);
-
-        txtPassword.setFont(new java.awt.Font("Segoe UI Semibold", 0, 15)); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Segoe UI Semibold", 0, 15)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(102, 255, 255));
@@ -89,6 +103,12 @@ public class LoginFrame extends javax.swing.JFrame {
             }
         });
 
+        txtPassword.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtPasswordKeyPressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -99,10 +119,10 @@ public class LoginFrame extends javax.swing.JFrame {
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnSubmit, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtUsername, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
+                    .addComponent(txtPassword))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -137,15 +157,141 @@ public class LoginFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_txtUsernameActionPerformed
 
     private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
-        AdminPannel adminPannel = new AdminPannel();
-        
-        //Keep the window fullscreen
-        adminPannel.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
-        
-        adminPannel.setVisible(true);
-        this.setVisible(false);
+
+         userName = txtUsername.getText();
+         password = txtPassword.getText();
+         
+         if (checkLogin(userName, password)==1){
+             
+                AdminPannel adminPannel = new AdminPannel();//the provided username & password matched
+                adminPannel.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);//Keep the window fullscreen
+                adminPannel.setVisible(true);
+                user =userName;
+                this.setVisible(false);
+                
+            }else if (checkLogin(userName, password)==2){
+                
+                ManagerPannel managerPannel = new ManagerPannel();//the provided username & password matched
+                managerPannel.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);//Keep the window fullscreen
+                managerPannel.setVisible(true);
+                user =userName;
+                this.setVisible(false);
+                
+            /*}else if (checkLogin(userName, password)==3){
+                
+                if (passwrdCount !=3){
+                JOptionPane.showMessageDialog(this, "Wrong user name or password");//the provided password does not exist in the db
+                txtUsername.setText("");
+                txtPassword.setText("");
+                txtUsername.requestFocusInWindow();
+                passwrdCount++;
+                }else if (passwrdCount==3){
+                    JOptionPane.showMessageDialog(this, "ERROR!!! System will close!");
+                    this.dispose();
+                }*/
+                
+            }else if (checkLogin(userName, password)== 4 | checkLogin(userName, password)==3){
+                
+                if (passwrdCount !=3){
+                JOptionPane.showMessageDialog(this, "Wrong user name or password");//the provided password does not exist in the db
+                txtUsername.setText("");
+                txtPassword.setText("");
+                txtUsername.requestFocusInWindow();
+                passwrdCount++;
+                }else if (passwrdCount==3){
+                    JOptionPane.showMessageDialog(this, "ERROR!!! System will close!");
+                    this.dispose();
+                }
+            }
+
     }//GEN-LAST:event_btnSubmitActionPerformed
 
+    private void txtPasswordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPasswordKeyPressed
+        int code = evt.getKeyCode();
+        if (code== KeyEvent.VK_ENTER) {
+            userName = txtUsername.getText();
+            password = txtPassword.getText();
+         
+            if (checkLogin(userName, password)==1){
+                
+                AdminPannel adminPannel = new AdminPannel();//the provided username & password matched
+                adminPannel.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);//Keep the window fullscreen
+                adminPannel.setVisible(true);
+                user =userName;
+                this.setVisible(false);
+                
+            }else if (checkLogin(userName, password)==2){
+                
+                ManagerPannel managerPannel = new ManagerPannel();//the provided username & password matched
+                managerPannel.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);//Keep the window fullscreen
+                managerPannel.setVisible(true);
+                user =userName;
+                this.setVisible(false);
+                
+            /*}else if (checkLogin(userName, password)==3){
+                
+                if (passwrdCount !=3){
+                JOptionPane.showMessageDialog(this, "Wrong user name or password");//the provided password does not exist in the db
+                txtUsername.setText("");
+                txtPassword.setText("");
+                txtUsername.requestFocusInWindow();
+                passwrdCount++;
+                }else if (passwrdCount==3){
+                    JOptionPane.showMessageDialog(this, "ERROR!!! System will close!");
+                    this.dispose();
+                    
+                }*/
+            }else if (checkLogin(userName, password)== 4 | checkLogin(userName, password)==3){
+                
+                if (passwrdCount !=3){
+                JOptionPane.showMessageDialog(this, "Wrong user name or password");//the provided password does not exist in the db
+                txtUsername.setText("");
+                txtPassword.setText("");
+                txtUsername.requestFocusInWindow();
+                passwrdCount++;
+                }else if (passwrdCount==3){
+                    JOptionPane.showMessageDialog(this, "ERROR!!! System will close!");
+                    this.dispose();
+                }
+            }
+        }
+        
+    }//GEN-LAST:event_txtPasswordKeyPressed
+    
+    public int checkLogin(String userName, String password) {
+        try {
+            con = dbcon.setConnection();//get the connection
+            String query = "SELECT username,designation FROM user where password = sha1('"+password+"') and username = ('"+userName+"')";
+            ResultSet rs =dbcon.getResult(query, con);
+            
+            while (rs.next()) {
+                if (rs.getString(2).equals("Admin")) {
+                    return 1;     
+                } else if (rs.getString(2).equals("Manager")) {
+                    return 2;  
+                } else{
+                    return 3;  
+                }
+            }
+            return 4;
+            
+            
+        } catch (SQLException e) {
+            System.out.println(e);//an error occured while executing
+            return 0;
+        } finally {
+            try {
+                if (pst != null) {
+                    pst.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+
+            }
+        }
+    }
     /**
      * @param args the command line arguments
      */
@@ -187,7 +333,7 @@ public class LoginFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField txtPassword;
+    private javax.swing.JPasswordField txtPassword;
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
 }

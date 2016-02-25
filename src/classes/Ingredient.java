@@ -2,12 +2,20 @@
 package classes;
 
 // attributes
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.util.Vector;
+import javax.swing.table.DefaultTableModel;
+
 public class Ingredient {
     // attributes
     private int ingID ,ingCategoryID ,visibleStock ,orderedStock , invisibleStock ,supID;
     private int orderReqQty , orderExcessQty ;
     private String ingName ;
-    private float unitPrice; 
+    private float unitPrice;
+    
+    DBConnection dbConn = new DBConnection();
     
     //constructor
     public Ingredient() {
@@ -104,8 +112,48 @@ public class Ingredient {
         this.orderExcessQty = orderExessQty;
     }
     
-     // Start of methods
-    
+    /* start of populateIngredientTable method */
+    public void populateIngredientTable(DefaultTableModel tableModel){
+        
+        Connection connection = null;
+        ResultSet resultSet = null;
+        
+        try{
+            String query = "SELECT ingName,visibleStock,invisibleStock FROM ingredient";
+            
+            connection = dbConn.setConnection();
+            resultSet = dbConn.getResult(query, connection);
+            
+            tableModel.setRowCount(0);
+            
+            while (resultSet.next()) {
+                Vector newRow = new Vector();
+                for (int i = 1; i <= 3; i++) {
+                    newRow.addElement(resultSet.getObject(i));
+                }
+                tableModel.addRow(newRow);
+            }
+            
+        }catch(Exception e){
+            System.err.println("err : " + e);
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (Exception e) {
+                    System.err.println("Resultset close error : " + e);
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (Exception e) {
+                    System.err.println("Connection close error : " + e);
+                }
+            }
+        }
+    }
+    /* end of populateIngredientTable method */
 }
 
 
