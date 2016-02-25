@@ -57,6 +57,7 @@ public class AdminPannel extends javax.swing.JFrame {
         initComponents();
 
         startClock();
+        
         final ListSelectionModel mod = productTable.getSelectionModel();
         mod.addListSelectionListener(new ListSelectionListener() {
 
@@ -67,9 +68,7 @@ public class AdminPannel extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, productTable.getValueAt(row, 0));
                 }
             }
-
-        }
-        );
+        });
 
         user.viewUser((DefaultTableModel) userTable.getModel());
 
@@ -90,9 +89,17 @@ public class AdminPannel extends javax.swing.JFrame {
 
         /* populate inventryIngredientTable in inventory management -- dont remove this*/
         ingredient.populateIngredientTable((DefaultTableModel) inventryIngredientTable.getModel());
+        
+        /*Populate ingredientstock history*/
+        StockHistory ingredientHistoryStock = new StockHistory ();
+        ingredientHistoryStock.populateStockIngredientHistoryTable((DefaultTableModel) ingStockHistoryTbl.getModel());
 
         /* populate inventryBlendTable in inventory management -- dont remove this */
         blend.populateBlendTable((DefaultTableModel) inventoryBlendTable.getModel());
+
+        /*Populate ingredientstock history*/
+        StockHistory blendHistoryStock = new StockHistory ();
+        blendHistoryStock.populateStockBlendHistoryTable((DefaultTableModel) blendStockHistoryTbl.getModel());
 
         StockHistory ingredientStock = new StockHistory();
         ingredientStock.populateStockIngredientHistoryTable((DefaultTableModel) ingStockHistoryTbl.getModel());
@@ -198,7 +205,7 @@ public class AdminPannel extends javax.swing.JFrame {
         ingStockHistoryTbl = new javax.swing.JTable();
         settingsBlendHistoryPanel = new javax.swing.JPanel();
         jScrollPane9 = new javax.swing.JScrollPane();
-        jTable4 = new javax.swing.JTable();
+        blendStockHistoryTbl = new javax.swing.JTable();
         settingsUserPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         userTable = new javax.swing.JTable();
@@ -774,7 +781,7 @@ public class AdminPannel extends javax.swing.JFrame {
 
         settingsBlendHistoryPanel.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTable4.setModel(new javax.swing.table.DefaultTableModel(
+        blendStockHistoryTbl.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
@@ -793,17 +800,17 @@ public class AdminPannel extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane9.setViewportView(jTable4);
-        if (jTable4.getColumnModel().getColumnCount() > 0) {
-            jTable4.getColumnModel().getColumn(0).setResizable(false);
-            jTable4.getColumnModel().getColumn(1).setResizable(false);
-            jTable4.getColumnModel().getColumn(1).setPreferredWidth(200);
-            jTable4.getColumnModel().getColumn(2).setResizable(false);
-            jTable4.getColumnModel().getColumn(3).setResizable(false);
-            jTable4.getColumnModel().getColumn(4).setResizable(false);
-            jTable4.getColumnModel().getColumn(4).setPreferredWidth(400);
-            jTable4.getColumnModel().getColumn(5).setResizable(false);
-            jTable4.getColumnModel().getColumn(5).setPreferredWidth(200);
+        jScrollPane9.setViewportView(blendStockHistoryTbl);
+        if (blendStockHistoryTbl.getColumnModel().getColumnCount() > 0) {
+            blendStockHistoryTbl.getColumnModel().getColumn(0).setResizable(false);
+            blendStockHistoryTbl.getColumnModel().getColumn(1).setResizable(false);
+            blendStockHistoryTbl.getColumnModel().getColumn(1).setPreferredWidth(200);
+            blendStockHistoryTbl.getColumnModel().getColumn(2).setResizable(false);
+            blendStockHistoryTbl.getColumnModel().getColumn(3).setResizable(false);
+            blendStockHistoryTbl.getColumnModel().getColumn(4).setResizable(false);
+            blendStockHistoryTbl.getColumnModel().getColumn(4).setPreferredWidth(400);
+            blendStockHistoryTbl.getColumnModel().getColumn(5).setResizable(false);
+            blendStockHistoryTbl.getColumnModel().getColumn(5).setPreferredWidth(200);
         }
 
         javax.swing.GroupLayout settingsBlendHistoryPanelLayout = new javax.swing.GroupLayout(settingsBlendHistoryPanel);
@@ -1189,6 +1196,7 @@ public class AdminPannel extends javax.swing.JFrame {
     private javax.swing.JButton addNewBlendsBtn;
     private javax.swing.JButton addProductBtn;
     private javax.swing.JButton addUserBtn;
+    private javax.swing.JTable blendStockHistoryTbl;
     private javax.swing.JButton deleteUserBtn;
     private javax.swing.JTable ingStockHistoryTbl;
     private javax.swing.JLabel inventoryBlendLbl;
@@ -1217,7 +1225,6 @@ public class AdminPannel extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable4;
     private javax.swing.JLabel logoLabel;
     private javax.swing.JButton logoutBtn;
     private javax.swing.JTabbedPane mainTabbedPane;
