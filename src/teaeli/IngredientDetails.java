@@ -120,7 +120,7 @@ public class IngredientDetails extends javax.swing.JFrame {
 
         deleteItemBtn.setText("Delete");
 
-        itemTypeCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Herbs", "Flowers", "Fruits", "Leaves", "Other", "Tea", "Flavours" }));
+        itemTypeCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] {"Tea", "Flavours" , "Herbs", "Flowers", "Fruits", "Leaves", "Other"}));
         itemTypeCombo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 itemTypeComboActionPerformed(evt);

@@ -992,18 +992,20 @@ public class AdminPannel extends javax.swing.JFrame {
     }//GEN-LAST:event_addProductBtnActionPerformed
 
     private void searchIngredientBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchIngredientBtnActionPerformed
+        
         String[] resultArray = new String[4];
-        try {
+        try {           
            resultArray = ingredient.viewAllDetailsOfAIngredient((String) searchIngredientComboBox.getSelectedItem());
             
         } catch (SQLException ex) {
             Logger.getLogger(AdminPannel.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+        }       
         IngredientDetails itemDetails = new IngredientDetails();
-        itemDetails.itemNameTxt.setText(resultArray[0]);        
+        //set values to fields in IngredientDetails window
+        itemDetails.itemNameTxt.setText(resultArray[0]); 
+        itemDetails.itemTypeCombo.setSelectedItem(resultArray[1]);
         itemDetails.supplierNameTxt.setText(resultArray[2]);
-        itemDetails.unitPriceTxt.setText(resultArray[3]);
+        itemDetails.unitPriceTxt.setText(resultArray[3]); 
         itemDetails.setVisible(true);
         itemDetails.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
     }//GEN-LAST:event_searchIngredientBtnActionPerformed
