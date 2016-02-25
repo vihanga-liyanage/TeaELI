@@ -103,11 +103,10 @@ public class User {
         }
     }
     
-    //method to remove user from the user table in the admin pannel
+    //method to remove user from the user table in the admin pannel(completely remove user from the system)
     public int removeUser(int id){
         DBConnection dbConn = new DBConnection();
         Connection connection = null;
-        ResultSet resultSet;
         try{
           connection = dbConn.setConnection();  
         }catch(SQLException e){
@@ -117,7 +116,82 @@ public class User {
         String query = "DELETE FROM user WHERE userID = " + id;
         
         int rslt = dbConn.updateResult(query, connection);
+        
+        if (connection != null) {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                System.err.println("Connection close error : " + e);
+            }
+        }
+
         return rslt;
     }
     
+    //Method to check whether the username is already in the database when adding a new user
+    public int checkUserName(String userName){
+        DBConnection dbConn = new DBConnection();
+        Connection connection = null;
+        ResultSet resultSet;
+        try {
+            connection = dbConn.setConnection();
+        } catch (SQLException e) {
+
+        }
+        
+        String query = "SELECT username FROM user";
+        
+        resultSet = dbConn.getResult(query, connection);
+        
+        try {    
+            while (resultSet.next()) {
+                if (userName.equals(resultSet.getString(1))) {
+                    return 0;//the provided username already exists in the db
+                }
+            }
+            return 1;//the provided username does not exist in the db
+            
+        } catch (SQLException ex) {
+            System.out.println(ex);
+            return 0;
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    System.err.println("Resultset close error : " + e);
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    System.err.println("Connection close error : " + e);
+                }
+            }
+        }
+    }
+    
+    public int addNewUser(User user){
+        DBConnection dbConn = new DBConnection();
+        Connection connection = null;
+        try {
+            connection = dbConn.setConnection();
+        } catch (SQLException e) {
+
+        }
+        
+        String query = "INSERT INTO user values(0, '"+ user.getUserName()+"', '"+user.getFirstName()+"', '"+user.getLastName()+"', sha1('"+user.getPassword()+"'), '"+user.getDesignation()+"')";
+        int rslt = dbConn.updateResult(query, connection);
+        
+        if (connection != null) {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                System.err.println("Connection close error : " + e);
+            }
+        }
+
+        return rslt;
+    }
 }

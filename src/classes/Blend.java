@@ -164,7 +164,7 @@ public class Blend {
             }
         }
     }
-    /* end of populateBlendTable method */
+    /* end */
     
     /* start of initializing blend combo in CreateNewBlendOrder */
     public void initBlendCombo(JComboBox blendsCombo){
@@ -199,4 +199,24 @@ public class Blend {
             }
         }
     }
+    /* end */
+    
+    /* start of loadNameForSearchStockBlendsComboBox method*/
+    public ResultSet loadNameForsearchStockBlendsComboBox(){
+        Connection connection = null;
+        ResultSet resultSet = null;
+        
+        try{
+            connection = dbConn.setConnection();
+            
+            String query = "SELECT blendName FROM blend";
+            
+            resultSet = dbConn.getResult(query, connection);
+            
+        } catch(Exception e){
+            System.err.println("");
+        }
+        return resultSet; 
+    }
+    /* end */
 }

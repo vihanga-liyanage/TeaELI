@@ -48,10 +48,10 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
                 if (qty.length() > 0) {
                     if (!(new Validation().isInt(qty))) {
                         JOptionPane.showMessageDialog(blendsQtyTxt, "Blend quantity must be a valid number!");
-                        blendsQtyTxt.setText("");
+                        blendsQtyTxt.setText(qty.substring(0, qty.length() - 1));
                     } else if (Integer.parseInt(qty) < 0) {
                         JOptionPane.showMessageDialog(blendsQtyTxt, "Blend quantity cannot be less than 0!");
-                        blendsQtyTxt.setText("");
+                        blendsQtyTxt.setText(qty.substring(0, qty.length() - 1));
                     }
                 }
             }

@@ -68,22 +68,24 @@
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="usernameTxt" min="-2" pref="200" max="-2" attributes="0"/>
-                      <Component id="addUserDesignationCombo" min="-2" pref="200" max="-2" attributes="0"/>
-                      <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
-                      <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Component id="cancelBtn" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="addBtn" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="usernameTxt" pref="200" max="32767" attributes="0"/>
+                          <Component id="addUserDesignationCombo" pref="200" max="32767" attributes="0"/>
+                          <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Component id="cancelBtn" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="addBtn" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="firstnameTxt" alignment="0" pref="200" max="32767" attributes="0"/>
+                                  <Component id="lastnameTxt" max="32767" attributes="0"/>
+                              </Group>
                           </Group>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="cnfrmPasswordTxt" max="32767" attributes="0"/>
-                              <Component id="firstnameTxt" alignment="0" max="32767" attributes="0"/>
-                              <Component id="lastnameTxt" max="32767" attributes="0"/>
-                              <Component id="passwordTxt" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="passwordTxt" alignment="0" pref="200" max="32767" attributes="0"/>
                       </Group>
+                      <Component id="cnfrmPasswordTxt" min="-2" pref="200" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="24" max="32767" attributes="0"/>
               </Group>
@@ -112,24 +114,24 @@
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                       <Component id="usernameTxt" min="-2" pref="25" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="passwordTxt" min="-2" pref="25" max="-2" attributes="0"/>
-                      <Component id="passwordLbl" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="passwordLbl" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="passwordTxt" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="cnfrmPasswordTxt" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                       <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="cnfrmPasswordTxt" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="addBtn" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="cancelBtn" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="17" max="32767" attributes="0"/>
+                  <EmptySpace pref="14" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -187,10 +189,6 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addBtnActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JPasswordField" name="passwordTxt">
-        </Component>
-        <Component class="javax.swing.JPasswordField" name="cnfrmPasswordTxt">
-        </Component>
         <Component class="javax.swing.JLabel" name="jLabel5">
           <Properties>
             <Property name="horizontalAlignment" type="int" value="4"/>
@@ -202,7 +200,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="0" green="0" id="red" palette="1" red="ff" type="palette"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="* Password must be 8 characters long"/>
+            <Property name="text" type="java.lang.String" value="* Enter atleast 8 characters"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JComboBox" name="addUserDesignationCombo">
@@ -214,6 +212,10 @@
               </StringArray>
             </Property>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JPasswordField" name="passwordTxt">
+        </Component>
+        <Component class="javax.swing.JPasswordField" name="cnfrmPasswordTxt">
         </Component>
       </SubComponents>
     </Container>

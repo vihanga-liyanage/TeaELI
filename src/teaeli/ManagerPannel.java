@@ -6,9 +6,16 @@
 
 package teaeli;
 
+import classes.DBConnection;
+import classes.User;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.logging.Level;
@@ -17,6 +24,7 @@ import javax.swing.JFrame;
 import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import static teaeli.TeaELI.loginFrame;
 
 
 /**
@@ -24,10 +32,9 @@ import javax.swing.UnsupportedLookAndFeelException;
  * @author CHAM PC
  */
 public class ManagerPannel extends javax.swing.JFrame {
-
-    /**
-     * Creates new form AdminPannel
-     */
+    User user = new User(); 
+    
+    
     public ManagerPannel() {
         try
         {
@@ -48,7 +55,12 @@ public class ManagerPannel extends javax.swing.JFrame {
 
     }
     
-    //Setting default font
+    DBConnection dbcon = new DBConnection();
+    Connection con = null;
+    PreparedStatement pst = null;
+    ResultSet rs = null;
+    Statement st = null;
+    
     public static void setUIFont(javax.swing.plaf.FontUIResource f)
     {   
         java.util.Enumeration keys = UIManager.getDefaults().keys();
@@ -439,9 +451,42 @@ public class ManagerPannel extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void profileBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profileBtnActionPerformed
-        EditProfile editProfile = new EditProfile();
-        editProfile.setVisible(true);
-        editProfile.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        String userName = loginFrame.user;
+        
+        try {
+            con = dbcon.setConnection();//get the connection
+            String query = "SELECT username,firstname,lastname FROM user where username = ('"+userName+"')";
+            ResultSet rs =dbcon.getResult(query, con);
+            
+            while (rs.next()) {
+                user.setUserName(rs.getString(1));
+                user.setFirstName(rs.getString(2));
+                user.setLastName(rs.getString(3));
+            }
+            
+            
+            
+        } catch (SQLException e) {
+            System.out.println(e);//an error occured while executing
+            
+        } finally {
+            try {
+                if (pst != null) {
+                    pst.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            }catch (SQLException e) {
+
+            }
+        }
+            EditProfile editProfile = new EditProfile();
+            editProfile.setVisible(true);
+            editProfile.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE); 
+            editProfile.lblUserName.setText(user.getUserName());
+            editProfile.txtFirstName.setText(user.getFirstName());
+            editProfile.txtLastName.setText(user.getLastName());
     }//GEN-LAST:event_profileBtnActionPerformed
 
     private void searchOrderBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchOrderBtnActionPerformed
