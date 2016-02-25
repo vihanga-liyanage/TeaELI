@@ -1,7 +1,5 @@
 package classes;
 
-// attributes
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import javax.swing.table.DefaultTableModel;
@@ -11,20 +9,15 @@ import static teaeli.LoginFrame.adminPannel;
 import java.sql.ResultSet;
 import java.util.Vector;
 
-
-
-
 public class Ingredient {
 
     // attributes
-
-    private int ingID ,ingCategoryID ,visibleStock ,orderedStock , invisibleStock ,supID;
-    private int orderReqQty , orderExcessQty ;
-    private String ingName ;
+    private int ingID, ingCategoryID, visibleStock, orderedStock, invisibleStock, supID;
+    private int orderReqQty, orderExcessQty;
+    private String ingName;
     private float unitPrice;
-    
+
     DBConnection dbConn = new DBConnection();
-    
 
     //constructor
     public Ingredient() {
@@ -121,21 +114,20 @@ public class Ingredient {
         this.orderExcessQty = orderExessQty;
     }
 
-    
     /* start of populateIngredientTable method */
-    public void populateIngredientTable(DefaultTableModel tableModel){
-        
+    public void populateIngredientTable(DefaultTableModel tableModel) {
+
         Connection connection = null;
         ResultSet resultSet = null;
-        
-        try{
+
+        try {
             String query = "SELECT ingName,visibleStock,invisibleStock FROM ingredient";
-            
+
             connection = dbConn.setConnection();
             resultSet = dbConn.getResult(query, connection);
-            
+
             tableModel.setRowCount(0);
-            
+
             while (resultSet.next()) {
                 Vector newRow = new Vector();
                 for (int i = 1; i <= 3; i++) {
@@ -143,8 +135,8 @@ public class Ingredient {
                 }
                 tableModel.addRow(newRow);
             }
-            
-        }catch(Exception e){
+
+        } catch (Exception e) {
             System.err.println("err : " + e);
         } finally {
             if (resultSet != null) {
@@ -165,46 +157,37 @@ public class Ingredient {
     }
     /* end of populateIngredientTable method */
 
-    
     /* start of loadNameForSearchStockIngComboBox method*/
-    public ResultSet loadNameForSearchStockIngComboBox(){
+    public ResultSet loadNameForSearchStockIngComboBox() {
         Connection connection = null;
         ResultSet resultSet = null;
-        
-        try{
+
+        try {
             connection = dbConn.setConnection();
-            
+
             String query = "SELECT ingName FROM ingredient";
-            
+
             resultSet = dbConn.getResult(query, connection);
-            
-        } catch(Exception e){
+
+        } catch (Exception e) {
             System.err.println("");
         }
-        return resultSet; 
+        return resultSet;
     }
     /* end of loadNameForSearchStockIngComboBox method */
 
-
-
-
-
-
-
-    // Start of methods
     //start of view all ingredients method
-   public void viewAllIngredients() throws SQLException {
+    public void viewAllIngredients() throws SQLException {
 
-        DBConnection dbConn = new DBConnection();
         Connection connection = dbConn.setConnection();
         ResultSet resultSet = null;
         String query = "SELECT ingName,unitPrice,supName FROM ingredient,supplier where ingredient.supID = supplier.supID";
         try {
             resultSet = dbConn.getResult(query, connection);
-            
-            while (resultSet.next()) {                
+
+            while (resultSet.next()) {
                 DefaultTableModel model = (DefaultTableModel) adminPannel.settingsIngredientTable.getModel();
-                model.addRow(new Object[]{resultSet.getString(1),resultSet.getString(3),resultSet.getString(2)});    
+                model.addRow(new Object[]{resultSet.getString(1), resultSet.getString(3), resultSet.getString(2)});
             }
 
         } catch (Exception e) {
@@ -227,6 +210,53 @@ public class Ingredient {
         }
 
     }
-
     //end of view all ingredients method
+
+    //start of view all details of a ingredient
+    public String[] viewAllDetailsOfAIngredient(String ingredientName) throws SQLException {
+
+        Connection connection = dbConn.setConnection();
+        ResultSet resultSet = null;
+        String[] resultArray = new String[4];
+        //set name of the ingredient
+        resultArray[0]=ingredientName;
+
+        String query = "SELECT categoryName,supName,unitPrice  FROM ingredient I,supplier S,ingredientcategory IC where I.ingName = '" + ingredientName + "' and I.supID = S.supID and I.ingCategoryID = IC.ingCategoryID;";
+        try {
+            resultSet = dbConn.getResult(query, connection);
+
+            while (resultSet.next()) {
+                for (int i = 1; i<=3; i++) {
+                    resultArray[i] = resultSet.getString(i);
+                }
+            }
+            
+        } catch (Exception e) {
+            System.err.println("err : " + e);
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (Exception e) {
+                    System.err.println("Resultset close error : " + e);
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (Exception e) {
+                    System.err.println("Connection close error : " + e);
+                }
+            }
+        }
+        return resultArray;
+    }
+   //end of view all details of a ingredient
+    
+    //start of update ingredient method
+    public void updateIngredient(String ingredientName){
+        
+    }
+    
+    //end of update ingredient method
 }
