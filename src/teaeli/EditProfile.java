@@ -5,10 +5,17 @@
  */
 package teaeli;
 
+import classes.DBConnection;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -18,9 +25,8 @@ import javax.swing.UnsupportedLookAndFeelException;
  */
 public class EditProfile extends javax.swing.JFrame {
 
-    /**
-     * Creates new form EditProfile
-     */
+    int pswrdFlag =0;
+    
     public EditProfile() {
         //Add windows look and feel
         try {
@@ -40,6 +46,12 @@ public class EditProfile extends javax.swing.JFrame {
         setResizable(false);
     }
 
+    DBConnection dbcon = new DBConnection();
+    Connection con = null;
+    PreparedStatement pst = null;
+    ResultSet rs = null;
+    Statement st = null;
+    String firstname,lastname,username;
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -64,8 +76,8 @@ public class EditProfile extends javax.swing.JFrame {
         txtConfirmPassword = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         changePasswordBtn = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        Cancel = new javax.swing.JButton();
+        SaveChanges = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -103,9 +115,19 @@ public class EditProfile extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("Cancel");
+        Cancel.setText("Cancel");
+        Cancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CancelActionPerformed(evt);
+            }
+        });
 
-        jButton3.setText("Save Changes");
+        SaveChanges.setText("Save Changes");
+        SaveChanges.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SaveChangesActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -132,9 +154,9 @@ public class EditProfile extends javax.swing.JFrame {
                                         .addComponent(txtConfirmPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                     .addGap(122, 122, 122)
-                                    .addComponent(jButton2)
+                                    .addComponent(Cancel)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jButton3)
+                                    .addComponent(SaveChanges)
                                     .addGap(2, 2, 2)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -179,8 +201,8 @@ public class EditProfile extends javax.swing.JFrame {
                     .addComponent(txtConfirmPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Cancel, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(SaveChanges, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(51, 51, 51)
                 .addComponent(jLabel5))
         );
@@ -212,7 +234,50 @@ public class EditProfile extends javax.swing.JFrame {
         txtCurrentPassword.setEditable(true);
         txtNewPassword.setEditable(true);
         txtConfirmPassword.setEditable(true);
+        pswrdFlag = 1;
     }//GEN-LAST:event_changePasswordBtnActionPerformed
+
+    private void CancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelActionPerformed
+        this.setVisible(false);
+    }//GEN-LAST:event_CancelActionPerformed
+
+    private void SaveChangesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveChangesActionPerformed
+        if(pswrdFlag==0){
+            
+            firstname = txtFirstName.getText();
+            lastname = txtLastName.getText();
+            username = lblUserName.getText();
+            
+            try {
+            con = dbcon.setConnection();//get the connection
+            String query = "UPDATE user SET firstname =' "+firstname+"', lastname = '"+lastname+"' WHERE username = '"+username+"'";
+                System.out.println(query);
+            if (dbcon.updateResult(query, con)==1){
+                JOptionPane.showMessageDialog(this, "Succsfully updated");
+            }else{
+                JOptionPane.showMessageDialog(this, "Error occurd while updating.. changes will not be saved");
+            }
+        } catch (SQLException e) {
+            System.out.println(e);//an error occured while executing
+            
+        } finally {
+            try {
+                if (pst != null) {
+                    pst.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+
+            }
+        }
+            
+        }
+        else if(pswrdFlag==1){
+            
+        }
+    }//GEN-LAST:event_SaveChangesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -250,9 +315,9 @@ public class EditProfile extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Cancel;
+    private javax.swing.JButton SaveChanges;
     private javax.swing.JButton changePasswordBtn;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

@@ -14,10 +14,9 @@ import classes.User;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-<<<<<<< HEAD
-=======
+
 import java.nio.channels.SeekableByteChannel;
->>>>>>> 6cfbb79b768ca4ec609dcbed938199399aa0a025
+
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.util.Date;
