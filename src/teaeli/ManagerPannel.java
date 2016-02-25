@@ -302,7 +302,6 @@ public class ManagerPannel extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setText("Start typing blend name to search");
-        jLabel2.setMinimumSize(new java.awt.Dimension(208, 20));
 
         blendSearchBtn.setText("Go");
 
@@ -363,7 +362,7 @@ public class ManagerPannel extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel2)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(blendTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -384,6 +383,11 @@ public class ManagerPannel extends javax.swing.JFrame {
         jLabel9.setText("Hello Mr. Dushantha");
 
         logoutBtn.setText("Log Out");
+        logoutBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logoutBtnActionPerformed(evt);
+            }
+        });
 
         profileBtn.setText("Profile");
         profileBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -461,6 +465,13 @@ public class ManagerPannel extends javax.swing.JFrame {
         updateStock.setVisible(true);
         updateStock.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
     }//GEN-LAST:event_searchStockBtnActionPerformed
+
+    private void logoutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutBtnActionPerformed
+        this.setVisible(false);
+        LoginFrame lf = new LoginFrame();
+        lf.setVisible(true);
+        lf.setSize(740,400);
+    }//GEN-LAST:event_logoutBtnActionPerformed
 
 
     /**

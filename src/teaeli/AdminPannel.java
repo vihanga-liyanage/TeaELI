@@ -7,6 +7,11 @@
 package teaeli;
 
 import classes.Ingredient;
+import classes.DBConnection;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import classes.User;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -75,6 +80,12 @@ public class AdminPannel extends javax.swing.JFrame {
         ingredient.populateIngredientTable((DefaultTableModel) inventryIngredientTable.getModel());
 
     }
+    
+    DBConnection dbcon = new DBConnection();
+    Connection con = null;
+    PreparedStatement pst = null;
+    ResultSet rs = null;
+    Statement st = null;
     
     //Setting default font
     public static void setUIFont(javax.swing.plaf.FontUIResource f)
@@ -970,6 +981,13 @@ public class AdminPannel extends javax.swing.JFrame {
         EditProfile editProfile = new EditProfile();
         editProfile.setVisible(true);
         editProfile.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        
+        
+        //String UserName = new LoginFrame().user;
+        
+        
+        
+        
     }//GEN-LAST:event_profileBtnActionPerformed
 
     private void addUserBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addUserBtnActionPerformed
