@@ -57,6 +57,7 @@ public class AdminPannel extends javax.swing.JFrame {
         initComponents();
 
         startClock();
+        
         final ListSelectionModel mod = productTable.getSelectionModel();
         mod.addListSelectionListener(new ListSelectionListener() {
 
@@ -67,9 +68,7 @@ public class AdminPannel extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, productTable.getValueAt(row, 0));
                 }
             }
-
-        }
-        );
+        });
 
         user.viewUser((DefaultTableModel) userTable.getModel());
 
