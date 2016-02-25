@@ -59,12 +59,44 @@ public class Order {
         this.blendID = blendID;
     }
     
-    public String getIngName() {
+    public String getBlendName() {
         return blendName;
     }
 
     public void setIngName(String blendName) {
         this.blendName = blendName;
+    }
+    
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+    
+    public Date getDate(){
+        return date;
+    }
+    
+    public void setDate(Date date){
+        this.date = date;
+    }
+    
+    public ArrayList<Ingredient> getIngredientList() {
+        return ingredientList;
+    }
+
+    public void setIngredientList(ArrayList<Ingredient> ingredientList) {
+        this.ingredientList = ingredientList;
+    }
+    
+    public ArrayList<Blend> getBlendList() {
+        return blendList;
+    }
+
+    public void setBlendList(ArrayList<Blend> blendList) {
+        this.blendList = blendList;
     }
 }
 

@@ -1,7 +1,14 @@
 
 package teaeli;
 
+
+import classes.Blend;
 import classes.Ingredient;
+import classes.DBConnection;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import classes.User;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -20,15 +27,18 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
 
 
 
 public class AdminPannel extends javax.swing.JFrame {
-
+    User user = new User(); 
+    Ingredient ingredient = new Ingredient();
     /**
      * Creates new form AdminPannel
      */
     public AdminPannel() {
+        
         try
         {
             setUIFont(new javax.swing.plaf.FontUIResource("Segoe UI", Font.PLAIN, 14));
@@ -60,16 +70,20 @@ public class AdminPannel extends javax.swing.JFrame {
         }
         
         );
+               
+        user.viewUser((DefaultTableModel) userTable.getModel());
         
-        User user = new User();
+
+        
         try{
-          user.viewUser();  
+          user.viewUser();
         }catch(Exception e){
             
         }
-        
+        //Start of ingredient class method calls
+		
         //start of view all ingredients
-        Ingredient ingredient = new Ingredient();
+        
         try {
             ingredient.viewAllIngredients();            
             
@@ -81,7 +95,21 @@ public class AdminPannel extends javax.swing.JFrame {
         //end of view all ingredients
         
 
+        /* populate inventryIngredientTable in inventory management*/
+       
+        ingredient.populateIngredientTable((DefaultTableModel) inventryIngredientTable.getModel());
+
+
+        /* populate inventryBlendTable in inventory management*/
+        Blend blend = new Blend();
+        blend.populateBlendTable((DefaultTableModel) inventoryBlendTable.getModel());
     }
+    
+    DBConnection dbcon = new DBConnection();
+    Connection con = null;
+    PreparedStatement pst = null;
+    ResultSet rs = null;
+    Statement st = null;
     
     //Setting default font
     public static void setUIFont(javax.swing.plaf.FontUIResource f)
@@ -174,7 +202,7 @@ public class AdminPannel extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         userTable = new javax.swing.JTable();
         addUserBtn = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        deleteUserBtn = new javax.swing.JButton();
         logoLabel = new javax.swing.JLabel();
         timeLabel = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -321,7 +349,7 @@ public class AdminPannel extends javax.swing.JFrame {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, true, true
+                false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -383,15 +411,15 @@ public class AdminPannel extends javax.swing.JFrame {
 
         inventoryBlendTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Blend Name", "Visible Stock (g)", "Invisible Stock (g)"
+                "Blend Category", "Blend Name", "Visible Stock (g)", "Invisible Stock (g)"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -809,9 +837,14 @@ public class AdminPannel extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jButton1.setText("Delete User");
-        jButton1.setMinimumSize(new java.awt.Dimension(200, 25));
+        deleteUserBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        deleteUserBtn.setText("Delete User");
+        deleteUserBtn.setMinimumSize(new java.awt.Dimension(200, 25));
+        deleteUserBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteUserBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout settingsUserPanelLayout = new javax.swing.GroupLayout(settingsUserPanel);
         settingsUserPanel.setLayout(settingsUserPanelLayout);
@@ -825,7 +858,7 @@ public class AdminPannel extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(settingsUserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(addUserBtn, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(deleteUserBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
         settingsUserPanelLayout.setVerticalGroup(
@@ -836,7 +869,7 @@ public class AdminPannel extends javax.swing.JFrame {
                 .addGap(26, 26, 26)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(deleteUserBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -956,6 +989,13 @@ public class AdminPannel extends javax.swing.JFrame {
         EditProfile editProfile = new EditProfile();
         editProfile.setVisible(true);
         editProfile.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        
+        
+        //String UserName = new LoginFrame().user;
+        
+        
+        
+        
     }//GEN-LAST:event_profileBtnActionPerformed
 
     private void addUserBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addUserBtnActionPerformed
@@ -996,6 +1036,37 @@ public class AdminPannel extends javax.swing.JFrame {
         updateBlendStock.setVisible(true);
         updateBlendStock.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
     }//GEN-LAST:event_searchStockBlendsBtnActionPerformed
+
+    private void deleteUserBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteUserBtnActionPerformed
+        DefaultTableModel model = (DefaultTableModel) userTable.getModel();
+        if (userTable.getSelectedRow() == -1) {
+            if (userTable.getSelectedRow() == 0) {
+                JOptionPane.showMessageDialog(this, "Table is empty");
+            } else {
+                JOptionPane.showMessageDialog(this, "Please select a row to delete");
+            }
+        } else {
+            int dialogButton = JOptionPane.YES_NO_OPTION;
+            String uID = model.getValueAt(userTable.getSelectedRow(), 0).toString();
+            int a = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete user having Employee ID of " + uID + "? ", "Warning", dialogButton);
+            if (a == JOptionPane.YES_OPTION) {
+
+                int id = Integer.parseInt(uID);
+
+                int rst = user.removeUser(id);
+                if (rst == 1) {
+                    JOptionPane.showMessageDialog(this, "User successfully deleted");
+                    user.viewUser((DefaultTableModel) userTable.getModel());
+                } else {
+                    JOptionPane.showMessageDialog(this, "Error occured! User couldn't be deleted");
+                }
+
+            } else {
+                return;
+            }
+
+        }
+    }//GEN-LAST:event_deleteUserBtnActionPerformed
 
     
     /**
@@ -1038,6 +1109,7 @@ public class AdminPannel extends javax.swing.JFrame {
     private javax.swing.JButton addNewBlendsBtn;
     private javax.swing.JButton addProductBtn;
     private javax.swing.JButton addUserBtn;
+    private javax.swing.JButton deleteUserBtn;
     private javax.swing.JLabel inventoryBlendLbl;
     private javax.swing.JLabel inventoryBlendLbl1;
     private javax.swing.JTable inventoryBlendTable;
@@ -1046,8 +1118,10 @@ public class AdminPannel extends javax.swing.JFrame {
     private javax.swing.JPanel inventoryManagementIngredientPanel;
     private javax.swing.JSplitPane inventoryManagementSplitPane;
     private javax.swing.JPanel inventoryPanel;
+
     public javax.swing.JTable inventryIngredientTable;
     private javax.swing.JButton jButton1;
+		
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel3;

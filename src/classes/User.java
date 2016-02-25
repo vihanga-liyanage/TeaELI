@@ -6,8 +6,6 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
-import static teaeli.LoginFrame.adminPannel;
-import static teaeli.TeaELI.resultSet;
 
 public class User {
     private String userName, Password, firstName, lastName, designation;
@@ -61,32 +59,32 @@ public class User {
     }
     
     //Method to add the result set of the user table in the DB to the user table in the Admin Pannel
-    public static void updateTableModelData(DefaultTableModel tModel, ResultSet rs) throws Exception {
-        tModel.setRowCount(0);
-        ResultSetMetaData metaData = rs.getMetaData();
-
-        while (rs.next()) {
-            Vector newRow = new Vector();
-            for (int i = 1; i <= 5; i++) {
-                newRow.addElement(rs.getObject(i));
-            }
-            tModel.addRow(newRow);
-        }
-    }
-    
-    //Set user details to the users table in the Admin Pannel
-    public void viewUser() throws SQLException, Exception{
+    public void viewUser(DefaultTableModel tModel){
         DBConnection dbConn = new DBConnection();
-        Connection connection = dbConn.setConnection();
+        Connection connection = null;
+        ResultSet resultSet;
+        try{
+          connection = dbConn.setConnection();  
+        }catch(SQLException e){
+            
+        }
 
         String query = "SELECT userID, username, firstname, lastname FROM user";
         
+        resultSet = dbConn.getResult(query, connection);
+        
         try {
+            tModel.setRowCount(0);
             
-            resultSet = dbConn.getResult(query, connection);
-            
-        } catch (Exception e) {
-            System.err.println("err : " + e);
+            while (resultSet.next()) {
+                Vector newRow = new Vector();
+                for (int i = 1; i <= 4; i++) {
+                    newRow.addElement(resultSet.getObject(i));
+                }
+                tModel.addRow(newRow);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex);
         } finally {
             if (resultSet != null) {
                 try {
@@ -102,9 +100,24 @@ public class User {
                     System.err.println("Connection close error : " + e);
                 }
             }
-        }            
+        }
+    }
+    
+    //method to remove user from the user table in the admin pannel
+    public int removeUser(int id){
+        DBConnection dbConn = new DBConnection();
+        Connection connection = null;
+        ResultSet resultSet;
+        try{
+          connection = dbConn.setConnection();  
+        }catch(SQLException e){
+            
+        }
+
+        String query = "DELETE FROM user WHERE userID = " + id;
         
-        updateTableModelData((DefaultTableModel) adminPannel.userTable.getModel(), resultSet);
+        int rslt = dbConn.updateResult(query, connection);
+        return rslt;
     }
     
 }
