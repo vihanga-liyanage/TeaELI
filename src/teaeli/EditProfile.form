@@ -72,9 +72,9 @@
                                       </Group>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="currentPasswordTxt" min="-2" pref="200" max="-2" attributes="0"/>
-                                          <Component id="newPasswordTxt" min="-2" pref="200" max="-2" attributes="0"/>
-                                          <Component id="confirmPasswordTxt" min="-2" pref="200" max="-2" attributes="0"/>
+                                          <Component id="txtCurrentPassword" min="-2" pref="200" max="-2" attributes="0"/>
+                                          <Component id="txtNewPassword" min="-2" pref="200" max="-2" attributes="0"/>
+                                          <Component id="txtConfirmPassword" min="-2" pref="200" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <Group type="102" alignment="1" attributes="0">
@@ -92,11 +92,11 @@
                                       <Component id="jLabel4" alignment="1" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="changePasswordBtn" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
-                                      <Component id="lastNameTxt" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
-                                      <Component id="firstNameTxt" min="-2" pref="200" max="-2" attributes="0"/>
-                                      <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="changePasswordBtn" alignment="0" pref="200" max="32767" attributes="0"/>
+                                      <Component id="txtLastName" alignment="0" pref="200" max="32767" attributes="0"/>
+                                      <Component id="txtFirstName" pref="200" max="32767" attributes="0"/>
+                                      <Component id="jLabel2" alignment="0" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -116,29 +116,29 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="firstNameTxt" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                      <Component id="txtFirstName" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="lastNameTxt" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                      <Component id="txtLastName" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                   <Component id="changePasswordBtn" min="-2" pref="25" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="currentPasswordTxt" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                      <Component id="txtCurrentPassword" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="newPasswordTxt" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                      <Component id="txtNewPassword" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="confirmPasswordTxt" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                      <Component id="txtConfirmPassword" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -167,14 +167,14 @@
             <Property name="text" type="java.lang.String" value="First Name"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="firstNameTxt">
+        <Component class="javax.swing.JTextField" name="txtFirstName">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel4">
           <Properties>
             <Property name="text" type="java.lang.String" value="Last Name"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="lastNameTxt">
+        <Component class="javax.swing.JTextField" name="txtLastName">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel5">
         </Component>
@@ -183,18 +183,27 @@
             <Property name="text" type="java.lang.String" value="New Password"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JPasswordField" name="currentPasswordTxt">
+        <Component class="javax.swing.JPasswordField" name="txtCurrentPassword">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
         </Component>
-        <Component class="javax.swing.JPasswordField" name="newPasswordTxt">
+        <Component class="javax.swing.JPasswordField" name="txtNewPassword">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel7">
           <Properties>
             <Property name="text" type="java.lang.String" value="Confirm Password"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="confirmPasswordTxt">
+        <Component class="javax.swing.JTextField" name="txtConfirmPassword">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="confirmPasswordTxtActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtConfirmPasswordActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel8">
