@@ -8,8 +8,10 @@ public class Blend {
     private String blendID, blendName, baseName;
     private int baseID, visibleStock, orderedStock, invisibleStock;
     private int orderReqQty , orderExcessQty ;
-    private ArrayList<Ingredient> ingredientArray = new ArrayList();
-    private ArrayList<Ingredient> flavourArray = new ArrayList();
+    private ArrayList<Ingredient> ingredientArray;
+    private ArrayList<Ingredient> flavourArray;
+    
+    DBConnection dbConn = new DBConnection();
 
     //constructor
     public Blend() {
@@ -20,6 +22,10 @@ public class Blend {
         this.visibleStock = 0;
         this.orderedStock = 0;
         this.invisibleStock = 0;
+        this.orderExcessQty = 0;
+        this.orderReqQty = 0;
+        this.ingredientArray = new ArrayList();
+        this.flavourArray = new ArrayList();
     }
     
     /* Start of setters and getters */
@@ -111,4 +117,7 @@ public class Blend {
         this.flavourArray = flavourArray;
     }
     /* End of setters and getters */
+    
+    
+    
 }

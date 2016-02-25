@@ -6,6 +6,7 @@
 
 package teaeli;
 
+import classes.Ingredient;
 import classes.User;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -69,6 +70,9 @@ public class AdminPannel extends javax.swing.JFrame {
         );
                
         user.viewUser((DefaultTableModel) userTable.getModel());
+        
+        Ingredient ingredient = new Ingredient();
+        ingredient.populateIngredientTable((DefaultTableModel) inventryIngredientTable.getModel());
 
     }
     

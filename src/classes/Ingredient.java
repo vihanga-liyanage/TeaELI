@@ -5,13 +5,17 @@ package classes;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.util.Vector;
+import javax.swing.table.DefaultTableModel;
 
 public class Ingredient {
     // attributes
     private int ingID ,ingCategoryID ,visibleStock ,orderedStock , invisibleStock ,supID;
     private int orderReqQty , orderExcessQty ;
     private String ingName ;
-    private float unitPrice; 
+    private float unitPrice;
+    
+    DBConnection dbConn = new DBConnection();
     
     //constructor
     public Ingredient() {
@@ -108,9 +112,9 @@ public class Ingredient {
         this.orderExcessQty = orderExessQty;
     }
     
-    // Start of methods
-    public void populateIngredientTable(){
-        DBConnection dbConn = new DBConnection();
+    /* start of populateIngredientTable method */
+    public void populateIngredientTable(DefaultTableModel tableModel){
+        
         Connection connection = null;
         ResultSet resultSet = null;
         
@@ -120,7 +124,15 @@ public class Ingredient {
             connection = dbConn.setConnection();
             resultSet = dbConn.getResult(query, connection);
             
-            //inventryIngredientTable.setModel(DbUtils.resultSetToTableModel(resultSet));
+            tableModel.setRowCount(0);
+            
+            while (resultSet.next()) {
+                Vector newRow = new Vector();
+                for (int i = 1; i <= 3; i++) {
+                    newRow.addElement(resultSet.getObject(i));
+                }
+                tableModel.addRow(newRow);
+            }
             
         }catch(Exception e){
             System.err.println("err : " + e);
@@ -141,6 +153,7 @@ public class Ingredient {
             }
         }
     }
+    /* end of populateIngredientTable method */
 }
 
 
