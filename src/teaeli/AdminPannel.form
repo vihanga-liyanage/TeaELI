@@ -323,7 +323,7 @@
                           <Group type="102" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jScrollPane6" alignment="0" pref="630" max="32767" attributes="0"/>
+                                  <Component id="jScrollPane6" alignment="0" pref="631" max="32767" attributes="0"/>
                                   <Group type="102" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="inventoryIngredientsLbl" min="-2" pref="100" max="-2" attributes="0"/>
@@ -436,6 +436,9 @@
                           <StringArray count="0"/>
                         </Property>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="searchStockIngComboBoxActionPerformed"/>
+                      </Events>
                     </Component>
                   </SubComponents>
                 </Container>
@@ -466,7 +469,7 @@
                                       <Component id="searchStockBlendsBtn" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="32767" attributes="0"/>
                                   </Group>
-                                  <Component id="jScrollPane2" alignment="0" pref="594" max="32767" attributes="0"/>
+                                  <Component id="jScrollPane2" alignment="0" pref="593" max="32767" attributes="0"/>
                                   <Group type="102" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="inventoryBlendLbl" min="-2" pref="67" max="-2" attributes="0"/>
@@ -648,16 +651,15 @@
                               <Group type="103" groupAlignment="1" attributes="0">
                                   <Component id="jScrollPane10" max="32767" attributes="0"/>
                                   <Group type="102" attributes="0">
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="jLabel5" max="32767" attributes="0"/>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="searchItemTxt" min="-2" pref="200" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="searchItemBtn" min="-2" max="-2" attributes="0"/>
-                                          </Group>
-                                      </Group>
-                                      <EmptySpace pref="813" max="32767" attributes="0"/>
+                                      <Component id="jLabel5" max="32767" attributes="0"/>
+                                      <EmptySpace pref="824" max="32767" attributes="0"/>
                                       <Component id="addItemBtn" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="searchIngredientComboBox" pref="189" max="32767" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="searchIngredientBtn" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="967" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
@@ -674,8 +676,8 @@
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="searchItemTxt" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
-                                  <Component id="searchItemBtn" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                                  <Component id="searchIngredientComboBox" alignment="3" pref="25" max="32767" attributes="0"/>
+                                  <Component id="searchIngredientBtn" alignment="3" pref="25" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="jScrollPane10" min="-2" pref="389" max="-2" attributes="0"/>
@@ -685,8 +687,6 @@
                     </DimensionLayout>
                   </Layout>
                   <SubComponents>
-                    <Component class="javax.swing.JTextField" name="searchItemTxt">
-                    </Component>
                     <Component class="javax.swing.JLabel" name="jLabel5">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -695,12 +695,12 @@
                         <Property name="text" type="java.lang.String" value="Start typing ingredient name to update"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JButton" name="searchItemBtn">
+                    <Component class="javax.swing.JButton" name="searchIngredientBtn">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Go"/>
                       </Properties>
                       <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="searchItemBtnActionPerformed"/>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="searchIngredientBtnActionPerformed"/>
                       </Events>
                     </Component>
                     <Component class="javax.swing.JButton" name="addItemBtn">
@@ -759,6 +759,14 @@
                         </Component>
                       </SubComponents>
                     </Container>
+                    <Component class="javax.swing.JComboBox" name="searchIngredientComboBox">
+                      <Properties>
+                        <Property name="editable" type="boolean" value="true"/>
+                        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                          <StringArray count="0"/>
+                        </Property>
+                      </Properties>
+                    </Component>
                   </SubComponents>
                 </Container>
                 <Container class="javax.swing.JPanel" name="settingsBlendPanel">

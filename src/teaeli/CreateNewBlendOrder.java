@@ -5,10 +5,16 @@
  */
 package teaeli;
 
+import classes.Blend;
+import classes.Validation;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -30,6 +36,32 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
         }
         initComponents();
         this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
+        
+        //Initialize blendCombo
+        Blend blend = new Blend();
+        blend.initBlendCombo(blendsCombo);
+        
+        //Validation on qty, when key released
+        blendsQtyTxt.addKeyListener(new KeyAdapter() {
+            public void keyReleased(KeyEvent e) {
+                String qty = blendsQtyTxt.getText();
+                if (qty.length() > 0) {
+                    if (!(new Validation().isInt(qty))) {
+                        JOptionPane.showMessageDialog(blendsQtyTxt, "Blend quantity must be a valid number!");
+                        blendsQtyTxt.setText(qty.substring(0, qty.length() - 1));
+                    } else if (Integer.parseInt(qty) < 0) {
+                        JOptionPane.showMessageDialog(blendsQtyTxt, "Blend quantity cannot be less than 0!");
+                        blendsQtyTxt.setText(qty.substring(0, qty.length() - 1));
+                    }
+                }
+            }
+
+            public void keyTyped(KeyEvent e) {
+            }
+
+            public void keyPressed(KeyEvent e) {
+            }
+        });
     }
 
     /**
@@ -198,6 +230,12 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
             }
         });
 
+        blendsQtyTxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                blendsQtyTxtActionPerformed(evt);
+            }
+        });
+
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         lblDate.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -276,7 +314,7 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(blendsCombo, 0, 190, Short.MAX_VALUE)
+                                    .addComponent(blendsCombo, 0, 250, Short.MAX_VALUE)
                                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(28, 28, 28)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -388,6 +426,11 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_blendQtyAddBtnActionPerformed
 
+    private void blendsQtyTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blendsQtyTxtActionPerformed
+        
+    }//GEN-LAST:event_blendsQtyTxtActionPerformed
+
+    
     /**
      * @param args the command line arguments
      */
