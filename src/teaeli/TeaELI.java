@@ -8,13 +8,14 @@ import java.sql.SQLException;
 public class TeaELI {
 
     public static ResultSet resultSet = null;          //for temp
-
+    
     public static void main(String[] args) throws SQLException {
+        
         LoginFrame loginFrame = new LoginFrame();
         loginFrame.setVisible(true);
         loginFrame.setSize(740, 400);
 
-        /* for temp */
+        /*
         DBConnection dbConn = new DBConnection();
         Connection connection = dbConn.setConnection();
 
@@ -44,7 +45,7 @@ public class TeaELI {
                 }
             }
         }
-
-    }
+           */ 
+    } 
 
 }
