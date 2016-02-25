@@ -6,16 +6,18 @@
 
 package teaeli;
 
+
 import classes.DBConnection;
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.nio.channels.SeekableByteChannel;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
+
+import classes.User;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.logging.Level;
@@ -28,6 +30,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
 
 
 /**
@@ -35,11 +38,12 @@ import javax.swing.event.ListSelectionListener;
  * @author CHAM PC
  */
 public class AdminPannel extends javax.swing.JFrame {
-
+    User user = new User(); 
     /**
      * Creates new form AdminPannel
      */
     public AdminPannel() {
+        
         try
         {
             setUIFont(new javax.swing.plaf.FontUIResource("Segoe UI", Font.PLAIN, 14));
@@ -71,8 +75,8 @@ public class AdminPannel extends javax.swing.JFrame {
         }
         
         );
-        
-        
+               
+        user.viewUser((DefaultTableModel) userTable.getModel());
 
     }
     
@@ -133,17 +137,17 @@ public class AdminPannel extends javax.swing.JFrame {
         inventoryManagementIngredientPanel = new javax.swing.JPanel();
         inventoryIngredientsLbl = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        searchStockIngTxt = new javax.swing.JTextField();
         searchStockIngBtn = new javax.swing.JButton();
         jScrollPane6 = new javax.swing.JScrollPane();
         inventryIngredientTable = new javax.swing.JTable();
+        searchStockIngComboBox = new javax.swing.JComboBox();
         inventoryManagementBlendPanel = new javax.swing.JPanel();
         inventoryBlendLbl = new javax.swing.JLabel();
-        searchStockBlendsTxt = new javax.swing.JTextField();
         searchStockBlendsBtn = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         inventoryBlendTable = new javax.swing.JTable();
         jLabel7 = new javax.swing.JLabel();
+        searchStockBlendsComboBox = new javax.swing.JComboBox();
         settingsPanel = new javax.swing.JPanel();
         settingsTabbedPane = new javax.swing.JTabbedPane();
         settingsIngPanel = new javax.swing.JPanel();
@@ -173,7 +177,7 @@ public class AdminPannel extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         userTable = new javax.swing.JTable();
         addUserBtn = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        deleteUserBtn = new javax.swing.JButton();
         logoLabel = new javax.swing.JLabel();
         timeLabel = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -329,6 +333,8 @@ public class AdminPannel extends javax.swing.JFrame {
         });
         jScrollPane6.setViewportView(inventryIngredientTable);
 
+        searchStockIngComboBox.setEditable(true);
+
         javax.swing.GroupLayout inventoryManagementIngredientPanelLayout = new javax.swing.GroupLayout(inventoryManagementIngredientPanel);
         inventoryManagementIngredientPanel.setLayout(inventoryManagementIngredientPanelLayout);
         inventoryManagementIngredientPanelLayout.setHorizontalGroup(
@@ -336,12 +342,12 @@ public class AdminPannel extends javax.swing.JFrame {
             .addGroup(inventoryManagementIngredientPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(inventoryManagementIngredientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 619, Short.MAX_VALUE)
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 630, Short.MAX_VALUE)
                     .addGroup(inventoryManagementIngredientPanelLayout.createSequentialGroup()
                         .addGroup(inventoryManagementIngredientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(inventoryIngredientsLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(inventoryManagementIngredientPanelLayout.createSequentialGroup()
-                                .addComponent(searchStockIngTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(searchStockIngComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(searchStockIngBtn))
                             .addComponent(jLabel6))
@@ -357,8 +363,8 @@ public class AdminPannel extends javax.swing.JFrame {
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(11, 11, 11)
                 .addGroup(inventoryManagementIngredientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(searchStockIngTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(searchStockIngBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(searchStockIngBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(searchStockIngComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE))
         );
@@ -400,6 +406,8 @@ public class AdminPannel extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel7.setText("Start typing blend name to update stock");
 
+        searchStockBlendsComboBox.setEditable(true);
+
         javax.swing.GroupLayout inventoryManagementBlendPanelLayout = new javax.swing.GroupLayout(inventoryManagementBlendPanel);
         inventoryManagementBlendPanel.setLayout(inventoryManagementBlendPanelLayout);
         inventoryManagementBlendPanelLayout.setHorizontalGroup(
@@ -408,11 +416,11 @@ public class AdminPannel extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(inventoryManagementBlendPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(inventoryManagementBlendPanelLayout.createSequentialGroup()
-                        .addComponent(searchStockBlendsTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(searchStockBlendsComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(searchStockBlendsBtn)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 605, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 594, Short.MAX_VALUE)
                     .addGroup(inventoryManagementBlendPanelLayout.createSequentialGroup()
                         .addGroup(inventoryManagementBlendPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(inventoryBlendLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -428,8 +436,8 @@ public class AdminPannel extends javax.swing.JFrame {
                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(11, 11, 11)
                 .addGroup(inventoryManagementBlendPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(searchStockBlendsTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(searchStockBlendsBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(searchStockBlendsBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(searchStockBlendsComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE))
         );
@@ -820,9 +828,14 @@ public class AdminPannel extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jButton1.setText("Delete User");
-        jButton1.setMinimumSize(new java.awt.Dimension(200, 25));
+        deleteUserBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        deleteUserBtn.setText("Delete User");
+        deleteUserBtn.setMinimumSize(new java.awt.Dimension(200, 25));
+        deleteUserBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteUserBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout settingsUserPanelLayout = new javax.swing.GroupLayout(settingsUserPanel);
         settingsUserPanel.setLayout(settingsUserPanelLayout);
@@ -836,7 +849,7 @@ public class AdminPannel extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(settingsUserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(addUserBtn, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(deleteUserBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
         settingsUserPanelLayout.setVerticalGroup(
@@ -847,7 +860,7 @@ public class AdminPannel extends javax.swing.JFrame {
                 .addGap(26, 26, 26)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(deleteUserBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -1015,9 +1028,38 @@ public class AdminPannel extends javax.swing.JFrame {
         updateBlendStock.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
     }//GEN-LAST:event_searchStockBlendsBtnActionPerformed
 
+    private void deleteUserBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteUserBtnActionPerformed
+        DefaultTableModel model = (DefaultTableModel) userTable.getModel();
+        if (userTable.getSelectedRow() == -1) {
+            if (userTable.getSelectedRow() == 0) {
+                JOptionPane.showMessageDialog(this, "Table is empty");
+            } else {
+                JOptionPane.showMessageDialog(this, "Please select a row to delete");
+            }
+        } else {
+            int dialogButton = JOptionPane.YES_NO_OPTION;
+            String uID = model.getValueAt(userTable.getSelectedRow(), 0).toString();
+            int a = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete user having Employee ID of " + uID + "? ", "Warning", dialogButton);
+            if (a == JOptionPane.YES_OPTION) {
 
+                int id = Integer.parseInt(uID);
 
+                int rst = user.removeUser(id);
+                if (rst == 1) {
+                    JOptionPane.showMessageDialog(this, "User successfully deleted");
+                    user.viewUser((DefaultTableModel) userTable.getModel());
+                } else {
+                    JOptionPane.showMessageDialog(this, "Error occured! User couldn't be deleted");
+                }
 
+            } else {
+                return;
+            }
+
+        }
+    }//GEN-LAST:event_deleteUserBtnActionPerformed
+
+    
     /**
      * @param args the command line arguments
      */
@@ -1058,6 +1100,7 @@ public class AdminPannel extends javax.swing.JFrame {
     private javax.swing.JButton addNewBlendsBtn;
     private javax.swing.JButton addProductBtn;
     private javax.swing.JButton addUserBtn;
+    private javax.swing.JButton deleteUserBtn;
     private javax.swing.JLabel inventoryBlendLbl;
     private javax.swing.JLabel inventoryBlendLbl1;
     private javax.swing.JTable inventoryBlendTable;
@@ -1067,7 +1110,6 @@ public class AdminPannel extends javax.swing.JFrame {
     private javax.swing.JSplitPane inventoryManagementSplitPane;
     private javax.swing.JPanel inventoryPanel;
     private javax.swing.JTable inventryIngredientTable;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel3;
@@ -1102,9 +1144,9 @@ public class AdminPannel extends javax.swing.JFrame {
     private javax.swing.JButton searchProductBtn;
     private javax.swing.JTextField searchProductTxt;
     private javax.swing.JButton searchStockBlendsBtn;
-    private javax.swing.JTextField searchStockBlendsTxt;
+    private javax.swing.JComboBox searchStockBlendsComboBox;
     private javax.swing.JButton searchStockIngBtn;
-    private javax.swing.JTextField searchStockIngTxt;
+    private javax.swing.JComboBox searchStockIngComboBox;
     private javax.swing.JPanel settingsBlendHistoryPanel;
     private javax.swing.JPanel settingsBlendPanel;
     private javax.swing.JPanel settingsIngHistoryPanel;
@@ -1113,7 +1155,7 @@ public class AdminPannel extends javax.swing.JFrame {
     private javax.swing.JTabbedPane settingsTabbedPane;
     private javax.swing.JPanel settingsUserPanel;
     private javax.swing.JLabel timeLabel;
-    private javax.swing.JTable userTable;
+    public javax.swing.JTable userTable;
     // End of variables declaration//GEN-END:variables
     private javax.swing.JTable flavourTable;
 

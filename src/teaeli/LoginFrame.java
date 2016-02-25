@@ -28,9 +28,8 @@ import javax.swing.UnsupportedLookAndFeelException;
  */
 public class LoginFrame extends javax.swing.JFrame {
     
-    /**
-     * Creates new form LoginFrame
-     */
+    public static AdminPannel adminPannel = new AdminPannel();
+            
     public LoginFrame() {
         //Add windows look and feel
         try {
@@ -158,6 +157,7 @@ public class LoginFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_txtUsernameActionPerformed
 
     private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
+
          userName = txtUsername.getText();
          password = txtPassword.getText();
          
@@ -203,6 +203,7 @@ public class LoginFrame extends javax.swing.JFrame {
                     this.dispose();
                 }
             }
+
     }//GEN-LAST:event_btnSubmitActionPerformed
 
     private void txtPasswordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPasswordKeyPressed
