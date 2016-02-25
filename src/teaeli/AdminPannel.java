@@ -415,6 +415,12 @@ public class AdminPannel extends javax.swing.JFrame {
             }
         });
         jScrollPane2.setViewportView(inventoryBlendTable);
+        if (inventoryBlendTable.getColumnModel().getColumnCount() > 0) {
+            inventoryBlendTable.getColumnModel().getColumn(1).setResizable(false);
+            inventoryBlendTable.getColumnModel().getColumn(1).setPreferredWidth(200);
+            inventoryBlendTable.getColumnModel().getColumn(2).setResizable(false);
+            inventoryBlendTable.getColumnModel().getColumn(3).setResizable(false);
+        }
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel7.setText("Start typing blend name to update stock");
