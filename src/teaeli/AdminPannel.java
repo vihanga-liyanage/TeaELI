@@ -6,18 +6,17 @@
 
 package teaeli;
 
-
+import classes.Blend;
+import classes.Ingredient;
 import classes.DBConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-
 import classes.User;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.logging.Level;
@@ -77,7 +76,14 @@ public class AdminPannel extends javax.swing.JFrame {
         );
                
         user.viewUser((DefaultTableModel) userTable.getModel());
+        
+        /* populate inventryIngredientTable in inventory management*/
+        Ingredient ingredient = new Ingredient();
+        ingredient.populateIngredientTable((DefaultTableModel) inventryIngredientTable.getModel());
 
+        /* populate inventryBlendTable in inventory management*/
+        Blend blend = new Blend();
+        blend.populateBlendTable((DefaultTableModel) inventoryBlendTable.getModel());
     }
     
     DBConnection dbcon = new DBConnection();
@@ -324,7 +330,7 @@ public class AdminPannel extends javax.swing.JFrame {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, true, true
+                false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -386,15 +392,15 @@ public class AdminPannel extends javax.swing.JFrame {
 
         inventoryBlendTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Blend Name", "Visible Stock (g)", "Invisible Stock (g)"
+                "Blend Category", "Blend Name", "Visible Stock (g)", "Invisible Stock (g)"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
