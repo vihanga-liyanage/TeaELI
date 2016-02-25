@@ -6,10 +6,15 @@
 package teaeli;
 
 import classes.Blend;
+import classes.Validation;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -35,6 +40,28 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
         //Initialize blendCombo
         Blend blend = new Blend();
         blend.initBlendCombo(blendsCombo);
+        
+        //Validation on qty, when key released
+        blendsQtyTxt.addKeyListener(new KeyAdapter() {
+            public void keyReleased(KeyEvent e) {
+                String qty = blendsQtyTxt.getText();
+                if (qty.length() > 0) {
+                    if (!(new Validation().isInt(qty))) {
+                        JOptionPane.showMessageDialog(blendsQtyTxt, "Blend quantity must be a valid number!");
+                        blendsQtyTxt.setText("");
+                    } else if (Integer.parseInt(qty) < 0) {
+                        JOptionPane.showMessageDialog(blendsQtyTxt, "Blend quantity cannot be less than 0!");
+                        blendsQtyTxt.setText("");
+                    }
+                }
+            }
+
+            public void keyTyped(KeyEvent e) {
+            }
+
+            public void keyPressed(KeyEvent e) {
+            }
+        });
     }
 
     /**
@@ -200,6 +227,12 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
         cancelBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancelBtnActionPerformed(evt);
+            }
+        });
+
+        blendsQtyTxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                blendsQtyTxtActionPerformed(evt);
             }
         });
 
@@ -393,6 +426,11 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_blendQtyAddBtnActionPerformed
 
+    private void blendsQtyTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blendsQtyTxtActionPerformed
+        
+    }//GEN-LAST:event_blendsQtyTxtActionPerformed
+
+    
     /**
      * @param args the command line arguments
      */
