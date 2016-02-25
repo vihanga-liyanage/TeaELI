@@ -3,8 +3,6 @@ package classes;
 import java.sql.Connection;
 import java.sql.SQLException;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
-import teaeli.LoginFrame;
 import static teaeli.LoginFrame.adminPannel;
 import java.sql.ResultSet;
 import java.util.Vector;
@@ -14,7 +12,7 @@ public class Ingredient {
     // attributes
     private int ingID, ingCategoryID, visibleStock, orderedStock, invisibleStock, supID;
     private int orderReqQty, orderExcessQty;
-    private String ingName;
+    private String ingName, ingCategoryName;
     private float unitPrice;
 
     DBConnection dbConn = new DBConnection();
@@ -26,7 +24,8 @@ public class Ingredient {
         this.visibleStock = 0;
         this.orderedStock = 0;
         this.invisibleStock = 0;
-        this.ingName = null;
+        this.ingName = "";
+        this.ingCategoryName = "";
         this.supID = 0;
         this.unitPrice = 0.0f;
         this.orderReqQty = 0;
@@ -114,6 +113,22 @@ public class Ingredient {
         this.orderExcessQty = orderExessQty;
     }
 
+    public int getOrderExcessQty() {
+        return orderExcessQty;
+    }
+
+    public void setOrderExcessQty(int orderExcessQty) {
+        this.orderExcessQty = orderExcessQty;
+    }
+
+    public String getIngCategoryName() {
+        return ingCategoryName;
+    }
+
+    public void setIngCategoryName(String ingCategoryName) {
+        this.ingCategoryName = ingCategoryName;
+    }
+
     /* Get ingredient data when blend name is given */
     public ResultSet getIngDataByIngName(String ingName){
         Connection conn = null;
@@ -153,7 +168,7 @@ public class Ingredient {
         ResultSet resultSet = null;
 
         try {
-            String query = "SELECT ingName,visibleStock,invisibleStock FROM ingredient";
+            String query = "SELECT ing.categoryName , i.ingName,i.visibleStock,i.invisibleStock FROM ingredient i JOIN ingredientcategory ing ON i.ingCategoryID = ing.ingCategoryID ORDER BY ing.categoryName ";
 
             connection = dbConn.setConnection();
             resultSet = dbConn.getResult(query, connection);
@@ -162,7 +177,7 @@ public class Ingredient {
 
             while (resultSet.next()) {
                 Vector newRow = new Vector();
-                for (int i = 1; i <= 3; i++) {
+                for (int i = 1; i <= 4; i++) {
                     newRow.addElement(resultSet.getObject(i));
                 }
                 tableModel.addRow(newRow);
@@ -208,6 +223,51 @@ public class Ingredient {
     }
     /* end of loadNameForSearchStockIngComboBox method */
 
+    /* start of checkAndLoadIngredientStockDetails method */
+    public boolean checkAndLoadIngredientStockDetails(String selectedIngName){
+        
+        Connection connection = null;
+        ResultSet resultSet = null;
+        boolean validIngName = false;
+        
+        try{
+            connection = dbConn.setConnection();
+            
+            String query = "SELECT i.ingID, i.ingName, i.visibleStock, ing.categoryName FROM ingredient i JOIN ingredientcategory ing ON i.ingCategoryID = ing.ingCategoryID WHERE ingName = '" + selectedIngName + "'";
+            
+            resultSet = dbConn.getResult(query, connection);
+            
+            if(resultSet.next()){
+                
+                validIngName = true;
+                
+                this.setIngID(Integer.parseInt(resultSet.getString(1)));
+                this.setIngName(resultSet.getString(2));
+                this.setVisibleStock(Integer.parseInt(resultSet.getString(3)));
+                this.setIngCategoryName(resultSet.getString(4));
+            }            
+        }catch(SQLException | NumberFormatException e){
+            System.err.println("err : " + e);
+        }finally{
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (Exception e) {
+                    System.err.println("Resultset close error : " + e);
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (Exception e) {
+                    System.err.println("Connection close error : " + e);
+                }
+            }
+        }       
+        return validIngName;
+    }
+    /* end ofcheckAndLoadIngredientStockDetails method */
+    
     //start of view all ingredients method
     public void viewAllIngredients() throws SQLException {
 
@@ -284,9 +344,40 @@ public class Ingredient {
    //end of view all details of a ingredient
     
     //start of update ingredient method
-    public void updateIngredient(String ingredientName){
+    public void updateIngredient(String ingredientName,String ingCategory, String SupName,String unitPrice) throws SQLException{
+       /*
+        Connection connection = dbConn.setConnection();
+        ResultSet resultSet = null;
         
-    }
+        //set name of the ingredient
+        
+
+        String query = "Update ingredient";
+        try {
+            resultSet = dbConn.getResult(query, connection);
+            while (resultSet.next()) {
+                
+            }
+        } catch (Exception e) {
+            System.err.println("err : " + e);
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (Exception e) {
+                    System.err.println("Resultset close error : " + e);
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (Exception e) {
+                    System.err.println("Connection close error : " + e);
+                }
+            }
+        }
+    }*/
+    }      
     
     //end of update ingredient method
 }
