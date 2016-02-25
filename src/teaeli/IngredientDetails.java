@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -111,6 +112,11 @@ public class IngredientDetails extends javax.swing.JFrame {
         });
 
         updateItemBtn.setText("Update");
+        updateItemBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateItemBtnActionPerformed(evt);
+            }
+        });
 
         deleteItemBtn.setText("Delete");
 
@@ -215,6 +221,10 @@ public class IngredientDetails extends javax.swing.JFrame {
     private void unitPriceTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_unitPriceTxtActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_unitPriceTxtActionPerformed
+
+    private void updateItemBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateItemBtnActionPerformed
+        
+    }//GEN-LAST:event_updateItemBtnActionPerformed
 
     /**
      * @param args the command line arguments
