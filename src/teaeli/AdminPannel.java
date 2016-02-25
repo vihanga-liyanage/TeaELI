@@ -5,6 +5,7 @@ package teaeli;
 import classes.Blend;
 import classes.Ingredient;
 import classes.DBConnection;
+import classes.AutoSuggest;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -75,11 +76,7 @@ public class AdminPannel extends javax.swing.JFrame {
         
 
         
-        try{
-          user.viewUser();
-        }catch(Exception e){
-            
-        }
+        
         //Start of ingredient class method calls
 		
         //start of view all ingredients
@@ -98,11 +95,17 @@ public class AdminPannel extends javax.swing.JFrame {
         /* populate inventryIngredientTable in inventory management*/
        
         ingredient.populateIngredientTable((DefaultTableModel) inventryIngredientTable.getModel());
+        
+        AutoSuggest searchStockIngComboBoxAutoSuggest = new AutoSuggest();
+        searchStockIngComboBoxAutoSuggest.autoSuggest(searchStockIngComboBox, ingredient.loadNameForSearchStockIngComboBox());
 
 
         /* populate inventryBlendTable in inventory management*/
         Blend blend = new Blend();
         blend.populateBlendTable((DefaultTableModel) inventoryBlendTable.getModel());
+        
+        AutoSuggest searchStockBlendComboBoxAutoSuggest = new AutoSuggest();
+        searchStockBlendComboBoxAutoSuggest.autoSuggest(searchStockBlendsComboBox, blend.loadNameForsearchStockBlendsComboBox());
     }
     
     DBConnection dbcon = new DBConnection();
@@ -441,7 +444,7 @@ public class AdminPannel extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(inventoryManagementBlendPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(inventoryManagementBlendPanelLayout.createSequentialGroup()
-                        .addComponent(searchStockBlendsComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(searchStockBlendsComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(searchStockBlendsBtn)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -812,7 +815,7 @@ public class AdminPannel extends javax.swing.JFrame {
 
         userTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null}
+
             },
             new String [] {
                 "User ID", "Username", "Firstname", "Lastname"
@@ -1055,8 +1058,8 @@ public class AdminPannel extends javax.swing.JFrame {
 
                 int rst = user.removeUser(id);
                 if (rst == 1) {
-                    JOptionPane.showMessageDialog(this, "User successfully deleted");
                     user.viewUser((DefaultTableModel) userTable.getModel());
+                    JOptionPane.showMessageDialog(this, "User successfully deleted");
                 } else {
                     JOptionPane.showMessageDialog(this, "Error occured! User couldn't be deleted");
                 }

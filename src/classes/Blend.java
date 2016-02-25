@@ -165,4 +165,22 @@ public class Blend {
     }
     /* end of populateBlendTable method */
     
+    /* start of loadNameForSearchStockBlendsComboBox method*/
+    public ResultSet loadNameForsearchStockBlendsComboBox(){
+        Connection connection = null;
+        ResultSet resultSet = null;
+        
+        try{
+            connection = dbConn.setConnection();
+            
+            String query = "SELECT blendName FROM blend";
+            
+            resultSet = dbConn.getResult(query, connection);
+            
+        } catch(Exception e){
+            System.err.println("");
+        }
+        return resultSet; 
+    }
+    /* end of loadNameForSearchStockBlendsComboBox method */
 }

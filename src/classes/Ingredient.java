@@ -10,7 +10,7 @@ import teaeli.LoginFrame;
 import static teaeli.LoginFrame.adminPannel;
 import java.sql.ResultSet;
 import java.util.Vector;
-import static teaeli.TeaELI.resultSet;
+
 
 
 
@@ -164,6 +164,27 @@ public class Ingredient {
         }
     }
     /* end of populateIngredientTable method */
+
+    
+    /* start of loadNameForSearchStockIngComboBox method*/
+    public ResultSet loadNameForSearchStockIngComboBox(){
+        Connection connection = null;
+        ResultSet resultSet = null;
+        
+        try{
+            connection = dbConn.setConnection();
+            
+            String query = "SELECT ingName FROM ingredient";
+            
+            resultSet = dbConn.getResult(query, connection);
+            
+        } catch(Exception e){
+            System.err.println("");
+        }
+        return resultSet; 
+    }
+    /* end of loadNameForSearchStockIngComboBox method */
+
 
 
 
