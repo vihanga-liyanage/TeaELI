@@ -5,12 +5,16 @@
  */
 package teaeli;
 
+import classes.User;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.table.DefaultTableModel;
+import static teaeli.LoginFrame.adminPannel;
 
 /**
  *
@@ -60,11 +64,11 @@ public class AddNewUser extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         cancelBtn = new javax.swing.JButton();
         addBtn = new javax.swing.JButton();
-        passwordTxt = new javax.swing.JPasswordField();
-        cnfrmPasswordTxt = new javax.swing.JPasswordField();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         addUserDesignationCombo = new javax.swing.JComboBox();
+        passwordTxt = new javax.swing.JPasswordField();
+        cnfrmPasswordTxt = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Add New User");
@@ -104,7 +108,7 @@ public class AddNewUser extends javax.swing.JFrame {
         jLabel5.setText("Confirm Password");
 
         jLabel6.setForeground(java.awt.Color.red);
-        jLabel6.setText("* Password must be 8 characters long");
+        jLabel6.setText("* Enter atleast 8 characters");
 
         addUserDesignationCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Manager", "Admin" }));
 
@@ -123,19 +127,20 @@ public class AddNewUser extends javax.swing.JFrame {
                     .addComponent(jLabel2))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(usernameTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(addUserDesignationCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(cancelBtn)
-                            .addGap(18, 18, 18)
-                            .addComponent(addBtn))
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(cnfrmPasswordTxt)
-                            .addComponent(firstnameTxt)
-                            .addComponent(lastnameTxt)
-                            .addComponent(passwordTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(usernameTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                        .addComponent(addUserDesignationCombo, 0, 200, Short.MAX_VALUE)
+                        .addComponent(jLabel6)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(cancelBtn)
+                                .addGap(18, 18, 18)
+                                .addComponent(addBtn))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(firstnameTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                                .addComponent(lastnameTxt)))
+                        .addComponent(passwordTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE))
+                    .addComponent(cnfrmPasswordTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(24, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -157,21 +162,21 @@ public class AddNewUser extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel1)
                     .addComponent(usernameTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(passwordTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(passwordLbl))
+                .addGap(26, 26, 26)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(passwordLbl)
+                    .addComponent(passwordTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel6)
-                .addGap(8, 8, 8)
+                .addGap(10, 10, 10)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cnfrmPasswordTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
-                .addGap(27, 27, 27)
+                    .addComponent(jLabel5)
+                    .addComponent(cnfrmPasswordTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addBtn)
                     .addComponent(cancelBtn))
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -199,7 +204,54 @@ public class AddNewUser extends javax.swing.JFrame {
     }//GEN-LAST:event_cancelBtnActionPerformed
 
     private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
+        if (firstnameTxt.getText().isEmpty() || lastnameTxt.getText().isEmpty() || usernameTxt.getText().isEmpty() || passwordTxt.getText().isEmpty() || cnfrmPasswordTxt.getText().isEmpty() ){
+            JOptionPane.showMessageDialog(this, "No text field should be empty!!!");
+            return;
+        }
+        if(passwordTxt.getText().length()<8){
+            JOptionPane.showMessageDialog(this, "Password length should be atleast 8 characters!!!");
+            passwordTxt.setText("");
+            cnfrmPasswordTxt.setText("");
+            return;
+        }
         
+        //create an instance of the entity class
+        User user = new User();
+
+        if (passwordTxt.getText().equals(cnfrmPasswordTxt.getText())) {
+            int x = user.checkUserName(usernameTxt.getText());
+
+            if (x == 1) {
+                user.setFirstName(firstnameTxt.getText());
+                user.setLastName(lastnameTxt.getText());
+                user.setDesignation(addUserDesignationCombo.getSelectedItem().toString());
+                user.setUserName(usernameTxt.getText());
+                user.setPassword(passwordTxt.getText());
+
+                int result = user.addNewUser(user);
+                if (result == 1) {
+                    JOptionPane.showMessageDialog(this, "New entry has entered succesfully");
+                    this.setVisible(false);                        
+                    user.viewUser((DefaultTableModel) adminPannel.userTable.getModel());
+                    
+                } else {
+                    //if insert is not successful
+                    JOptionPane.showMessageDialog(this, "Sorry! Error occured while inserting!\nPlease enter again.");
+                    
+                }
+            } else if (x == 0) {
+                JOptionPane.showMessageDialog(this, "UserName already exists!!!");
+                usernameTxt.setText("");
+            } else {
+                JOptionPane.showMessageDialog(this, "Error occured while checking the userName!!!");
+                return;
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Password mismatched!!!");
+            passwordTxt.setText("");
+            cnfrmPasswordTxt.setText("");
+        }
     }//GEN-LAST:event_addBtnActionPerformed
 
     /**
