@@ -5,6 +5,7 @@
  */
 package teaeli;
 
+import classes.Blend;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.logging.Level;
@@ -30,6 +31,10 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
         }
         initComponents();
         this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
+        
+        //Initialize blendCombo
+        Blend blend = new Blend();
+        blend.initBlendCombo(blendsCombo);
     }
 
     /**
@@ -276,7 +281,7 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(blendsCombo, 0, 190, Short.MAX_VALUE)
+                                    .addComponent(blendsCombo, 0, 250, Short.MAX_VALUE)
                                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(28, 28, 28)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

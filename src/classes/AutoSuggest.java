@@ -20,12 +20,13 @@ class AutoSuggest {
     private boolean hide_flag = false;
     JTextField tx;
 
-    public void autoSuggest(final JComboBox Search, ResultSet rst) {
+    public void setAutoSuggest(final JComboBox Search, ResultSet rst) {
 
         Search.removeAllItems();
         try {
             rst.first();
             if (Search.getItemCount() == 0) {
+                Search.addItem("");
                 do {
                     Search.addItem(rst.getString(1));
                     v.addElement(rst.getString(1));
