@@ -51,7 +51,7 @@ public class EditProfile extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        lblUserName = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         txtFirstName = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
@@ -73,7 +73,7 @@ public class EditProfile extends javax.swing.JFrame {
 
         jLabel1.setText("Username");
 
-        jLabel2.setText("dushyantha");
+        lblUserName.setText("dushyantha");
 
         jLabel3.setText("First Name");
 
@@ -97,6 +97,11 @@ public class EditProfile extends javax.swing.JFrame {
         jLabel8.setText("Current Password");
 
         changePasswordBtn.setText("Change Password");
+        changePasswordBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                changePasswordBtnActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Cancel");
 
@@ -141,7 +146,7 @@ public class EditProfile extends javax.swing.JFrame {
                                     .addComponent(changePasswordBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
                                     .addComponent(txtLastName, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
                                     .addComponent(txtFirstName, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                                    .addComponent(lblUserName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
                 .addGap(0, 25, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -149,7 +154,7 @@ public class EditProfile extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblUserName, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -203,6 +208,12 @@ public class EditProfile extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtConfirmPasswordActionPerformed
 
+    private void changePasswordBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changePasswordBtnActionPerformed
+        txtCurrentPassword.setEditable(true);
+        txtNewPassword.setEditable(true);
+        txtConfirmPassword.setEditable(true);
+    }//GEN-LAST:event_changePasswordBtnActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -243,7 +254,6 @@ public class EditProfile extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -251,10 +261,11 @@ public class EditProfile extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
+    public javax.swing.JLabel lblUserName;
     private javax.swing.JTextField txtConfirmPassword;
     private javax.swing.JPasswordField txtCurrentPassword;
-    private javax.swing.JTextField txtFirstName;
-    private javax.swing.JTextField txtLastName;
+    public javax.swing.JTextField txtFirstName;
+    public javax.swing.JTextField txtLastName;
     private javax.swing.JPasswordField txtNewPassword;
     // End of variables declaration//GEN-END:variables
 }
