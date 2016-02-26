@@ -225,22 +225,22 @@ public class Ingredient {
         }
     }
     /* end of populateIngredientTable method */
-    
+
     /* start of initializing ing combo in AddNewBlend */
     public void initIngCombo(JComboBox ingCombo){
         Connection conn = null;
         ResultSet resultSet = null;
         AutoSuggest autoSuggest = new AutoSuggest();
-        
-        try{
+
+        try {
             String query = "SELECT ingName FROM ingredient WHERE ingCategoryID=1 OR ingCategoryID=3 OR ingCategoryID=4 OR ingCategoryID=5 OR ingCategoryID=6 ORDER BY ingName";
-            
+
             conn = dbConn.setConnection();
             resultSet = dbConn.getResult(query, conn);
-            
+
             autoSuggest.setAutoSuggest(ingCombo, resultSet);
-            
-        }catch(Exception e){
+
+        } catch (Exception e) {
             System.err.println("err : " + e);
         } finally {
             if (resultSet != null) {
@@ -261,6 +261,7 @@ public class Ingredient {
     }
     
     /* start of loadNameForSearchStockIngComboBox method*/
+
     public ResultSet loadNameForSearchStockIngComboBox() {
         Connection connection = null;
         ResultSet resultSet = null;
@@ -278,22 +279,22 @@ public class Ingredient {
         return resultSet;
     }
     /* end of loadNameForSearchStockIngComboBox method */
-    
+
     /* start of initializing flavours combo in AddNewBlend */
-    public void initBaseCombo(JComboBox ingCombo){
+    public void initBaseCombo(JComboBox ingCombo) {
         Connection conn = null;
         ResultSet resultSet = null;
         AutoSuggest autoSuggest = new AutoSuggest();
-        
-        try{
+
+        try {
             String query = "SELECT ingName FROM ingredient WHERE ingCategoryID=2 OR ingCategoryID=3 OR ingCategoryID=4 OR ingCategoryID=5 OR ingCategoryID=6 ORDER BY ingName";
-            
+
             conn = dbConn.setConnection();
             resultSet = dbConn.getResult(query, conn);
-            
+
             autoSuggest.setAutoSuggest(ingCombo, resultSet);
-            
-        }catch(Exception e){
+
+        } catch (Exception e) {
             System.err.println("err : " + e);
         } finally {
             if (resultSet != null) {
@@ -312,7 +313,7 @@ public class Ingredient {
             }
         }
     }
-    
+
     /* start of checkAndLoadIngredientStockDetails method */
     public boolean checkAndLoadIngredientStockDetails(String selectedIngName) {
 
@@ -401,10 +402,10 @@ public class Ingredient {
         Date currentDate = Calendar.getInstance().getTime();
         dateFormat.format(currentDate);
         Timestamp date = new Timestamp(currentDate.getTime());
-        
+
         User updatedUser = new User();
         updatedUser.getIDByUsername();
-        
+
         try {
             connection = dbConn.setConnection();
 
@@ -416,7 +417,7 @@ public class Ingredient {
 
             if (i == 1) {
                 query = "UPDATE ingredient SET visibleStock = '" + this.getVisibleStock() + "' WHERE ingID = '" + this.getIngID() + "'";
-                
+
                 i = dbConn.updateResult(query, connection);
 
                 if (i == 1) {
@@ -550,7 +551,6 @@ public class Ingredient {
 
             }
 
-            
         } catch (Exception e) {
             System.err.println("err : " + e);
         } finally {
@@ -575,18 +575,17 @@ public class Ingredient {
     //end of get suplier id by name
     
     //start of update ingredient method
-    public void updateIngredient(int ingredientID, String ingredientName, int ingCategory, int supID, float unitPrice) throws SQLException {
+    public int updateIngredient(int ingredientID, String ingredientName, int ingCategory, int supID, float unitPrice) throws SQLException {
 
         Connection connection = dbConn.setConnection();
         ResultSet resultSet = null;
-
+        Statement statement;
+        int insertOK =0;
         //set name of the ingredient
         String query = "Update ingredient SET ingName = '" + ingredientName + "', ingCategoryID = '" + ingCategory + "',supID= '" + supID + "',unitPrice = '" + unitPrice + "' WHERE ingID = '" + ingredientID + "'";
         try {
-            resultSet = dbConn.getResult(query, connection);
-            while (resultSet.next()) {
-
-            }
+            statement = connection.createStatement();
+            insertOK = statement.executeUpdate(query);
         } catch (Exception e) {
             System.err.println("err : " + e);
         } finally {
@@ -605,7 +604,9 @@ public class Ingredient {
                 }
             }
 
+
         } 
+        return 0;
     } 
     
 
@@ -644,19 +645,23 @@ public class Ingredient {
         return null;
     }
 
+
+
+        
     
-    public int addNewSupplier(String Name){
-        DBConnection dbConn = new DBConnection();
+
+    public int addNewSupplier(String Name) {
         Connection connection = null;
         try {
             connection = dbConn.setConnection();
         } catch (SQLException e) {
 
         }
+
+        String query = "INSERT INTO supplier values(0,'" + Name + "')";
         
-        String query = "INSERT INTO supplier values(0,'"+ Name+"')";
         int rslt = dbConn.updateResult(query, connection);
-        
+
         if (connection != null) {
             try {
                 connection.close();
@@ -684,7 +689,7 @@ public class Ingredient {
             }
 
             if (ingUsed == 0) {
-                 String queryDelete = "DELETE FROM ingredient WHERE ingredient.ingID = '" + ingredientID + "' ";
+                String queryDelete = "DELETE FROM ingredient WHERE ingredient.ingID = '" + ingredientID + "' ";
                 statement = connection.createStatement();
                 int insertOK = statement.executeUpdate(queryDelete);
             }

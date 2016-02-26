@@ -1089,22 +1089,20 @@ public class AdminPannel extends javax.swing.JFrame {
     private void searchIngredientBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchIngredientBtnActionPerformed
 
         String[] resultArray = new String[5];
+        
 
         if ((String) searchIngredientComboBox.getSelectedItem() == "") {
             JOptionPane.showMessageDialog(null, "You Haven't selected an Ingredient!!!", "Pleae select", 0);
         } else {
             try {
                 resultArray = ingredient.viewAllDetailsOfAIngredient((String) searchIngredientComboBox.getSelectedItem());
-                for (int i = 0; i < 5; i++) {
-                    System.out.println(resultArray[i]);
-                }
             } catch (SQLException ex) {
                 Logger.getLogger(AdminPannel.class.getName()).log(Level.SEVERE, null, ex);
             }
             IngredientDetails itemDetails = new IngredientDetails();
             Supplier supplier = new Supplier();
 
-        //set values to fields in IngredientDetails window
+            //set values to fields in IngredientDetails window
             //load supplier list to combobox
             AutoSuggest supplierComboboxAutoSuggest = new AutoSuggest();
             try {
@@ -1112,9 +1110,9 @@ public class AdminPannel extends javax.swing.JFrame {
             } catch (SQLException ex) {
                 Logger.getLogger(AdminPannel.class.getName()).log(Level.SEVERE, null, ex);
             }
-
-           
-            
+            for(int i=0;i<5;i++){
+                System.out.println(resultArray[i]); 
+            }
             itemDetails.itemNameTxt.setText(resultArray[0]);
             itemDetails.setName(resultArray[1]); //set ingid as name
             itemDetails.itemTypeCombo.setSelectedItem(resultArray[2]);
