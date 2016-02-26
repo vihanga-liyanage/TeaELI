@@ -9,6 +9,7 @@ import java.util.Vector;
 import javax.swing.JComboBox;
 import javax.swing.table.DefaultTableModel;
 
+
 public class Blend {
     
     //attributes
@@ -201,7 +202,8 @@ public class Blend {
             }
         }
     }
-    /* end */
+    
+    
     
     /* start of loadNameForSearchStockBlendsComboBox method*/
     public ResultSet loadNameForsearchStockBlendsComboBox(){
@@ -211,6 +213,22 @@ public class Blend {
         try{
             connection = dbConn.setConnection();
             String query = "SELECT blendName FROM blend";
+            resultSet = dbConn.getResult(query, connection);
+        } catch(Exception e){
+            System.err.println("");
+        }
+        return resultSet; 
+    }
+    /* end */
+    
+    /* start of loadNameForSearchStockBlendsComboBox method*/
+    public ResultSet loadNameForsearchBlendIngComboBox(){
+        Connection connection = null;
+        ResultSet resultSet = null;
+        
+        try{
+            connection = dbConn.setConnection();
+            String query = "SELECT ingName FROM ingredient";
             resultSet = dbConn.getResult(query, connection);
         } catch(Exception e){
             System.err.println("");
