@@ -472,4 +472,44 @@ public class Blend {
         return null;
     }
     /* end */
+    
+    /* start of the method to load values to the productTable in the blends tab*/
+    public void populateProductTable(DefaultTableModel tModel){
+        Connection connection = null;
+        ResultSet resultSet;
+        try{
+            connection = dbConn.setConnection();  
+        }catch(SQLException e){
+            
+        }
+
+        String query = "SELECT b.blendID, b.blendName, i.ingName FROM ingredient i JOIN blend b ON i.ingID = b.baseID ORDER BY b.blendName";
+        
+        resultSet = dbConn.getResult(query, connection);
+        try {
+            tModel.setRowCount(0);
+            
+            while (resultSet.next()) {
+                tModel.addRow(new Object[]{resultSet.getString(1), resultSet.getString(2), resultSet.getString(3)});
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    System.err.println("Resultset close error : " + e);
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    System.err.println("Connection close error : " + e);
+                }
+            }
+        }
+    }
+    /* end */
 }

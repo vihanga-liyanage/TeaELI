@@ -103,6 +103,9 @@ public class AdminPannel extends javax.swing.JFrame {
         /* populate inventryBlendTable in inventory management */
         blend.populateBlendTable((DefaultTableModel) inventoryBlendTable.getModel());
 
+        /* populate product table in the blend tab*/
+        blend.populateProductTable((DefaultTableModel) productTable.getModel());
+        
         /*Populate ingredientstock history*/
         blendHistoryStock.populateStockBlendHistoryTable((DefaultTableModel) blendStockHistoryTbl.getModel());
 
@@ -671,7 +674,8 @@ public class AdminPannel extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        productTable.setRowHeight(20);
+        productTable.setRowHeight(24);
+        productTable.setRowSelectionAllowed(false);
         jScrollPane4.setViewportView(productTable);
         if (productTable.getColumnModel().getColumnCount() > 0) {
             productTable.getColumnModel().getColumn(0).setMinWidth(100);
@@ -716,7 +720,7 @@ public class AdminPannel extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.setRowHeight(20);
+        jTable1.setRowHeight(24);
         jScrollPane3.setViewportView(jTable1);
         if (jTable1.getColumnModel().getColumnCount() > 0) {
             jTable1.getColumnModel().getColumn(0).setPreferredWidth(100);
