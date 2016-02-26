@@ -13,7 +13,6 @@ import classes.User;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.util.Date;
@@ -31,8 +30,7 @@ import javax.swing.table.DefaultTableModel;
 import static teaeli.TeaELI.loginFrame;
 
 public class AdminPannel extends javax.swing.JFrame {
-
-    User user = new User();
+    public static User user = new User(); 
     Ingredient ingredient = new Ingredient();
     Blend blend = new Blend();
     public static IngredientDetails ingredientDetails = new IngredientDetails();
@@ -58,7 +56,9 @@ public class AdminPannel extends javax.swing.JFrame {
         initComponents();
 
         startClock();
-        
+
+        //method to view the selected row details of a jtable
+
         final ListSelectionModel mod = productTable.getSelectionModel();
         mod.addListSelectionListener(new ListSelectionListener() {
 
@@ -69,8 +69,10 @@ public class AdminPannel extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, productTable.getValueAt(row, 0));
                 }
             }
+            
         });
-
+         
+        //set all users details to the users table in the users tab
         user.viewUser((DefaultTableModel) userTable.getModel());
 
         /*Start of ingredient class method calls*/
@@ -111,6 +113,12 @@ public class AdminPannel extends javax.swing.JFrame {
 
         AutoSuggest searchStockBlendComboBoxAutoSuggest = new AutoSuggest();
         searchStockBlendComboBoxAutoSuggest.setAutoSuggest(searchStockBlendsComboBox, blend.loadNameForsearchStockBlendsComboBox());
+        
+        AutoSuggest searchBlendIngComboBoxAutoSuggest = new AutoSuggest();
+        searchBlendIngComboBoxAutoSuggest.setAutoSuggest(searchStockBlendsComboBox, blend.loadNameForsearchBlendIngComboBox());
+        
+        AutoSuggest searchBlendBaseComboBoxAutoSuggest = new AutoSuggest();
+        searchBlendBaseComboBoxAutoSuggest.setAutoSuggest(searchStockBlendsComboBox, blend.loadNameForsearchBlendBaseComboBox());
     }
 
     DBConnection dbcon = new DBConnection();
@@ -212,6 +220,7 @@ public class AdminPannel extends javax.swing.JFrame {
         userTable = new javax.swing.JTable();
         addUserBtn = new javax.swing.JButton();
         deleteUserBtn = new javax.swing.JButton();
+        refreshBtn = new javax.swing.JButton();
         logoLabel = new javax.swing.JLabel();
         timeLabel = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -844,7 +853,7 @@ public class AdminPannel extends javax.swing.JFrame {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, true, true, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -871,6 +880,14 @@ public class AdminPannel extends javax.swing.JFrame {
             }
         });
 
+        refreshBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        refreshBtn.setText("Refresh Tables");
+        refreshBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                refreshBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout settingsUserPanelLayout = new javax.swing.GroupLayout(settingsUserPanel);
         settingsUserPanel.setLayout(settingsUserPanelLayout);
         settingsUserPanelLayout.setHorizontalGroup(
@@ -882,20 +899,25 @@ public class AdminPannel extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, settingsUserPanelLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(settingsUserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(addUserBtn, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(deleteUserBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(deleteUserBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, settingsUserPanelLayout.createSequentialGroup()
+                                .addComponent(refreshBtn)
+                                .addGap(18, 18, 18)
+                                .addComponent(addUserBtn)))))
                 .addContainerGap())
         );
         settingsUserPanelLayout.setVerticalGroup(
             settingsUserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(settingsUserPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(addUserBtn)
+                .addGroup(settingsUserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(addUserBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(refreshBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(26, 26, 26)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(deleteUserBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(209, Short.MAX_VALUE))
         );
 
         settingsTabbedPane.addTab("    Users    ", settingsUserPanel);
@@ -1007,10 +1029,11 @@ public class AdminPannel extends javax.swing.JFrame {
         }       
         IngredientDetails itemDetails = new IngredientDetails();
         //set values to fields in IngredientDetails window
+        itemDetails.setName(resultArray[1]); //set ingid as name
         itemDetails.itemNameTxt.setText(resultArray[0]); 
-        itemDetails.itemTypeCombo.setSelectedItem(resultArray[1]);
-        itemDetails.supplierNameTxt.setText(resultArray[2]);
-        itemDetails.unitPriceTxt.setText(resultArray[3]); 
+        itemDetails.itemTypeCombo.setSelectedItem(resultArray[2]);
+        //itemDetails.supplierNameTxt.setText(resultArray[3]);
+        itemDetails.unitPriceTxt.setText(resultArray[4]); 
         itemDetails.setVisible(true);
         itemDetails.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
     }//GEN-LAST:event_searchIngredientBtnActionPerformed
@@ -1156,6 +1179,10 @@ public class AdminPannel extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_deleteUserBtnActionPerformed
 
+    private void refreshBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshBtnActionPerformed
+        user.viewUser((DefaultTableModel) userTable.getModel());
+    }//GEN-LAST:event_refreshBtnActionPerformed
+
     private void searchStockIngComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchStockIngComboBoxActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_searchStockIngComboBoxActionPerformed
@@ -1236,6 +1263,7 @@ public class AdminPannel extends javax.swing.JFrame {
     private javax.swing.JTable orderListTable;
     private javax.swing.JTable productTable;
     private javax.swing.JButton profileBtn;
+    private javax.swing.JButton refreshBtn;
     private javax.swing.JButton searchIngredientBtn;
     private javax.swing.JComboBox searchIngredientComboBox;
     private javax.swing.JButton searchOrderBtn;
