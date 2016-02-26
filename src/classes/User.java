@@ -5,9 +5,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
+import teaeli.TeaELI;
+import static teaeli.TeaELI.loginFrame;
 
 public class User {
     private String userName, Password, firstName, lastName, designation;
+    private int userID;
+    
+    DBConnection dbConn = new DBConnection();
 
     public User() {
         this.userName = "";
@@ -15,6 +20,7 @@ public class User {
         this.firstName = "";
         this.lastName = "";
         this.designation = "";
+        this.userID = 0;
     }
     
     public String getUserName() {
@@ -56,10 +62,17 @@ public class User {
     public void setDesignation(String designation) {
         this.designation = designation;
     }
+
+    public int getUserID() {
+        return userID;
+    }
+
+    public void setUserID(int userID) {
+        this.userID = userID;
+    }
     
     //Method to add the result set of the user table in the DB to the user table in the Admin Pannel
     public void viewUser(DefaultTableModel tModel){
-        DBConnection dbConn = new DBConnection();
         Connection connection = null;
         ResultSet resultSet;
         try{
@@ -104,7 +117,6 @@ public class User {
     
     //method to remove user from the user table in the admin pannel(completely remove user from the system)
     public int removeUser(int id){
-        DBConnection dbConn = new DBConnection();
         Connection connection = null;
         try{
           connection = dbConn.setConnection();  
@@ -129,7 +141,6 @@ public class User {
     
     //Method to check whether the username is already in the database when adding a new user
     public int checkUserName(String userName){
-        DBConnection dbConn = new DBConnection();
         Connection connection = null;
         ResultSet resultSet;
         try {
@@ -172,7 +183,6 @@ public class User {
     }
     
     public int addNewUser(User user){
-        DBConnection dbConn = new DBConnection();
         Connection connection = null;
         try {
             connection = dbConn.setConnection();
@@ -192,5 +202,41 @@ public class User {
         }
 
         return rslt;
+    }
+    
+    public void getIDByUsername(){
+        
+        Connection connection = null;
+        ResultSet resultSet = null;
+        
+        try{
+            connection = dbConn.setConnection();
+            
+            String query = "SELECT userID FROM user WHERE username = '" + loginFrame.user + "'";
+            
+            resultSet = dbConn.getResult(query, connection);
+            
+            if(resultSet.next()){
+                this.setUserID(Integer.parseInt(resultSet.getString(1)));
+            }
+            
+        }catch (SQLException | NumberFormatException e) {
+            System.out.println("Exception : " + e);
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    System.err.println("Resultset close error : " + e);
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    System.err.println("Connection close error : " + e);
+                }
+            }
+        }
     }
 }

@@ -22,13 +22,13 @@ public class UpdateIngStock extends javax.swing.JFrame {
      */
     public UpdateIngStock() {
         initComponents();
-        
-        Dimension screenSize,frameSize;
-        int x,y;
-        screenSize=Toolkit.getDefaultToolkit().getScreenSize();
-        frameSize=getSize();
-        x=(screenSize.width-frameSize.width)/4;
-        y=(screenSize.height-frameSize.height)/4;
+
+        Dimension screenSize, frameSize;
+        int x, y;
+        screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        frameSize = getSize();
+        x = (screenSize.width - frameSize.width) / 4;
+        y = (screenSize.height - frameSize.height) / 4;
         setLocation(x, y);
         setResizable(false);
     }
@@ -43,8 +43,8 @@ public class UpdateIngStock extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel2 = new javax.swing.JPanel();
-        updateStockReasonLbl = new javax.swing.JLabel();
-        updateStockQtyInStockLbl = new javax.swing.JLabel();
+        updateStockReasonName = new javax.swing.JLabel();
+        updateStockQtyInStockName = new javax.swing.JLabel();
         newQtyTxt = new javax.swing.JTextField();
         saveBtn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -54,7 +54,7 @@ public class UpdateIngStock extends javax.swing.JFrame {
         cancelBtn = new javax.swing.JButton();
         updateStockItemName = new javax.swing.JLabel();
         stockQtyLbl = new javax.swing.JLabel();
-        updateStockItemName1 = new javax.swing.JLabel();
+        updateStockChangeName = new javax.swing.JLabel();
         updateStockCategoryName = new javax.swing.JLabel();
         updateStockCategoryLbl = new javax.swing.JLabel();
         stockIncreasedBtn = new javax.swing.JRadioButton();
@@ -64,13 +64,13 @@ public class UpdateIngStock extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, " Update Ingredient Stock ", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI Semibold", 0, 16))); // NOI18N
 
-        updateStockReasonLbl.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        updateStockReasonLbl.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        updateStockReasonLbl.setText("Reason to Change");
+        updateStockReasonName.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        updateStockReasonName.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        updateStockReasonName.setText("Reason to Change");
 
-        updateStockQtyInStockLbl.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        updateStockQtyInStockLbl.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        updateStockQtyInStockLbl.setText("Qty In Stock");
+        updateStockQtyInStockName.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        updateStockQtyInStockName.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        updateStockQtyInStockName.setText("Qty In Stock");
 
         saveBtn.setText("Save");
         saveBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -103,9 +103,9 @@ public class UpdateIngStock extends javax.swing.JFrame {
         stockQtyLbl.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         stockQtyLbl.setText("250 g");
 
-        updateStockItemName1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        updateStockItemName1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        updateStockItemName1.setText("Change Qty");
+        updateStockChangeName.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        updateStockChangeName.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        updateStockChangeName.setText("Change Qty");
 
         updateStockCategoryName.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         updateStockCategoryName.setText("Ingredient Cateogry");
@@ -138,9 +138,9 @@ public class UpdateIngStock extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(updateStockItemName)
                     .addComponent(updateStockCategoryName)
-                    .addComponent(updateStockQtyInStockLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(updateStockItemName1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(updateStockReasonLbl))
+                    .addComponent(updateStockQtyInStockName, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(updateStockChangeName, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(updateStockReasonName))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -186,11 +186,11 @@ public class UpdateIngStock extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(stockQtyLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(updateStockQtyInStockLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(updateStockQtyInStockName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(newQtyTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(updateStockItemName1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(updateStockChangeName, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -199,7 +199,7 @@ public class UpdateIngStock extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(updateStockReasonLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(updateStockReasonName, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cancelBtn)
@@ -232,31 +232,80 @@ public class UpdateIngStock extends javax.swing.JFrame {
     }//GEN-LAST:event_cancelBtnActionPerformed
 
     private void stockIncreasedBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stockIncreasedBtnActionPerformed
-        if(this.stockDecreaseBtn.isSelected()){
+        if (this.stockDecreaseBtn.isSelected()) {
             this.stockDecreaseBtn.setSelected(false);
         }
     }//GEN-LAST:event_stockIncreasedBtnActionPerformed
 
     private void stockDecreaseBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stockDecreaseBtnActionPerformed
-        if(this.stockIncreasedBtn.isSelected()){
+        if (this.stockIncreasedBtn.isSelected()) {
             this.stockIncreasedBtn.setSelected(false);
         }
     }//GEN-LAST:event_stockDecreaseBtnActionPerformed
 
     private void saveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBtnActionPerformed
-        
+
         String changeQty = this.newQtyTxt.getText();
-        int stockChangeQty = 0;
-        if (!changeQty.isEmpty()){
-            stockChangeQty = Integer.parseInt(changeQty);
-        }
-        
-        String reason = this.reasonTxt.getText();
-        
-        if(stockChangeQty > 0 && reason.isEmpty() && (this.stockIncreasedBtn.isSelected() || this.stockDecreaseBtn.isSelected())){
-            Ingredient ingredient = new Ingredient();
-        }else{
-            JOptionPane.showMessageDialog(this,"Please fill all fields");
+        int stockChangeQty, oldStockQty;
+
+        if (!changeQty.isEmpty()) {
+            if (testForInteger(changeQty)) {
+
+                stockChangeQty = Integer.parseInt(changeQty);
+                String reason = this.reasonTxt.getText();
+
+                if (!reason.isEmpty() && (this.stockIncreasedBtn.isSelected() || this.stockDecreaseBtn.isSelected())) {
+
+                    Ingredient ingredient = new Ingredient();
+                    ingredient.setIngName(this.updateStockItemNameLbl.getText());
+                    ingredient.setStockUpdateReason(this.reasonTxt.getText());
+
+                    oldStockQty = Integer.parseInt(this.stockQtyLbl.getText());
+                    ingredient.setOldStockQty(oldStockQty);
+                    ingredient.setUpdatedStockQTy(stockChangeQty);
+
+                    if (this.stockIncreasedBtn.isSelected()) {
+                        ingredient.setVisibleStock(oldStockQty + stockChangeQty);
+
+                        if (ingredient.updateStockQty()) {
+                            JOptionPane.showMessageDialog(this, "Updated Successfuly!! ");
+                            this.setVisible(false);
+                        } else {
+                            JOptionPane.showMessageDialog(this, "Unable to update!!");
+                        }
+                    } else {
+                        ingredient.setVisibleStock(oldStockQty - stockChangeQty);
+
+                        if (ingredient.getVisibleStock() < 0) {
+                            JOptionPane.showMessageDialog(this, "Stock Qty can not be negative !!! ");
+                            this.newQtyTxt.setText(null);
+                        } else {
+                            if (ingredient.updateStockQty()) {
+                                JOptionPane.showMessageDialog(this, "Updated Successfuly!! ");
+                                this.setVisible(false);
+                            } else {
+                                JOptionPane.showMessageDialog(this, "Unable to update!!");
+                            }
+                        }
+                    }
+
+                } else {
+                    JOptionPane.showMessageDialog(this, "Please fill all fields before save");
+                    this.newQtyTxt.setText(null);
+                    this.reasonTxt.setText(null);
+                    this.stockDecreaseBtn.setSelected(false);
+                    this.stockIncreasedBtn.setSelected(false);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Change Qty value must be integer");
+                this.newQtyTxt.setText(null);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Please fill all fields before save");
+            this.newQtyTxt.setText(null);
+            this.reasonTxt.setText(null);
+            this.stockDecreaseBtn.setSelected(false);
+            this.stockIncreasedBtn.setSelected(false);
         }
     }//GEN-LAST:event_saveBtnActionPerformed
 
@@ -296,6 +345,16 @@ public class UpdateIngStock extends javax.swing.JFrame {
         });
     }
 
+    private boolean testForInteger(String text) {
+        try {
+            Integer.parseInt(text);
+            return true;
+        } catch (NumberFormatException e) {
+            System.out.println("Num Exception : " + e);
+            return false;
+        }
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelBtn;
     private javax.swing.JLabel jLabel4;
@@ -309,10 +368,10 @@ public class UpdateIngStock extends javax.swing.JFrame {
     public javax.swing.JLabel stockQtyLbl;
     public javax.swing.JLabel updateStockCategoryLbl;
     private javax.swing.JLabel updateStockCategoryName;
+    private javax.swing.JLabel updateStockChangeName;
     private javax.swing.JLabel updateStockItemName;
-    private javax.swing.JLabel updateStockItemName1;
     public javax.swing.JLabel updateStockItemNameLbl;
-    private javax.swing.JLabel updateStockQtyInStockLbl;
-    private javax.swing.JLabel updateStockReasonLbl;
+    private javax.swing.JLabel updateStockQtyInStockName;
+    private javax.swing.JLabel updateStockReasonName;
     // End of variables declaration//GEN-END:variables
 }
