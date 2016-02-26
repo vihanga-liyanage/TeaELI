@@ -14,18 +14,19 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 
-class AutoSuggest {
+public class AutoSuggest {
 
     Vector<String> v = new Stack<String>();
     private boolean hide_flag = false;
     JTextField tx;
 
-    public void autoSuggest(final JComboBox Search, ResultSet rst) {
+    public void setAutoSuggest(final JComboBox Search, ResultSet rst) {
 
         Search.removeAllItems();
         try {
             rst.first();
             if (Search.getItemCount() == 0) {
+                Search.addItem("");
                 do {
                     Search.addItem(rst.getString(1));
                     v.addElement(rst.getString(1));
@@ -42,7 +43,7 @@ class AutoSuggest {
                 Search.addItem("");
             }
         } catch (SQLException e) {
-            
+            System.err.println("SQLException : " + e);
         }
 
         tx = (JTextField) Search.getEditor().getEditorComponent();

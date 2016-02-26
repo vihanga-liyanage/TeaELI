@@ -5,8 +5,11 @@
  */
 package teaeli;
 
+import classes.Ingredient;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import javax.swing.JOptionPane;
+import javax.swing.JRootPane;
 
 /**
  *
@@ -50,8 +53,12 @@ public class UpdateIngStock extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         cancelBtn = new javax.swing.JButton();
         updateStockItemName = new javax.swing.JLabel();
-        updateStockItemNameLbl1 = new javax.swing.JLabel();
+        stockQtyLbl = new javax.swing.JLabel();
         updateStockItemName1 = new javax.swing.JLabel();
+        updateStockCategoryName = new javax.swing.JLabel();
+        updateStockCategoryLbl = new javax.swing.JLabel();
+        stockIncreasedBtn = new javax.swing.JRadioButton();
+        stockDecreaseBtn = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -66,6 +73,11 @@ public class UpdateIngStock extends javax.swing.JFrame {
         updateStockQtyInStockLbl.setText("Qty In Stock");
 
         saveBtn.setText("Save");
+        saveBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveBtnActionPerformed(evt);
+            }
+        });
 
         reasonTxt.setColumns(20);
         reasonTxt.setRows(5);
@@ -88,46 +100,77 @@ public class UpdateIngStock extends javax.swing.JFrame {
         updateStockItemName.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         updateStockItemName.setText("Ingredient Name");
 
-        updateStockItemNameLbl1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        updateStockItemNameLbl1.setText("250 g");
+        stockQtyLbl.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        stockQtyLbl.setText("250 g");
 
         updateStockItemName1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         updateStockItemName1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        updateStockItemName1.setText("New Qty");
+        updateStockItemName1.setText("Change Qty");
+
+        updateStockCategoryName.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        updateStockCategoryName.setText("Ingredient Cateogry");
+
+        updateStockCategoryLbl.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        updateStockCategoryLbl.setText("Tea");
+
+        stockIncreasedBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        stockIncreasedBtn.setText("increased");
+        stockIncreasedBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                stockIncreasedBtnActionPerformed(evt);
+            }
+        });
+
+        stockDecreaseBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        stockDecreaseBtn.setText("decreased");
+        stockDecreaseBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                stockDecreaseBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(33, 33, 33)
+                .addGap(22, 22, 22)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(updateStockItemName)
+                    .addComponent(updateStockCategoryName)
                     .addComponent(updateStockQtyInStockLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(updateStockItemName1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(updateStockReasonLbl))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(updateStockItemNameLbl1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(stockQtyLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                        .addComponent(cancelBtn)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(saveBtn))
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(stockIncreasedBtn)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(stockDecreaseBtn))
                                     .addComponent(newQtyTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(41, 41, 41)
-                .addComponent(updateStockItemName)
-                .addGap(18, 18, 18)
-                .addComponent(updateStockItemNameLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(47, 47, 47)
+                                        .addComponent(cancelBtn)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(saveBtn))
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(updateStockItemNameLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(updateStockCategoryLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -136,24 +179,32 @@ public class UpdateIngStock extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(updateStockItemName, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(updateStockItemNameLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(updateStockItemNameLbl1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(updateStockCategoryName, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(updateStockCategoryLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(stockQtyLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(updateStockQtyInStockLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(newQtyTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4)
-                    .addComponent(updateStockItemName1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(updateStockItemName1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(stockIncreasedBtn)
+                    .addComponent(stockDecreaseBtn))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(updateStockReasonLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(29, 29, 29)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(updateStockReasonLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(saveBtn)
-                    .addComponent(cancelBtn))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(cancelBtn)
+                    .addComponent(saveBtn))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -179,6 +230,35 @@ public class UpdateIngStock extends javax.swing.JFrame {
     private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
         this.setVisible(false);
     }//GEN-LAST:event_cancelBtnActionPerformed
+
+    private void stockIncreasedBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stockIncreasedBtnActionPerformed
+        if(this.stockDecreaseBtn.isSelected()){
+            this.stockDecreaseBtn.setSelected(false);
+        }
+    }//GEN-LAST:event_stockIncreasedBtnActionPerformed
+
+    private void stockDecreaseBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stockDecreaseBtnActionPerformed
+        if(this.stockIncreasedBtn.isSelected()){
+            this.stockIncreasedBtn.setSelected(false);
+        }
+    }//GEN-LAST:event_stockDecreaseBtnActionPerformed
+
+    private void saveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBtnActionPerformed
+        
+        String changeQty = this.newQtyTxt.getText();
+        int stockChangeQty = 0;
+        if (!changeQty.isEmpty()){
+            stockChangeQty = Integer.parseInt(changeQty);
+        }
+        
+        String reason = this.reasonTxt.getText();
+        
+        if(stockChangeQty > 0 && reason.isEmpty() && (this.stockIncreasedBtn.isSelected() || this.stockDecreaseBtn.isSelected())){
+            Ingredient ingredient = new Ingredient();
+        }else{
+            JOptionPane.showMessageDialog(this,"Please fill all fields");
+        }
+    }//GEN-LAST:event_saveBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -221,13 +301,17 @@ public class UpdateIngStock extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField newQtyTxt;
-    private javax.swing.JTextArea reasonTxt;
+    public javax.swing.JTextField newQtyTxt;
+    public javax.swing.JTextArea reasonTxt;
     private javax.swing.JButton saveBtn;
+    public javax.swing.JRadioButton stockDecreaseBtn;
+    public javax.swing.JRadioButton stockIncreasedBtn;
+    public javax.swing.JLabel stockQtyLbl;
+    public javax.swing.JLabel updateStockCategoryLbl;
+    private javax.swing.JLabel updateStockCategoryName;
     private javax.swing.JLabel updateStockItemName;
     private javax.swing.JLabel updateStockItemName1;
-    private javax.swing.JLabel updateStockItemNameLbl;
-    private javax.swing.JLabel updateStockItemNameLbl1;
+    public javax.swing.JLabel updateStockItemNameLbl;
     private javax.swing.JLabel updateStockQtyInStockLbl;
     private javax.swing.JLabel updateStockReasonLbl;
     // End of variables declaration//GEN-END:variables

@@ -1,10 +1,13 @@
 package teaeli;
 
-public class TeaELI {
 
+public class TeaELI {
+    public static LoginFrame loginFrame = new LoginFrame();
     public static void main(String[] args) {
-        LoginFrame loginFrame = new LoginFrame();
+
         loginFrame.setVisible(true);
         loginFrame.setSize(740, 400);
+
     }
+
 }

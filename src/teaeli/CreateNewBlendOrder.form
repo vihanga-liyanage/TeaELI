@@ -72,7 +72,7 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="blendsCombo" pref="190" max="32767" attributes="0"/>
+                                      <Component id="blendsCombo" pref="250" max="32767" attributes="0"/>
                                       <Component id="jLabel3" max="32767" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
@@ -81,29 +81,31 @@
                                       <Group type="102" alignment="0" attributes="0">
                                           <Component id="blendsQtyTxt" min="-2" pref="89" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="weightCombo" min="-2" pref="34" max="-2" attributes="0"/>
+                                          <Component id="weightCombo" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="blendQtyAddBtn" min="-2" max="-2" attributes="0"/>
+                                          <Component id="blendAddBtn" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
                               <Component id="jLabel15" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace pref="33" max="32767" attributes="0"/>
+                          <EmptySpace pref="21" max="32767" attributes="0"/>
                           <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="createOrderBtn" alignment="1" min="-2" pref="130" max="-2" attributes="0"/>
-                              <Group type="102" alignment="1" attributes="0">
-                                  <Component id="cancelBtn" min="-2" pref="130" max="-2" attributes="0"/>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="confirmBtn" min="-2" pref="130" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
+                          <Component id="cancelBtn" min="-2" pref="130" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="confirmBtn" min="-2" pref="130" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="1" attributes="0">
+                          <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="deleteBtn" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="createOrderBtn" min="-2" pref="130" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -126,7 +128,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="blendsCombo" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
-                              <Component id="blendQtyAddBtn" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                              <Component id="blendAddBtn" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                               <Component id="blendsQtyTxt" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                               <Component id="weightCombo" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                           </Group>
@@ -135,8 +137,19 @@
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="jScrollPane1" min="-2" pref="249" max="-2" attributes="0"/>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="createOrderBtn" min="-2" pref="30" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="createOrderBtn" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                              <Component id="deleteBtn" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                          <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
                   <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                   <Component id="tblMasterPlanScrollPane" pref="165" max="32767" attributes="0"/>
                   <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
@@ -172,6 +185,9 @@
             </Property>
             <Property name="selectedIndex" type="int" value="-1"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="blendsComboActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel3">
           <Properties>
@@ -200,7 +216,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="weightComboActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="blendQtyAddBtn">
+        <Component class="javax.swing.JButton" name="blendAddBtn">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="14" style="0"/>
@@ -208,7 +224,7 @@
             <Property name="text" type="java.lang.String" value="Add"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="blendQtyAddBtnActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="blendAddBtnActionPerformed"/>
           </Events>
         </Component>
         <Container class="javax.swing.JScrollPane" name="jScrollPane1">
@@ -218,14 +234,14 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTable" name="tblOrder">
+            <Component class="javax.swing.JTable" name="blendListTbl">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="7" rowCount="1">
+                  <Table columnCount="7" rowCount="0">
                     <Column editable="false" title="Blend Name" type="java.lang.Object"/>
                     <Column editable="false" title="Qty Required (g)" type="java.lang.Object"/>
                     <Column editable="false" title="Visible Stock (g)" type="java.lang.Object"/>
-                    <Column editable="true" title="Invisible Stock (g)" type="java.lang.Object"/>
+                    <Column editable="false" title="Invisible Stock (g)" type="java.lang.Object"/>
                     <Column editable="false" title="Balance Qty Required(g)" type="java.lang.Object"/>
                     <Column editable="false" title="Excess Qty (g)" type="java.lang.Object"/>
                     <Column editable="true" title="Final Qty (g)" type="java.lang.Object"/>
@@ -233,7 +249,7 @@
                 </Property>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                   <TableColumnModel selectionModel="0">
-                    <Column maxWidth="-1" minWidth="-1" prefWidth="200" resizable="false">
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="250" resizable="false">
                       <Title/>
                       <Editor/>
                       <Renderer/>
@@ -270,13 +286,13 @@
                     </Column>
                   </TableColumnModel>
                 </Property>
-                <Property name="rowHeight" type="int" value="20"/>
+                <Property name="rowHeight" type="int" value="24"/>
                 <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
                   <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="tblOrderPropertyChange"/>
+                <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="blendListTblPropertyChange"/>
               </Events>
             </Component>
           </SubComponents>
@@ -392,6 +408,9 @@
           </AuxValues>
         </Component>
         <Component class="javax.swing.JTextField" name="blendsQtyTxt">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="blendsQtyTxtActionPerformed"/>
+          </Events>
         </Component>
         <Container class="javax.swing.JPanel" name="jPanel2">
           <Properties>
@@ -510,6 +529,22 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Add blends to generate RO order"/>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel6">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI" size="14" style="0"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Please edit final qty column to add excess amounts."/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="deleteBtn">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Delete"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deleteBtnActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
