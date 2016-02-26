@@ -19,6 +19,8 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.event.PopupMenuEvent;
+import javax.swing.event.PopupMenuListener;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -73,9 +75,24 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
         //set focus to blendCombo
         blendsCombo.requestFocus();
         
+        //test
+        blendsCombo.addPopupMenuListener(new PopupMenuListener() {
+
+            @Override
+            public void popupMenuCanceled(PopupMenuEvent e) {}
+
+            @Override
+            public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
+                blendsQtyTxt.requestFocus();
+            }
+
+            @Override
+            public void popupMenuWillBecomeVisible(PopupMenuEvent e) {}
+        });
+        
         deleteBtn.setEnabled(false);
         
-        //enabling delete button on row select
+        //enabling delete button and update excess qty on row select
         final ListSelectionModel mod = blendListTbl.getSelectionModel();
         mod.addListSelectionListener(new ListSelectionListener() {
 
@@ -83,11 +100,21 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
             public void valueChanged(ListSelectionEvent lse) {
                 if (!mod.isSelectionEmpty()) {
                     deleteBtn.setEnabled(true);
+                    int count = blendListTbl.getRowCount();
+                    for (int i=0; i<count; i++) {
+                        setExcessQty(i);
+                    }
                 }
             }
         });
     }
 
+    //method to reset excess qty
+    private void setExcessQty(int row){
+        int requiredQty = Integer.parseInt(blendListTbl.getValueAt(row, 4).toString());
+        int finalQty = Integer.parseInt(blendListTbl.getValueAt(row, 6).toString());
+        blendListTbl.setValueAt(finalQty - requiredQty, row, 5);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -336,6 +363,11 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
         jLabel6.setText("Please edit final qty column to add excess amounts.");
 
         deleteBtn.setText("Delete");
+        deleteBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -469,34 +501,68 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
     }//GEN-LAST:event_cancelBtnActionPerformed
 
     private void blendAddBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blendAddBtnActionPerformed
-        String blendName = (String) blendsCombo.getSelectedItem();
-        List<List<String>> res = blend.getBlendDataByBlendName(blendName);
-        Vector newRow = new Vector();
-        newRow.addElement(res.get(0).get(1));
-        newRow.addElement(blendsQtyTxt.getText());
-        newRow.addElement(res.get(0).get(3));
-        newRow.addElement(res.get(0).get(5));
-        
-        //calculating qty required
-        int blendQty = Integer.parseInt(blendsQtyTxt.getText());
-        int visible = Integer.parseInt(res.get(0).get(3));
-        int invisible = Integer.parseInt(res.get(0).get(5));
-        int balance = 0;
-        balance = blendQty - visible;
-        if (balance > 0) {
-            balance = blendQty - visible - invisible;
+        if (blendsCombo.getSelectedItem().equals("")){
+            JOptionPane.showMessageDialog(blendsCombo, "Please select a blend to add.");
+            blendsCombo.requestFocus();
+        } else if (blendsQtyTxt.getText().equals("")) {
+            JOptionPane.showMessageDialog(blendsQtyTxt, "Please enter blend quantity to add.");
+            blendsQtyTxt.requestFocus();
+        } else {
+            String blendName = (String) blendsCombo.getSelectedItem();
+            boolean isNew = true;
+            //Search if the blend is already added
+            int rowCount = blendListTbl.getRowCount();
+            for (int i = 0; i < rowCount; i++) {
+                if (blendName.equals(blendListTbl.getValueAt(i, 0))) {
+                    //calculating qty required
+                    int blendQty = Integer.parseInt(blendsQtyTxt.getText()) + Integer.parseInt(blendListTbl.getValueAt(i, 1).toString());
+                    blendListTbl.setValueAt(blendQty, i, 1);
+                    int visible = Integer.parseInt(blendListTbl.getValueAt(i, 2).toString());
+                    int invisible = Integer.parseInt(blendListTbl.getValueAt(i, 3).toString());
+                    int balance = 0;
+                    balance = blendQty - visible;
+                    if (balance > 0) {
+                        balance = blendQty - visible - invisible;
+                    }
+                    if (balance < 0) {
+                        balance = 0;
+                    }
+                    blendListTbl.setValueAt(balance, i, 4);
+                    int excess = Integer.parseInt(blendListTbl.getValueAt(i, 5).toString());
+                    blendListTbl.setValueAt(excess + balance, i, 6);
+                    isNew = false;
+                    break;
+                }
+            }
+            if (isNew) {
+                List<List<String>> res = blend.getBlendDataByBlendName(blendName);
+                Vector newRow = new Vector();
+                newRow.addElement(res.get(0).get(1));
+                newRow.addElement(blendsQtyTxt.getText());
+                newRow.addElement(res.get(0).get(3));
+                newRow.addElement(res.get(0).get(5));
+
+                //calculating qty required
+                int blendQty = Integer.parseInt(blendsQtyTxt.getText());
+                int visible = Integer.parseInt(res.get(0).get(3));
+                int invisible = Integer.parseInt(res.get(0).get(5));
+                int balance = 0;
+                balance = blendQty - visible;
+                if (balance > 0) {
+                    balance = blendQty - visible - invisible;
+                }
+                if (balance < 0) {
+                    balance = 0;
+                }
+                newRow.addElement(balance);
+                newRow.addElement(0);
+                newRow.addElement(balance);
+                DefaultTableModel model = (DefaultTableModel) blendListTbl.getModel();
+                model.addRow(newRow);
+            }
+            //blendsCombo.remove(blendsCombo.getSelectedIndex());
+            blendsCombo.requestFocus();
         }
-        if (balance < 0) {
-            balance = 0;
-        }
-        newRow.addElement(balance);
-        newRow.addElement(0);
-        newRow.addElement(balance);
-        DefaultTableModel model = (DefaultTableModel) blendListTbl.getModel();
-        model.addRow(newRow);
-        
-        //blendsCombo.remove(blendsCombo.getSelectedIndex());
-        blendsCombo.requestFocus();
     }//GEN-LAST:event_blendAddBtnActionPerformed
 
     private void blendsQtyTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blendsQtyTxtActionPerformed
@@ -506,6 +572,12 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
     private void blendsComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blendsComboActionPerformed
 
     }//GEN-LAST:event_blendsComboActionPerformed
+
+    private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
+        DefaultTableModel model = (DefaultTableModel)blendListTbl.getModel();
+        model.removeRow(blendListTbl.getSelectedRow());
+        deleteBtn.setEnabled(false);
+    }//GEN-LAST:event_deleteBtnActionPerformed
 
     
     /**

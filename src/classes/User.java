@@ -3,7 +3,6 @@ package classes;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
 
 public class User {
@@ -63,7 +62,7 @@ public class User {
         Connection connection = null;
         ResultSet resultSet;
         try{
-          connection = dbConn.setConnection();  
+            connection = dbConn.setConnection();  
         }catch(SQLException e){
             
         }
@@ -71,16 +70,11 @@ public class User {
         String query = "SELECT userID, username, firstname, lastname FROM user";
         
         resultSet = dbConn.getResult(query, connection);
-        
         try {
             tModel.setRowCount(0);
             
             while (resultSet.next()) {
-                Vector newRow = new Vector();
-                for (int i = 1; i <= 4; i++) {
-                    newRow.addElement(resultSet.getObject(i));
-                }
-                tModel.addRow(newRow);
+                tModel.addRow(new Object[]{resultSet.getString(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4)});
             }
         } catch (SQLException ex) {
             System.out.println(ex);

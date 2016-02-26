@@ -13,18 +13,15 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.table.DefaultTableModel;
-import static teaeli.LoginFrame.adminPannel;
-
 /**
  *
  * @author ASHI
  */
 public class AddNewUser extends javax.swing.JFrame {
 
-    /**
-     * Creates new form AddNewUser
-     */
+    //create an instance of the entity class
+    User user1 = new User();
+    
     public AddNewUser() {
         //Add windows look and feel
         try {
@@ -215,25 +212,21 @@ public class AddNewUser extends javax.swing.JFrame {
             return;
         }
         
-        //create an instance of the entity class
-        User user = new User();
-
         if (passwordTxt.getText().equals(cnfrmPasswordTxt.getText())) {
-            int x = user.checkUserName(usernameTxt.getText());
+            int x = user1.checkUserName(usernameTxt.getText());
 
             if (x == 1) {
-                user.setFirstName(firstnameTxt.getText());
-                user.setLastName(lastnameTxt.getText());
-                user.setDesignation(addUserDesignationCombo.getSelectedItem().toString());
-                user.setUserName(usernameTxt.getText());
-                user.setPassword(passwordTxt.getText());
+                user1.setFirstName(firstnameTxt.getText());
+                user1.setLastName(lastnameTxt.getText());
+                user1.setDesignation(addUserDesignationCombo.getSelectedItem().toString());
+                user1.setUserName(usernameTxt.getText());
+                user1.setPassword(passwordTxt.getText());
 
-                int result = user.addNewUser(user);
-                if (result == 1) {
-                    JOptionPane.showMessageDialog(this, "New entry has entered succesfully");
-                    this.setVisible(false);                        
-                    user.viewUser((DefaultTableModel) adminPannel.userTable.getModel());
-                    
+                int result = user1.addNewUser(user1);
+                if (result == 1) {                    
+                    JOptionPane.showMessageDialog(this, "New entry has been entered succesfully");
+                    this.setVisible(false);
+                                        
                 } else {
                     //if insert is not successful
                     JOptionPane.showMessageDialog(this, "Sorry! Error occured while inserting!\nPlease enter again.");
