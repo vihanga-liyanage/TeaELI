@@ -9,6 +9,8 @@ import classes.Blend;
 import classes.Validation;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.text.DateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
@@ -46,6 +48,9 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
         
         //Loading required class objects
         blend = new Blend();
+        
+        //Setting date
+        dateLabel.setText(DateFormat.getDateTimeInstance().format(new Date("M/L")));
         
         //Initialize blendCombo
         blend.initBlendCombo(blendsCombo);
@@ -151,7 +156,7 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
         cancelBtn = new javax.swing.JButton();
         blendsQtyTxt = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
-        lblDate = new javax.swing.JLabel();
+        dateLabel = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         lblOrderNo = new javax.swing.JLabel();
@@ -307,9 +312,9 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        lblDate.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        lblDate.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblDate.setText("Feb 18, 2016");
+        dateLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        dateLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        dateLabel.setText("Feb 18, 2016");
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -323,7 +328,7 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel5)
                 .addGap(18, 18, 18)
-                .addComponent(lblDate)
+                .addComponent(dateLabel)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -331,7 +336,7 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(dateLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel5))
                 .addContainerGap())
         );
@@ -643,6 +648,7 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
     public javax.swing.JButton cancelBtn;
     public javax.swing.JButton confirmBtn;
     private javax.swing.JButton createOrderBtn;
+    private javax.swing.JLabel dateLabel;
     private javax.swing.JButton deleteBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel15;
@@ -655,7 +661,6 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lblDate;
     private javax.swing.JLabel lblOrderNo;
     public javax.swing.JTable tblMasterPlan;
     public javax.swing.JScrollPane tblMasterPlanScrollPane;
