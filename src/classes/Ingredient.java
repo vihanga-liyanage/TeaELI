@@ -8,6 +8,7 @@ import teaeli.LoginFrame;
 import static teaeli.LoginFrame.adminPannel;
 import java.sql.ResultSet;
 import java.util.Vector;
+import javax.swing.JComboBox;
 
 public class Ingredient {
 
@@ -188,7 +189,39 @@ public class Ingredient {
         }
     }
     /* end of populateIngredientTable method */
-
+/* start of initializing ing combo in AddNewBlend */
+    public void initIngCombo(JComboBox ingCombo){
+        Connection conn = null;
+        ResultSet resultSet = null;
+        AutoSuggest autoSuggest = new AutoSuggest();
+        
+        try{
+            String query = "SELECT ingName FROM ingredient ORDER BY ingName";
+            
+            conn = dbConn.setConnection();
+            resultSet = dbConn.getResult(query, conn);
+            
+            autoSuggest.setAutoSuggest(ingCombo, resultSet);
+            
+        }catch(Exception e){
+            System.err.println("err : " + e);
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (Exception e) {
+                    System.err.println("Resultset close error : " + e);
+                }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (Exception e) {
+                    System.err.println("Connection close error : " + e);
+                }
+            }
+        }
+    }
     /* start of loadNameForSearchStockIngComboBox method*/
     public ResultSet loadNameForSearchStockIngComboBox() {
         Connection connection = null;
