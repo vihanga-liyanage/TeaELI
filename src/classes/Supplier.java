@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JComboBox;
 
 public class Supplier {
 
@@ -37,50 +38,22 @@ public class Supplier {
         this.SupplierName = SupplierName;
     }
 
-    public String[] loadSuppliersForCombobox() throws SQLException {
-        System.out.println("inside loadSuppliersForCombobox()");
-        Connection con = dbConn.setConnection();
+    public ResultSet loadSuppliersForCombobox() throws SQLException {
+         Connection connection = null;
         ResultSet resultSet = null;
-        String[] supplierList = null;
-        try {
-            String queryRowCount = "SELECT COUNT(supID) FROM supplier";
-            resultSet = dbConn.getResult(queryRowCount, con);
 
-            int numOfRows = 0;
-            if (resultSet.next()) {
-                numOfRows = Integer.parseInt(resultSet.getString(1));
-            }
+        try {
+            connection = dbConn.setConnection();
 
             String query = "SELECT supName FROM supplier";
-            resultSet = dbConn.getResult(query, con);
 
-            supplierList = new String[numOfRows];
-            int i = 0;
-            while (resultSet.next()) {
-                supplierList[i] = resultSet.getString(1);
-                i++;
-            }
-            
+            resultSet = dbConn.getResult(query, connection);
 
         } catch (Exception e) {
-            System.err.println("err : " + e);
-        } finally {
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (Exception e) {
-                    System.err.println("Resultset close error : " + e);
-                }
-            }
-            if (con != null) {
-                try {
-                    con.close();
-                } catch (Exception e) {
-                    System.err.println("Connection close error : " + e);
-                }
-            }
+            System.err.println("");
         }
-        return supplierList;
+        return resultSet;
+       
     }
 
 }

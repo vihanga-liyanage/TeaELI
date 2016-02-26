@@ -1087,12 +1087,7 @@ public class AdminPannel extends javax.swing.JFrame {
     private void searchIngredientBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchIngredientBtnActionPerformed
 
         String[] resultArray = new String[5];
-        Supplier supplier = new Supplier();
-        try {
-            String[] supplierList = supplier.loadSuppliersForCombobox();
-        } catch (SQLException ex) {
-            System.out.println("SQL error : " + ex);
-        }
+
         if ((String) searchIngredientComboBox.getSelectedItem() == "") {
             JOptionPane.showMessageDialog(null, "You Haven't selected an Ingredient!!!", "Pleae select", 0);
         } else {
@@ -1105,13 +1100,23 @@ public class AdminPannel extends javax.swing.JFrame {
                 Logger.getLogger(AdminPannel.class.getName()).log(Level.SEVERE, null, ex);
             }
             IngredientDetails itemDetails = new IngredientDetails();
-        //set values to fields in IngredientDetails window
+            Supplier supplier = new Supplier();
 
+        //set values to fields in IngredientDetails window
             //load supplier list to combobox
-            // itemDetails.supplierCombobox.
-            itemDetails.setName(resultArray[1]); //set ingid as name
+            AutoSuggest supplierComboboxAutoSuggest = new AutoSuggest();
+            try {
+                supplierComboboxAutoSuggest.setAutoSuggest(itemDetails.supplierCombobox, supplier.loadSuppliersForCombobox());
+            } catch (SQLException ex) {
+                Logger.getLogger(AdminPannel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+           
+            
             itemDetails.itemNameTxt.setText(resultArray[0]);
+            itemDetails.setName(resultArray[1]); //set ingid as name
             itemDetails.itemTypeCombo.setSelectedItem(resultArray[2]);
+            itemDetails.supplierCombobox.setSelectedItem(resultArray[3]);
             itemDetails.unitPriceTxt.setText(resultArray[4]);
 
             itemDetails.setVisible(true);

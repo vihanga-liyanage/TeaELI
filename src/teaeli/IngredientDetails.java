@@ -129,7 +129,14 @@ public class IngredientDetails extends javax.swing.JFrame {
             }
         });
 
+        supplierCombobox.setEditable(true);
+
         jButton1.setText("Add new Supplier");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -292,6 +299,10 @@ public class IngredientDetails extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_deleteItemBtnActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -340,7 +351,7 @@ public class IngredientDetails extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JComboBox supplierCombobox;
+    public static javax.swing.JComboBox supplierCombobox;
     public static javax.swing.JTextField unitPriceTxt;
     private javax.swing.JButton updateItemBtn;
     // End of variables declaration//GEN-END:variables
