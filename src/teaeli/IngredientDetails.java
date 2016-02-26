@@ -32,7 +32,7 @@ public class IngredientDetails extends javax.swing.JFrame {
         y = (screenSize.height - frameSize.height) /10;
         setLocation(x, y);
         setResizable(false);
-        this.pack();
+        
     }
 
     /**
@@ -51,13 +51,14 @@ public class IngredientDetails extends javax.swing.JFrame {
         itemNameTxt = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        supplierNameTxt = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         unitPriceTxt = new javax.swing.JTextField();
         cancelBtn = new javax.swing.JButton();
         updateItemBtn = new javax.swing.JButton();
         deleteItemBtn = new javax.swing.JButton();
         itemTypeCombo = new javax.swing.JComboBox();
+        jComboBox1 = new javax.swing.JComboBox();
+        jButton1 = new javax.swing.JButton();
 
         jPasswordField1.setText("jPasswordField1");
 
@@ -65,7 +66,7 @@ public class IngredientDetails extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Ingredient Details");
-        setPreferredSize(new java.awt.Dimension(500, 314));
+        setPreferredSize(new java.awt.Dimension(600, 314));
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, " Ingredient Details ", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI Semibold", 0, 16))); // NOI18N
         jPanel1.setPreferredSize(new java.awt.Dimension(480, 290));
@@ -87,12 +88,6 @@ public class IngredientDetails extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel3.setText("Supplier Name");
-
-        supplierNameTxt.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                supplierNameTxtActionPerformed(evt);
-            }
-        });
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -127,6 +122,8 @@ public class IngredientDetails extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setText("Add new Supplier");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -143,10 +140,12 @@ public class IngredientDetails extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(itemNameTxt)
-                            .addComponent(supplierNameTxt)
                             .addComponent(unitPriceTxt)
-                            .addComponent(itemTypeCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(115, Short.MAX_VALUE))
+                            .addComponent(itemTypeCombo, 0, 200, Short.MAX_VALUE)
+                            .addComponent(jComboBox1, 0, 200, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(cancelBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -168,8 +167,9 @@ public class IngredientDetails extends javax.swing.JFrame {
                     .addComponent(jLabel2))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(supplierNameTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
+                    .addComponent(jLabel3)
+                    .addComponent(jComboBox1)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(unitPriceTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -188,14 +188,14 @@ public class IngredientDetails extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 556, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
                 .addGap(9, 9, 9))
         );
 
@@ -214,10 +214,6 @@ public class IngredientDetails extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_itemNameTxtActionPerformed
 
-    private void supplierNameTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_supplierNameTxtActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_supplierNameTxtActionPerformed
-
     private void unitPriceTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_unitPriceTxtActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_unitPriceTxtActionPerformed
@@ -229,15 +225,44 @@ public class IngredientDetails extends javax.swing.JFrame {
         if (response == JOptionPane.NO_OPTION) {
             System.out.println("No button clicked");
         } else if (response == JOptionPane.YES_OPTION) {
+            String ingName;
+            int supID=0,ingCategoryID=0,ingID = 0;
+            float unitPrice;
+            
+            //get ingID
+            ingID = Integer.parseInt(this.getName()) ;
+            
+            //get ingredient name
+            ingName = this.itemNameTxt.getText();
+            
+            //get ingredient categoryid
+            int comboSelected = this.itemTypeCombo.getSelectedIndex();
+            ingCategoryID = comboSelected+1;
+            System.out.println("ingCategoryID" + ingCategoryID);
+            /*
+            //get supplier id by name
             try {
-                System.out.println("get sup id");
-                System.out.println("this.supplierNameTxt.getText()" +this.supplierNameTxt.getText());
-                
-                ingredient.getSupplierIDByName(this.supplierNameTxt.getText());
+                  supID = ingredient.getSupplierIDByName(this.supplierNameTxt.getText());
             } catch (SQLException ex) {
-                Logger.getLogger(IngredientDetails.class.getName()).log(Level.SEVERE, null, ex);
+               // Logger.getLogger(IngredientDetails.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("sol error id:"+ ex);
             }
-            //ingredient.updateIngredient(null, null, null, null);
+            */
+            //get unit price
+            String unitPriceString = this.unitPriceTxt.getText();
+            unitPrice = Float.parseFloat(unitPriceString);
+            System.out.println("unitPrice" + unitPrice);
+            
+            
+            
+            // call update ingredient method
+            try {
+                ingredient.updateIngredient(ingID ,ingName, ingCategoryID, supID, unitPrice);
+            } catch (SQLException ex) {
+                //Logger.getLogger(IngredientDetails.class.getName()).log(Level.SEVERE, null, ex);
+                 System.out.println("sol error id:"+ ex);
+            }
+            
         } else if (response == JOptionPane.CLOSED_OPTION) {
             System.out.println("JOptionPane closed");
         }
@@ -283,14 +308,15 @@ public class IngredientDetails extends javax.swing.JFrame {
     private javax.swing.JButton deleteItemBtn;
     public static javax.swing.JTextField itemNameTxt;
     public static javax.swing.JComboBox itemTypeCombo;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPasswordField jPasswordField1;
-    public static javax.swing.JTextField supplierNameTxt;
     public static javax.swing.JTextField unitPriceTxt;
     private javax.swing.JButton updateItemBtn;
     // End of variables declaration//GEN-END:variables

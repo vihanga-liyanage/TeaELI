@@ -1007,10 +1007,11 @@ public class AdminPannel extends javax.swing.JFrame {
         }       
         IngredientDetails itemDetails = new IngredientDetails();
         //set values to fields in IngredientDetails window
+        itemDetails.setName(resultArray[1]); //set ingid as name
         itemDetails.itemNameTxt.setText(resultArray[0]); 
-        itemDetails.itemTypeCombo.setSelectedItem(resultArray[1]);
-        itemDetails.supplierNameTxt.setText(resultArray[2]);
-        itemDetails.unitPriceTxt.setText(resultArray[3]); 
+        itemDetails.itemTypeCombo.setSelectedItem(resultArray[2]);
+        //itemDetails.supplierNameTxt.setText(resultArray[3]);
+        itemDetails.unitPriceTxt.setText(resultArray[4]); 
         itemDetails.setVisible(true);
         itemDetails.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
     }//GEN-LAST:event_searchIngredientBtnActionPerformed

@@ -310,15 +310,17 @@ public class Ingredient {
 
         Connection connection = dbConn.setConnection();
         ResultSet resultSet = null;
-        String[] resultArray = new String[4];
+        String[] resultArray = new String[5];
         //set name of the ingredient
         resultArray[0] = ingredientName;
+        
+                
 
-        String query = "SELECT categoryName,supName,unitPrice  FROM ingredient I,supplier S,ingredientcategory IC where I.ingName = '" + ingredientName + "' and I.supID = S.supID and I.ingCategoryID = IC.ingCategoryID;";
+        String query = "SELECT ingID,categoryName,supName,unitPrice  FROM ingredient I,supplier S,ingredientcategory IC where I.ingName = '" + ingredientName + "' and I.supID = S.supID and I.ingCategoryID = IC.ingCategoryID;";
         try {
             resultSet = dbConn.getResult(query, connection);
             while (resultSet.next()) {
-                for (int i = 1; i <= 3; i++) {
+                for (int i = 1; i <= 4; i++) {
                     resultArray[i] = resultSet.getString(i);
                 }
             }
@@ -357,19 +359,15 @@ public class Ingredient {
             resultSet = dbConn.getResult(query, connection);
 
             if (resultSet.next()) {
-                System.out.println("inside resultset");
                 supplierID = Integer.parseInt(resultSet.getString(1));
             } else {
-                System.out.println("not in table");
                 String insetSupplierQuery = "INSERT INTO supplier(supName) VALUES ('" + supplierName + "') ";
                 statement = connection.createStatement();
                 int insertOK = statement.executeUpdate(insetSupplierQuery);
-                System.out.println("inserted table");
                 if (insertOK == 1) {
                     String getsupIDQuery = "SELECT MAX(supID) FROM supplier";
                     resultSet = dbConn.getResult(getsupIDQuery, connection);
                     if (resultSet.next()) {
-                        System.out.println("get id ");
                         supplierID = Integer.parseInt(resultSet.getString(1));
 
                     }
@@ -396,46 +394,45 @@ public class Ingredient {
                 }
             }
         }
-        System.out.println("supplierID  "+supplierID);
+        System.out.println("supplierID  " + supplierID);
         return supplierID;
     }
 
     //end of get suplier id by name
     //start of update ingredient method
-    public void updateIngredient(String ingredientName, String ingCategory, String SupName, String unitPrice) throws SQLException {
-        /*
-         Connection connection = dbConn.setConnection();
-         ResultSet resultSet = null;
+    public void updateIngredient(int ingredientID ,String ingredientName, int ingCategory, int supID, float unitPrice) throws SQLException {
         
-         //set name of the ingredient
-        
+        Connection connection = dbConn.setConnection();
+        ResultSet resultSet = null;
 
-         String query = "Update ingredient";
-         try {
-         resultSet = dbConn.getResult(query, connection);
-         while (resultSet.next()) {
-                
-         }
-         } catch (Exception e) {
-         System.err.println("err : " + e);
-         } finally {
-         if (resultSet != null) {
-         try {
-         resultSet.close();
-         } catch (Exception e) {
-         System.err.println("Resultset close error : " + e);
-         }
-         }
-         if (connection != null) {
-         try {
-         connection.close();
-         } catch (Exception e) {
-         System.err.println("Connection close error : " + e);
-         }
-         }
-         }
-         }*/
-    }
+         //set name of the ingredient
+        String query = "Update ingredient SET ingName = '" + ingredientName + "', ingCategoryID = '" + ingCategory + "',supID= '" + supID + "',unitPrice = '" + unitPrice + "' WHERE ingID = '" + ingredientID + "'";
+        try {
+            resultSet = dbConn.getResult(query, connection);
+            while (resultSet.next()) {
+
+            }
+        } catch (Exception e) {
+            System.err.println("err : " + e);
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (Exception e) {
+                    System.err.println("Resultset close error : " + e);
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (Exception e) {
+                    System.err.println("Connection close error : " + e);
+                }
+            }
+        } 
+    } 
+
+}
 
     //end of update ingredient method
-}
+
