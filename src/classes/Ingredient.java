@@ -1,6 +1,7 @@
 package classes;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import javax.swing.table.DefaultTableModel;
 import static teaeli.LoginFrame.adminPannel;
@@ -460,9 +461,63 @@ public class Ingredient {
                     System.err.println("Connection close error : " + e);
                 }
             }
+
+        } 
+    } 
+    
+    public ResultSet getSupplierDetails(){
+        Connection con = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        Statement st = null;
+        try{
+            String query = "SELECT * FROM supplier";
+            rs = dbConn.getResult(query, con);
+        }catch(Exception e){
+            System.err.println("err : " + e);
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (Exception e) {
+                    System.err.println("Resultset close error : " + e);
+                }
+            }
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (Exception e) {
+                    System.err.println("Connection close error : " + e);
+                }
+            }
         }
+        return rs;
     }
-    //end of update ingredient method
+    
+    public int addNewSupplier(String Name){
+        DBConnection dbConn = new DBConnection();
+        Connection connection = null;
+        try {
+            connection = dbConn.setConnection();
+        } catch (SQLException e) {
+
+        }
+        
+        String query = "INSERT INTO supplier values(0,'"+ Name+"')";
+        int rslt = dbConn.updateResult(query, connection);
+        
+        if (connection != null) {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                System.err.println("Connection close error : " + e);
+            }
+        }
+
+        return rslt;
+    }
+
+
 
     //start of update ingredient method
     public int deleteIngredient(int ingredientID) throws SQLException {

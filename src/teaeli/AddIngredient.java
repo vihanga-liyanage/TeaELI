@@ -6,6 +6,7 @@
 package teaeli;
 
 import classes.DBConnection;
+import classes.Ingredient;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.sql.Connection;
@@ -33,7 +34,7 @@ public class AddIngredient extends javax.swing.JFrame {
     PreparedStatement pst = null;
     ResultSet rs = null;
     Statement st = null;
-    
+    Ingredient ingr = new Ingredient();
     public AddIngredient() {
         //Add windows look and feel
         try {
@@ -52,32 +53,16 @@ public class AddIngredient extends javax.swing.JFrame {
         setLocation(x, y);
         setResizable(false);
         
-        /*try{
-            String query = "SELECT * FROM supplier";
-            rs = dbcon.getResult(query, con);
-            while(rs.next()){
-                DefaultComboBoxModel items = new DefaultComboBoxModel();
-                JComboBox  = new JComboBox(items);
-                items.addElement(rs.getString(2));
-            }
-        }catch(Exception e){
-            System.err.println("err : " + e);
-        } finally {
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (Exception e) {
-                    System.err.println("Resultset close error : " + e);
-                }
-            }
-            if (con != null) {
-                try {
-                    con.close();
-                } catch (Exception e) {
-                    System.err.println("Connection close error : " + e);
-                }
-            }
-        }*/
+        
+        rs = ingr.getSupplierDetails();
+        try{
+        while(rs.next()){
+            System.out.println(rs.getString(2));
+            supliercombo.addItem(rs.getString(2));
+        }
+        }catch (Exception e){
+            System.out.println(e);
+        }
         
     }
 
@@ -107,6 +92,7 @@ public class AddIngredient extends javax.swing.JFrame {
         addBtn = new javax.swing.JButton();
         itemTypeCombo = new javax.swing.JComboBox();
         supliercombo = new javax.swing.JComboBox();
+        btnAddSupplier = new javax.swing.JButton();
 
         jPasswordField1.setText("jPasswordField1");
 
@@ -154,10 +140,17 @@ public class AddIngredient extends javax.swing.JFrame {
             }
         });
 
-        supliercombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "CARGILLS", "FINLAYS TEA ESTATES PLC", "FORBES & WALKER TEA BROKERS (PVT) LTD", "GREEN FIELD BIO PLANTATIONS (PVT) LTD", "ISLAND WIDE MARKETING SERVICES (PVT) LTD", "KRAETEURMIX LANKA (PVT) LTD", "PJM INTERNATIONAL (PVT) LTD", "RAKEEB INTERNATIONAL (PVT) LTD", "TALAWAKELLE PLANTATIONS PLC", " " }));
+        supliercombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " " }));
         supliercombo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 supliercomboActionPerformed(evt);
+            }
+        });
+
+        btnAddSupplier.setText("Add New Supplier");
+        btnAddSupplier.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddSupplierActionPerformed(evt);
             }
         });
 
@@ -166,8 +159,12 @@ public class AddIngredient extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(32, 32, 32)
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(cancelBtn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(addBtn))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel3)
@@ -176,15 +173,13 @@ public class AddIngredient extends javax.swing.JFrame {
                             .addComponent(jLabel1))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtName)
-                            .addComponent(txtPrice)
-                            .addComponent(itemTypeCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(supliercombo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(cancelBtn)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(addBtn)))
-                .addContainerGap(19, Short.MAX_VALUE))
+                            .addComponent(btnAddSupplier, javax.swing.GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(txtPrice)
+                                .addComponent(txtName)
+                                .addComponent(itemTypeCombo, 0, 231, Short.MAX_VALUE)
+                                .addComponent(supliercombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -201,15 +196,17 @@ public class AddIngredient extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(supliercombo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnAddSupplier)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
-                .addGap(29, 29, 29)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cancelBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -288,6 +285,17 @@ public class AddIngredient extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_supliercomboActionPerformed
 
+    private void btnAddSupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddSupplierActionPerformed
+        String SupName = JOptionPane.showInputDialog ( "Enter Supplier Name" );
+        int rslt = ingr.addNewSupplier(SupName);
+        if(rslt == 1){
+            JOptionPane.showMessageDialog(this, "Supplier Added Succesfully");            
+        }
+        else{
+            JOptionPane.showMessageDialog(this, "Sorry! Error occured while inserting!\nPlease enter again.");
+        }
+    }//GEN-LAST:event_btnAddSupplierActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -325,6 +333,7 @@ public class AddIngredient extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addBtn;
+    private javax.swing.JButton btnAddSupplier;
     private javax.swing.JButton cancelBtn;
     private javax.swing.JComboBox itemTypeCombo;
     private javax.swing.JButton jButton2;
