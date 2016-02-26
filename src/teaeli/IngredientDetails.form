@@ -89,7 +89,7 @@
                               <Component id="itemNameTxt" max="32767" attributes="0"/>
                               <Component id="unitPriceTxt" max="32767" attributes="0"/>
                               <Component id="itemTypeCombo" pref="200" max="32767" attributes="0"/>
-                              <Component id="jComboBox1" pref="200" max="32767" attributes="0"/>
+                              <Component id="supplierCombobox" pref="200" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="jButton1" min="-2" pref="163" max="-2" attributes="0"/>
@@ -123,7 +123,7 @@
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jComboBox1" alignment="3" max="32767" attributes="0"/>
+                      <Component id="supplierCombobox" alignment="3" max="32767" attributes="0"/>
                       <Component id="jButton1" alignment="3" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -232,7 +232,7 @@
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JComboBox" name="jComboBox1">
+        <Component class="javax.swing.JComboBox" name="supplierCombobox">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="0"/>

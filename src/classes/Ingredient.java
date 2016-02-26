@@ -465,34 +465,7 @@ public class Ingredient {
         } 
     } 
     
-    public ResultSet getSupplierDetails(){
-        Connection con = null;
-        PreparedStatement pst = null;
-        ResultSet rs = null;
-        Statement st = null;
-        try{
-            String query = "SELECT * FROM supplier";
-            rs = dbConn.getResult(query, con);
-        }catch(Exception e){
-            System.err.println("err : " + e);
-        } finally {
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (Exception e) {
-                    System.err.println("Resultset close error : " + e);
-                }
-            }
-            if (con != null) {
-                try {
-                    con.close();
-                } catch (Exception e) {
-                    System.err.println("Connection close error : " + e);
-                }
-            }
-        }
-        return rs;
-    }
+    
     
     public int addNewSupplier(String Name){
         DBConnection dbConn = new DBConnection();

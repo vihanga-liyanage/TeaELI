@@ -5,6 +5,7 @@ import classes.Ingredient;
 import classes.StockHistory;
 import classes.DBConnection;
 import classes.AutoSuggest;
+import classes.Supplier;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -1033,6 +1034,14 @@ public class AdminPannel extends javax.swing.JFrame {
         
         String[] resultArray = new String[5];
         
+        Supplier supplier = new Supplier();
+        try {
+            String[] supplierList = supplier.loadSuppliersForCombobox();
+        } catch (SQLException ex) {
+            System.out.println("SQL error : "+ex);
+        }
+
+        
         if((String) searchIngredientComboBox.getSelectedItem()==""){
             JOptionPane.showMessageDialog(null, "You Haven't selected an Ingredient!!!", "Pleae select", 0);
             
@@ -1048,6 +1057,8 @@ public class AdminPannel extends javax.swing.JFrame {
         }       
         IngredientDetails itemDetails = new IngredientDetails();
         //set values to fields in IngredientDetails window
+        //load supplier list to combobox
+       // itemDetails.supplierCombobox.
         
         itemDetails.itemNameTxt.setText(resultArray[0]); //set ing name
         itemDetails.setName(resultArray[1]); //set ingid as name of the frame
