@@ -222,7 +222,7 @@
         <Component class="javax.swing.JComboBox" name="itemTypeCombo">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="new javax.swing.DefaultComboBoxModel(new String[] {&quot;Tea&quot;, &quot;Flavours&quot; , &quot;Herbs&quot;, &quot;Flowers&quot;, &quot;Fruits&quot;, &quot;Leaves&quot;, &quot;Other&quot;})" type="code"/>
+              <Connection code="new javax.swing.DefaultComboBoxModel(new String[] {&quot;Tea&quot;, &quot;Flavour&quot; , &quot;Herbs&quot;, &quot;Flowers&quot;, &quot;Fruits&quot;, &quot;Leaves&quot;, &quot;Other&quot;})" type="code"/>
             </Property>
           </Properties>
           <Events>
