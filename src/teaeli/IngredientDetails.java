@@ -1,6 +1,7 @@
 package teaeli;
 
 import classes.Ingredient;
+import classes.Supplier;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.sql.SQLException;
@@ -32,7 +33,8 @@ public class IngredientDetails extends javax.swing.JFrame {
         y = (screenSize.height - frameSize.height) / 10;
         setLocation(x, y);
         setResizable(false);
-
+        
+        
     }
 
     /**
@@ -57,7 +59,7 @@ public class IngredientDetails extends javax.swing.JFrame {
         updateItemBtn = new javax.swing.JButton();
         deleteItemBtn = new javax.swing.JButton();
         itemTypeCombo = new javax.swing.JComboBox();
-        jComboBox1 = new javax.swing.JComboBox();
+        supplierCombobox = new javax.swing.JComboBox();
         jButton1 = new javax.swing.JButton();
 
         jPasswordField1.setText("jPasswordField1");
@@ -127,7 +129,14 @@ public class IngredientDetails extends javax.swing.JFrame {
             }
         });
 
+        supplierCombobox.setEditable(true);
+
         jButton1.setText("Add new Supplier");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -147,7 +156,7 @@ public class IngredientDetails extends javax.swing.JFrame {
                             .addComponent(itemNameTxt)
                             .addComponent(unitPriceTxt)
                             .addComponent(itemTypeCombo, 0, 200, Short.MAX_VALUE)
-                            .addComponent(jComboBox1, 0, 200, Short.MAX_VALUE))
+                            .addComponent(supplierCombobox, 0, 200, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -173,7 +182,7 @@ public class IngredientDetails extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jComboBox1)
+                    .addComponent(supplierCombobox)
                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -290,6 +299,10 @@ public class IngredientDetails extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_deleteItemBtnActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -332,13 +345,13 @@ public class IngredientDetails extends javax.swing.JFrame {
     public static javax.swing.JComboBox itemTypeCombo;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPasswordField jPasswordField1;
+    public static javax.swing.JComboBox supplierCombobox;
     public static javax.swing.JTextField unitPriceTxt;
     private javax.swing.JButton updateItemBtn;
     // End of variables declaration//GEN-END:variables
