@@ -81,7 +81,7 @@
                                       <Group type="102" alignment="0" attributes="0">
                                           <Component id="blendsQtyTxt" min="-2" pref="89" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="weightCombo" min="-2" max="-2" attributes="0"/>
+                                          <Component id="blendWeightCombo" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Component id="blendAddBtn" min="-2" max="-2" attributes="0"/>
                                       </Group>
@@ -130,7 +130,7 @@
                               <Component id="blendsCombo" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                               <Component id="blendAddBtn" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                               <Component id="blendsQtyTxt" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
-                              <Component id="weightCombo" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                              <Component id="blendWeightCombo" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
@@ -198,7 +198,7 @@
             <Property name="text" type="java.lang.String" value="Blends"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="weightCombo">
+        <Component class="javax.swing.JComboBox" name="blendWeightCombo">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="14" style="0"/>
@@ -213,7 +213,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="weightComboActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="blendWeightComboActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="blendAddBtn">
