@@ -54,6 +54,7 @@ public class AddIngredient extends javax.swing.JFrame {
         setResizable(false);
         
         
+        /*
         rs = ingr.getSupplierDetails();
         try{
         while(rs.next()){
@@ -64,6 +65,7 @@ public class AddIngredient extends javax.swing.JFrame {
             System.out.println(e);
         }
         
+        */
     }
 
     

@@ -5,6 +5,7 @@ import classes.Ingredient;
 import classes.StockHistory;
 import classes.DBConnection;
 import classes.AutoSuggest;
+import classes.Supplier;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -575,8 +576,22 @@ public class AdminPannel extends javax.swing.JFrame {
             new String [] {
                 "IngredientName", "Supplier", "Unit Price"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, true, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        settingsIngredientTable.setRowHeight(24);
         jScrollPane10.setViewportView(settingsIngredientTable);
+        if (settingsIngredientTable.getColumnModel().getColumnCount() > 0) {
+            settingsIngredientTable.getColumnModel().getColumn(0).setResizable(false);
+            settingsIngredientTable.getColumnModel().getColumn(1).setResizable(false);
+            settingsIngredientTable.getColumnModel().getColumn(2).setResizable(false);
+        }
 
         searchIngredientComboBox.setEditable(true);
 
@@ -1073,23 +1088,43 @@ public class AdminPannel extends javax.swing.JFrame {
 
     private void searchIngredientBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchIngredientBtnActionPerformed
 
-        String[] resultArray = new String[4];
+        String[] resultArray = new String[5];
 
-        try {
-            resultArray = ingredient.viewAllDetailsOfAIngredient((String) searchIngredientComboBox.getSelectedItem());
+        if ((String) searchIngredientComboBox.getSelectedItem() == "") {
+            JOptionPane.showMessageDialog(null, "You Haven't selected an Ingredient!!!", "Pleae select", 0);
+        } else {
+            try {
+                resultArray = ingredient.viewAllDetailsOfAIngredient((String) searchIngredientComboBox.getSelectedItem());
+                for (int i = 0; i < 5; i++) {
+                    System.out.println(resultArray[i]);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(AdminPannel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            IngredientDetails itemDetails = new IngredientDetails();
+            Supplier supplier = new Supplier();
 
-        } catch (SQLException ex) {
-            Logger.getLogger(AdminPannel.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        IngredientDetails itemDetails = new IngredientDetails();
         //set values to fields in IngredientDetails window
-        itemDetails.setName(resultArray[1]); //set ingid as name
-        itemDetails.itemNameTxt.setText(resultArray[0]);
-        itemDetails.itemTypeCombo.setSelectedItem(resultArray[2]);
-        //itemDetails.supplierNameTxt.setText(resultArray[3]);
-        itemDetails.unitPriceTxt.setText(resultArray[4]);
-        itemDetails.setVisible(true);
-        itemDetails.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+            //load supplier list to combobox
+            AutoSuggest supplierComboboxAutoSuggest = new AutoSuggest();
+            try {
+                supplierComboboxAutoSuggest.setAutoSuggest(itemDetails.supplierCombobox, supplier.loadSuppliersForCombobox());
+            } catch (SQLException ex) {
+                Logger.getLogger(AdminPannel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+           
+            
+            itemDetails.itemNameTxt.setText(resultArray[0]);
+            itemDetails.setName(resultArray[1]); //set ingid as name
+            itemDetails.itemTypeCombo.setSelectedItem(resultArray[2]);
+            itemDetails.supplierCombobox.setSelectedItem(resultArray[3]);
+            itemDetails.unitPriceTxt.setText(resultArray[4]);
+
+            itemDetails.setVisible(true);
+            itemDetails.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        }
+
     }//GEN-LAST:event_searchIngredientBtnActionPerformed
 
     private void addNewBlendsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addNewBlendsBtnActionPerformed
