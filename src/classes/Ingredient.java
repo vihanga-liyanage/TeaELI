@@ -8,6 +8,8 @@ import static teaeli.LoginFrame.adminPannel;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JComboBox;
 
 public class Ingredient {
@@ -466,32 +468,38 @@ public class Ingredient {
     } 
     
     public ResultSet getSupplierDetails(){
-        Connection con = null;
-        PreparedStatement pst = null;
-        ResultSet rs = null;
-        Statement st = null;
+        
         try{
-            String query = "SELECT * FROM supplier";
-            rs = dbConn.getResult(query, con);
-        }catch(Exception e){
-            System.err.println("err : " + e);
-        } finally {
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (Exception e) {
-                    System.err.println("Resultset close error : " + e);
+            Connection con = null;
+            PreparedStatement pst = null;
+            ResultSet rs = null;
+            Statement st = null;
+            try{
+                String query = "SELECT * FROM supplier";
+                con = dbConn.setConnection();
+                rs = dbConn.getResult(query, con);
+                
+            }catch(Exception e){
+                System.err.println("e : " + e);
+            } finally {
+                
+                if (con != null) {
+                    try {
+                        con.close();
+                    } catch (Exception e) {
+                        System.err.println("Connection close error : " + e);
+                    }
                 }
             }
-            if (con != null) {
-                try {
-                    con.close();
-                } catch (Exception e) {
-                    System.err.println("Connection close error : " + e);
-                }
+            while(rs.next()){
+                System.out.println(rs.getString(1));
+                return rs;
+                
             }
+        }catch(SQLException ex){
+            
         }
-        return rs;
+        return null;
     }
     
     public int addNewSupplier(String Name){

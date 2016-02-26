@@ -57,7 +57,7 @@ public class AddIngredient extends javax.swing.JFrame {
         rs = ingr.getSupplierDetails();
         try{
         while(rs.next()){
-            System.out.println(rs.getString(2));
+            System.out.println("a");
             supliercombo.addItem(rs.getString(2));
         }
         }catch (Exception e){
