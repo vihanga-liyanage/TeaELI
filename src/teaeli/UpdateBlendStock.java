@@ -273,40 +273,40 @@ public class UpdateBlendStock extends javax.swing.JFrame {
                         blend.setVisibleStock(oldStockQty + stockChangeQty);
 
                         if (blend.updateStockQty()) {
-                            JOptionPane.showMessageDialog(this, "Updated Successfuly!! ");
+                            JOptionPane.showMessageDialog(this, "Updated Successfuly !","Update Success",JOptionPane.INFORMATION_MESSAGE);
                             this.setVisible(false);
                         } else {
-                            JOptionPane.showMessageDialog(this, "Unable to update!!");
+                            JOptionPane.showMessageDialog(this, "Unable to update !","Update Fails",JOptionPane.ERROR_MESSAGE);
                         }
                     } else {
                         blend.setVisibleStock(oldStockQty - stockChangeQty);
 
                         if (blend.getVisibleStock() < 0) {
-                            JOptionPane.showMessageDialog(this, "Stock Qty can not be negative !!! ");
+                            JOptionPane.showMessageDialog(this, "Stock Qty can not be negative !","Invalid Input",JOptionPane.ERROR_MESSAGE);
                             this.newQtyTxt.setText(null);
                         } else {
                             if (blend.updateStockQty()) {
-                                JOptionPane.showMessageDialog(this, "Updated Successfuly!! ");
+                                JOptionPane.showMessageDialog(this, "Updated Successfuly !","Update Success",JOptionPane.INFORMATION_MESSAGE);
                                 this.setVisible(false);
                             } else {
-                                JOptionPane.showMessageDialog(this, "Unable to update!!");
+                                JOptionPane.showMessageDialog(this, "Unable to update !","Update Fails",JOptionPane.ERROR_MESSAGE);
                             }
                         }
                     }
 
                 } else {
-                    JOptionPane.showMessageDialog(this, "Please fill all fields before save");
+                    JOptionPane.showMessageDialog(this, "Please fill all fields before save","Empty Fields",JOptionPane.ERROR_MESSAGE);
                     this.newQtyTxt.setText(null);
                     this.reasonToChangeTxt.setText(null);
                     this.blendStockDecreasedBtn.setSelected(false);
                     this.blendStockIncreaseBtn.setSelected(false);
                 }
             } else {
-                JOptionPane.showMessageDialog(this, "Change Qty value must be integer");
+                JOptionPane.showMessageDialog(this, "Change Qty value must be integer","Invalid Input",JOptionPane.ERROR_MESSAGE);
                 this.newQtyTxt.setText(null);
             }
         } else {
-            JOptionPane.showMessageDialog(this, "Please fill all fields before save");
+            JOptionPane.showMessageDialog(this, "Please fill all fields before save","Empty Fields",JOptionPane.ERROR_MESSAGE);
             this.newQtyTxt.setText(null);
             this.reasonToChangeTxt.setText(null);
             this.blendStockDecreasedBtn.setSelected(false);
