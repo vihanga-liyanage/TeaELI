@@ -577,7 +577,6 @@ public class Ingredient {
     } 
     
     
-    
     public int addNewSupplier(String Name){
         DBConnection dbConn = new DBConnection();
         Connection connection = null;
@@ -600,8 +599,6 @@ public class Ingredient {
 
         return rslt;
     }
-
-
 
     //start of update ingredient method
     public int deleteIngredient(int ingredientID) throws SQLException {

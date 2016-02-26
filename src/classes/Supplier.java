@@ -43,23 +43,24 @@ public class Supplier {
         ResultSet resultSet = null;
         String[] supplierList = null;
         try {
+            String queryRowCount = "SELECT COUNT(supID) FROM supplier";
+            resultSet = dbConn.getResult(queryRowCount, con);
+
+            int numOfRows = 0;
+            if (resultSet.next()) {
+                numOfRows = Integer.parseInt(resultSet.getString(1));
+            }
+
             String query = "SELECT supName FROM supplier";
             resultSet = dbConn.getResult(query, con);
-            
 
-            ResultSetMetaData rsmd = resultSet.getMetaData();
-            int numcols = rsmd.getColumnCount();
-
-            supplierList = new String[numcols];
+            supplierList = new String[numOfRows];
             int i = 0;
             while (resultSet.next()) {
-                System.out.println(resultSet.getString(1));
-                //supplierList[i] = resultSet.getString(1);
+                supplierList[i] = resultSet.getString(1);
                 i++;
             }
-            for(int j=0;j<=numcols;j++){
-                System.out.println(supplierList[j]);
-            }
+            
 
         } catch (Exception e) {
             System.err.println("err : " + e);
