@@ -313,8 +313,6 @@ public class Ingredient {
         String[] resultArray = new String[5];
         //set name of the ingredient
         resultArray[0] = ingredientName;
-        
-                
 
         String query = "SELECT ingID,categoryName,supName,unitPrice  FROM ingredient I,supplier S,ingredientcategory IC where I.ingName = '" + ingredientName + "' and I.supID = S.supID and I.ingCategoryID = IC.ingCategoryID;";
         try {
@@ -400,12 +398,12 @@ public class Ingredient {
 
     //end of get suplier id by name
     //start of update ingredient method
-    public void updateIngredient(int ingredientID ,String ingredientName, int ingCategory, int supID, float unitPrice) throws SQLException {
-        
+    public void updateIngredient(int ingredientID, String ingredientName, int ingCategory, int supID, float unitPrice) throws SQLException {
+
         Connection connection = dbConn.setConnection();
         ResultSet resultSet = null;
 
-         //set name of the ingredient
+        //set name of the ingredient
         String query = "Update ingredient SET ingName = '" + ingredientName + "', ingCategoryID = '" + ingCategory + "',supID= '" + supID + "',unitPrice = '" + unitPrice + "' WHERE ingID = '" + ingredientID + "'";
         try {
             resultSet = dbConn.getResult(query, connection);
@@ -429,10 +427,51 @@ public class Ingredient {
                     System.err.println("Connection close error : " + e);
                 }
             }
-        } 
-    } 
-
-}
-
+        }
+    }
     //end of update ingredient method
 
+    //start of update ingredient method
+    public int deleteIngredient(int ingredientID) throws SQLException {
+        Connection connection = dbConn.setConnection();
+        ResultSet resultSet = null;
+        int ingUsed = 0;
+        Statement statement;
+
+        //set name of the ingredient
+        String query = "SELECT ingID from recipie WHERE recipie.ingID ='" + ingredientID + "' ";
+        try {
+            resultSet = dbConn.getResult(query, connection);
+            if (resultSet.next()) {
+                ingUsed = 1;
+            }
+
+            if (ingUsed == 0) {
+                 String queryDelete = "DELETE FROM ingredient WHERE ingredient.ingID = '" + ingredientID + "' ";
+                statement = connection.createStatement();
+                int insertOK = statement.executeUpdate(queryDelete);
+            }
+        } catch (Exception e) {
+            System.err.println("err : " + e);
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (Exception e) {
+                    System.err.println("Resultset close error : " + e);
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (Exception e) {
+                    System.err.println("Connection close error : " + e);
+                }
+            }
+        }
+        System.out.println("ingUsed " + ingUsed);
+        return ingUsed;
+    }
+
+     //end of update ingredient method
+}
