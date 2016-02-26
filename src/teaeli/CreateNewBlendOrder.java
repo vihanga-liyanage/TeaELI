@@ -9,6 +9,8 @@ import classes.Blend;
 import classes.Validation;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.text.DateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
@@ -47,6 +49,9 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
         //Loading required class objects
         blend = new Blend();
         
+        //Setting date
+        dateLabel.setText(DateFormat.getDateTimeInstance().format(new Date("M/L")));
+        
         //Initialize blendCombo
         blend.initBlendCombo(blendsCombo);
         
@@ -56,10 +61,10 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
                 String qty = blendsQtyTxt.getText();
                 if (qty.length() > 0) {
                     if (!(new Validation().isInt(qty))) {
-                        JOptionPane.showMessageDialog(blendsQtyTxt, "Blend quantity must be a valid number!");
+                        JOptionPane.showMessageDialog(blendsQtyTxt, "Blend quantity must be a valid number!", "Error", JOptionPane.WARNING_MESSAGE);
                         blendsQtyTxt.setText(qty.substring(0, qty.length() - 1));
                     } else if (Integer.parseInt(qty) < 0) {
-                        JOptionPane.showMessageDialog(blendsQtyTxt, "Blend quantity cannot be less than 0!");
+                        JOptionPane.showMessageDialog(blendsQtyTxt, "Blend quantity cannot be less than 0!", "Error", JOptionPane.WARNING_MESSAGE);
                         blendsQtyTxt.setText(qty.substring(0, qty.length() - 1));
                     }
                 }
@@ -75,7 +80,7 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
         //set focus to blendCombo
         blendsCombo.requestFocus();
         
-        //test
+        //setting focus to qty txt when item selected
         blendsCombo.addPopupMenuListener(new PopupMenuListener() {
 
             @Override
@@ -111,9 +116,20 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
 
     //method to reset excess qty
     private void setExcessQty(int row){
+        String blendName = blendListTbl.getValueAt(row, 0).toString();
         int requiredQty = Integer.parseInt(blendListTbl.getValueAt(row, 4).toString());
-        int finalQty = Integer.parseInt(blendListTbl.getValueAt(row, 6).toString());
-        blendListTbl.setValueAt(finalQty - requiredQty, row, 5);
+        if (new Validation().isInt(blendListTbl.getValueAt(row, 6).toString())) {
+            int finalQty = Integer.parseInt(blendListTbl.getValueAt(row, 6).toString());
+            if (finalQty < requiredQty) {
+                JOptionPane.showMessageDialog(blendListTbl, "<html>You cannot decrease the <b>" + blendName + "</b> final quantity less than required quantity!</html>", "Error", JOptionPane.WARNING_MESSAGE);
+                blendListTbl.setValueAt(requiredQty, row, 6);
+            } else {
+                blendListTbl.setValueAt(finalQty - requiredQty, row, 5);
+            }
+        } else {
+            JOptionPane.showMessageDialog(blendListTbl, "<html>Please enter a valid final quantity for <b>" + blendName + "</b>.</html>", "Error", JOptionPane.WARNING_MESSAGE);
+            blendListTbl.setValueAt(requiredQty, row, 6);
+        }
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -129,7 +145,7 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         blendsCombo = new javax.swing.JComboBox();
         jLabel3 = new javax.swing.JLabel();
-        weightCombo = new javax.swing.JComboBox();
+        blendWeightCombo = new javax.swing.JComboBox();
         blendAddBtn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         blendListTbl = new javax.swing.JTable();
@@ -140,7 +156,7 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
         cancelBtn = new javax.swing.JButton();
         blendsQtyTxt = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
-        lblDate = new javax.swing.JLabel();
+        dateLabel = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         lblOrderNo = new javax.swing.JLabel();
@@ -173,12 +189,12 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel3.setText("Blends");
 
-        weightCombo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        weightCombo.setMaximumRowCount(2);
-        weightCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "g", "kg", " " }));
-        weightCombo.addActionListener(new java.awt.event.ActionListener() {
+        blendWeightCombo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        blendWeightCombo.setMaximumRowCount(2);
+        blendWeightCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "g", "kg", " " }));
+        blendWeightCombo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                weightComboActionPerformed(evt);
+                blendWeightComboActionPerformed(evt);
             }
         });
 
@@ -296,9 +312,9 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        lblDate.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        lblDate.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblDate.setText("Feb 18, 2016");
+        dateLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        dateLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        dateLabel.setText("Feb 18, 2016");
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -312,7 +328,7 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel5)
                 .addGap(18, 18, 18)
-                .addComponent(lblDate)
+                .addComponent(dateLabel)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -320,7 +336,7 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(dateLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel5))
                 .addContainerGap())
         );
@@ -390,7 +406,7 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(blendsQtyTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(weightCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(blendWeightCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(blendAddBtn))))
                             .addComponent(jLabel15))
@@ -428,7 +444,7 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
                             .addComponent(blendsCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(blendAddBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(blendsQtyTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(weightCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(blendWeightCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -470,9 +486,9 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void weightComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_weightComboActionPerformed
+    private void blendWeightComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blendWeightComboActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_weightComboActionPerformed
+    }//GEN-LAST:event_blendWeightComboActionPerformed
 
     private void blendListTblPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_blendListTblPropertyChange
         // TODO add your handling code here:
@@ -502,20 +518,24 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
 
     private void blendAddBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blendAddBtnActionPerformed
         if (blendsCombo.getSelectedItem().equals("")){
-            JOptionPane.showMessageDialog(blendsCombo, "Please select a blend to add.");
+            JOptionPane.showMessageDialog(blendsCombo, "Please select a blend to add.", "Error", JOptionPane.WARNING_MESSAGE);
             blendsCombo.requestFocus();
         } else if (blendsQtyTxt.getText().equals("")) {
-            JOptionPane.showMessageDialog(blendsQtyTxt, "Please enter blend quantity to add.");
+            JOptionPane.showMessageDialog(blendsQtyTxt, "Please enter blend quantity to add.", "Error", JOptionPane.WARNING_MESSAGE);
             blendsQtyTxt.requestFocus();
         } else {
             String blendName = (String) blendsCombo.getSelectedItem();
+            int blendQty = Integer.parseInt(blendsQtyTxt.getText());
+            if (blendWeightCombo.getSelectedItem().equals("kg")) {
+                blendQty *= 1000;
+            }
             boolean isNew = true;
             //Search if the blend is already added
             int rowCount = blendListTbl.getRowCount();
             for (int i = 0; i < rowCount; i++) {
                 if (blendName.equals(blendListTbl.getValueAt(i, 0))) {
                     //calculating qty required
-                    int blendQty = Integer.parseInt(blendsQtyTxt.getText()) + Integer.parseInt(blendListTbl.getValueAt(i, 1).toString());
+                    blendQty += Integer.parseInt(blendListTbl.getValueAt(i, 1).toString());
                     blendListTbl.setValueAt(blendQty, i, 1);
                     int visible = Integer.parseInt(blendListTbl.getValueAt(i, 2).toString());
                     int invisible = Integer.parseInt(blendListTbl.getValueAt(i, 3).toString());
@@ -538,12 +558,11 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
                 List<List<String>> res = blend.getBlendDataByBlendName(blendName);
                 Vector newRow = new Vector();
                 newRow.addElement(res.get(0).get(1));
-                newRow.addElement(blendsQtyTxt.getText());
+                newRow.addElement(blendQty);
                 newRow.addElement(res.get(0).get(3));
                 newRow.addElement(res.get(0).get(5));
 
                 //calculating qty required
-                int blendQty = Integer.parseInt(blendsQtyTxt.getText());
                 int visible = Integer.parseInt(res.get(0).get(3));
                 int invisible = Integer.parseInt(res.get(0).get(5));
                 int balance = 0;
@@ -560,7 +579,9 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
                 DefaultTableModel model = (DefaultTableModel) blendListTbl.getModel();
                 model.addRow(newRow);
             }
-            //blendsCombo.remove(blendsCombo.getSelectedIndex());
+            
+            blendsQtyTxt.setText("");
+            blendsCombo.setSelectedIndex(-1);
             blendsCombo.requestFocus();
         }
     }//GEN-LAST:event_blendAddBtnActionPerformed
@@ -574,9 +595,12 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
     }//GEN-LAST:event_blendsComboActionPerformed
 
     private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
-        DefaultTableModel model = (DefaultTableModel)blendListTbl.getModel();
-        model.removeRow(blendListTbl.getSelectedRow());
-        deleteBtn.setEnabled(false);
+        int dialogResult = JOptionPane.showConfirmDialog(blendListTbl, "Please confirm record deletion", "Confirm Deletion", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+        if (dialogResult == JOptionPane.YES_OPTION){
+            DefaultTableModel model = (DefaultTableModel)blendListTbl.getModel();
+            model.removeRow(blendListTbl.getSelectedRow());
+            deleteBtn.setEnabled(false);
+        }
     }//GEN-LAST:event_deleteBtnActionPerformed
 
     
@@ -618,11 +642,13 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton blendAddBtn;
     private javax.swing.JTable blendListTbl;
+    private javax.swing.JComboBox blendWeightCombo;
     private javax.swing.JComboBox blendsCombo;
     private javax.swing.JTextField blendsQtyTxt;
     public javax.swing.JButton cancelBtn;
     public javax.swing.JButton confirmBtn;
     private javax.swing.JButton createOrderBtn;
+    private javax.swing.JLabel dateLabel;
     private javax.swing.JButton deleteBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel15;
@@ -635,10 +661,8 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lblDate;
     private javax.swing.JLabel lblOrderNo;
     public javax.swing.JTable tblMasterPlan;
     public javax.swing.JScrollPane tblMasterPlanScrollPane;
-    private javax.swing.JComboBox weightCombo;
     // End of variables declaration//GEN-END:variables
 }
