@@ -406,7 +406,7 @@ public class Ingredient {
 
             }
 
-            // System.out.println("supID 1 :" + supplierID);
+            
         } catch (Exception e) {
             System.err.println("err : " + e);
         } finally {
