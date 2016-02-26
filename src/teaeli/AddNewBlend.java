@@ -5,7 +5,9 @@
  */
 package teaeli;
 
+import classes.Blend;
 import classes.DBConnection;
+import classes.Ingredient;
 import java.sql.Connection;
 import java.sql.ResultSet;
 
@@ -22,6 +24,9 @@ public class AddNewBlend extends javax.swing.JFrame {
     public AddNewBlend() {
         initComponents();
         setResizable(false);
+        
+        Ingredient ingredient = new Ingredient();
+        ingredient.initIngCombo(ingCombo);
     }
 
     /**

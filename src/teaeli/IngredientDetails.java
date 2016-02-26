@@ -29,10 +29,10 @@ public class IngredientDetails extends javax.swing.JFrame {
         screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         frameSize = getSize();
         x = (screenSize.width - frameSize.width) / 10;
-        y = (screenSize.height - frameSize.height) /10;
+        y = (screenSize.height - frameSize.height) / 10;
         setLocation(x, y);
         setResizable(false);
-        
+
     }
 
     /**
@@ -114,6 +114,11 @@ public class IngredientDetails extends javax.swing.JFrame {
         });
 
         deleteItemBtn.setText("Delete");
+        deleteItemBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteItemBtnActionPerformed(evt);
+            }
+        });
 
         itemTypeCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] {"Tea", "Flavours" , "Herbs", "Flowers", "Fruits", "Leaves", "Other"}));
         itemTypeCombo.addActionListener(new java.awt.event.ActionListener() {
@@ -226,47 +231,64 @@ public class IngredientDetails extends javax.swing.JFrame {
             System.out.println("No button clicked");
         } else if (response == JOptionPane.YES_OPTION) {
             String ingName;
-            int supID=0,ingCategoryID=0,ingID = 0;
+            int supID = 0, ingCategoryID = 0, ingID = 0;
             float unitPrice;
-            
+
             //get ingID
-            ingID = Integer.parseInt(this.getName()) ;
-            
+            ingID = Integer.parseInt(this.getName());
+
             //get ingredient name
             ingName = this.itemNameTxt.getText();
-            
+
             //get ingredient categoryid
             int comboSelected = this.itemTypeCombo.getSelectedIndex();
-            ingCategoryID = comboSelected+1;
+            ingCategoryID = comboSelected + 1;
             System.out.println("ingCategoryID" + ingCategoryID);
             /*
-            //get supplier id by name
-            try {
-                  supID = ingredient.getSupplierIDByName(this.supplierNameTxt.getText());
-            } catch (SQLException ex) {
-               // Logger.getLogger(IngredientDetails.class.getName()).log(Level.SEVERE, null, ex);
-                System.out.println("sol error id:"+ ex);
-            }
-            */
+             //get supplier id by name
+             try {
+             supID = ingredient.getSupplierIDByName(this.supplierNameTxt.getText());
+             } catch (SQLException ex) {
+             // Logger.getLogger(IngredientDetails.class.getName()).log(Level.SEVERE, null, ex);
+             System.out.println("sol error id:"+ ex);
+             }
+             */
             //get unit price
             String unitPriceString = this.unitPriceTxt.getText();
             unitPrice = Float.parseFloat(unitPriceString);
             System.out.println("unitPrice" + unitPrice);
-            
-            
-            
+
             // call update ingredient method
             try {
-                ingredient.updateIngredient(ingID ,ingName, ingCategoryID, supID, unitPrice);
+                ingredient.updateIngredient(ingID, ingName, ingCategoryID, supID, unitPrice);
             } catch (SQLException ex) {
                 //Logger.getLogger(IngredientDetails.class.getName()).log(Level.SEVERE, null, ex);
-                 System.out.println("sol error id:"+ ex);
+                System.out.println("sol error id:" + ex);
             }
-            
+
         } else if (response == JOptionPane.CLOSED_OPTION) {
             System.out.println("JOptionPane closed");
         }
     }//GEN-LAST:event_updateItemBtnActionPerformed
+
+    private void deleteItemBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteItemBtnActionPerformed
+        Ingredient ingredient = new Ingredient();
+        int ingID = 0;
+        ingID = Integer.parseInt(this.getName());
+        try {
+            int usedIng = ingredient.deleteIngredient(ingID);
+
+            if (usedIng == 1) {
+                JOptionPane.showMessageDialog(null, "Ingredient is used in a blend ", "Unable to delete", 0);
+            }else{
+                JOptionPane.showMessageDialog(null, "Ingredient deleted successfully", "Deleted", 1);
+                
+            }
+        } catch (SQLException ex) {
+            //Logger.getLogger(IngredientDetails.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("sol error id:" + ex);
+        }
+    }//GEN-LAST:event_deleteItemBtnActionPerformed
 
     /**
      * @param args the command line arguments
