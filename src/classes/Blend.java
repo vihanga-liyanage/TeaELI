@@ -237,6 +237,22 @@ public class Blend {
     }
     /* end */
     
+    /* start of loadNameForSearchStockBlendsComboBox method*/
+    public ResultSet loadNameForsearchBlendBaseComboBox(){
+        Connection connection = null;
+        ResultSet resultSet = null;
+        
+        try{
+            connection = dbConn.setConnection();
+            String query = "SELECT ingName FROM ingredient";
+            resultSet = dbConn.getResult(query, connection);
+        } catch(Exception e){
+            System.err.println("");
+        }
+        return resultSet; 
+    }
+    /* end */
+    
     /* Get blend data when blend name is given */
     public List<List<String>> getBlendDataByBlendName(String blendName){
         Connection conn = null;

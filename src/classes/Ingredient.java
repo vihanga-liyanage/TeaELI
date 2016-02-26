@@ -212,7 +212,7 @@ public class Ingredient {
         AutoSuggest autoSuggest = new AutoSuggest();
         
         try{
-            String query = "SELECT ingName FROM ingredient ORDER BY ingName";
+            String query = "SELECT ingName FROM ingredient WHERE ingCategoryID=1 OR ingCategoryID=3 OR ingCategoryID=4 OR ingCategoryID=5 OR ingCategoryID=6 ORDER BY ingName";
             
             conn = dbConn.setConnection();
             resultSet = dbConn.getResult(query, conn);
@@ -256,7 +256,41 @@ public class Ingredient {
         return resultSet;
     }
     /* end of loadNameForSearchStockIngComboBox method */
-
+    
+    /* start of initializing flavours combo in AddNewBlend */
+    public void initBaseCombo(JComboBox ingCombo){
+        Connection conn = null;
+        ResultSet resultSet = null;
+        AutoSuggest autoSuggest = new AutoSuggest();
+        
+        try{
+            String query = "SELECT ingName FROM ingredient WHERE ingCategoryID=2 OR ingCategoryID=3 OR ingCategoryID=4 OR ingCategoryID=5 OR ingCategoryID=6 ORDER BY ingName";
+            
+            conn = dbConn.setConnection();
+            resultSet = dbConn.getResult(query, conn);
+            
+            autoSuggest.setAutoSuggest(ingCombo, resultSet);
+            
+        }catch(Exception e){
+            System.err.println("err : " + e);
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (Exception e) {
+                    System.err.println("Resultset close error : " + e);
+                }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (Exception e) {
+                    System.err.println("Connection close error : " + e);
+                }
+            }
+        }
+    }
+    
     /* start of checkAndLoadIngredientStockDetails method */
     public boolean checkAndLoadIngredientStockDetails(String selectedIngName) {
 

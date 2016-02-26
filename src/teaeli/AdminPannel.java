@@ -117,6 +117,9 @@ public class AdminPannel extends javax.swing.JFrame {
         
         AutoSuggest searchBlendIngComboBoxAutoSuggest = new AutoSuggest();
         searchBlendIngComboBoxAutoSuggest.setAutoSuggest(searchStockBlendsComboBox, blend.loadNameForsearchBlendIngComboBox());
+        
+        AutoSuggest searchBlendBaseComboBoxAutoSuggest = new AutoSuggest();
+        searchBlendBaseComboBoxAutoSuggest.setAutoSuggest(searchStockBlendsComboBox, blend.loadNameForsearchBlendBaseComboBox());
     }
 
     DBConnection dbcon = new DBConnection();
