@@ -81,9 +81,9 @@
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="txtName" max="32767" attributes="0"/>
-                              <Component id="txtSupplierName" max="32767" attributes="0"/>
                               <Component id="txtPrice" max="32767" attributes="0"/>
                               <Component id="itemTypeCombo" min="-2" pref="200" max="-2" attributes="0"/>
+                              <Component id="supliercombo" min="-2" pref="200" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
@@ -111,8 +111,8 @@
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="txtSupplierName" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                       <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="supliercombo" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -159,8 +159,6 @@
             <Property name="text" type="java.lang.String" value="Supplier Name"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="txtSupplierName">
-        </Component>
         <Component class="javax.swing.JLabel" name="jLabel4">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -204,6 +202,27 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="itemTypeComboActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="supliercombo">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="10">
+                <StringItem index="0" value="CARGILLS"/>
+                <StringItem index="1" value="FINLAYS TEA ESTATES PLC"/>
+                <StringItem index="2" value="FORBES &amp; WALKER TEA BROKERS (PVT) LTD"/>
+                <StringItem index="3" value="GREEN FIELD BIO PLANTATIONS (PVT) LTD"/>
+                <StringItem index="4" value="ISLAND WIDE MARKETING SERVICES (PVT) LTD"/>
+                <StringItem index="5" value="KRAETEURMIX LANKA (PVT) LTD"/>
+                <StringItem index="6" value="PJM INTERNATIONAL (PVT) LTD"/>
+                <StringItem index="7" value="RAKEEB INTERNATIONAL (PVT) LTD"/>
+                <StringItem index="8" value="TALAWAKELLE PLANTATIONS PLC"/>
+                <StringItem index="9" value=" "/>
+              </StringArray>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="supliercomboActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
