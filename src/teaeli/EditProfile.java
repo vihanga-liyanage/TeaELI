@@ -51,7 +51,7 @@ public class EditProfile extends javax.swing.JFrame {
     PreparedStatement pst = null;
     ResultSet rs = null;
     Statement st = null;
-    String firstname,lastname,username;
+    String firstname,lastname,username,currentpassword,newpassword,confirmpassword;
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -73,11 +73,11 @@ public class EditProfile extends javax.swing.JFrame {
         txtCurrentPassword = new javax.swing.JPasswordField();
         txtNewPassword = new javax.swing.JPasswordField();
         jLabel7 = new javax.swing.JLabel();
-        txtConfirmPassword = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         changePasswordBtn = new javax.swing.JButton();
         Cancel = new javax.swing.JButton();
         SaveChanges = new javax.swing.JButton();
+        txtConfirmPassword = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -98,13 +98,6 @@ public class EditProfile extends javax.swing.JFrame {
         txtNewPassword.setEditable(false);
 
         jLabel7.setText("Confirm Password");
-
-        txtConfirmPassword.setEditable(false);
-        txtConfirmPassword.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtConfirmPasswordActionPerformed(evt);
-            }
-        });
 
         jLabel8.setText("Current Password");
 
@@ -128,6 +121,8 @@ public class EditProfile extends javax.swing.JFrame {
                 SaveChangesActionPerformed(evt);
             }
         });
+
+        txtConfirmPassword.setEditable(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -199,7 +194,7 @@ public class EditProfile extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(txtConfirmPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Cancel, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(SaveChanges, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -226,10 +221,6 @@ public class EditProfile extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtConfirmPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtConfirmPasswordActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtConfirmPasswordActionPerformed
-
     private void changePasswordBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changePasswordBtnActionPerformed
         txtCurrentPassword.setEditable(true);
         txtNewPassword.setEditable(true);
@@ -242,18 +233,22 @@ public class EditProfile extends javax.swing.JFrame {
     }//GEN-LAST:event_CancelActionPerformed
 
     private void SaveChangesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveChangesActionPerformed
+        firstname = txtFirstName.getText();
+        lastname = txtLastName.getText();
+        username = lblUserName.getText();
+        currentpassword = txtCurrentPassword.getText();
+        newpassword = txtNewPassword.getText();
+        confirmpassword = txtConfirmPassword.getText();
+        
         if(pswrdFlag==0){
-            
-            firstname = txtFirstName.getText();
-            lastname = txtLastName.getText();
-            username = lblUserName.getText();
-            
+        
             try {
             con = dbcon.setConnection();//get the connection
             String query = "UPDATE user SET firstname =' "+firstname+"', lastname = '"+lastname+"' WHERE username = '"+username+"'";
                 System.out.println(query);
             if (dbcon.updateResult(query, con)==1){
                 JOptionPane.showMessageDialog(this, "Succsfully updated");
+                this.setVisible(false);
             }else{
                 JOptionPane.showMessageDialog(this, "Error occurd while updating.. changes will not be saved");
             }
@@ -274,9 +269,66 @@ public class EditProfile extends javax.swing.JFrame {
         }
             
         }
-        else if(pswrdFlag==1){
+        else if(pswrdFlag==1 && currentpassword.isEmpty() && newpassword.isEmpty() && confirmpassword.isEmpty()){
+            
+            
+            try {
+            con = dbcon.setConnection();//get the connection
+                String query = "UPDATE user SET firstname =' "+firstname+"', lastname = '"+lastname+"' WHERE username = '"+username+"'";
+                
+            if (dbcon.updateResult(query, con)==1){
+                JOptionPane.showMessageDialog(this, "Succsfully updated");
+                this.setVisible(false);
+            }else{
+                JOptionPane.showMessageDialog(this, "Error occurd while updating.. changes will not be saved");
+            }
+        } catch (SQLException e) {
+            System.out.println(e);//an error occured while executing
+            
+        } finally {
+            try {
+                if (pst != null) {
+                    pst.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+
+            }
+        }
             
         }
+        else if(pswrdFlag==1 && !currentpassword.isEmpty() && !newpassword.isEmpty() && !confirmpassword.isEmpty() && newpassword.equals(newpassword)){
+            System.out.println("hari");
+            
+            try {
+            con = dbcon.setConnection();//get the connection
+                String query = "UPDATE user SET firstname =' "+firstname+"', lastname = '"+lastname+"',password = sha1('"+newpassword+"') WHERE username = '"+username+"' and password = sha1('"+currentpassword+"')";
+                System.out.println(query);
+            if (dbcon.updateResult(query, con)==1){
+                JOptionPane.showMessageDialog(this, "Password succsfully updated");
+                this.setVisible(false);
+            }else{
+                JOptionPane.showMessageDialog(this, "Error occurd while updating.. changes will not be saved");
+            }
+        } catch (SQLException e) {
+            System.out.println(e);//an error occured while executing
+            
+        } finally {
+            try {
+                if (pst != null) {
+                    pst.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+
+            }
+        }
+        }
+        
     }//GEN-LAST:event_SaveChangesActionPerformed
 
     /**
@@ -327,7 +379,7 @@ public class EditProfile extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     public javax.swing.JLabel lblUserName;
-    private javax.swing.JTextField txtConfirmPassword;
+    private javax.swing.JPasswordField txtConfirmPassword;
     private javax.swing.JPasswordField txtCurrentPassword;
     public javax.swing.JTextField txtFirstName;
     public javax.swing.JTextField txtLastName;

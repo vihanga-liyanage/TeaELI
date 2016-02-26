@@ -5,10 +5,20 @@
  */
 package teaeli;
 
+import classes.DBConnection;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -18,9 +28,12 @@ import javax.swing.UnsupportedLookAndFeelException;
  */
 public class AddIngredient extends javax.swing.JFrame {
 
-    /**
-     * Creates new form itemDetails
-     */
+    DBConnection dbcon = new DBConnection();
+    Connection con = null;
+    PreparedStatement pst = null;
+    ResultSet rs = null;
+    Statement st = null;
+    
     public AddIngredient() {
         //Add windows look and feel
         try {
@@ -29,16 +42,48 @@ public class AddIngredient extends javax.swing.JFrame {
             Logger.getLogger(AdminPannel.class.getName()).log(Level.SEVERE, null, ex);
         }
         initComponents();
-        
-        Dimension screenSize,frameSize;
-        int x,y;
-        screenSize=Toolkit.getDefaultToolkit().getScreenSize();
-        frameSize=getSize();
-        x=(screenSize.width-frameSize.width)/4;
-        y=(screenSize.height-frameSize.height)/4;
+
+        Dimension screenSize, frameSize;
+        int x, y;
+        screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        frameSize = getSize();
+        x = (screenSize.width - frameSize.width) / 4;
+        y = (screenSize.height - frameSize.height) / 4;
         setLocation(x, y);
         setResizable(false);
+        
+        /*try{
+            String query = "SELECT * FROM supplier";
+            rs = dbcon.getResult(query, con);
+            while(rs.next()){
+                DefaultComboBoxModel items = new DefaultComboBoxModel();
+                JComboBox  = new JComboBox(items);
+                items.addElement(rs.getString(2));
+            }
+        }catch(Exception e){
+            System.err.println("err : " + e);
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (Exception e) {
+                    System.err.println("Resultset close error : " + e);
+                }
+            }
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (Exception e) {
+                    System.err.println("Connection close error : " + e);
+                }
+            }
+        }*/
+        
     }
+
+    
+
+    String name, supname, price, type;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -53,15 +98,15 @@ public class AddIngredient extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        itemNameTxt = new javax.swing.JTextField();
+        txtName = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        supplierNameTxt = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        unitPriceTxt = new javax.swing.JTextField();
+        txtPrice = new javax.swing.JTextField();
         cancelBtn = new javax.swing.JButton();
         addBtn = new javax.swing.JButton();
         itemTypeCombo = new javax.swing.JComboBox();
+        supliercombo = new javax.swing.JComboBox();
 
         jPasswordField1.setText("jPasswordField1");
 
@@ -96,11 +141,23 @@ public class AddIngredient extends javax.swing.JFrame {
         });
 
         addBtn.setText("Add");
+        addBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addBtnActionPerformed(evt);
+            }
+        });
 
         itemTypeCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Herbs", "Flowers", "Fruits", "Leaves", "Other", "Tea", "Flavours" }));
         itemTypeCombo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 itemTypeComboActionPerformed(evt);
+            }
+        });
+
+        supliercombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "CARGILLS", "FINLAYS TEA ESTATES PLC", "FORBES & WALKER TEA BROKERS (PVT) LTD", "GREEN FIELD BIO PLANTATIONS (PVT) LTD", "ISLAND WIDE MARKETING SERVICES (PVT) LTD", "KRAETEURMIX LANKA (PVT) LTD", "PJM INTERNATIONAL (PVT) LTD", "RAKEEB INTERNATIONAL (PVT) LTD", "TALAWAKELLE PLANTATIONS PLC", " " }));
+        supliercombo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                supliercomboActionPerformed(evt);
             }
         });
 
@@ -119,10 +176,10 @@ public class AddIngredient extends javax.swing.JFrame {
                             .addComponent(jLabel1))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(itemNameTxt)
-                            .addComponent(supplierNameTxt)
-                            .addComponent(unitPriceTxt)
-                            .addComponent(itemTypeCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtName)
+                            .addComponent(txtPrice)
+                            .addComponent(itemTypeCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(supliercombo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(cancelBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -135,18 +192,18 @@ public class AddIngredient extends javax.swing.JFrame {
                 .addGap(26, 26, 26)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(itemNameTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(itemTypeCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(supplierNameTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
+                    .addComponent(jLabel3)
+                    .addComponent(supliercombo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(unitPriceTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
                 .addGap(29, 29, 29)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -182,6 +239,54 @@ public class AddIngredient extends javax.swing.JFrame {
     private void itemTypeComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemTypeComboActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_itemTypeComboActionPerformed
+
+    private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
+        name = txtName.getText();
+        type = itemTypeCombo.getSelectedItem().toString();
+        supname = supliercombo.getSelectedItem().toString();
+        price = txtPrice.getText();
+
+        if (name.isEmpty() || supname.isEmpty() || price.isEmpty()) {
+
+            JOptionPane.showMessageDialog(this, "Any feild cannot be empty");
+
+        } else {
+
+            if (Integer.parseInt(price) < 0) {
+                JOptionPane.showMessageDialog(this, "Enter valid price");
+            } else {
+                
+                /*try {
+                    con = dbcon.setConnection();
+                    String query = "INSERT INTO productdetails VALUES(?,?,?,?,?,?,?,?,?)";
+                    pst = (PreparedStatement) con.prepareStatement(query);
+
+                    pst.executeUpdate();
+
+                } catch (SQLException e) {
+                    System.out.println(e);
+
+                } finally {
+                    try {
+                        if (pst != null) {
+                            pst.close();
+                        }
+                        if (con != null) {
+                            con.close();
+                        }
+                    } catch (SQLException e) {
+                        System.out.println(e);
+                    }
+                }*/
+
+            }
+
+        }
+    }//GEN-LAST:event_addBtnActionPerformed
+
+    private void supliercomboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_supliercomboActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_supliercomboActionPerformed
 
     /**
      * @param args the command line arguments
@@ -221,7 +326,6 @@ public class AddIngredient extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addBtn;
     private javax.swing.JButton cancelBtn;
-    private javax.swing.JTextField itemNameTxt;
     private javax.swing.JComboBox itemTypeCombo;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
@@ -230,7 +334,8 @@ public class AddIngredient extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField supplierNameTxt;
-    private javax.swing.JTextField unitPriceTxt;
+    private javax.swing.JComboBox supliercombo;
+    private javax.swing.JTextField txtName;
+    private javax.swing.JTextField txtPrice;
     // End of variables declaration//GEN-END:variables
 }

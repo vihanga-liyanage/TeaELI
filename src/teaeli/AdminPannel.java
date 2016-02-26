@@ -30,11 +30,11 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import static teaeli.TeaELI.loginFrame;
 
-
 public class AdminPannel extends javax.swing.JFrame {
-
-    User user = new User();
+    public static User user = new User(); 
     Ingredient ingredient = new Ingredient();
+    Blend blend = new Blend();
+    public static IngredientDetails ingredientDetails = new IngredientDetails();
 
     /**
      * Creates new form AdminPannel
@@ -57,6 +57,9 @@ public class AdminPannel extends javax.swing.JFrame {
         initComponents();
 
         startClock();
+
+        //method to view the selected row details of a jtable
+
         final ListSelectionModel mod = productTable.getSelectionModel();
         mod.addListSelectionListener(new ListSelectionListener() {
 
@@ -67,13 +70,13 @@ public class AdminPannel extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, productTable.getValueAt(row, 0));
                 }
             }
-
-        }
-        );
-
+            
+        });
+         
+        //set all users details to the users table in the users tab
         user.viewUser((DefaultTableModel) userTable.getModel());
 
-        //Start of ingredient class method calls
+        /*Start of ingredient class method calls*/
         //populate serch ingredient combobox in settings->ingredient
         AutoSuggest searchIngredientComboBoxAutoSuggest = new AutoSuggest();
         searchIngredientComboBoxAutoSuggest.setAutoSuggest(searchIngredientComboBox, ingredient.loadNameForSearchStockIngComboBox());
@@ -86,28 +89,28 @@ public class AdminPannel extends javax.swing.JFrame {
             //Logger.getLogger(AdminPannel.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("SQL error in view all ingredients method" + ex);
         }
+        //end of view all ingredients
 
-            //end of view all ingredients
-        
-        /* populate inventryIngredientTable in inventory management*/
+        /* populate inventryIngredientTable in inventory management -- dont remove this*/
         ingredient.populateIngredientTable((DefaultTableModel) inventryIngredientTable.getModel());
         
         /*Populate ingredientstock history*/
         StockHistory ingredientHistoryStock = new StockHistory ();
         ingredientHistoryStock.populateStockIngredientHistoryTable((DefaultTableModel) ingStockHistoryTbl.getModel());
 
+        /* populate inventryBlendTable in inventory management -- dont remove this */
+        blend.populateBlendTable((DefaultTableModel) inventoryBlendTable.getModel());
+
         /*Populate ingredientstock history*/
         StockHistory blendHistoryStock = new StockHistory ();
         blendHistoryStock.populateStockBlendHistoryTable((DefaultTableModel) blendStockHistoryTbl.getModel());
 
+        StockHistory ingredientStock = new StockHistory();
+        ingredientStock.populateStockIngredientHistoryTable((DefaultTableModel) ingStockHistoryTbl.getModel());
 
+        /* combox auto suggests in inventory management -- dont remove this*/
         AutoSuggest searchStockIngComboBoxAutoSuggest = new AutoSuggest();
         searchStockIngComboBoxAutoSuggest.setAutoSuggest(searchStockIngComboBox, ingredient.loadNameForSearchStockIngComboBox());
-
-
-        /* populate inventryBlendTable in inventory management*/
-        Blend blend = new Blend();
-        blend.populateBlendTable((DefaultTableModel) inventoryBlendTable.getModel());
 
         AutoSuggest searchStockBlendComboBoxAutoSuggest = new AutoSuggest();
         searchStockBlendComboBoxAutoSuggest.setAutoSuggest(searchStockBlendsComboBox, blend.loadNameForsearchStockBlendsComboBox());
@@ -215,6 +218,7 @@ public class AdminPannel extends javax.swing.JFrame {
         userTable = new javax.swing.JTable();
         addUserBtn = new javax.swing.JButton();
         deleteUserBtn = new javax.swing.JButton();
+        refreshBtn = new javax.swing.JButton();
         logoLabel = new javax.swing.JLabel();
         timeLabel = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -354,14 +358,14 @@ public class AdminPannel extends javax.swing.JFrame {
 
         inventryIngredientTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null}
+                {null, null, null, null}
             },
             new String [] {
-                "Ingredient Name", "Visible Stock (g)", "Invisible Stock (g)"
+                "Cateogry", "Ingredient Name", "Visible Stock (g)", "Invisible Stock (g)"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -369,6 +373,10 @@ public class AdminPannel extends javax.swing.JFrame {
             }
         });
         jScrollPane6.setViewportView(inventryIngredientTable);
+        if (inventryIngredientTable.getColumnModel().getColumnCount() > 0) {
+            inventryIngredientTable.getColumnModel().getColumn(1).setResizable(false);
+            inventryIngredientTable.getColumnModel().getColumn(1).setPreferredWidth(200);
+        }
 
         searchStockIngComboBox.setEditable(true);
         searchStockIngComboBox.addActionListener(new java.awt.event.ActionListener() {
@@ -448,7 +456,6 @@ public class AdminPannel extends javax.swing.JFrame {
             inventoryBlendTable.getColumnModel().getColumn(1).setResizable(false);
             inventoryBlendTable.getColumnModel().getColumn(1).setPreferredWidth(200);
             inventoryBlendTable.getColumnModel().getColumn(2).setResizable(false);
-            inventoryBlendTable.getColumnModel().getColumn(3).setResizable(false);
         }
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -844,7 +851,7 @@ public class AdminPannel extends javax.swing.JFrame {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, true, true, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -871,6 +878,14 @@ public class AdminPannel extends javax.swing.JFrame {
             }
         });
 
+        refreshBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        refreshBtn.setText("Refresh Tables");
+        refreshBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                refreshBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout settingsUserPanelLayout = new javax.swing.GroupLayout(settingsUserPanel);
         settingsUserPanel.setLayout(settingsUserPanelLayout);
         settingsUserPanelLayout.setHorizontalGroup(
@@ -882,20 +897,25 @@ public class AdminPannel extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, settingsUserPanelLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(settingsUserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(addUserBtn, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(deleteUserBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(deleteUserBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, settingsUserPanelLayout.createSequentialGroup()
+                                .addComponent(refreshBtn)
+                                .addGap(18, 18, 18)
+                                .addComponent(addUserBtn)))))
                 .addContainerGap())
         );
         settingsUserPanelLayout.setVerticalGroup(
             settingsUserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(settingsUserPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(addUserBtn)
+                .addGroup(settingsUserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(addUserBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(refreshBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(26, 26, 26)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(deleteUserBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(209, Short.MAX_VALUE))
         );
 
         settingsTabbedPane.addTab("    Users    ", settingsUserPanel);
@@ -996,18 +1016,22 @@ public class AdminPannel extends javax.swing.JFrame {
     }//GEN-LAST:event_addProductBtnActionPerformed
 
     private void searchIngredientBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchIngredientBtnActionPerformed
+        
         String[] resultArray = new String[4];
-        try {
+
+        try {           
            resultArray = ingredient.viewAllDetailsOfAIngredient((String) searchIngredientComboBox.getSelectedItem());
             
         } catch (SQLException ex) {
             Logger.getLogger(AdminPannel.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+        }       
         IngredientDetails itemDetails = new IngredientDetails();
-        itemDetails.itemNameTxt.setText(resultArray[0]);        
-        itemDetails.supplierNameTxt.setText(resultArray[2]);
-        itemDetails.unitPriceTxt.setText(resultArray[3]);
+        //set values to fields in IngredientDetails window
+        itemDetails.setName(resultArray[1]); //set ingid as name
+        itemDetails.itemNameTxt.setText(resultArray[0]); 
+        itemDetails.itemTypeCombo.setSelectedItem(resultArray[2]);
+        //itemDetails.supplierNameTxt.setText(resultArray[3]);
+        itemDetails.unitPriceTxt.setText(resultArray[4]); 
         itemDetails.setVisible(true);
         itemDetails.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
     }//GEN-LAST:event_searchIngredientBtnActionPerformed
@@ -1028,27 +1052,22 @@ public class AdminPannel extends javax.swing.JFrame {
         editProfile.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 
         //String UserName = new LoginFrame().user;
-
-
-        
         String userName = loginFrame.user;
-        
+
         try {
             con = dbcon.setConnection();//get the connection
-            String query = "SELECT username,firstname,lastname FROM user where username = ('"+userName+"')";
-            ResultSet rs =dbcon.getResult(query, con);
-            
+            String query = "SELECT username,firstname,lastname FROM user where username = ('" + userName + "')";
+            ResultSet rs = dbcon.getResult(query, con);
+
             while (rs.next()) {
                 user.setUserName(rs.getString(1));
                 user.setFirstName(rs.getString(2));
                 user.setLastName(rs.getString(3));
             }
-            
-            
-            
+
         } catch (SQLException e) {
             System.out.println(e);//an error occured while executing
-            
+
         } finally {
             try {
                 if (pst != null) {
@@ -1057,17 +1076,17 @@ public class AdminPannel extends javax.swing.JFrame {
                 if (con != null) {
                     con.close();
                 }
-            }catch (SQLException e) {
+            } catch (SQLException e) {
 
             }
         }
-            
-            editProfile.setVisible(true);
-            editProfile.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE); 
-            editProfile.lblUserName.setText(user.getUserName());
-            editProfile.txtFirstName.setText(user.getFirstName());
-            editProfile.txtLastName.setText(user.getLastName());
-        
+
+        editProfile.setVisible(true);
+        editProfile.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        editProfile.lblUserName.setText(user.getUserName());
+        editProfile.txtFirstName.setText(user.getFirstName());
+        editProfile.txtLastName.setText(user.getLastName());
+
 
     }//GEN-LAST:event_profileBtnActionPerformed
 
@@ -1099,9 +1118,26 @@ public class AdminPannel extends javax.swing.JFrame {
     }//GEN-LAST:event_searchOrderBtnActionPerformed
 
     private void searchStockIngBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchStockIngBtnActionPerformed
-        UpdateIngStock updateStock = new UpdateIngStock();
-        updateStock.setVisible(true);
-        updateStock.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+
+        String selectedIngName = (String) searchStockIngComboBox.getSelectedItem();
+
+        if (selectedIngName.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "You haven't select any ingeredient name!!");
+        } else {
+
+            Ingredient ingredeintForStock = new Ingredient();
+            
+            if (ingredeintForStock.checkAndLoadIngredientStockDetails(selectedIngName)) {
+                UpdateIngStock updateStock = new UpdateIngStock();
+                updateStock.setVisible(true);
+                updateStock.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+                updateStock.updateStockItemNameLbl.setText(ingredeintForStock.getIngName());
+                updateStock.updateStockCategoryLbl.setText(ingredeintForStock.getIngCategoryName());
+                updateStock.stockQtyLbl.setText(String.valueOf(ingredeintForStock.getVisibleStock()));
+            }else{
+                JOptionPane.showMessageDialog(this, "You have selected invalid ingeredient name!!");
+            }
+        }
     }//GEN-LAST:event_searchStockIngBtnActionPerformed
 
     private void searchStockBlendsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchStockBlendsBtnActionPerformed
@@ -1140,6 +1176,10 @@ public class AdminPannel extends javax.swing.JFrame {
 
         }
     }//GEN-LAST:event_deleteUserBtnActionPerformed
+
+    private void refreshBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshBtnActionPerformed
+        user.viewUser((DefaultTableModel) userTable.getModel());
+    }//GEN-LAST:event_refreshBtnActionPerformed
 
     private void searchStockIngComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchStockIngComboBoxActionPerformed
         // TODO add your handling code here:
@@ -1221,6 +1261,7 @@ public class AdminPannel extends javax.swing.JFrame {
     private javax.swing.JTable orderListTable;
     private javax.swing.JTable productTable;
     private javax.swing.JButton profileBtn;
+    private javax.swing.JButton refreshBtn;
     private javax.swing.JButton searchIngredientBtn;
     private javax.swing.JComboBox searchIngredientComboBox;
     private javax.swing.JButton searchOrderBtn;

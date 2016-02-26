@@ -272,7 +272,7 @@ public class LoginFrame extends javax.swing.JFrame {
             con = dbcon.setConnection();//get the connection
             String query = "SELECT username,designation FROM user where password = sha1('"+password+"') and username = ('"+userName+"')";
             ResultSet rs =dbcon.getResult(query, con);
-            System.out.println("Login result came\n");
+
             while (rs.next()) {
                 if (rs.getString(2).equals("Admin")) {
                     return 1;     
