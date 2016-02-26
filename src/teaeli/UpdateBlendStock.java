@@ -5,8 +5,11 @@
  */
 package teaeli;
 
+import classes.Blend;
+import classes.Ingredient;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -52,9 +55,11 @@ public class UpdateBlendStock extends javax.swing.JFrame {
         cancelBtn = new javax.swing.JButton();
         updateStockItemName = new javax.swing.JLabel();
         stockQtyLbl = new javax.swing.JLabel();
-        updateStockItemName1 = new javax.swing.JLabel();
+        updateStockChangeName = new javax.swing.JLabel();
         updateStockItemCategoryName = new javax.swing.JLabel();
         updateStockItemCategoryLbl = new javax.swing.JLabel();
+        blendStockIncreaseBtn = new javax.swing.JRadioButton();
+        blendStockDecreasedBtn = new javax.swing.JRadioButton();
 
         jToggleButton1.setText("jToggleButton1");
 
@@ -71,6 +76,11 @@ public class UpdateBlendStock extends javax.swing.JFrame {
         updateStockQtyInStockLbl.setText("Qty In Stock");
 
         saveBtn.setText("Save");
+        saveBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveBtnActionPerformed(evt);
+            }
+        });
 
         reasonToChangeTxt.setColumns(20);
         reasonToChangeTxt.setRows(5);
@@ -96,15 +106,31 @@ public class UpdateBlendStock extends javax.swing.JFrame {
         stockQtyLbl.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         stockQtyLbl.setText("500 g");
 
-        updateStockItemName1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        updateStockItemName1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        updateStockItemName1.setText("New Qty");
+        updateStockChangeName.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        updateStockChangeName.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        updateStockChangeName.setText("New Qty");
 
         updateStockItemCategoryName.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         updateStockItemCategoryName.setText("Blend Category");
 
         updateStockItemCategoryLbl.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         updateStockItemCategoryLbl.setText("Artisian Blend V2");
+
+        blendStockIncreaseBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        blendStockIncreaseBtn.setText("increased");
+        blendStockIncreaseBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                blendStockIncreaseBtnActionPerformed(evt);
+            }
+        });
+
+        blendStockDecreasedBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        blendStockDecreasedBtn.setText("decreased");
+        blendStockDecreasedBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                blendStockDecreasedBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -121,7 +147,7 @@ public class UpdateBlendStock extends javax.swing.JFrame {
                             .addComponent(updateStockItemCategoryName, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(updateStockItemName, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(updateStockQtyInStockLbl, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(updateStockItemName1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(updateStockChangeName, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -133,14 +159,19 @@ public class UpdateBlendStock extends javax.swing.JFrame {
                                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addGroup(jPanel2Layout.createSequentialGroup()
                                             .addComponent(cancelBtn)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                            .addGap(18, 18, 18)
                                             .addComponent(saveBtn))
                                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(newQtyTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                                .addComponent(blendStockIncreaseBtn)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(blendStockDecreasedBtn))
+                                            .addComponent(newQtyTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(0, 0, Short.MAX_VALUE)))
+                                .addGap(0, 20, Short.MAX_VALUE)))
                         .addGap(16, 16, 16))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(updateStockItemCategoryLbl)
@@ -163,22 +194,23 @@ public class UpdateBlendStock extends javax.swing.JFrame {
                     .addComponent(stockQtyLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addGap(23, 23, 23))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(newQtyTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(updateStockItemName1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(updateStockChangeName, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel4))
+                    .addComponent(newQtyTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(blendStockDecreasedBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(blendStockIncreaseBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(updateStockReasonLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cancelBtn)
                     .addComponent(saveBtn))
-                .addGap(24, 24, 24))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -204,6 +236,83 @@ public class UpdateBlendStock extends javax.swing.JFrame {
     private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
         this.setVisible(false);
     }//GEN-LAST:event_cancelBtnActionPerformed
+	
+	private void blendStockIncreaseBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blendStockIncreaseBtnActionPerformed
+        if (this.blendStockDecreasedBtn.isSelected()) {
+            this.blendStockDecreasedBtn.setSelected(false);
+        }
+    }//GEN-LAST:event_blendStockIncreaseBtnActionPerformed
+
+    private void blendStockDecreasedBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blendStockDecreasedBtnActionPerformed
+        if (this.blendStockIncreaseBtn.isSelected()) {
+            this.blendStockIncreaseBtn.setSelected(false);
+        }
+    }//GEN-LAST:event_blendStockDecreasedBtnActionPerformed
+
+    private void saveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBtnActionPerformed
+        String changeQty = this.newQtyTxt.getText();
+        int stockChangeQty, oldStockQty;
+
+        if (!changeQty.isEmpty()) {
+            if (testForInteger(changeQty)) {
+
+                stockChangeQty = Integer.parseInt(changeQty);
+                String reason = this.reasonToChangeTxt.getText();
+
+                if (!reason.isEmpty() && (this.blendStockIncreaseBtn.isSelected() || this.blendStockDecreasedBtn.isSelected())) {
+
+                    Blend blend = new Blend();
+                    blend.setBlendName(this.updateStockItemNameLbl.getText());
+                    blend.setStockUpdateReason(this.reasonToChangeTxt.getText());
+
+                    oldStockQty = Integer.parseInt(this.stockQtyLbl.getText());
+                    blend.setOldStockQty(oldStockQty);
+                    blend.setUpdatedStockQTy(stockChangeQty);
+
+                    if (this.blendStockIncreaseBtn.isSelected()) {
+                        blend.setVisibleStock(oldStockQty + stockChangeQty);
+
+                        if (blend.updateStockQty()) {
+                            JOptionPane.showMessageDialog(this, "Updated Successfuly!! ");
+                            this.setVisible(false);
+                        } else {
+                            JOptionPane.showMessageDialog(this, "Unable to update!!");
+                        }
+                    } else {
+                        blend.setVisibleStock(oldStockQty - stockChangeQty);
+
+                        if (blend.getVisibleStock() < 0) {
+                            JOptionPane.showMessageDialog(this, "Stock Qty can not be negative !!! ");
+                            this.newQtyTxt.setText(null);
+                        } else {
+                            if (blend.updateStockQty()) {
+                                JOptionPane.showMessageDialog(this, "Updated Successfuly!! ");
+                                this.setVisible(false);
+                            } else {
+                                JOptionPane.showMessageDialog(this, "Unable to update!!");
+                            }
+                        }
+                    }
+
+                } else {
+                    JOptionPane.showMessageDialog(this, "Please fill all fields before save");
+                    this.newQtyTxt.setText(null);
+                    this.reasonToChangeTxt.setText(null);
+                    this.blendStockDecreasedBtn.setSelected(false);
+                    this.blendStockIncreaseBtn.setSelected(false);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Change Qty value must be integer");
+                this.newQtyTxt.setText(null);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Please fill all fields before save");
+            this.newQtyTxt.setText(null);
+            this.reasonToChangeTxt.setText(null);
+            this.blendStockDecreasedBtn.setSelected(false);
+            this.blendStockIncreaseBtn.setSelected(false);
+        }
+    }//GEN-LAST:event_saveBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -240,22 +349,34 @@ public class UpdateBlendStock extends javax.swing.JFrame {
             }
         });
     }
+    
+    private boolean testForInteger(String text) {
+        try {
+            Integer.parseInt(text);
+            return true;
+        } catch (NumberFormatException e) {
+            System.out.println("Num Exception : " + e);
+            return false;
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public javax.swing.JRadioButton blendStockDecreasedBtn;
+    public javax.swing.JRadioButton blendStockIncreaseBtn;
     private javax.swing.JButton cancelBtn;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToggleButton jToggleButton1;
-    private javax.swing.JTextField newQtyTxt;
-    private javax.swing.JTextArea reasonToChangeTxt;
+    public javax.swing.JTextField newQtyTxt;
+    public javax.swing.JTextArea reasonToChangeTxt;
     private javax.swing.JButton saveBtn;
-    private javax.swing.JLabel stockQtyLbl;
-    private javax.swing.JLabel updateStockItemCategoryLbl;
+    public javax.swing.JLabel stockQtyLbl;
+    private javax.swing.JLabel updateStockChangeName;
+    public javax.swing.JLabel updateStockItemCategoryLbl;
     private javax.swing.JLabel updateStockItemCategoryName;
     private javax.swing.JLabel updateStockItemName;
-    private javax.swing.JLabel updateStockItemName1;
-    private javax.swing.JLabel updateStockItemNameLbl;
+    public javax.swing.JLabel updateStockItemNameLbl;
     private javax.swing.JLabel updateStockQtyInStockLbl;
     private javax.swing.JLabel updateStockReasonLbl;
     // End of variables declaration//GEN-END:variables
