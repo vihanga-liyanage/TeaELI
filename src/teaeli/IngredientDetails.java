@@ -33,8 +33,7 @@ public class IngredientDetails extends javax.swing.JFrame {
         y = (screenSize.height - frameSize.height) / 10;
         setLocation(x, y);
         setResizable(false);
-        
-        
+
     }
 
     /**
@@ -122,7 +121,7 @@ public class IngredientDetails extends javax.swing.JFrame {
             }
         });
 
-        itemTypeCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] {"Tea", "Flavours" , "Herbs", "Flowers", "Fruits", "Leaves", "Other"}));
+        itemTypeCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] {"Tea", "Flavour" , "Herbs", "Flowers", "Fruits", "Leaves", "Other"}));
         itemTypeCombo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 itemTypeComboActionPerformed(evt);
@@ -250,18 +249,15 @@ public class IngredientDetails extends javax.swing.JFrame {
             ingName = this.itemNameTxt.getText();
 
             //get ingredient categoryid
-            int comboSelected = this.itemTypeCombo.getSelectedIndex();
-            ingCategoryID = comboSelected + 1;
+            int comboSelectedIgCat = this.itemTypeCombo.getSelectedIndex();
+            ingCategoryID = comboSelectedIgCat + 1;
             System.out.println("ingCategoryID" + ingCategoryID);
-            /*
+
              //get supplier id by name
-             try {
-             supID = ingredient.getSupplierIDByName(this.supplierNameTxt.getText());
-             } catch (SQLException ex) {
-             // Logger.getLogger(IngredientDetails.class.getName()).log(Level.SEVERE, null, ex);
-             System.out.println("sol error id:"+ ex);
-             }
-             */
+            int comboSelectedSupllier = this.supplierCombobox.getSelectedIndex();
+            supID = comboSelectedSupllier + 1;
+            System.out.println("supID" + supID);
+            
             //get unit price
             String unitPriceString = this.unitPriceTxt.getText();
             unitPrice = Float.parseFloat(unitPriceString);
@@ -269,7 +265,13 @@ public class IngredientDetails extends javax.swing.JFrame {
 
             // call update ingredient method
             try {
-                ingredient.updateIngredient(ingID, ingName, ingCategoryID, supID, unitPrice);
+                int updateOK = ingredient.updateIngredient(ingID, ingName, ingCategoryID, supID, unitPrice);
+
+                if (updateOK == 1) {
+                    JOptionPane.showMessageDialog(null, "Ingredient updated successfully", "Successfully Updated", 1);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Ingredient update is not successfull!!!", "Unable to update", 0);
+                }
             } catch (SQLException ex) {
                 //Logger.getLogger(IngredientDetails.class.getName()).log(Level.SEVERE, null, ex);
                 System.out.println("sol error id:" + ex);
@@ -289,9 +291,9 @@ public class IngredientDetails extends javax.swing.JFrame {
 
             if (usedIng == 1) {
                 JOptionPane.showMessageDialog(null, "Ingredient is used in a blend ", "Unable to delete", 0);
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(null, "Ingredient deleted successfully", "Deleted", 1);
-                
+
             }
         } catch (SQLException ex) {
             //Logger.getLogger(IngredientDetails.class.getName()).log(Level.SEVERE, null, ex);
@@ -300,7 +302,7 @@ public class IngredientDetails extends javax.swing.JFrame {
     }//GEN-LAST:event_deleteItemBtnActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
