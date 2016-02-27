@@ -1,5 +1,6 @@
 package classes;
 
+import java.sql.Array;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -10,6 +11,7 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Vector;
@@ -488,7 +490,7 @@ public class Ingredient {
 
         Connection connection = dbConn.setConnection();
         ResultSet resultSet = null;
-        String[] resultArray = new String[5];
+        String[] resultArray = new String[5]; 
         //set name of the ingredient
         resultArray[0] = ingredientName;
 
@@ -609,47 +611,44 @@ public class Ingredient {
         return 0;
     } 
     
-
-    public ResultSet getSupplierDetails(){
-        
+    public ArrayList<String> getSupplierDetails(){
+        Connection con = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        Statement st = null;
+        ArrayList<String> result = new ArrayList<>();
         try{
-            Connection con = null;
-            PreparedStatement pst = null;
-            ResultSet rs = null;
-            Statement st = null;
-            try{
-                String query = "SELECT * FROM supplier";
-                con = dbConn.setConnection();
-                rs = dbConn.getResult(query, con);
-                
-            }catch(Exception e){
-                System.err.println("e : " + e);
-            } finally {
-                
-                if (con != null) {
-                    try {
-                        con.close();
-                    } catch (Exception e) {
-                        System.err.println("Connection close error : " + e);
-                    }
+            String query = "SELECT * FROM supplier";
+            con = dbConn.setConnection();
+            rs = dbConn.getResult(query, con);
+            while(rs.next()){
+                result.add(rs.getString(2));
+            }
+            
+            return result;
+            
+        }catch(Exception e){
+            System.err.println("err : " + e);
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (Exception e) {
+                    System.err.println("Resultset close error : " + e);
                 }
             }
-            while(rs.next()){
-                System.out.println(rs.getString(1));
-                return rs;
-                
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (Exception e) {
+                    System.err.println("Connection close error : " + e);
+                }
             }
-        }catch(SQLException ex){
-            
         }
         return null;
     }
-
-
-
-        
+   
     
-
     public int addNewSupplier(String Name) {
         Connection connection = null;
         try {
