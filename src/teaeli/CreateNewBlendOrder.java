@@ -10,6 +10,8 @@ import classes.Validation;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Vector;
@@ -50,7 +52,9 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
         blend = new Blend();
         
         //Setting date
-        dateLabel.setText(DateFormat.getDateTimeInstance().format(new Date("M/L")));
+        DateFormat formatter = new SimpleDateFormat("EEE, d MMM yyyy");
+        Date today = new Date();
+        dateLabel.setText(formatter.format(today));
         
         //Initialize blendCombo
         blend.initBlendCombo(blendsCombo);
