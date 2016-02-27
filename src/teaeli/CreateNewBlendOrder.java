@@ -6,6 +6,7 @@
 package teaeli;
 
 import classes.Blend;
+import classes.Order;
 import classes.Validation;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -55,6 +56,19 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
         DateFormat formatter = new SimpleDateFormat("EEE, d MMM yyyy");
         Date today = new Date();
         dateLabel.setText(formatter.format(today));
+        
+        //Setting order id
+        String orderID = new Order().getLastOrderID();
+        int num = Integer.parseInt(orderID.substring(2));
+        num++;
+        String newID = "OD";
+        while (newID.length() < 10) {
+            if ((newID.length() + String.valueOf(num).length()) >= 10)
+                break;
+            newID += "0";
+        }
+        newID += String.valueOf(num);
+        orderIDLabel.setText(newID);
         
         //Initialize blendCombo
         blend.initBlendCombo(blendsCombo);
@@ -163,7 +177,7 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
         dateLabel = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        lblOrderNo = new javax.swing.JLabel();
+        orderIDLabel = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -347,9 +361,9 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
 
         jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        lblOrderNo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        lblOrderNo.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblOrderNo.setText("0001");
+        orderIDLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        orderIDLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        orderIDLabel.setText("0001");
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -363,7 +377,7 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(lblOrderNo)
+                .addComponent(orderIDLabel)
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -371,7 +385,7 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblOrderNo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(orderIDLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -665,7 +679,7 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lblOrderNo;
+    private javax.swing.JLabel orderIDLabel;
     public javax.swing.JTable tblMasterPlan;
     public javax.swing.JScrollPane tblMasterPlanScrollPane;
     // End of variables declaration//GEN-END:variables
