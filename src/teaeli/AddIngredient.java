@@ -70,7 +70,8 @@ public class AddIngredient extends javax.swing.JFrame {
 
     
 
-    String name, supname, price, type;
+    String name, supname, type;
+    float price;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -245,40 +246,25 @@ public class AddIngredient extends javax.swing.JFrame {
         name = txtName.getText();
         type = itemTypeCombo.getSelectedItem().toString();
         supname = supliercombo.getSelectedItem().toString();
-        price = txtPrice.getText();
+        price = Float.parseFloat(txtPrice.getText());
 
-        if (name.isEmpty() || supname.isEmpty() || price.isEmpty()) {
+        if (name.isEmpty() || supname.isEmpty() || txtPrice.getText().isEmpty()) {
 
             JOptionPane.showMessageDialog(this, "Any feild cannot be empty");
 
         } else {
 
-            if (Integer.parseInt(price) < 0) {
+            if (price < 0) {
                 JOptionPane.showMessageDialog(this, "Enter valid price");
             } else {
                 
-                /*try {
-                    con = dbcon.setConnection();
-                    String query = "INSERT INTO productdetails VALUES(?,?,?,?,?,?,?,?,?)";
-                    pst = (PreparedStatement) con.prepareStatement(query);
-
-                    pst.executeUpdate();
-
-                } catch (SQLException e) {
-                    System.out.println(e);
-
-                } finally {
-                    try {
-                        if (pst != null) {
-                            pst.close();
-                        }
-                        if (con != null) {
-                            con.close();
-                        }
-                    } catch (SQLException e) {
-                        System.out.println(e);
-                    }
-                }*/
+                int result = ingr.addNewIngredient(name,type,supname,price);
+                if (result == 1){
+                    JOptionPane.showMessageDialog(this, "Ingredient Succesfully Added");
+                }
+                else{
+                    JOptionPane.showMessageDialog(this, "Error occurd while updating.. changes will not be saved");
+                }
 
             }
 

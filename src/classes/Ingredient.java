@@ -713,6 +713,55 @@ public class Ingredient {
         System.out.println("ingUsed " + ingUsed);
         return ingUsed;
     }
+    
+    public int addNewIngredient(String Name,String type,String supplier,float price) {
+        Connection connection = null;
+        int rslt1 = 0, rslt2=0;
+        try {
+            connection = dbConn.setConnection();
+        } catch (SQLException e) {
+
+        }
+        String query1 = "SELECT ingCategoryID FROM ingredientcategory WHERE categoryName = '"+type+"' ";
+        ResultSet rs1 = dbConn.getResult(query1, connection);
+        
+            try {
+                while (rs1.next()){
+                rslt1 = Integer.parseInt(rs1.getString(1));
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(Ingredient.class.getName()).log(Level.SEVERE, null, ex);
+            
+        }
+        
+        
+        String query2 = "SELECT supID FROM supplier WHERE supName = '"+supplier+"' ";
+        ResultSet rs2 = dbConn.getResult(query1, connection);
+        
+            try {
+                while (rs2.next()){
+                rslt2 = Integer.parseInt(rs2.getString(1));
+                        }
+
+            } catch (SQLException ex) {
+                Logger.getLogger(Ingredient.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        
+        
+        String query3 = "INSERT INTO ingredient values(0,'" + Name + "','"+rslt1+"',0,0,0,'"+rslt2+"','"+price+"') ";
+        
+        int rslt3 = dbConn.updateResult(query3, connection);
+
+        if (connection != null) {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                System.err.println("Connection close error : " + e);
+            }
+        }
+
+        return rslt3;
+    }
 
      //end of update ingredient method
 }
