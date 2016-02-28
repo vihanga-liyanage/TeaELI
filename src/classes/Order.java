@@ -133,39 +133,13 @@ public class Order {
             
     //Getting last order ID
     public String getLastOrderID(){
-        Connection conn = null;
-        ResultSet resultSet = null;
-        
-        try{
-            String query = "SELECT `orderID` FROM `order` ORDER BY `orderID` DESC LIMIT 0 , 1";
-            
-            conn = dbConn.setConnection();
-            resultSet = dbConn.getResult(query, conn);
-            String orderID = "";
-            while(resultSet.next()){
-                orderID = resultSet.getString(1);
-            }
-            return orderID;
-            
-        }catch(Exception e){
-            System.err.println("err : " + e);
-        } finally {
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (SQLException e) {
-                    System.err.println("Resultset close error : " + e);
-                }
-            }
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (Exception e) {
-                    System.err.println("Connection close error : " + e);
-                }
-            }
+        String query = "SELECT `orderID` FROM `order` ORDER BY `orderID` DESC LIMIT 0 , 1";
+        ResultArray res = dbConn.getResultArray(query);
+        String orderID = "";
+        while(res.next()){
+            orderID = res.getString(0);
         }
-        return null;
+        return orderID;
     }
 }
 

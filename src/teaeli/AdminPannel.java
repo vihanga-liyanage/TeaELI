@@ -1194,11 +1194,8 @@ public class AdminPannel extends javax.swing.JFrame {
     }//GEN-LAST:event_searchIngredientBtnActionPerformed
 
     private void addNewBlendsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addNewBlendsBtnActionPerformed
-        CreateNewBlendOrder createNewBlendOrder = new CreateNewBlendOrder();
+        CreateNewBlendOrder1 createNewBlendOrder = new CreateNewBlendOrder1();
         createNewBlendOrder.setVisible(true);
-        createNewBlendOrder.tblMasterPlanScrollPane.setVisible(false);
-        createNewBlendOrder.cancelBtn.setVisible(false);
-        createNewBlendOrder.confirmBtn.setVisible(false);
         createNewBlendOrder.setDefaultCloseOperation(HIDE_ON_CLOSE);
     }//GEN-LAST:event_addNewBlendsBtnActionPerformed
 
