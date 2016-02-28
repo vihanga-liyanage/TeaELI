@@ -27,10 +27,9 @@ public class DBConnection {
         } catch (SQLException ex) {
             Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE, null, ex);
         }
-
         return connection;
     }
-
+    
     public ResultSet getResult(String query, Connection connection) {
         this.connection = connection;
         try {
