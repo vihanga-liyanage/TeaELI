@@ -21,6 +21,7 @@ public class UpdateIngStock extends javax.swing.JFrame {
         setLocation(x, y);
         setResizable(false);
 
+        //for validation of change qty field
         newQtyTxt.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {

@@ -1,11 +1,4 @@
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import teaeli.CreateNewBlendOrder1;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -19,9 +12,14 @@ import teaeli.CreateNewBlendOrder1;
  */
 public class test {
     public static void main(String[] args) {
-        DateFormat formatter = new SimpleDateFormat("EEE, d MMM yyyy");
-        Date today = new Date();
-        System.out.println(formatter.format(today));
-
+        String num = "1568718017898754034";
+        int i = num.length();
+        while (i > 3) {
+            String part1 = num.substring(0, i-3);
+            String part2 = num.substring(i-3);
+            num = part1 + "," + part2;
+            i-=3;
+            System.out.println(num);
+        }
     }
 }
