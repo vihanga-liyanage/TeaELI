@@ -30,6 +30,9 @@ public class AddNewBlend extends javax.swing.JFrame {
         
         Ingredient base = new Ingredient();
         base.initIngCombo(baseCombo);
+        
+        Ingredient flavour = new Ingredient();
+        flavour.initFlavourCombo(flavourCombo);
     }
 
     /**
@@ -132,6 +135,11 @@ public class AddNewBlend extends javax.swing.JFrame {
         flavourCombo.setEditable(true);
         flavourCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         flavourCombo.setSelectedIndex(-1);
+        flavourCombo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                flavourComboActionPerformed(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -315,6 +323,10 @@ public class AddNewBlend extends javax.swing.JFrame {
     private void ingPerAddBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingPerAddBtnActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_ingPerAddBtnActionPerformed
+
+    private void flavourComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_flavourComboActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_flavourComboActionPerformed
     
     public void FillIngCombo(){
         Connection connection = null;
