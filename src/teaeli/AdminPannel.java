@@ -103,7 +103,7 @@ public class AdminPannel extends javax.swing.JFrame {
         /*Start of ingredient class method calls*/
         //populate serch ingredient combobox in settings->ingredient
         AutoSuggest searchIngredientComboBoxAutoSuggest = new AutoSuggest();
-        searchIngredientComboBoxAutoSuggest.setAutoSuggest(searchIngredientComboBox, ingredient.loadNameForSearchStockIngComboBox());
+        searchIngredientComboBoxAutoSuggest.setAutoSuggestTwo(searchIngredientComboBox, ingredient.loadNameForSearchStockIngComboBox2());
 
         //start of view all ingredients
         try {
@@ -1177,9 +1177,7 @@ public class AdminPannel extends javax.swing.JFrame {
             } catch (SQLException ex) {
                 Logger.getLogger(AdminPannel.class.getName()).log(Level.SEVERE, null, ex);
             }
-            for(int i=0;i<5;i++){
-                System.out.println(resultArray[i]); 
-            }
+            
             itemDetails.itemNameTxt.setText(resultArray[0]);
             itemDetails.setName(resultArray[1]); //set ingid as name
             itemDetails.itemTypeCombo.setSelectedItem(resultArray[2]);
