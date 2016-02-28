@@ -15,6 +15,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
@@ -54,23 +55,23 @@ public class AddIngredient extends javax.swing.JFrame {
         setResizable(false);
         
         
-        /*
-        rs = ingr.getSupplierDetails();
+        
+        ArrayList<String> result = ingr.getSupplierDetails();
         try{
-        while(rs.next()){
-            System.out.println(rs.getString(2));
-            supliercombo.addItem(rs.getString(2));
+            for(int i=0;i<result.size();i++){
+                supliercombo.addItem(result.get(i));
         }
         }catch (Exception e){
             System.out.println(e);
         }
         
-        */
+        
     }
 
     
 
-    String name, supname, price, type;
+    String name, supname, type;
+    float price;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -93,8 +94,8 @@ public class AddIngredient extends javax.swing.JFrame {
         cancelBtn = new javax.swing.JButton();
         addBtn = new javax.swing.JButton();
         itemTypeCombo = new javax.swing.JComboBox();
-        supliercombo = new javax.swing.JComboBox();
         btnAddSupplier = new javax.swing.JButton();
+        supliercombo = new javax.swing.JComboBox();
 
         jPasswordField1.setText("jPasswordField1");
 
@@ -110,15 +111,15 @@ public class AddIngredient extends javax.swing.JFrame {
         jLabel1.setText("Ingredient Name");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel2.setText("Ingredient Type");
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel3.setText("Supplier Name");
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel4.setText("Unit Price");
 
         cancelBtn.setText("Cancel");
@@ -142,17 +143,16 @@ public class AddIngredient extends javax.swing.JFrame {
             }
         });
 
-        supliercombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " " }));
-        supliercombo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                supliercomboActionPerformed(evt);
-            }
-        });
-
         btnAddSupplier.setText("Add New Supplier");
         btnAddSupplier.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAddSupplierActionPerformed(evt);
+            }
+        });
+
+        supliercombo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                supliercomboActionPerformed(evt);
             }
         });
 
@@ -161,46 +161,50 @@ public class AddIngredient extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(40, 40, 40)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(btnAddSupplier)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(txtName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+                                    .addComponent(itemTypeCombo, javax.swing.GroupLayout.Alignment.LEADING, 0, 300, Short.MAX_VALUE)
+                                    .addComponent(supliercombo, javax.swing.GroupLayout.Alignment.LEADING, 0, 300, Short.MAX_VALUE)))
+                            .addComponent(txtPrice, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(cancelBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(addBtn))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel1))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnAddSupplier, javax.swing.GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(txtPrice)
-                                .addComponent(txtName)
-                                .addComponent(itemTypeCombo, 0, 231, Short.MAX_VALUE)
-                                .addComponent(supliercombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(addBtn)))
+                .addContainerGap(59, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(itemTypeCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(supliercombo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(28, 28, 28)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(itemTypeCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(supliercombo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3)))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnAddSupplier)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
@@ -215,17 +219,17 @@ public class AddIngredient extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -243,49 +247,30 @@ public class AddIngredient extends javax.swing.JFrame {
         name = txtName.getText();
         type = itemTypeCombo.getSelectedItem().toString();
         supname = supliercombo.getSelectedItem().toString();
-        price = txtPrice.getText();
+        price = Float.parseFloat(txtPrice.getText());
 
-        if (name.isEmpty() || supname.isEmpty() || price.isEmpty()) {
+        if (name.isEmpty() || supname.isEmpty() || txtPrice.getText().isEmpty()) {
 
             JOptionPane.showMessageDialog(this, "Any feild cannot be empty");
 
         } else {
 
-            if (Integer.parseInt(price) < 0) {
+            if (price < 0) {
                 JOptionPane.showMessageDialog(this, "Enter valid price");
             } else {
                 
-                /*try {
-                    con = dbcon.setConnection();
-                    String query = "INSERT INTO productdetails VALUES(?,?,?,?,?,?,?,?,?)";
-                    pst = (PreparedStatement) con.prepareStatement(query);
-
-                    pst.executeUpdate();
-
-                } catch (SQLException e) {
-                    System.out.println(e);
-
-                } finally {
-                    try {
-                        if (pst != null) {
-                            pst.close();
-                        }
-                        if (con != null) {
-                            con.close();
-                        }
-                    } catch (SQLException e) {
-                        System.out.println(e);
-                    }
-                }*/
+                int result = ingr.addNewIngredient(name,type,supname,price);
+                if (result == 1){
+                    JOptionPane.showMessageDialog(this, "Ingredient Succesfully Added");
+                }
+                else{
+                    JOptionPane.showMessageDialog(this, "Error occurd while updating.. changes will not be saved");
+                }
 
             }
 
         }
     }//GEN-LAST:event_addBtnActionPerformed
-
-    private void supliercomboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_supliercomboActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_supliercomboActionPerformed
 
     private void btnAddSupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddSupplierActionPerformed
         String SupName = JOptionPane.showInputDialog ( "Enter Supplier Name" );
@@ -297,6 +282,10 @@ public class AddIngredient extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Sorry! Error occured while inserting!\nPlease enter again.");
         }
     }//GEN-LAST:event_btnAddSupplierActionPerformed
+
+    private void supliercomboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_supliercomboActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_supliercomboActionPerformed
 
     /**
      * @param args the command line arguments

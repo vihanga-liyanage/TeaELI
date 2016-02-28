@@ -115,7 +115,7 @@
                           </Group>
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jScrollPane7" pref="1244" max="32767" attributes="0"/>
+                                  <Component id="jScrollPane7" pref="1255" max="32767" attributes="0"/>
                                   <Group type="102" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Group type="102" attributes="0">
@@ -153,7 +153,7 @@
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jLabel1" min="-2" pref="27" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jScrollPane7" pref="387" max="32767" attributes="0"/>
+                      <Component id="jScrollPane7" pref="468" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -275,7 +275,7 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
-                      <Component id="inventoryManagementSplitPane" pref="1254" max="32767" attributes="0"/>
+                      <Component id="inventoryManagementSplitPane" pref="1265" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -323,7 +323,7 @@
                           <Group type="102" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jScrollPane6" alignment="0" pref="630" max="32767" attributes="0"/>
+                                  <Component id="jScrollPane6" alignment="0" pref="635" max="32767" attributes="0"/>
                                   <Group type="102" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="inventoryIngredientsLbl" min="-2" pref="100" max="-2" attributes="0"/>
@@ -359,7 +359,7 @@
                                   </Group>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jScrollPane6" pref="394" max="32767" attributes="0"/>
+                              <Component id="jScrollPane6" pref="475" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -495,7 +495,7 @@
                                       <EmptySpace max="32767" attributes="0"/>
                                       <Component id="refreshBlendInventryBtn" min="-2" pref="50" max="-2" attributes="0"/>
                                   </Group>
-                                  <Component id="jScrollPane2" alignment="0" pref="594" max="32767" attributes="0"/>
+                                  <Component id="jScrollPane2" alignment="0" pref="600" max="32767" attributes="0"/>
                                   <Group type="102" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="inventoryBlendLbl" min="-2" pref="67" max="-2" attributes="0"/>
@@ -521,7 +521,7 @@
                                   <Component id="refreshBlendInventryBtn" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jScrollPane2" pref="394" max="32767" attributes="0"/>
+                              <Component id="jScrollPane2" pref="475" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -690,11 +690,11 @@
                                   <Component id="jScrollPane10" max="32767" attributes="0"/>
                                   <Group type="102" attributes="0">
                                       <Component id="jLabel5" max="32767" attributes="0"/>
-                                      <EmptySpace pref="824" max="32767" attributes="0"/>
+                                      <EmptySpace pref="829" max="32767" attributes="0"/>
                                       <Component id="addItemBtn" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Component id="searchIngredientComboBox" pref="189" max="32767" attributes="0"/>
+                                      <Component id="searchIngredientComboBox" pref="200" max="32767" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
                                       <Component id="searchIngredientBtn" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="967" max="-2" attributes="0"/>
@@ -832,7 +832,7 @@
                                       <Component id="jScrollPane4" min="-2" pref="457" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="jScrollPane3" pref="744" max="32767" attributes="0"/>
+                                          <Component id="jScrollPane3" pref="755" max="32767" attributes="0"/>
                                           <Group type="102" attributes="0">
                                               <Component id="inventoryBlendLbl1" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -840,16 +840,15 @@
                                       </Group>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="searchProductTxt" min="-2" pref="200" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="searchProductBtn" min="-2" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace max="32767" attributes="0"/>
+                                      <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace pref="864" max="32767" attributes="0"/>
                                       <Component id="addProductBtn" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="searchBlendComboBox" min="-2" pref="200" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="searchProductBtn" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
@@ -866,8 +865,8 @@
                               </Group>
                               <EmptySpace max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="searchProductTxt" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                                   <Component id="searchProductBtn" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                                  <Component id="searchBlendComboBox" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                               </Group>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Group type="102" attributes="0">
@@ -985,7 +984,8 @@
                                 </Column>
                               </TableColumnModel>
                             </Property>
-                            <Property name="rowHeight" type="int" value="20"/>
+                            <Property name="rowHeight" type="int" value="24"/>
+                            <Property name="rowSelectionAllowed" type="boolean" value="false"/>
                             <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
                               <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                             </Property>
@@ -993,8 +993,6 @@
                         </Component>
                       </SubComponents>
                     </Container>
-                    <Component class="javax.swing.JTextField" name="searchProductTxt">
-                    </Component>
                     <Component class="javax.swing.JButton" name="searchProductBtn">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Go"/>
@@ -1063,7 +1061,7 @@
                                 </Column>
                               </TableColumnModel>
                             </Property>
-                            <Property name="rowHeight" type="int" value="20"/>
+                            <Property name="rowHeight" type="int" value="24"/>
                             <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
                               <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                             </Property>
@@ -1078,6 +1076,20 @@
                         </Property>
                         <Property name="text" type="java.lang.String" value="Blend Details"/>
                       </Properties>
+                    </Component>
+                    <Component class="javax.swing.JComboBox" name="searchBlendComboBox">
+                      <Properties>
+                        <Property name="editable" type="boolean" value="true"/>
+                        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                          <StringArray count="0"/>
+                        </Property>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="searchBlendComboBoxActionPerformed"/>
+                      </Events>
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+                      </AuxValues>
                     </Component>
                   </SubComponents>
                 </Container>
@@ -1101,7 +1113,7 @@
                           <Group type="102" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jScrollPane8" alignment="0" pref="1219" max="32767" attributes="0"/>
+                                  <Component id="jScrollPane8" alignment="0" pref="1230" max="32767" attributes="0"/>
                                   <Group type="102" alignment="1" attributes="0">
                                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                       <Component id="refreshBtnForIngredientStockHistory" min="-2" pref="50" max="-2" attributes="0"/>
@@ -1217,7 +1229,7 @@
                           <Group type="102" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jScrollPane9" alignment="0" pref="1219" max="32767" attributes="0"/>
+                                  <Component id="jScrollPane9" alignment="0" pref="1230" max="32767" attributes="0"/>
                                   <Group type="102" alignment="1" attributes="0">
                                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                       <Component id="refreshBtnForBlendStockHistory" min="-2" pref="50" max="-2" attributes="0"/>
@@ -1338,7 +1350,7 @@
                           <Group type="102" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jScrollPane1" alignment="0" pref="1219" max="32767" attributes="0"/>
+                                  <Component id="jScrollPane1" alignment="0" pref="1230" max="32767" attributes="0"/>
                                   <Group type="102" alignment="1" attributes="0">
                                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
