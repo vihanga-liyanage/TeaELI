@@ -520,57 +520,7 @@ public class Ingredient {
     }
    //end of view all details of a ingredient
 
-    //start of get suplier id by name
-    public int getSupplierIDByName(String supplierName) throws SQLException {
-        int supplierID = 0;
-        Connection connection = dbConn.setConnection();
-        ResultSet resultSet = null;
-        Statement statement;
 
-        //set name of the ingredient
-        String query = "SELECT supID from supplier WHERE supplier.supName= '" + supplierName + "' ";
-        try {
-            resultSet = dbConn.getResult(query, connection);
-
-            if (resultSet.next()) {
-                supplierID = Integer.parseInt(resultSet.getString(1));
-            } else {
-                String insetSupplierQuery = "INSERT INTO supplier(supName) VALUES ('" + supplierName + "') ";
-                statement = connection.createStatement();
-                int insertOK = statement.executeUpdate(insetSupplierQuery);
-                if (insertOK == 1) {
-                    String getsupIDQuery = "SELECT MAX(supID) FROM supplier";
-                    resultSet = dbConn.getResult(getsupIDQuery, connection);
-                    if (resultSet.next()) {
-                        supplierID = Integer.parseInt(resultSet.getString(1));
-
-                    }
-                }
-
-            }
-
-        } catch (Exception e) {
-            System.err.println("err : " + e);
-        } finally {
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (Exception e) {
-                    System.err.println("Resultset close error : " + e);
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (Exception e) {
-                    System.err.println("Connection close error : " + e);
-                }
-            }
-        }
-        System.out.println("supplierID  " + supplierID);
-        return supplierID;
-    }
-    //end of get suplier id by name
     
     //start of update ingredient method
     public int updateIngredient(int ingredientID, String ingredientName, int ingCategory, int supID, float unitPrice) throws SQLException {
@@ -606,28 +556,7 @@ public class Ingredient {
         return insertOK;
     }
 
-    public int addNewSupplier(String Name) {
-        DBConnection dbConn = new DBConnection();
-        Connection connection = null;
-        try {
-            connection = dbConn.setConnection();
-        } catch (SQLException e) {
-
-        }
-
-        String query = "INSERT INTO supplier values(0,'" + Name + "')";
-        int rslt = dbConn.updateResult(query, connection);
-
-        if (connection != null) {
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                System.err.println("Connection close error : " + e);
-            }
-        }
-
-        return rslt;
-    }
+    
 
     //start of update ingredient method
     public int deleteIngredient(int ingredientID) throws SQLException {

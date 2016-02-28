@@ -7,6 +7,7 @@ package teaeli;
 
 import classes.DBConnection;
 import classes.Ingredient;
+import classes.Supplier;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.sql.Connection;
@@ -35,6 +36,8 @@ public class AddIngredient extends javax.swing.JFrame {
     ResultSet rs = null;
     Statement st = null;
     Ingredient ingr = new Ingredient();
+    Supplier supplier = new Supplier();
+            
     public AddIngredient() {
         //Add windows look and feel
         try {
@@ -289,7 +292,12 @@ public class AddIngredient extends javax.swing.JFrame {
 
     private void btnAddSupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddSupplierActionPerformed
         String SupName = JOptionPane.showInputDialog ( "Enter Supplier Name" );
-        int rslt = ingr.addNewSupplier(SupName);
+        int rslt=0;
+        try {
+            rslt = supplier.addNewSupplier(SupName);
+        } catch (SQLException ex){
+            Logger.getLogger(AddIngredient.class.getName()).log(Level.SEVERE, null, ex);
+        }
         if(rslt == 1){
             JOptionPane.showMessageDialog(this, "Supplier Added Succesfully");            
         }

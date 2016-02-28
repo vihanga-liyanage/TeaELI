@@ -13,9 +13,9 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 public class IngredientDetails extends javax.swing.JFrame {
 
-    /**
-     * Creates new form itemDetails
-     */
+    Ingredient ingredient = new Ingredient();
+    Supplier supplier = new Supplier();
+
     public IngredientDetails() {
         //Add windows look and feel
         try {
@@ -130,7 +130,7 @@ public class IngredientDetails extends javax.swing.JFrame {
 
         supplierCombobox.setEditable(true);
 
-        jButton1.setText("Add new Supplier");
+        jButton1.setText("+");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -154,10 +154,10 @@ public class IngredientDetails extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(itemNameTxt)
                             .addComponent(unitPriceTxt)
-                            .addComponent(itemTypeCombo, 0, 200, Short.MAX_VALUE)
+                            .addComponent(itemTypeCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(supplierCombobox, 0, 200, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton1)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(cancelBtn)
@@ -199,16 +199,16 @@ public class IngredientDetails extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 556, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 434, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE)
                 .addGap(9, 9, 9))
         );
 
@@ -232,7 +232,7 @@ public class IngredientDetails extends javax.swing.JFrame {
     }//GEN-LAST:event_unitPriceTxtActionPerformed
 
     private void updateItemBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateItemBtnActionPerformed
-        Ingredient ingredient = new Ingredient();
+
         int response = JOptionPane.showConfirmDialog(null, "Are you sure you need to update the ingredient? ", "Confirm Update",
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (response == JOptionPane.NO_OPTION) {
@@ -250,14 +250,28 @@ public class IngredientDetails extends javax.swing.JFrame {
 
             //get ingredient categoryid
             int comboSelectedIgCat = this.itemTypeCombo.getSelectedIndex();
-            ingCategoryID = comboSelectedIgCat + 1;
-            System.out.println("ingCategoryID" + ingCategoryID);
-
-             //get supplier id by name
-            int comboSelectedSupllier = this.supplierCombobox.getSelectedIndex();
-            supID = comboSelectedSupllier + 1;
-            System.out.println("supID" + supID);
             
+            
+            if (comboSelectedIgCat == -1) {
+                JOptionPane.showMessageDialog(null, "Please select a ingredient type!!!");
+            } else {
+                ingCategoryID = comboSelectedIgCat + 1;
+
+            }
+
+            //get supplier id by name
+            String SupName = (String) this.supplierCombobox.getSelectedItem();
+            int selecetdID = this.supplierCombobox.getSelectedIndex();
+            if (selecetdID == 0) {
+                JOptionPane.showMessageDialog(null, "Please select a supplier !!!" ,"No supplier selected",0);
+            }else{
+                
+                        try {
+                supID = supplier.getSupplierIDByName(SupName);
+            } catch (SQLException ex) {
+                System.out.println("SQL eror : "+ ex);
+            }
+
             //get unit price
             String unitPriceString = this.unitPriceTxt.getText();
             unitPrice = Float.parseFloat(unitPriceString);
@@ -276,6 +290,10 @@ public class IngredientDetails extends javax.swing.JFrame {
                 //Logger.getLogger(IngredientDetails.class.getName()).log(Level.SEVERE, null, ex);
                 System.out.println("sol error id:" + ex);
             }
+            
+            } 
+            
+
 
         } else if (response == JOptionPane.CLOSED_OPTION) {
             System.out.println("JOptionPane closed");
@@ -283,7 +301,7 @@ public class IngredientDetails extends javax.swing.JFrame {
     }//GEN-LAST:event_updateItemBtnActionPerformed
 
     private void deleteItemBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteItemBtnActionPerformed
-        Ingredient ingredient = new Ingredient();
+
         int ingID = 0;
         ingID = Integer.parseInt(this.getName());
         try {
@@ -302,6 +320,28 @@ public class IngredientDetails extends javax.swing.JFrame {
     }//GEN-LAST:event_deleteItemBtnActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String suplierName = JOptionPane.showInputDialog(null, "Enter Supplier Name");
+
+        if (suplierName.equals("")) { // check for null input
+            JOptionPane.showMessageDialog(null, "Please enter supplier name!!!", "No suppier Name", 0);
+        } else {
+            try {
+                int inserted = supplier.addNewSupplier(suplierName);
+
+                if (inserted == 1) {
+                    JOptionPane.showMessageDialog(null, "New supplier added successfully", "New supplier added", 1);
+                    supplierCombobox.addItem(suplierName);
+                    supplierCombobox.setSelectedItem(suplierName);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Unable to add the new supplier!!!", "Unable to add", 0);
+
+                }
+            } catch (SQLException ex) {
+                System.out.println("SQL error : " + ex);
+            }
+
+        }
+
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
