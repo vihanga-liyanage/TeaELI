@@ -10,6 +10,7 @@ import classes.DBConnection;
 import classes.Ingredient;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -321,9 +322,11 @@ public class AddNewBlend extends javax.swing.JFrame {
     }//GEN-LAST:event_blendCodeTxtActionPerformed
 
     private void ingPerAddBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingPerAddBtnActionPerformed
-        // TODO add your handling code here:
+        if (ingCombo.getSelectedItem().equals("")){
+            JOptionPane.showMessageDialog(ingCombo, "Please select a ingredient to add.", "Error", JOptionPane.WARNING_MESSAGE);
+            ingCombo.requestFocus();
     }//GEN-LAST:event_ingPerAddBtnActionPerformed
-
+    }
     private void flavourComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_flavourComboActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_flavourComboActionPerformed
