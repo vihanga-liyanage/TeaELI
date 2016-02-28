@@ -457,6 +457,7 @@ public class AddNewBlend extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_blendCategoryComboActionPerformed
     
+    
     String blendID, blendName, blendCategory, base;
     
     private void addNewBlendBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addNewBlendBtnActionPerformed
@@ -469,6 +470,19 @@ public class AddNewBlend extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Any feild cannot be empty");
 
         }
+        
+        float perCount = 0;
+        int rowCount = addNewBlendIngTbl.getRowCount();
+        for(int i=0; i < rowCount; i++){
+            float initPer = Float.parseFloat(addNewBlendIngTbl.getValueAt(i, 1).toString()); ;
+            perCount = perCount + initPer;
+            /*System.out.println(a);*/
+        }
+        
+        if(perCount <= 0 || perCount>=100){
+            JOptionPane.showMessageDialog(this, "Invalid percentage");   
+    }
+        System.out.println(perCount);
     }//GEN-LAST:event_addNewBlendBtnActionPerformed
    
     public void FillIngCombo(){
