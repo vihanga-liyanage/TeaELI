@@ -213,36 +213,10 @@ public class Blend {
     
     /* start of initializing blend combo in CreateNewBlendOrder */
     public void initBlendCombo(JComboBox blendsCombo){
-        Connection conn = null;
-        ResultSet resultSet = null;
         AutoSuggest autoSuggest = new AutoSuggest();
-        
-        try{
-            String query = "SELECT blendName FROM blend ORDER BY blendName";
-            
-            conn = dbConn.setConnection();
-            resultSet = dbConn.getResult(query, conn);
-            
-            autoSuggest.setAutoSuggest(blendsCombo, resultSet);
-            
-        }catch(Exception e){
-            System.err.println("err : " + e);
-        } finally {
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (Exception e) {
-                    System.err.println("Resultset close error : " + e);
-                }
-            }
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (Exception e) {
-                    System.err.println("Connection close error : " + e);
-                }
-            }
-        }
+        String query = "SELECT blendName FROM blend ORDER BY blendName";
+        ResultArray res = dbConn.getResultArray(query);
+        autoSuggest.setAutoSuggest(blendsCombo, res);
     }
     
     /* start of loadNameForSearchStockBlendsComboBox method */
@@ -403,48 +377,9 @@ public class Blend {
     /* end */
     
     /* Get blend data when blend name is given */
-    public List<List<String>> getBlendDataByBlendName(String blendName){
-        Connection conn = null;
-        ResultSet resultSet = null;
-        try{
-            String query = "SELECT * FROM blend WHERE blendName='" + blendName + "'";
-            conn = dbConn.setConnection();
-            resultSet = dbConn.getResult(query, conn);
-
-            List<List<String>> result = new ArrayList<>();  // List of list, one per row
-            ResultSetMetaData rsmd = resultSet.getMetaData();
-            int numcols = rsmd.getColumnCount();
-            
-            while (resultSet.next()) { 
-                List<String> row = new ArrayList<>(numcols); // new list per row
-                int i = 1;
-                while (i <= numcols) {  // don't skip the last column, use <=
-                    row.add(resultSet.getString(i++));
-                }
-                result.add(row); // add it to the result
-            }
-            
-            return result;
-            
-        }catch(Exception e){
-            System.err.println("err : " + e);
-        } finally {
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (Exception e) {
-                    System.err.println("Resultset close error : " + e);
-                }
-            }
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (Exception e) {
-                    System.err.println("Connection close error : " + e);
-                }
-            }
-        }
-        return null;
+    public ResultArray getBlendDataByBlendName(String blendName){
+        String query = "SELECT * FROM blend WHERE blendName='" + blendName + "'";
+        return dbConn.getResultArray(query);
     }
     /* end */
     
