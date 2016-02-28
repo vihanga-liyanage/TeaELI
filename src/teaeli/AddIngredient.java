@@ -7,6 +7,7 @@ package teaeli;
 
 import classes.DBConnection;
 import classes.Ingredient;
+import classes.Supplier;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.sql.Connection;
@@ -23,6 +24,7 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import static teaeli.IngredientDetails.supplierCombobox;
 
 /**
  *
@@ -36,6 +38,10 @@ public class AddIngredient extends javax.swing.JFrame {
     ResultSet rs = null;
     Statement st = null;
     Ingredient ingr = new Ingredient();
+
+    Supplier supplier = new Supplier();
+            
+
     public AddIngredient() {
         //Add windows look and feel
         try {
@@ -53,22 +59,17 @@ public class AddIngredient extends javax.swing.JFrame {
         y = (screenSize.height - frameSize.height) / 4;
         setLocation(x, y);
         setResizable(false);
-        
-        
-        
+
         ArrayList<String> result = ingr.getSupplierDetails();
-        try{
-            for(int i=0;i<result.size();i++){
+        try {
+            for (int i = 0; i < result.size(); i++) {
                 supliercombo.addItem(result.get(i));
-        }
-        }catch (Exception e){
+            }
+        } catch (Exception e) {
             System.out.println(e);
         }
-        
-        
-    }
 
-    
+    }
 
     String name, supname, type;
     float price;
@@ -258,12 +259,11 @@ public class AddIngredient extends javax.swing.JFrame {
             if (price < 0) {
                 JOptionPane.showMessageDialog(this, "Enter valid price");
             } else {
-                
-                int result = ingr.addNewIngredient(name,type,supname,price);
-                if (result == 1){
+
+                int result = ingr.addNewIngredient(name, type, supname, price);
+                if (result == 1) {
                     JOptionPane.showMessageDialog(this, "Ingredient Succesfully Added");
-                }
-                else{
+                } else {
                     JOptionPane.showMessageDialog(this, "Error occurd while updating.. changes will not be saved");
                 }
 
@@ -273,14 +273,38 @@ public class AddIngredient extends javax.swing.JFrame {
     }//GEN-LAST:event_addBtnActionPerformed
 
     private void btnAddSupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddSupplierActionPerformed
-        String SupName = JOptionPane.showInputDialog ( "Enter Supplier Name" );
-        int rslt = ingr.addNewSupplier(SupName);
-        if(rslt == 1){
-            JOptionPane.showMessageDialog(this, "Supplier Added Succesfully");            
+        try{   
+        String suplierName = JOptionPane.showInputDialog(null, "Enter Supplier Name");
+        
+        
+        
+        if (suplierName.equals("")) { // check for null input
+            JOptionPane.showMessageDialog(this, "Please enter supplier name!!!");
+        } else {
+            try {
+                int inserted = supplier.addNewSupplier(suplierName);
+
+                if (inserted == 1) {
+                    JOptionPane.showMessageDialog(null, "New supplier added successfully", "New supplier added", 1);
+                    supliercombo.addItem(suplierName);
+                    supliercombo.setSelectedItem(suplierName);
+                    supplierCombobox.addItem(suplierName);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Error occurd while Adding.. changes will not be saved");
+
+                }
+            } catch (SQLException ex) {
+                System.out.println("SQL error : " + ex);
+            }
+
         }
-        else{
-            JOptionPane.showMessageDialog(this, "Sorry! Error occured while inserting!\nPlease enter again.");
+        
         }
+        catch (NullPointerException e){
+            System.out.println(e);
+        }
+        
+
     }//GEN-LAST:event_btnAddSupplierActionPerformed
 
     private void supliercomboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_supliercomboActionPerformed
