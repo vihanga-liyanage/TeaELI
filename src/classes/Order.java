@@ -7,9 +7,14 @@ package classes;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+<<<<<<< HEAD
 import java.sql.SQLException;
 import java.util.*;
 import javax.swing.table.DefaultTableModel;
+=======
+import java.util.*;
+import javax.swing.JComboBox;
+>>>>>>> b1d332c849304843173e60d93273942440109da4
 
 public class Order {
     //attributes
@@ -105,6 +110,7 @@ public class Order {
         this.blendList = blendList;
     }
     
+<<<<<<< HEAD
     //Populate orderListTable in the order handling tab (NOT FINISHED........!!!!!!!!!)
     public void populateorderListTable(DefaultTableModel tModel) {
         Connection connection = null;
@@ -132,10 +138,31 @@ public class Order {
             }
         } catch (SQLException ex) {
             System.out.println(ex);
+=======
+    //Getting last order ID
+    public String getLastOrderID(){
+        Connection conn = null;
+        ResultSet resultSet = null;
+        
+        try{
+            String query = "SELECT `orderID` FROM `order` ORDER BY `orderID` DESC LIMIT 0 , 1";
+            
+            conn = dbConn.setConnection();
+            resultSet = dbConn.getResult(query, conn);
+            String orderID = "";
+            while(resultSet.next()){
+                orderID = resultSet.getString(1);
+            }
+            return orderID;
+            
+        }catch(Exception e){
+            System.err.println("err : " + e);
+>>>>>>> b1d332c849304843173e60d93273942440109da4
         } finally {
             if (resultSet != null) {
                 try {
                     resultSet.close();
+<<<<<<< HEAD
                 } catch (SQLException e) {
                     System.err.println("Resultset close error : " + e);
                 }
@@ -144,10 +171,24 @@ public class Order {
                 try {
                     connection.close();
                 } catch (SQLException e) {
+=======
+                } catch (Exception e) {
+                    System.err.println("Resultset close error : " + e);
+                }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (Exception e) {
+>>>>>>> b1d332c849304843173e60d93273942440109da4
                     System.err.println("Connection close error : " + e);
                 }
             }
         }
+<<<<<<< HEAD
+=======
+        return null;
+>>>>>>> b1d332c849304843173e60d93273942440109da4
     }
 }
 

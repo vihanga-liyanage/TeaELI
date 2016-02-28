@@ -153,6 +153,20 @@ public class AdminPannel extends javax.swing.JFrame {
          AutoSuggest searchBlendBaseComboBoxAutoSuggest = new AutoSuggest();
          searchBlendBaseComboBoxAutoSuggest.setAutoSuggest(searchStockBlendComboBox, blend.loadNameForsearchBlendBaseComboBox());
          */
+        
+        final ListSelectionModel selectionalModForStockIngTable = inventryIngredientTable.getSelectionModel();
+        selectionalModForStockIngTable.addListSelectionListener(new ListSelectionListener() {
+
+            @Override
+            public void valueChanged(ListSelectionEvent lsevt) {
+                if (!selectionalModForStockIngTable.isSelectionEmpty()) {
+                    int row = selectionalModForStockIngTable.getMinSelectionIndex();
+                    //JOptionPane.showMessageDialog(null, inventryIngredientTable.getValueAt(row, 0));
+                    //searchStockIngComboBox.
+                }
+            }
+
+        });
     }
 
     DBConnection dbcon = new DBConnection();
