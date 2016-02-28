@@ -5,7 +5,11 @@
  */
 package classes;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.*;
+import javax.swing.table.DefaultTableModel;
 
 public class Order {
     //attributes
@@ -14,6 +18,8 @@ public class Order {
     private ArrayList<Ingredient> ingredientList = new ArrayList();
     private ArrayList<Blend> blendList = new ArrayList();
     private Date date;
+    
+    DBConnection dbConn = new DBConnection();
     
     //constructor
     public Order(){
@@ -97,6 +103,51 @@ public class Order {
 
     public void setBlendList(ArrayList<Blend> blendList) {
         this.blendList = blendList;
+    }
+    
+    //Populate orderListTable in the order handling tab (NOT FINISHED........!!!!!!!!!)
+    public void populateorderListTable(DefaultTableModel tModel) {
+        Connection connection = null;
+        ResultSet resultSet;
+        try {
+            connection = dbConn.setConnection();
+        } catch (SQLException e) {
+
+        }
+
+        String query = "SELECT o.orderID, o.orderStatus, o.date, u.username FROM user u JOIN `order` o ON o.placedBy = u.userID ORDER BY o.orderStatus;";
+
+        resultSet = dbConn.getResult(query, connection);
+        try {
+            tModel.setRowCount(0);
+            
+            String status = null;
+            while (resultSet.next()) {
+                if(resultSet.getInt(2) == 0){
+                    status = "Pending";
+                }else if(resultSet.getInt(2) == 1){
+                    status = "Received";
+                }
+                tModel.addRow(new Object[]{resultSet.getString(1), status, resultSet.getString(3), resultSet.getString(4)});
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    System.err.println("Resultset close error : " + e);
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    System.err.println("Connection close error : " + e);
+                }
+            }
+        }
     }
 }
 

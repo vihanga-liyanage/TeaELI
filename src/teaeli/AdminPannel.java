@@ -5,6 +5,7 @@ import classes.Ingredient;
 import classes.StockHistory;
 import classes.DBConnection;
 import classes.AutoSuggest;
+import classes.Order;
 import classes.Supplier;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -40,6 +41,7 @@ public class AdminPannel extends javax.swing.JFrame {
     StockHistory blendHistoryStock = new StockHistory();
     StockHistory ingredientStock = new StockHistory();
     public static IngredientDetails ingredientDetails = new IngredientDetails();
+    Order order = new Order();
 
     /**
      * Creates new form AdminPannel
@@ -130,6 +132,9 @@ public class AdminPannel extends javax.swing.JFrame {
         blendHistoryStock.populateStockBlendHistoryTable((DefaultTableModel) blendStockHistoryTbl.getModel());
 
         ingredientStock.populateStockIngredientHistoryTable((DefaultTableModel) ingStockHistoryTbl.getModel());
+        
+        /*populate main order table in the order details tab*/
+        order.populateorderListTable((DefaultTableModel) orderListTable.getModel());
 
         /* combox auto suggests in inventory management */
         AutoSuggest searchStockIngComboBoxAutoSuggest = new AutoSuggest();
@@ -275,7 +280,7 @@ public class AdminPannel extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Order ID", "Status", "Date", "Placed By"
+                "Order ID", "Status", "Placed Date", "Placed By"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -286,7 +291,7 @@ public class AdminPannel extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        orderListTable.setRowHeight(20);
+        orderListTable.setRowHeight(24);
         jScrollPane7.setViewportView(orderListTable);
         if (orderListTable.getColumnModel().getColumnCount() > 0) {
             orderListTable.getColumnModel().getColumn(0).setResizable(false);
