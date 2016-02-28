@@ -5,6 +5,7 @@ import classes.Ingredient;
 import classes.StockHistory;
 import classes.DBConnection;
 import classes.AutoSuggest;
+import classes.Order;
 import classes.Supplier;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -40,6 +41,7 @@ public class AdminPannel extends javax.swing.JFrame {
     StockHistory blendHistoryStock = new StockHistory();
     StockHistory ingredientStock = new StockHistory();
     public static IngredientDetails ingredientDetails = new IngredientDetails();
+    Order order = new Order();
 
     /**
      * Creates new form AdminPannel
@@ -121,7 +123,7 @@ public class AdminPannel extends javax.swing.JFrame {
         ingredientHistoryStock.populateStockIngredientHistoryTable((DefaultTableModel) ingStockHistoryTbl.getModel());
 
         /* populate inventryBlendTable in inventory management */
-        blend.populateBlendTable((DefaultTableModel) inventoryBlendTable.getModel());
+        blend.populateBlendTable((DefaultTableModel) inventryBlendTable.getModel());
 
         /* populate product table in the blend tab*/
         blend.populateProductTable((DefaultTableModel) productTable.getModel());
@@ -130,6 +132,9 @@ public class AdminPannel extends javax.swing.JFrame {
         blendHistoryStock.populateStockBlendHistoryTable((DefaultTableModel) blendStockHistoryTbl.getModel());
 
         ingredientStock.populateStockIngredientHistoryTable((DefaultTableModel) ingStockHistoryTbl.getModel());
+        
+        /*populate main order table in the order details tab*/
+        order.populateorderListTable((DefaultTableModel) orderListTable.getModel());
 
         /* combox auto suggests in inventory management */
         AutoSuggest searchStockIngComboBoxAutoSuggest = new AutoSuggest();
@@ -148,6 +153,32 @@ public class AdminPannel extends javax.swing.JFrame {
          AutoSuggest searchBlendBaseComboBoxAutoSuggest = new AutoSuggest();
          searchBlendBaseComboBoxAutoSuggest.setAutoSuggest(searchStockBlendComboBox, blend.loadNameForsearchBlendBaseComboBox());
          */
+        
+        final ListSelectionModel selectionalModForStockIngTable = inventryIngredientTable.getSelectionModel();
+        selectionalModForStockIngTable.addListSelectionListener(new ListSelectionListener() {
+
+            @Override
+            public void valueChanged(ListSelectionEvent lsevt) {
+                if (!selectionalModForStockIngTable.isSelectionEmpty()) {
+                    int row = selectionalModForStockIngTable.getMinSelectionIndex();
+                    searchStockIngComboBox.setSelectedItem(inventryIngredientTable.getValueAt(row, 1));
+                }
+            }
+
+        });
+        
+        final ListSelectionModel selectionalModForStockBlendTable = inventryBlendTable.getSelectionModel();
+        selectionalModForStockBlendTable.addListSelectionListener(new ListSelectionListener() {
+
+            @Override
+            public void valueChanged(ListSelectionEvent lsevt) {
+                if (!selectionalModForStockBlendTable.isSelectionEmpty()) {
+                    int row = selectionalModForStockBlendTable.getMinSelectionIndex();
+                    searchStockBlendComboBox.setSelectedItem(inventryBlendTable.getValueAt(row, 1));
+                }
+            }
+
+        });
     }
 
     DBConnection dbcon = new DBConnection();
@@ -217,7 +248,7 @@ public class AdminPannel extends javax.swing.JFrame {
         inventoryBlendLbl = new javax.swing.JLabel();
         searchStockBlendsBtn = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        inventoryBlendTable = new javax.swing.JTable();
+        inventryBlendTable = new javax.swing.JTable();
         jLabel7 = new javax.swing.JLabel();
         searchStockBlendComboBox = new javax.swing.JComboBox();
         refreshBlendInventryBtn = new javax.swing.JButton();
@@ -275,7 +306,7 @@ public class AdminPannel extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Order ID", "Status", "Date", "Placed By"
+                "Order ID", "Status", "Placed Date", "Placed By"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -286,7 +317,7 @@ public class AdminPannel extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        orderListTable.setRowHeight(20);
+        orderListTable.setRowHeight(24);
         jScrollPane7.setViewportView(orderListTable);
         if (orderListTable.getColumnModel().getColumnCount() > 0) {
             orderListTable.getColumnModel().getColumn(0).setResizable(false);
@@ -481,7 +512,7 @@ public class AdminPannel extends javax.swing.JFrame {
             }
         });
 
-        inventoryBlendTable.setModel(new javax.swing.table.DefaultTableModel(
+        inventryBlendTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null}
@@ -498,12 +529,12 @@ public class AdminPannel extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        inventoryBlendTable.setRowHeight(24);
-        jScrollPane2.setViewportView(inventoryBlendTable);
-        if (inventoryBlendTable.getColumnModel().getColumnCount() > 0) {
-            inventoryBlendTable.getColumnModel().getColumn(1).setResizable(false);
-            inventoryBlendTable.getColumnModel().getColumn(1).setPreferredWidth(200);
-            inventoryBlendTable.getColumnModel().getColumn(2).setResizable(false);
+        inventryBlendTable.setRowHeight(24);
+        jScrollPane2.setViewportView(inventryBlendTable);
+        if (inventryBlendTable.getColumnModel().getColumnCount() > 0) {
+            inventryBlendTable.getColumnModel().getColumn(1).setResizable(false);
+            inventryBlendTable.getColumnModel().getColumn(1).setPreferredWidth(200);
+            inventryBlendTable.getColumnModel().getColumn(2).setResizable(false);
         }
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -1146,9 +1177,7 @@ public class AdminPannel extends javax.swing.JFrame {
             } catch (SQLException ex) {
                 Logger.getLogger(AdminPannel.class.getName()).log(Level.SEVERE, null, ex);
             }
-            for(int i=0;i<5;i++){
-                System.out.println(resultArray[i]); 
-            }
+            
             itemDetails.itemNameTxt.setText(resultArray[0]);
             itemDetails.setName(resultArray[1]); //set ingid as name
             itemDetails.itemTypeCombo.setSelectedItem(resultArray[2]);
@@ -1340,7 +1369,7 @@ public class AdminPannel extends javax.swing.JFrame {
     }//GEN-LAST:event_refreshIngredientInventryBtnActionPerformed
 
     private void refreshBlendInventryBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshBlendInventryBtnActionPerformed
-        blend.populateBlendTable((DefaultTableModel) inventoryBlendTable.getModel());
+        blend.populateBlendTable((DefaultTableModel) inventryBlendTable.getModel());
     }//GEN-LAST:event_refreshBlendInventryBtnActionPerformed
 
     private void refreshBtnForIngredientStockHistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshBtnForIngredientStockHistoryActionPerformed
@@ -1400,12 +1429,12 @@ public class AdminPannel extends javax.swing.JFrame {
     private javax.swing.JTable ingStockHistoryTbl;
     private javax.swing.JLabel inventoryBlendLbl;
     private javax.swing.JLabel inventoryBlendLbl1;
-    private javax.swing.JTable inventoryBlendTable;
     private javax.swing.JLabel inventoryIngredientsLbl;
     private javax.swing.JPanel inventoryManagementBlendPanel;
     private javax.swing.JPanel inventoryManagementIngredientPanel;
     private javax.swing.JSplitPane inventoryManagementSplitPane;
     private javax.swing.JPanel inventoryPanel;
+    private javax.swing.JTable inventryBlendTable;
     public javax.swing.JTable inventryIngredientTable;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel15;

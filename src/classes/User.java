@@ -4,9 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import teaeli.TeaELI;
 import static teaeli.TeaELI.loginFrame;
 
 public class User {
@@ -77,11 +75,7 @@ public class User {
     public void viewUser(DefaultTableModel tModel) {
         Connection connection = null;
         ResultSet resultSet;
-        try {
-            connection = dbConn.setConnection();
-        } catch (SQLException e) {
-
-        }
+        connection = dbConn.setConnection();
 
         String query = "SELECT userID, username, firstname, lastname FROM user";
 
@@ -115,11 +109,7 @@ public class User {
     //method to remove user from the user table in the admin pannel(completely remove user from the system)
     public int removeUser(int id) {
         Connection connection = null;
-        try {
-            connection = dbConn.setConnection();
-        } catch (SQLException e) {
-
-        }
+        connection = dbConn.setConnection();
 
         String query = "DELETE FROM user WHERE userID = " + id;
 
@@ -140,11 +130,7 @@ public class User {
     public int checkUserName(String userName) {
         Connection connection = null;
         ResultSet resultSet;
-        try {
-            connection = dbConn.setConnection();
-        } catch (SQLException e) {
-
-        }
+        connection = dbConn.setConnection();
 
         String query = "SELECT username FROM user";
 
@@ -181,11 +167,7 @@ public class User {
 
     public int addNewUser(User user) {
         Connection connection = null;
-        try {
-            connection = dbConn.setConnection();
-        } catch (SQLException e) {
-
-        }
+        connection = dbConn.setConnection();
 
         String query = "INSERT INTO user values(0, '" + user.getUserName() + "', '" + user.getFirstName() + "', '" + user.getLastName() + "', sha1('" + user.getPassword() + "'), '" + user.getDesignation() + "')";
         int rslt = dbConn.updateResult(query, connection);
@@ -276,68 +258,26 @@ public class User {
     public int updateUserName(String firstname, String lastname,String username) {
         Connection connection = null;
         PreparedStatement pst = null;
-
-        try {
-            connection = dbConn.setConnection();//get the connection
-            String query = "UPDATE user SET firstname =' " + firstname + "', lastname = '" + lastname + "' WHERE username = '" + username + "'";
-            
-            if (dbConn.updateResult(query, connection) == 1) {
-                return 1;
-                
-            } else {
-                return 2;
-                
-            }
-        } catch (SQLException e) {
-            System.out.println(e);//an error occured while executing
-
-        } finally {
-            try {
-                if (pst != null) {
-                    pst.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-
-            }
+        connection = dbConn.setConnection();
+        String query = "UPDATE user SET firstname =' " + firstname + "', lastname = '" + lastname + "' WHERE username = '" + username + "'";
+        if (dbConn.updateResult(query, connection) == 1) {
+            return 1;
+        } else {
+            return 2;
         }
-        return 0;
     }
     
     public  int updatePassword(String firstname, String lastname,String username,String newpassword,String currentpassword){
         Connection connection = null;
         PreparedStatement pst = null;
-        try {
-            connection = dbConn.setConnection();//get the connection
-                String query = "UPDATE user SET firstname =' "+firstname+"', lastname = '"+lastname+"',password = sha1('"+newpassword+"') WHERE username = '"+username+"' and password = sha1('"+currentpassword+"')";
-                
-            if (dbConn.updateResult(query, connection)==1){
-                return 1;
-                
-            }else{
-                return 2;
-                
-            }
-        } catch (SQLException e) {
-            System.out.println(e);//an error occured while executing
-            
-        } finally {
-            try {
-                if (pst != null) {
-                    pst.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-
-            }
+        connection = dbConn.setConnection();
+        String query = "UPDATE user SET firstname =' "+firstname+"', lastname = '"+lastname+"',password = sha1('"+newpassword+"') WHERE username = '"+username+"' and password = sha1('"+currentpassword+"')";
+        if (dbConn.updateResult(query, connection)==1){
+            return 1;
+        }else{
+            return 2;
         }
-        return 0;
-        }
-    
     }
+}
 
 

@@ -173,7 +173,7 @@
                       <Table columnCount="4" rowCount="1">
                         <Column editable="false" title="Order ID" type="java.lang.Object"/>
                         <Column editable="false" title="Status" type="java.lang.Object"/>
-                        <Column editable="false" title="Date" type="java.lang.Object"/>
+                        <Column editable="false" title="Placed Date" type="java.lang.Object"/>
                         <Column editable="false" title="Placed By" type="java.lang.Object"/>
                       </Table>
                     </Property>
@@ -201,7 +201,7 @@
                         </Column>
                       </TableColumnModel>
                     </Property>
-                    <Property name="rowHeight" type="int" value="20"/>
+                    <Property name="rowHeight" type="int" value="24"/>
                     <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
                       <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                     </Property>
@@ -550,7 +550,7 @@
 
                       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                       <SubComponents>
-                        <Component class="javax.swing.JTable" name="inventoryBlendTable">
+                        <Component class="javax.swing.JTable" name="inventryBlendTable">
                           <Properties>
                             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                               <Table columnCount="4" rowCount="2">

@@ -7,9 +7,10 @@ package teaeli;
 
 import classes.DBConnection;
 import javax.swing.JOptionPane;
-import classes.Ingredient;
+import classes.Supplier;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.UIManager;
@@ -40,7 +41,7 @@ public class AddSupplier extends javax.swing.JFrame {
         setResizable(false);
         
     }
-    Ingredient ingr = new Ingredient();
+    Supplier sup = new Supplier();
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -137,12 +138,16 @@ public class AddSupplier extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Please Enter Supplier Name");
         }
         else{
-            int result = ingr.addNewSupplier(supname);
-            if (result == 1){
-                JOptionPane.showMessageDialog(this, "Supplier Added Successfully");
-            }
-            else{
-                JOptionPane.showMessageDialog(this, "Error occurd while updating.. changes will not be saved");
+            try {
+                int result = sup.addNewSupplier(supname);
+                if (result == 1){
+                    JOptionPane.showMessageDialog(this, "Supplier Added Successfully");
+                }
+                else{
+                    JOptionPane.showMessageDialog(this, "Error occurd while updating.. changes will not be saved");
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(AddSupplier.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_btnOKActionPerformed
