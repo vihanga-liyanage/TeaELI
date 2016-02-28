@@ -25,7 +25,7 @@ public class DBConnection {
         } catch (ClassNotFoundException e) {
             System.err.println("Couldn't find database driver : " + e.getMessage());
         } catch (SQLException ex) {
-            Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println("SQL Exception occured : " + ex.getMessage());
         }
         return connection;
     }
@@ -57,6 +57,7 @@ public class DBConnection {
         }
     }
     
+    //New methods ==============================================================
     public ResultArray getResultArray(String query) {
         setConnection();
         ResultArray res = null;
@@ -85,5 +86,34 @@ public class DBConnection {
             }
         }
         return res;
+    }
+    
+    public int updateResult(String query) {
+        setConnection();
+        try {
+            pstStatement = connection.prepareStatement(query);
+            pstStatement.executeUpdate();
+            return 1;
+        } catch (SQLException e) {
+            System.err.println("SQL Problem : " + e.getMessage());
+            System.err.println("SQL State : " + e.getMessage());
+            System.err.println("Vendor error : " + e.getMessage());
+            return 0;
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (Exception e) {
+                    System.err.println("Resultset close error : " + e);
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (Exception e) {
+                    System.err.println("Connection close error : " + e);
+                }
+            }
+        }
     }
 }

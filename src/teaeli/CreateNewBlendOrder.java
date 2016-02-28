@@ -7,6 +7,7 @@ package teaeli;
 
 import classes.Blend;
 import classes.Order;
+import classes.ResultArray;
 import classes.Validation;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -573,16 +574,17 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
                 }
             }
             if (isNew) {
-                List<List<String>> res = blend.getBlendDataByBlendName(blendName);
+                ResultArray res = blend.getBlendDataByBlendName(blendName);
                 Vector newRow = new Vector();
-                newRow.addElement(res.get(0).get(1));
+                res.next();
+                newRow.addElement(res.getString(1));
                 newRow.addElement(blendQty);
-                newRow.addElement(res.get(0).get(3));
-                newRow.addElement(res.get(0).get(5));
+                newRow.addElement(res.getString(3));
+                newRow.addElement(res.getString(5));
 
                 //calculating qty required
-                int visible = Integer.parseInt(res.get(0).get(3));
-                int invisible = Integer.parseInt(res.get(0).get(5));
+                int visible = Integer.parseInt(res.getString(3));
+                int invisible = Integer.parseInt(res.getString(5));
                 int balance = 0;
                 balance = blendQty - visible;
                 if (balance > 0) {

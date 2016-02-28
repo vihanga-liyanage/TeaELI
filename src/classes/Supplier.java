@@ -1,14 +1,9 @@
 package classes;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
-import javax.swing.JComboBox;
 
 public class Supplier {
 
@@ -38,6 +33,8 @@ public class Supplier {
         this.SupplierName = SupplierName;
     }
 
+    
+    //start of load suppliers for combobox
     public ResultSet loadSuppliersForCombobox() throws SQLException {
          Connection connection = null;
         ResultSet resultSet = null;
@@ -55,5 +52,76 @@ public class Supplier {
         return resultSet;
        
     }
+    //end of load suppliers for combobox
+    
+    
+   public int addNewSupplier(String Name) throws SQLException {
+        DBConnection dbConn = new DBConnection();
+        Connection connection =dbConn.setConnection();
+        Statement statement;
+        int insertOK =0;
+        
+        String query = "INSERT INTO supplier(supName) values('" + Name + "')";
+        try {
+            statement = connection.createStatement();
+            insertOK = statement.executeUpdate(query);
+            
+        } catch (Exception e) {
+            System.err.println("err : " + e);
+        } finally {            
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (Exception e) {
+                    System.err.println("Connection close error : " + e);
+                }
+            }
+        }
+        return insertOK;
+    } 
+    
+    
+    
+    
+    
+        //start of get suplier id by name
+    public int getSupplierIDByName(String supplierName) throws SQLException {
+        int supplierID = 0;
+        Connection connection = dbConn.setConnection();
+        ResultSet resultSet = null;
+        
+
+        //set name of the ingredient
+        String query = "SELECT supID from supplier WHERE supplier.supName= '" + supplierName + "' ";
+        try {
+            resultSet = dbConn.getResult(query, connection);
+
+            if (resultSet.next()) {
+                supplierID = Integer.parseInt(resultSet.getString(1));
+            }
+
+        } catch (Exception e) {
+            System.err.println("err : " + e);
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (Exception e) {
+                    System.err.println("Resultset close error : " + e);
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (Exception e) {
+                    System.err.println("Connection close error : " + e);
+                }
+            }
+        }
+        System.out.println("supplierID  " + supplierID);
+        return supplierID;
+    }
+    //end of get suplier id by name
+    
 
 }
