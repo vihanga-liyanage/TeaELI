@@ -24,6 +24,7 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import static teaeli.IngredientDetails.supplierCombobox;
 
 /**
  *
@@ -272,10 +273,36 @@ public class AddIngredient extends javax.swing.JFrame {
     }//GEN-LAST:event_addBtnActionPerformed
 
     private void btnAddSupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddSupplierActionPerformed
+        try{   
+        String suplierName = JOptionPane.showInputDialog(null, "Enter Supplier Name");
+        
+        
+        
+        if (suplierName.equals("")) { // check for null input
+            JOptionPane.showMessageDialog(this, "Please enter supplier name!!!");
+        } else {
+            try {
+                int inserted = supplier.addNewSupplier(suplierName);
 
-        AddSupplier addsuplier = new AddSupplier();
-        addsuplier.setVisible(true);
-        addsuplier.setDefaultCloseOperation(HIDE_ON_CLOSE);
+                if (inserted == 1) {
+                    JOptionPane.showMessageDialog(null, "New supplier added successfully", "New supplier added", 1);
+                    supliercombo.addItem(suplierName);
+                    supliercombo.setSelectedItem(suplierName);
+                    supplierCombobox.addItem(suplierName);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Error occurd while Adding.. changes will not be saved");
+
+                }
+            } catch (SQLException ex) {
+                System.out.println("SQL error : " + ex);
+            }
+
+        }
+        
+        }
+        catch (NullPointerException e){
+            System.out.println(e);
+        }
         
 
     }//GEN-LAST:event_btnAddSupplierActionPerformed
