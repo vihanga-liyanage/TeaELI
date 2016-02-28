@@ -68,7 +68,7 @@ public class AddNewBlend extends javax.swing.JFrame {
         flavourCombo = new javax.swing.JComboBox();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
+        addNewBlendFlavourTbl = new javax.swing.JTable();
         jScrollPane4 = new javax.swing.JScrollPane();
         addNewBlendIngTbl = new javax.swing.JTable();
         baseCombo = new javax.swing.JComboBox();
@@ -156,7 +156,7 @@ public class AddNewBlend extends javax.swing.JFrame {
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel5.setText("Base ");
 
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+        addNewBlendFlavourTbl.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -172,8 +172,8 @@ public class AddNewBlend extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTable3.setRowHeight(24);
-        jScrollPane3.setViewportView(jTable3);
+        addNewBlendFlavourTbl.setRowHeight(24);
+        jScrollPane3.setViewportView(addNewBlendFlavourTbl);
 
         addNewBlendIngTbl.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -353,58 +353,25 @@ public class AddNewBlend extends javax.swing.JFrame {
         System.out.println(addNewBlendIngTbl.getRowCount()); */       
         
         
-            else {
+        else {
             String ingName = (String) ingCombo.getSelectedItem();
-            //float ingPer = Float.parseInt(blendsQtyTxt.getText());
             float ingPer = Float.parseFloat(ingPerTxt.getText());
             boolean isNew = true;
             //Search if the ingredient is already added
             int rowCount = addNewBlendIngTbl.getRowCount();
             for (int i = 0; i < rowCount; i++) {
                 if (ingName.equals(addNewBlendIngTbl.getValueAt(i, 0))) {
-                    //calculating qty required
-                    /*blendQty += Integer.parseInt(blendListTbl.getValueAt(i, 1).toString());
-                    blendListTbl.setValueAt(blendQty, i, 1);
-                    int visible = Integer.parseInt(blendListTbl.getValueAt(i, 2).toString());
-                    int invisible = Integer.parseInt(blendListTbl.getValueAt(i, 3).toString());
-                    int balance = 0;
-                    balance = blendQty - visible;
-                    if (balance > 0) {
-                        balance = blendQty - visible - invisible;
-                    }
-                    if (balance < 0) {
-                        balance = 0;
-                    }
-                    blendListTbl.setValueAt(balance, i, 4);
-                    int excess = Integer.parseInt(blendListTbl.getValueAt(i, 5).toString());
-                    blendListTbl.setValueAt(excess + balance, i, 6);*/
                     isNew = false;
                     break;
                 }
             }
             if (isNew) {
                 List<List<String>> res = ingredient1.getIngDataByIngName(ingName);
-                System.out.println(res);
+                //System.out.println(res);
                 Vector newRow = new Vector();
                 newRow.addElement(res.get(0).get(1));
                 newRow.addElement(ingPer);
-                /*newRow.addElement(res.get(0).get(3));
-                newRow.addElement(res.get(0).get(5));*/
-
-                //calculating qty required
-               /* int visible = Integer.parseInt(res.get(0).get(3));
-                int invisible = Integer.parseInt(res.get(0).get(5));
-                int balance = 0;
-                balance = blendQty - visible;
-                if (balance > 0) {
-                    balance = blendQty - visible - invisible;
-                }
-                if (balance < 0) {
-                    balance = 0;
-                }
-                newRow.addElement(balance);
-                newRow.addElement(0);
-                newRow.addElement(balance);*/
+              
                 DefaultTableModel model = (DefaultTableModel) addNewBlendIngTbl.getModel();
                 model.addRow(newRow);
             }
@@ -426,7 +393,38 @@ public class AddNewBlend extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(flavourCombo, "Please select a flavour to add.", "Error", JOptionPane.WARNING_MESSAGE);
             flavourCombo.requestFocus();
     }//GEN-LAST:event_flavourPerAddBtnActionPerformed
+        else {
+            String flavourName = (String) flavourCombo.getSelectedItem();
+            float ingPer = Float.parseFloat(flavourPerTxt.getText());
+            boolean isNew = true;
+            //Search if the ingredient is already added
+            int rowCount = addNewBlendFlavourTbl.getRowCount();
+            for (int i = 0; i < rowCount; i++) {
+                if (flavourName.equals(addNewBlendFlavourTbl.getValueAt(i, 0))) {
+                    isNew = false;
+                    break;
+                }
+            }
+            if (isNew) {
+                List<List<String>> res = ingredient1.getIngDataByIngName(flavourName);
+                //System.out.println(res);
+                Vector newRow = new Vector();
+                newRow.addElement(res.get(0).get(1));
+                newRow.addElement(ingPer);
+              
+                DefaultTableModel model = (DefaultTableModel) addNewBlendFlavourTbl.getModel();
+                model.addRow(newRow);
+            }
+            
+            flavourPerTxt.setText("");
+            flavourCombo.setSelectedIndex(-1);
+            flavourCombo.requestFocus();
+        }
+    
     }
+    
+    
+    
     private void baseAddBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_baseAddBtnActionPerformed
         if (baseCombo.getSelectedItem().equals("")){
             JOptionPane.showMessageDialog(baseCombo, "Please select a base to add.", "Error", JOptionPane.WARNING_MESSAGE);
@@ -481,6 +479,7 @@ public class AddNewBlend extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addNewBlendBtn;
+    private javax.swing.JTable addNewBlendFlavourTbl;
     private javax.swing.JTable addNewBlendIngTbl;
     private javax.swing.JButton baseAddBtn;
     private javax.swing.JComboBox baseCombo;
@@ -503,6 +502,5 @@ public class AddNewBlend extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTable jTable3;
     // End of variables declaration//GEN-END:variables
 }
