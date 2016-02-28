@@ -7,14 +7,19 @@ package teaeli;
 
 import classes.Blend;
 import classes.Order;
+import java.awt.Font;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -24,11 +29,12 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
     
     private Blend blend;
     public CreateNewBlendOrder1 createNewBlendOrder1;
+    public List<List<String>> blendList;
     
     /**
      * Creates new form AddNewOrder
      */
-    public CreateNewBlendOrder2() {
+    public CreateNewBlendOrder2(CreateNewBlendOrder1 cNBO1) {
         //Add windows look and feel
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
@@ -37,6 +43,14 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
         }
         initComponents();
         this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
+        
+        //Making table headers semibold
+        blendListTbl.getTableHeader().setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
+        masterPlanTbl.getTableHeader().setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
+        
+        
+        //setting phase 1 object
+        createNewBlendOrder1 = cNBO1;
         
         //Loading required class objects
         blend = new Blend();
@@ -47,21 +61,22 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
         dateLabel.setText(formatter.format(today));
         
         //Setting order id
-        String orderID = new Order().getLastOrderID();
-        if (orderID == "") {
-            orderID = "OD00000000";
-        }
-        int num = Integer.parseInt(orderID.substring(2));
-        num++;
-        String newID = "OD";
-        while (newID.length() < 10) {
-            if ((newID.length() + String.valueOf(num).length()) >= 10)
-                break;
-            newID += "0";
-        }
-        newID += String.valueOf(num);
-        orderIDLabel.setText(newID);
+        orderIDLabel.setText(createNewBlendOrder1.getOrderID());
         
+        //Init blendListTbl
+        DefaultTableModel model = createNewBlendOrder1.getBlendListTbl();
+        DefaultTableModel blendTBModel = (DefaultTableModel) blendListTbl.getModel();
+        for (int i=0; i<model.getRowCount(); i++) {
+            Vector row = new Vector();
+            row.add(model.getValueAt(i, 0));
+            row.add(model.getValueAt(i, 6));
+            blendTBModel.addRow(row);
+        }
+        
+    }
+
+    private CreateNewBlendOrder2() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     /**
@@ -78,7 +93,7 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         blendListTbl = new javax.swing.JTable();
         tblMasterPlanScrollPane = new javax.swing.JScrollPane();
-        tblMasterPlan = new javax.swing.JTable();
+        masterPlanTbl = new javax.swing.JTable();
         confirmBtn = new javax.swing.JButton();
         cancelBtn = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
@@ -125,7 +140,7 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
             blendListTbl.getColumnModel().getColumn(1).setPreferredWidth(180);
         }
 
-        tblMasterPlan.setModel(new javax.swing.table.DefaultTableModel(
+        masterPlanTbl.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -141,25 +156,25 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tblMasterPlan.setRowHeight(20);
-        tblMasterPlan.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+        masterPlanTbl.setRowHeight(20);
+        masterPlanTbl.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                tblMasterPlanPropertyChange(evt);
+                masterPlanTblPropertyChange(evt);
             }
         });
-        tblMasterPlanScrollPane.setViewportView(tblMasterPlan);
-        if (tblMasterPlan.getColumnModel().getColumnCount() > 0) {
-            tblMasterPlan.getColumnModel().getColumn(0).setResizable(false);
-            tblMasterPlan.getColumnModel().getColumn(0).setPreferredWidth(200);
-            tblMasterPlan.getColumnModel().getColumn(1).setResizable(false);
-            tblMasterPlan.getColumnModel().getColumn(2).setResizable(false);
-            tblMasterPlan.getColumnModel().getColumn(3).setResizable(false);
-            tblMasterPlan.getColumnModel().getColumn(4).setResizable(false);
-            tblMasterPlan.getColumnModel().getColumn(4).setPreferredWidth(120);
-            tblMasterPlan.getColumnModel().getColumn(5).setResizable(false);
-            tblMasterPlan.getColumnModel().getColumn(6).setResizable(false);
-            tblMasterPlan.getColumnModel().getColumn(7).setResizable(false);
-            tblMasterPlan.getColumnModel().getColumn(7).setPreferredWidth(200);
+        tblMasterPlanScrollPane.setViewportView(masterPlanTbl);
+        if (masterPlanTbl.getColumnModel().getColumnCount() > 0) {
+            masterPlanTbl.getColumnModel().getColumn(0).setResizable(false);
+            masterPlanTbl.getColumnModel().getColumn(0).setPreferredWidth(200);
+            masterPlanTbl.getColumnModel().getColumn(1).setResizable(false);
+            masterPlanTbl.getColumnModel().getColumn(2).setResizable(false);
+            masterPlanTbl.getColumnModel().getColumn(3).setResizable(false);
+            masterPlanTbl.getColumnModel().getColumn(4).setResizable(false);
+            masterPlanTbl.getColumnModel().getColumn(4).setPreferredWidth(120);
+            masterPlanTbl.getColumnModel().getColumn(5).setResizable(false);
+            masterPlanTbl.getColumnModel().getColumn(6).setResizable(false);
+            masterPlanTbl.getColumnModel().getColumn(7).setResizable(false);
+            masterPlanTbl.getColumnModel().getColumn(7).setPreferredWidth(200);
         }
 
         confirmBtn.setText("Confirm");
@@ -300,9 +315,9 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_blendListTblPropertyChange
 
-    private void tblMasterPlanPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_tblMasterPlanPropertyChange
+    private void masterPlanTblPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_masterPlanTblPropertyChange
         // TODO add your handling code here:
-    }//GEN-LAST:event_tblMasterPlanPropertyChange
+    }//GEN-LAST:event_masterPlanTblPropertyChange
 
     private void confirmBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmBtnActionPerformed
         OrderConfirmation oc = new OrderConfirmation();
@@ -366,8 +381,8 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    public javax.swing.JTable masterPlanTbl;
     private javax.swing.JLabel orderIDLabel;
-    public javax.swing.JTable tblMasterPlan;
     public javax.swing.JScrollPane tblMasterPlanScrollPane;
     // End of variables declaration//GEN-END:variables
 }

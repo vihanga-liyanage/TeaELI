@@ -9,10 +9,12 @@ import classes.Blend;
 import classes.Order;
 import classes.ResultArray;
 import classes.Validation;
+import java.awt.Font;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Vector;
@@ -98,6 +100,9 @@ public class CreateNewBlendOrder1 extends javax.swing.JFrame {
             }
         });
         
+        //Changing blendlist table header font
+        blendListTbl.getTableHeader().setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
+
         //set focus to blendCombo
         blendsCombo.requestFocus();
         
@@ -134,7 +139,8 @@ public class CreateNewBlendOrder1 extends javax.swing.JFrame {
             }
         });
     }
-
+    //End of constructor =======================================================
+    
     //method to reset excess qty
     private void setExcessQty(int row){
         String blendName = blendListTbl.getValueAt(row, 0).toString();
@@ -179,6 +185,14 @@ public class CreateNewBlendOrder1 extends javax.swing.JFrame {
             }
         }
         return 0;
+    }
+   
+    //getters to pass objects to phase 2
+    public String getOrderID(){
+        return orderIDLabel.getText();
+    }
+    public DefaultTableModel getBlendListTbl(){
+        return (DefaultTableModel) blendListTbl.getModel();
     }
     
     /**
@@ -479,14 +493,14 @@ public class CreateNewBlendOrder1 extends javax.swing.JFrame {
         if (blendListTbl.getRowCount() > 0) {
             int dialogResult = JOptionPane.showConfirmDialog(this, "Are you sure you want to move into next phase?", "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
             if (dialogResult == JOptionPane.YES_OPTION){
-                CreateNewBlendOrder2 creatNewBlendOrder2 = new CreateNewBlendOrder2();
-                creatNewBlendOrder2.setVisible(true);
-                creatNewBlendOrder2.createNewBlendOrder1 = this;
+                CreateNewBlendOrder2 creatNewBlendOrder2 = new CreateNewBlendOrder2(this);
                 creatNewBlendOrder2.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+                creatNewBlendOrder2.setVisible(true);
                 this.setVisible(false);
             }
         } else {
             JOptionPane.showMessageDialog(this, "Please add at least one blend to create an order.", "Error", JOptionPane.WARNING_MESSAGE);
+            blendsCombo.requestFocus();
         }
                 
     }//GEN-LAST:event_createOrderBtnActionPerformed
