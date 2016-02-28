@@ -5,6 +5,7 @@
  */
 package teaeli;
 
+import classes.User;
 import classes.DBConnection;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -24,7 +25,7 @@ import javax.swing.UnsupportedLookAndFeelException;
  * @author Thisara Salgado
  */
 public class EditProfile extends javax.swing.JFrame {
-
+    User us = new User();
     int pswrdFlag =0;
     
     public EditProfile() {
@@ -134,7 +135,7 @@ public class EditProfile extends javax.swing.JFrame {
                         .addGap(37, 37, 37)
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
+                        .addGap(28, 28, 28)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(jPanel1Layout.createSequentialGroup()
@@ -194,7 +195,7 @@ public class EditProfile extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(txtConfirmPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Cancel, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(SaveChanges, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -213,9 +214,10 @@ public class EditProfile extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
@@ -239,94 +241,42 @@ public class EditProfile extends javax.swing.JFrame {
         currentpassword = txtCurrentPassword.getText();
         newpassword = txtNewPassword.getText();
         confirmpassword = txtConfirmPassword.getText();
+        int result1 = us.updateUserName(firstname, lastname,username);
+        int result2 = us.updatePassword(firstname, lastname, username, newpassword, currentpassword);
         
         if(pswrdFlag==0){
         
-            try {
-            con = dbcon.setConnection();//get the connection
-            String query = "UPDATE user SET firstname =' "+firstname+"', lastname = '"+lastname+"' WHERE username = '"+username+"'";
-                System.out.println(query);
-            if (dbcon.updateResult(query, con)==1){
+            if (result1 == 1){
                 JOptionPane.showMessageDialog(this, "Succsfully updated");
                 this.setVisible(false);
-            }else{
+            }
+            else if (result1 == 2 || result1 == 0){
                 JOptionPane.showMessageDialog(this, "Error occurd while updating.. changes will not be saved");
             }
-        } catch (SQLException e) {
-            System.out.println(e);//an error occured while executing
-            
-        } finally {
-            try {
-                if (pst != null) {
-                    pst.close();
-                }
-                if (con != null) {
-                    con.close();
-                }
-            } catch (SQLException e) {
-
-            }
-        }
             
         }
         else if(pswrdFlag==1 && currentpassword.isEmpty() && newpassword.isEmpty() && confirmpassword.isEmpty()){
             
-            
-            try {
-            con = dbcon.setConnection();//get the connection
-                String query = "UPDATE user SET firstname =' "+firstname+"', lastname = '"+lastname+"' WHERE username = '"+username+"'";
-                
-            if (dbcon.updateResult(query, con)==1){
+            if (result1 == 1){
                 JOptionPane.showMessageDialog(this, "Succsfully updated");
                 this.setVisible(false);
-            }else{
+            }
+            else if (result1 == 2 || result1 == 0){
                 JOptionPane.showMessageDialog(this, "Error occurd while updating.. changes will not be saved");
             }
-        } catch (SQLException e) {
-            System.out.println(e);//an error occured while executing
-            
-        } finally {
-            try {
-                if (pst != null) {
-                    pst.close();
-                }
-                if (con != null) {
-                    con.close();
-                }
-            } catch (SQLException e) {
-
-            }
-        }
             
         }
-        else if(pswrdFlag==1 && !currentpassword.isEmpty() && !newpassword.isEmpty() && !confirmpassword.isEmpty() && newpassword.equals(newpassword)){
-            System.out.println("hari");
             
-            try {
-            con = dbcon.setConnection();//get the connection
-                String query = "UPDATE user SET firstname =' "+firstname+"', lastname = '"+lastname+"',password = sha1('"+newpassword+"') WHERE username = '"+username+"' and password = sha1('"+currentpassword+"')";
-                System.out.println(query);
-            if (dbcon.updateResult(query, con)==1){
+        
+        else if(pswrdFlag==1 && !currentpassword.isEmpty() && !newpassword.isEmpty() && !confirmpassword.isEmpty() && newpassword.equals(confirmpassword)){
+           
+            if(result2==1){
                 JOptionPane.showMessageDialog(this, "Password succsfully updated");
                 this.setVisible(false);
-            }else{
+            }
+            else if (result2 ==2 || result2 == 0){
                 JOptionPane.showMessageDialog(this, "Error occurd while updating.. changes will not be saved");
             }
-        } catch (SQLException e) {
-            System.out.println(e);//an error occured while executing
-            
-        } finally {
-            try {
-                if (pst != null) {
-                    pst.close();
-                }
-                if (con != null) {
-                    con.close();
-                }
-            } catch (SQLException e) {
-
-            }
-        }
         }
         
     }//GEN-LAST:event_SaveChangesActionPerformed

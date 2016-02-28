@@ -22,6 +22,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import classes.User;
 
 /**
  *
@@ -29,7 +30,7 @@ import javax.swing.UnsupportedLookAndFeelException;
  */
 
 public class LoginFrame extends javax.swing.JFrame {
-    
+    User us = new User();
     public static AdminPannel adminPannel = new AdminPannel();
     public String user;        
     public LoginFrame() {
@@ -160,7 +161,7 @@ public class LoginFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_txtUsernameActionPerformed
 
     private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
-
+         
          userName = txtUsername.getText();
          password = txtPassword.getText();
          
@@ -178,7 +179,7 @@ public class LoginFrame extends javax.swing.JFrame {
             user =userName;
             this.setVisible(false);
 
-        }else if (checkLogin(userName, password)==2){
+        }else if (us.checkLogin(userName, password)==2){
 
             ManagerPannel managerPannel = new ManagerPannel();//the provided username & password matched
             managerPannel.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);//Keep the window fullscreen
@@ -199,7 +200,7 @@ public class LoginFrame extends javax.swing.JFrame {
                 this.dispose();
             }*/
 
-        }else if (checkLogin(userName, password)== 4 | checkLogin(userName, password)==3){
+        }else if (us.checkLogin(userName, password)== 4 | us.checkLogin(userName, password)==3){
 
             if (passwrdCount !=3){
             JOptionPane.showMessageDialog(this, "Wrong user name or password");//the provided password does not exist in the db
@@ -221,7 +222,7 @@ public class LoginFrame extends javax.swing.JFrame {
             userName = txtUsername.getText();
             password = txtPassword.getText();
          
-            if (checkLogin(userName, password)==1){
+            if (us.checkLogin(userName, password)==1){
                 
                 AdminPannel adminPannel = new AdminPannel();//the provided username & password matched
                 adminPannel.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);//Keep the window fullscreen
@@ -229,7 +230,7 @@ public class LoginFrame extends javax.swing.JFrame {
                 user =userName;
                 this.setVisible(false);
                 
-            }else if (checkLogin(userName, password)==2){
+            }else if (us.checkLogin(userName, password)==2){
                 
                 ManagerPannel managerPannel = new ManagerPannel();//the provided username & password matched
                 managerPannel.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);//Keep the window fullscreen
@@ -250,7 +251,7 @@ public class LoginFrame extends javax.swing.JFrame {
                     this.dispose();
                     
                 }*/
-            }else if (checkLogin(userName, password)== 4 | checkLogin(userName, password)==3){
+            }else if (us.checkLogin(userName, password)== 4 | us.checkLogin(userName, password)==3){
                 
                 if (passwrdCount !=3){
                 JOptionPane.showMessageDialog(this, "Wrong user name or password");//the provided password does not exist in the db
@@ -267,40 +268,7 @@ public class LoginFrame extends javax.swing.JFrame {
         
     }//GEN-LAST:event_txtPasswordKeyPressed
     
-    public int checkLogin(String userName, String password) {
-        try {
-            con = dbcon.setConnection();//get the connection
-            String query = "SELECT username,designation FROM user where password = sha1('"+password+"') and username = ('"+userName+"')";
-            ResultSet rs =dbcon.getResult(query, con);
-
-            while (rs.next()) {
-                if (rs.getString(2).equals("Admin")) {
-                    return 1;     
-                } else if (rs.getString(2).equals("Manager")) {
-                    return 2;  
-                } else{
-                    return 3;  
-                }
-            }
-            return 4;
-            
-            
-        } catch (SQLException e) {
-            System.out.println(e);//an error occured while executing
-            return 0;
-        } finally {
-            try {
-                if (pst != null) {
-                    pst.close();
-                }
-                if (con != null) {
-                    con.close();
-                }
-            } catch (SQLException e) {
-
-            }
-        }
-    }
+    
     /**
      * @param args the command line arguments
      */

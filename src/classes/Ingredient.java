@@ -1,5 +1,6 @@
 package classes;
 
+import java.sql.Array;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -10,9 +11,12 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JComboBox;
 
 public class Ingredient {
@@ -232,6 +236,40 @@ public class Ingredient {
 
         try {
             String query = "SELECT ingName FROM ingredient WHERE ingCategoryID=1 OR ingCategoryID=3 OR ingCategoryID=4 OR ingCategoryID=5 OR ingCategoryID=6 ORDER BY ingName";
+
+            conn = dbConn.setConnection();
+            resultSet = dbConn.getResult(query, conn);
+
+            autoSuggest.setAutoSuggest(ingCombo, resultSet);
+
+        } catch (Exception e) {
+            System.err.println("err : " + e);
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (Exception e) {
+                    System.err.println("Resultset close error : " + e);
+                }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (Exception e) {
+                    System.err.println("Connection close error : " + e);
+                }
+            }
+        }
+    }
+    
+    /* start of initializing flavour combo in AddNewBlend */
+    public void initFlavourCombo(JComboBox ingCombo){
+        Connection conn = null;
+        ResultSet resultSet = null;
+        AutoSuggest autoSuggest = new AutoSuggest();
+
+        try {
+            String query = "SELECT ingName FROM ingredient WHERE ingCategoryID=2 ORDER BY ingName";
 
             conn = dbConn.setConnection();
             resultSet = dbConn.getResult(query, conn);
@@ -486,7 +524,7 @@ public class Ingredient {
 
         Connection connection = dbConn.setConnection();
         ResultSet resultSet = null;
-        String[] resultArray = new String[5];
+        String[] resultArray = new String[5]; 
         //set name of the ingredient
         resultArray[0] = ingredientName;
 
@@ -552,11 +590,47 @@ public class Ingredient {
                 }
             }
 
-        }
-        return insertOK;
-    }
 
+        } 
+        return 0;
+    } 
     
+    public ArrayList<String> getSupplierDetails(){
+        Connection con = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        Statement st = null;
+        ArrayList<String> result = new ArrayList<>();
+        try{
+            String query = "SELECT * FROM supplier";
+            con = dbConn.setConnection();
+            rs = dbConn.getResult(query, con);
+            while(rs.next()){
+                result.add(rs.getString(2));
+            }
+            
+            return result;
+            
+        }catch(Exception e){
+            System.err.println("err : " + e);
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (Exception e) {
+                    System.err.println("Resultset close error : " + e);
+                }
+            }
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (Exception e) {
+                    System.err.println("Connection close error : " + e);
+                }
+            }
+        }
+        return null;
+    }
 
     //start of update ingredient method
     public int deleteIngredient(int ingredientID) throws SQLException {
@@ -598,6 +672,55 @@ public class Ingredient {
         }
         System.out.println("ingUsed " + ingUsed);
         return ingUsed;
+    }
+    
+    public int addNewIngredient(String Name,String type,String supplier,float price) {
+        Connection connection = null;
+        int rslt1 = 0, rslt2=0;
+        try {
+            connection = dbConn.setConnection();
+        } catch (SQLException e) {
+
+        }
+        String query1 = "SELECT ingCategoryID FROM ingredientcategory WHERE categoryName = '"+type+"' ";
+        ResultSet rs1 = dbConn.getResult(query1, connection);
+        
+            try {
+                while (rs1.next()){
+                rslt1 = Integer.parseInt(rs1.getString(1));
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(Ingredient.class.getName()).log(Level.SEVERE, null, ex);
+            
+        }
+        
+        
+        String query2 = "SELECT supID FROM supplier WHERE supName = '"+supplier+"' ";
+        ResultSet rs2 = dbConn.getResult(query1, connection);
+        
+            try {
+                while (rs2.next()){
+                rslt2 = Integer.parseInt(rs2.getString(1));
+                        }
+
+            } catch (SQLException ex) {
+                Logger.getLogger(Ingredient.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        
+        
+        String query3 = "INSERT INTO ingredient values(0,'" + Name + "','"+rslt1+"',0,0,0,'"+rslt2+"','"+price+"') ";
+        
+        int rslt3 = dbConn.updateResult(query3, connection);
+
+        if (connection != null) {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                System.err.println("Connection close error : " + e);
+            }
+        }
+
+        return rslt3;
     }
 
      //end of update ingredient method
