@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import javax.swing.table.DefaultTableModel;
 import static teaeli.LoginFrame.adminPannel;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.text.DateFormat;
@@ -14,6 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -169,7 +171,7 @@ public class Ingredient {
     }
 
     /* Get ingredient data when blend name is given */
-    public ResultSet getIngDataByIngName(String ingName) {
+   /* public ResultSet getIngDataByIngName(String ingName) {
         Connection conn = null;
         ResultSet resultSet = null;
 
@@ -182,7 +184,53 @@ public class Ingredient {
             System.err.println("err : " + e);
         }
         return null;
+    }*/
+    
+    /* Get blend data when ing name is given -thisara */
+    public List<List<String>> getIngDataByIngName(String ingName){
+        Connection conn = null;
+        ResultSet resultSet = null;
+        try{
+            String query = "SELECT * FROM ingredient WHERE ingName='" + ingName + "'";
+            conn = dbConn.setConnection();
+            resultSet = dbConn.getResult(query, conn);
+
+            List<List<String>> result = new ArrayList<>();  // List of list, one per row
+            ResultSetMetaData rsmd = resultSet.getMetaData();
+            int numcols = rsmd.getColumnCount();
+            
+            while (resultSet.next()) { 
+                List<String> row = new ArrayList<>(numcols); // new list per row
+                int i = 1;
+                while (i <= numcols) {  // don't skip the last column, use <=
+                    row.add(resultSet.getString(i++));
+                }
+                result.add(row); // add it to the result
+            }
+            
+            return result;
+            
+        }catch(Exception e){
+            System.err.println("err : " + e);
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (Exception e) {
+                    System.err.println("Resultset close error : " + e);
+                }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (Exception e) {
+                    System.err.println("Connection close error : " + e);
+                }
+            }
+        }
+        return null;
     }
+    /* end */
     /* end */
 
     /* start of populateIngredientTable method */
