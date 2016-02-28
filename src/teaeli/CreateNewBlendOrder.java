@@ -58,6 +58,7 @@ public class CreateNewBlendOrder extends javax.swing.JFrame {
         
         //Setting order id
         String orderID = new Order().getLastOrderID();
+        orderID = "OD00000000";
         int num = Integer.parseInt(orderID.substring(2));
         num++;
         String newID = "OD";
