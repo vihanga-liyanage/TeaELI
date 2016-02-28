@@ -123,7 +123,7 @@ public class AdminPannel extends javax.swing.JFrame {
         ingredientHistoryStock.populateStockIngredientHistoryTable((DefaultTableModel) ingStockHistoryTbl.getModel());
 
         /* populate inventryBlendTable in inventory management */
-        blend.populateBlendTable((DefaultTableModel) inventoryBlendTable.getModel());
+        blend.populateBlendTable((DefaultTableModel) inventryBlendTable.getModel());
 
         /* populate product table in the blend tab*/
         blend.populateProductTable((DefaultTableModel) productTable.getModel());
@@ -161,8 +161,20 @@ public class AdminPannel extends javax.swing.JFrame {
             public void valueChanged(ListSelectionEvent lsevt) {
                 if (!selectionalModForStockIngTable.isSelectionEmpty()) {
                     int row = selectionalModForStockIngTable.getMinSelectionIndex();
-                    //JOptionPane.showMessageDialog(null, inventryIngredientTable.getValueAt(row, 0));
-                    //searchStockIngComboBox.
+                    searchStockIngComboBox.setSelectedItem(inventryIngredientTable.getValueAt(row, 1));
+                }
+            }
+
+        });
+        
+        final ListSelectionModel selectionalModForStockBlendTable = inventryBlendTable.getSelectionModel();
+        selectionalModForStockBlendTable.addListSelectionListener(new ListSelectionListener() {
+
+            @Override
+            public void valueChanged(ListSelectionEvent lsevt) {
+                if (!selectionalModForStockBlendTable.isSelectionEmpty()) {
+                    int row = selectionalModForStockBlendTable.getMinSelectionIndex();
+                    searchStockBlendComboBox.setSelectedItem(inventryBlendTable.getValueAt(row, 1));
                 }
             }
 
@@ -236,7 +248,7 @@ public class AdminPannel extends javax.swing.JFrame {
         inventoryBlendLbl = new javax.swing.JLabel();
         searchStockBlendsBtn = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        inventoryBlendTable = new javax.swing.JTable();
+        inventryBlendTable = new javax.swing.JTable();
         jLabel7 = new javax.swing.JLabel();
         searchStockBlendComboBox = new javax.swing.JComboBox();
         refreshBlendInventryBtn = new javax.swing.JButton();
@@ -500,7 +512,7 @@ public class AdminPannel extends javax.swing.JFrame {
             }
         });
 
-        inventoryBlendTable.setModel(new javax.swing.table.DefaultTableModel(
+        inventryBlendTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null}
@@ -517,12 +529,12 @@ public class AdminPannel extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        inventoryBlendTable.setRowHeight(24);
-        jScrollPane2.setViewportView(inventoryBlendTable);
-        if (inventoryBlendTable.getColumnModel().getColumnCount() > 0) {
-            inventoryBlendTable.getColumnModel().getColumn(1).setResizable(false);
-            inventoryBlendTable.getColumnModel().getColumn(1).setPreferredWidth(200);
-            inventoryBlendTable.getColumnModel().getColumn(2).setResizable(false);
+        inventryBlendTable.setRowHeight(24);
+        jScrollPane2.setViewportView(inventryBlendTable);
+        if (inventryBlendTable.getColumnModel().getColumnCount() > 0) {
+            inventryBlendTable.getColumnModel().getColumn(1).setResizable(false);
+            inventryBlendTable.getColumnModel().getColumn(1).setPreferredWidth(200);
+            inventryBlendTable.getColumnModel().getColumn(2).setResizable(false);
         }
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -1357,7 +1369,7 @@ public class AdminPannel extends javax.swing.JFrame {
     }//GEN-LAST:event_refreshIngredientInventryBtnActionPerformed
 
     private void refreshBlendInventryBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshBlendInventryBtnActionPerformed
-        blend.populateBlendTable((DefaultTableModel) inventoryBlendTable.getModel());
+        blend.populateBlendTable((DefaultTableModel) inventryBlendTable.getModel());
     }//GEN-LAST:event_refreshBlendInventryBtnActionPerformed
 
     private void refreshBtnForIngredientStockHistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshBtnForIngredientStockHistoryActionPerformed
@@ -1417,12 +1429,12 @@ public class AdminPannel extends javax.swing.JFrame {
     private javax.swing.JTable ingStockHistoryTbl;
     private javax.swing.JLabel inventoryBlendLbl;
     private javax.swing.JLabel inventoryBlendLbl1;
-    private javax.swing.JTable inventoryBlendTable;
     private javax.swing.JLabel inventoryIngredientsLbl;
     private javax.swing.JPanel inventoryManagementBlendPanel;
     private javax.swing.JPanel inventoryManagementIngredientPanel;
     private javax.swing.JSplitPane inventoryManagementSplitPane;
     private javax.swing.JPanel inventoryPanel;
+    private javax.swing.JTable inventryBlendTable;
     public javax.swing.JTable inventryIngredientTable;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel15;

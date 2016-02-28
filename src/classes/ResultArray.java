@@ -57,7 +57,12 @@ public class ResultArray implements List{
     }
     
     public String getString(int index){
-        return array.get(i).get(index);
+        try{
+            String res = array.get(i).get(index);
+            return res;
+        } catch (IndexOutOfBoundsException e){
+            return null;
+        }
     }
 
     @Override
@@ -132,7 +137,7 @@ public class ResultArray implements List{
 
     @Override
     public Object get(int index) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return array.get(index);
     }
 
     @Override

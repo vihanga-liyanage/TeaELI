@@ -105,7 +105,7 @@ public class AddNewUser extends javax.swing.JFrame {
         jLabel5.setText("Confirm Password");
 
         jLabel6.setForeground(java.awt.Color.red);
-        jLabel6.setText("* Enter atleast 8 characters");
+        jLabel6.setText("* Enter at least 8 characters");
 
         addUserDesignationCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Manager", "Admin" }));
 
