@@ -134,6 +134,11 @@ public class AddNewBlend extends javax.swing.JFrame {
         });
 
         addNewBlendBtn.setText("Add New");
+        addNewBlendBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addNewBlendBtnActionPerformed(evt);
+            }
+        });
 
         blendCodeTxt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -451,6 +456,20 @@ public class AddNewBlend extends javax.swing.JFrame {
     private void blendCategoryComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blendCategoryComboActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_blendCategoryComboActionPerformed
+    
+    String blendID, blendName, blendCategory, base;
+    
+    private void addNewBlendBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addNewBlendBtnActionPerformed
+        blendID = blendCodeTxt.getText();
+        blendName = blendNameTxt.getText();
+        blendCategory = blendCategoryCombo.getSelectedItem().toString();
+        
+        if (blendID.isEmpty() || blendName.isEmpty()) {
+
+            JOptionPane.showMessageDialog(this, "Any feild cannot be empty");
+
+        }
+    }//GEN-LAST:event_addNewBlendBtnActionPerformed
    
     public void FillIngCombo(){
         Connection connection = null;
