@@ -353,42 +353,17 @@ public class Blend {
         
         User updatedUser = new User();
         updatedUser.getIDByUsername();
-        
-        try {
-            connection = dbConn.setConnection();
-
-            this.getBlendIDFromBlendName();
-
-            String query = "INSERT INTO blendstockhistory VALUES ('0','" + this.getBlendID() + "','" + date + "','" + this.getOldStockQty() + "','" + this.getUpdatedStockQTy() + "','" + this.getStockUpdateReason() + "','" + updatedUser.getUserID() + "')";
-
-            int i = dbConn.updateResult(query, connection);
-
+        connection = dbConn.setConnection();
+        this.getBlendIDFromBlendName();
+        String query = "INSERT INTO blendstockhistory VALUES ('0','" + this.getBlendID() + "','" + date + "','" + this.getOldStockQty() + "','" + this.getUpdatedStockQTy() + "','" + this.getStockUpdateReason() + "','" + updatedUser.getUserID() + "')";
+        int i = dbConn.updateResult(query, connection);
+        if (i == 1) {
+            query = "UPDATE blend SET visibleStock = '" + this.getVisibleStock() + "' WHERE blendID = '" + this.getBlendID() + "'";
+            
+            i = dbConn.updateResult(query, connection);
+            
             if (i == 1) {
-                query = "UPDATE blend SET visibleStock = '" + this.getVisibleStock() + "' WHERE blendID = '" + this.getBlendID() + "'";
-                
-                i = dbConn.updateResult(query, connection);
-
-                if (i == 1) {
-                    updated = true;
-                }
-            }
-
-        } catch (SQLException | NumberFormatException e) {
-            System.err.println("Exception : " + e);
-        } finally {
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (Exception e) {
-                    System.err.println("Resultset close error : " + e);
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (Exception e) {
-                    System.err.println("Connection close error : " + e);
-                }
+                updated = true;
             }
         }
         return updated;
@@ -477,11 +452,7 @@ public class Blend {
     public void populateProductTable(DefaultTableModel tModel){
         Connection connection = null;
         ResultSet resultSet;
-        try{
-            connection = dbConn.setConnection();  
-        }catch(SQLException e){
-            
-        }
+        connection = dbConn.setConnection();
 
         String query = "SELECT b.blendID, b.blendName, i.ingName FROM ingredient i JOIN blend b ON i.ingID = b.baseID ORDER BY b.blendName";
         

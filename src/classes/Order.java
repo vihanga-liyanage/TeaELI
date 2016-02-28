@@ -7,8 +7,9 @@ package classes;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.table.DefaultTableModel;
 import java.util.*;
-import javax.swing.JComboBox;
 
 public class Order {
     //attributes
@@ -104,6 +105,32 @@ public class Order {
         this.blendList = blendList;
     }
     
+    //Populate orderListTable in the order handling tab (NOT FINISHED........!!!!!!!!!)
+    public void populateorderListTable(DefaultTableModel tModel) {
+        Connection connection = null;
+        ResultSet resultSet;
+        connection = dbConn.setConnection();
+
+        String query = "SELECT o.orderID, o.orderStatus, o.date, u.username FROM user u JOIN `order` o ON o.placedBy = u.userID ORDER BY o.orderStatus;";
+
+        resultSet = dbConn.getResult(query, connection);
+        try {
+            tModel.setRowCount(0);
+            
+            String status = null;
+            while (resultSet.next()) {
+                if(resultSet.getInt(2) == 0){
+                    status = "Pending";
+                }else if(resultSet.getInt(2) == 1){
+                    status = "Received";
+                }
+                tModel.addRow(new Object[]{resultSet.getString(1), status, resultSet.getString(3), resultSet.getString(4)});
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+    }
+            
     //Getting last order ID
     public String getLastOrderID(){
         Connection conn = null;
@@ -126,7 +153,7 @@ public class Order {
             if (resultSet != null) {
                 try {
                     resultSet.close();
-                } catch (Exception e) {
+                } catch (SQLException e) {
                     System.err.println("Resultset close error : " + e);
                 }
             }
