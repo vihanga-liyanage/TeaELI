@@ -13,8 +13,6 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.table.DefaultTableModel;
-import static teaeli.LoginFrame.adminPannel;
 /**
  *
  * @author ASHI
@@ -228,7 +226,7 @@ public class AddNewUser extends javax.swing.JFrame {
                 if (result == 1) {                    
                     JOptionPane.showMessageDialog(this, "New entry has been entered succesfully");
                     this.setVisible(false);
-                    user1.viewUser((DefaultTableModel) adminPannel.userTable.getModel());
+                    dispose();
                                         
                 } else {
                     //if insert is not successful

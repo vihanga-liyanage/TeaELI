@@ -38,7 +38,7 @@ import static teaeli.TeaELI.loginFrame;
 
 public class AdminPannel extends javax.swing.JFrame {
 
-    public static User user = new User();
+    User user = new User();
     Ingredient ingredient = new Ingredient();
     Blend blend = new Blend();
     StockHistory blendHistoryStock = new StockHistory();
@@ -103,7 +103,6 @@ public class AdminPannel extends javax.swing.JFrame {
         });
 
         //set all users details to the users table in the users tab
-        user.viewUser((DefaultTableModel) userTable.getModel());
 
         /*Start of ingredient class method calls*/
         //populate serch ingredient combobox in settings->ingredient
@@ -233,6 +232,7 @@ public class AdminPannel extends javax.swing.JFrame {
         ingredient.populateIngredientTable((DefaultTableModel) inventryIngredientTable.getModel());
         System.out.println("populateIngStockTable");
     }
+    
     //Setting default font
     public static void setUIFont(javax.swing.plaf.FontUIResource f) {
         java.util.Enumeration keys = UIManager.getDefaults().keys();
