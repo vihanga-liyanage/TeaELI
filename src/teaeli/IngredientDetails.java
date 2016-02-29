@@ -337,7 +337,7 @@ public class IngredientDetails extends javax.swing.JFrame {
                     supplierCombobox.addItem(suplierName);
                     supplierCombobox.setSelectedItem(suplierName);
                 } else {
-                    JOptionPane.showMessageDialog(null, "Unable to add the new supplier!!!", "Unable to add", 0);
+                    JOptionPane.showMessageDialog(this, "Error occurd while Adding.. changes will not be saved");
 
                 }
             } catch (SQLException ex) {

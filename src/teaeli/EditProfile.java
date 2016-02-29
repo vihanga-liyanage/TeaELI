@@ -250,7 +250,7 @@ public class EditProfile extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Succsfully updated");
                 this.setVisible(false);
             }
-            else if (result1 == 2){
+            else {
                 JOptionPane.showMessageDialog(this, "Error occurd while updating.. changes will not be saved");
             }
             
@@ -261,7 +261,7 @@ public class EditProfile extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Succsfully updated");
                 this.setVisible(false);
             }
-            else if (result1 == 2){
+            else {
                 JOptionPane.showMessageDialog(this, "Error occurd while updating.. changes will not be saved");
             }
             
@@ -274,7 +274,7 @@ public class EditProfile extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Password succsfully updated");
                 this.setVisible(false);
             }
-            else if (result2 ==2){
+            else {
                 JOptionPane.showMessageDialog(this, "Error occurd while updating.. changes will not be saved");
             }
         }

@@ -13,6 +13,7 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -171,43 +172,26 @@ public class Blend {
     /* start of populateBlendTable method */
     public void populateBlendTable(DefaultTableModel tableModel){
         
-        Connection connection = null;
-        ResultSet resultSet = null;
+        ResultArray resultSet;
         
         try{
             String query = "SELECT blendCategory,blendName,visibleStock,invisibleStock FROM blend ORDER BY blendCategory, blendName";
             
-            connection = dbConn.setConnection();
-            resultSet = dbConn.getResult(query, connection);
+            resultSet = dbConn.getResultArray(query);
             
             tableModel.setRowCount(0);
             
             while (resultSet.next()) {
                 Vector newRow = new Vector();
-                for (int i = 1; i <= 4; i++) {
-                    newRow.addElement(resultSet.getObject(i));
+                for (int i = 0; i <= 4; i++) {
+                    newRow.addElement(resultSet.getString(i));
                 }
                 tableModel.addRow(newRow);
             }
             
         }catch(Exception e){
             System.err.println("err : " + e);
-        } finally {
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (Exception e) {
-                    System.err.println("Resultset close error : " + e);
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (Exception e) {
-                    System.err.println("Connection close error : " + e);
-                }
-            }
-        }
+        } 
     }
     /* end of populateBlendTable method */
     
@@ -383,6 +367,11 @@ public class Blend {
     }
     /* end */
     
+    public ResultArray getIngIDByIngName(String base){
+        String query = "SELECT ingID FROM ingredient WHERE ingName = '" + base + "' ";
+        return dbConn.getResultArray(query);
+    }
+    
     /* start of the method to load values to the productTable in the blends tab*/
     public void populateProductTable(DefaultTableModel tModel){
         Connection connection = null;
@@ -421,54 +410,24 @@ public class Blend {
     
     //Add new blend method
     public int addNewBlend(String blendID, String blendName, String base, String blendCategory){
-        /*Connection connection = null;
-        ResultSet resultSet = null;
-
-        try {
-            connection = dbConn.setConnection();
-            String query = "SELECT ingID FROM ingredient WHERE ingName = '" + base + "'";
-
-            resultSet = dbConn.getResult(query, connection);
-            System.out.println(resultSet);
-            System.out.println("pass");
-
-            if (resultSet.next()) {
-                //this.setIngID(Integer.parseInt(resultSet.getString(1)));
-            }
-        } catch (SQLException | NumberFormatException e) {
-            System.err.println("Exception : " + e);
-        } finally {
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (Exception e) {
-                    System.err.println("Resultset close error : " + e);
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (Exception e) {
-                    System.err.println("Connection close error : " + e);
-                }
-            }
-        }*/
-        
-        Connection connection = null;
-        int rslt1 = 0, rslt2 = 0;
-        connection = dbConn.setConnection();
-        String query1 = "SELECT ingID FROM ingredient WHERE ingName = '" + base + "' ";
-        ResultSet rs1 = dbConn.getResult(query1, connection);
-        System.out.println(rs1);
-        try {
-            while (rs1.next()) {
-                rslt1 = Integer.parseInt(rs1.getString(1));
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(Ingredient.class.getName()).log(Level.SEVERE, null, ex);
-
+       
+        ResultArray res = getIngIDByIngName(base);
+        String baseCom = "";
+        if(res.next()){
+            baseCom = res.getString(0);
+           //System.out.println("base is " +baseCom);
         }
-        return rslt1;
+        String query = "INSERT INTO blend values('" + blendID + "','" + blendName + "','" + baseCom + "',0,0,0,'" + blendCategory + "') ";
+        int ret = dbConn.updateResult(query);
+        if(ret==1){
+            JOptionPane.showMessageDialog(null, "New Blend Succesfully Added");
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Error!, Data not Saved");
+        }
+  
+       
+        return 1;
     }
         
         

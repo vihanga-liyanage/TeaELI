@@ -362,6 +362,7 @@ public class AddNewBlend extends javax.swing.JFrame {
     
     private void ingPerAddBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingPerAddBtnActionPerformed
         if (ingCombo.getSelectedItem().equals("")){
+            //System.out.println("ing combo");
             JOptionPane.showMessageDialog(ingCombo, "Please select a ingredient to add.", "Error", JOptionPane.WARNING_MESSAGE);
             ingCombo.requestFocus();      
     }//GEN-LAST:event_ingPerAddBtnActionPerformed
@@ -467,34 +468,48 @@ public class AddNewBlend extends javax.swing.JFrame {
         blendName = blendNameTxt.getText();
         blendCategory = blendCategoryCombo.getSelectedItem().toString();
         base = baseCombo.getSelectedItem().toString();
-        //System.out.println(base);
+        
         if (blendID.isEmpty() || blendName.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Any feild cannot be empty");
         }else{
         
-            float perCount = 0;
-            int rowCount = addNewBlendIngTbl.getRowCount();
-            for(int i=0; i < rowCount; i++){
+            float ingPerCount = 0;
+            float flavPerCount = 0;
+            int ingCount = addNewBlendIngTbl.getRowCount();
+            int flavCount = addNewBlendFlavourTbl.getRowCount();
+            int recCount = ingCount+flavCount;
+            for(int i=0; i < ingCount; i++){
                 float initPer = Float.parseFloat(addNewBlendIngTbl.getValueAt(i, 1).toString()); ;
-                perCount = perCount + initPer;
+                ingPerCount = ingPerCount + initPer;
                 /*System.out.println(a);*/
             }
+            for(int i=0; i <flavCount;i++){
+                float initPer = Float.parseFloat(addNewBlendIngTbl.getValueAt(i, 1).toString()); ;
+                flavPerCount = flavPerCount + initPer;
+            }
 
-            if(perCount <= 0 || perCount>=100){
-                JOptionPane.showMessageDialog(this, "Invalid percentage");   
-
+            if(ingPerCount <= 0 || ingPerCount>=100){
+                JOptionPane.showMessageDialog(this, "Invalid percentage");
+                
+            }else if(flavPerCount <= 0 || flavPerCount>=100){
+                JOptionPane.showMessageDialog(this, "Invalid percentage");
             }else{
                 int ret = blend.addNewBlend(blendID, blendName, base, blendCategory);
-                System.out.println("ret "+ ret);
-                if(ret==1){
-                    JOptionPane.showMessageDialog(this, "New Blend Succesfully Added");
-                }else{
-                    JOptionPane.showMessageDialog(this, "Error with Adding new blend...Data not Saved");
+                
+                String query1 = "TNSERT INTO recipie VALUES";
+                String q1 ="";
+                
+                for(int i =0; i<ingCount ; i++){
+                    
                 }
+               
+                
+                
+                
             }
         
         }
-        //System.out.println(perCount);
+        
         
     }//GEN-LAST:event_addNewBlendBtnActionPerformed
    

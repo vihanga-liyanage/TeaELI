@@ -9,7 +9,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.JComboBox;
 import java.util.*;
 
 public class Order {
@@ -108,11 +107,10 @@ public class Order {
     }
 
     //Populate orderListTable in the order handling tab (NOT FINISHED........!!!!!!!!!)
-    public ArrayList<String> populateOrderListTable(DefaultTableModel tModel) {
+    public ResultSet populateOrderListTable(DefaultTableModel tModel) {
         Connection connection = null;
         ResultSet resultSet;
         connection = dbConn.setConnection();
-        ArrayList<String> result = new ArrayList();
         
         String query = "SELECT o.orderID, o.orderStatus, o.date, u.username FROM user u JOIN `order` o ON o.placedBy = u.userID ORDER BY o.orderStatus;";
 
@@ -128,7 +126,6 @@ public class Order {
                     status = "Received";
                 }
                 tModel.addRow(new Object[]{resultSet.getString(1), status, resultSet.getString(3), resultSet.getString(4)});
-                result.add(resultSet.getString(1));
             }
         } catch (SQLException ex) {
             System.out.println(ex);
@@ -148,7 +145,7 @@ public class Order {
                 }
             }
         }
-        return result;
+        return resultSet;
     }
 
     //Getting last order ID
