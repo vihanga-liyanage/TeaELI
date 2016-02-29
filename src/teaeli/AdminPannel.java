@@ -123,8 +123,7 @@ public class AdminPannel extends javax.swing.JFrame {
         populateIngStockTable();
 
         /*Populate ingredientstock history*/
-        StockHistory ingredientHistoryStock = new StockHistory();
-        ingredientHistoryStock.populateStockIngredientHistoryTable((DefaultTableModel) ingStockHistoryTbl.getModel());
+        populateIngHistoryTable();
 
         /* populate inventryBlendTable in inventory management */
         blend.populateBlendTable((DefaultTableModel) inventryBlendTable.getModel());
@@ -227,8 +226,12 @@ public class AdminPannel extends javax.swing.JFrame {
 
     public void populateIngStockTable(){
         ingredient.populateIngredientTable((DefaultTableModel) inventryIngredientTable.getModel());
-        System.out.println("populateIngStockTable");
     }
+    public void populateIngHistoryTable() {
+        StockHistory ingredientHistoryStock = new StockHistory();
+        ingredientHistoryStock.populateStockIngredientHistoryTable((DefaultTableModel) ingStockHistoryTbl.getModel());
+    }
+    
     //Setting default font
     public static void setUIFont(javax.swing.plaf.FontUIResource f) {
         java.util.Enumeration keys = UIManager.getDefaults().keys();
@@ -890,10 +893,7 @@ public class AdminPannel extends javax.swing.JFrame {
 
         ingStockHistoryTbl.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+
             },
             new String [] {
                 "Date", "Ingredient Name", "Old Qty", "Updated Qty", "Reason", "Updated By"
@@ -907,6 +907,7 @@ public class AdminPannel extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        ingStockHistoryTbl.setRowHeight(23);
         jScrollPane8.setViewportView(ingStockHistoryTbl);
         if (ingStockHistoryTbl.getColumnModel().getColumnCount() > 0) {
             ingStockHistoryTbl.getColumnModel().getColumn(0).setResizable(false);
