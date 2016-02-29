@@ -238,12 +238,10 @@ public class AddNewUser extends javax.swing.JFrame {
                 int result = user1.addNewUser(user1);
                 if (result == 1) {                    
                     JOptionPane.showMessageDialog(this, "New entry has been entered succesfully");
-                    close();
-                                        
+                    close();                 
                 } else {
                     //if insert is not successful
                     JOptionPane.showMessageDialog(this, "Sorry! Error occured while inserting!\nPlease enter again.");
-                    
                 }
             } else if (x == 0) {
                 JOptionPane.showMessageDialog(this, "UserName already exists!");

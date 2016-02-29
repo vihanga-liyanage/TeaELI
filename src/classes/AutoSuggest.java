@@ -208,7 +208,7 @@ public class AutoSuggest {
         Search.removeAllItems();
         int i = 0;
         if (Search.getItemCount() == 0) {
-            Search.addItem("");
+            //Search.addItem("");
             do {
                 Search.addItem(result.get(i));
                 v.addElement(result.get(i));

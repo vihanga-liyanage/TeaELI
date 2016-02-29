@@ -19,6 +19,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -137,8 +138,11 @@ public class AdminPannel extends javax.swing.JFrame {
         ingredientStock.populateStockIngredientHistoryTable((DefaultTableModel) ingStockHistoryTbl.getModel());
 
         /*populate main order table in the order details tab*/
-        order.populateorderListTable((DefaultTableModel) orderListTable.getModel());
-
+        AutoSuggest searchOrderComboBoxAutoSuggest = new AutoSuggest();
+        ArrayList<String> result = order.populateOrderListTable((DefaultTableModel) orderListTable.getModel());
+        searchOrderComboBoxAutoSuggest.setAutoSuggestTwo(orderSearchCombo, result);
+        orderSearchCombo.setSelectedIndex(-1);
+        
         /* combox auto suggests in inventory management */
         AutoSuggest searchStockIngComboBoxAutoSuggest = new AutoSuggest();
         searchStockIngComboBoxAutoSuggest.setAutoSuggest(searchStockIngComboBox, ingredient.loadNameForSearchStockIngComboBox());
@@ -280,8 +284,8 @@ public class AdminPannel extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         addNewBlendsBtn = new javax.swing.JButton();
         searchOrderBtn = new javax.swing.JButton();
-        searchOrderTxt = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
+        orderSearchCombo = new javax.swing.JComboBox();
         inventoryPanel = new javax.swing.JPanel();
         inventoryManagementSplitPane = new javax.swing.JSplitPane();
         inventoryManagementIngredientPanel = new javax.swing.JPanel();
@@ -400,7 +404,7 @@ public class AdminPannel extends javax.swing.JFrame {
         });
 
         jLabel15.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel15.setText("Start typing order ID to view details");
+        jLabel15.setText("Select order ID to view details");
 
         javax.swing.GroupLayout orderHandlingPanelLayout = new javax.swing.GroupLayout(orderHandlingPanel);
         orderHandlingPanel.setLayout(orderHandlingPanelLayout);
@@ -418,11 +422,11 @@ public class AdminPannel extends javax.swing.JFrame {
                             .addGroup(orderHandlingPanelLayout.createSequentialGroup()
                                 .addGroup(orderHandlingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(orderHandlingPanelLayout.createSequentialGroup()
-                                        .addComponent(searchOrderTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(orderSearchCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(searchOrderBtn))
                                     .addComponent(jLabel15))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 823, Short.MAX_VALUE)
                                 .addComponent(addNewBlendsBtn)))
                         .addContainerGap())))
         );
@@ -436,12 +440,12 @@ public class AdminPannel extends javax.swing.JFrame {
                         .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(orderHandlingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(searchOrderTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(searchOrderBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(searchOrderBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(orderSearchCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 468, Short.MAX_VALUE)
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 387, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -716,9 +720,9 @@ public class AdminPannel extends javax.swing.JFrame {
                         .addComponent(addItemBtn))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, settingsIngPanelLayout.createSequentialGroup()
                         .addComponent(searchIngredientComboBox, 0, 200, Short.MAX_VALUE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(searchIngredientBtn)
-                        .addGap(967, 967, 967)))
+                        .addGap(979, 979, 979)))
                 .addContainerGap())
         );
         settingsIngPanelLayout.setVerticalGroup(
@@ -862,7 +866,7 @@ public class AdminPannel extends javax.swing.JFrame {
                         .addComponent(addProductBtn))
                     .addGroup(settingsBlendPanelLayout.createSequentialGroup()
                         .addComponent(searchBlendComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(searchProductBtn)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
@@ -1502,6 +1506,7 @@ public class AdminPannel extends javax.swing.JFrame {
     private javax.swing.JTabbedPane mainTabbedPane;
     private javax.swing.JPanel orderHandlingPanel;
     private javax.swing.JTable orderListTable;
+    private javax.swing.JComboBox orderSearchCombo;
     private javax.swing.JTable productTable;
     private javax.swing.JButton profileBtn;
     private javax.swing.JButton refreshBlendInventryBtn;
@@ -1513,7 +1518,6 @@ public class AdminPannel extends javax.swing.JFrame {
     private javax.swing.JButton searchIngredientBtn;
     private javax.swing.JComboBox searchIngredientComboBox;
     private javax.swing.JButton searchOrderBtn;
-    private javax.swing.JTextField searchOrderTxt;
     private javax.swing.JButton searchProductBtn;
     private javax.swing.JComboBox searchStockBlendComboBox;
     private javax.swing.JButton searchStockBlendsBtn;
