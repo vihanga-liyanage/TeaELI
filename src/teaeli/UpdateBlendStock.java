@@ -44,6 +44,20 @@ public class UpdateBlendStock extends javax.swing.JFrame {
         });
     }
 
+    private AdminPannel adminPannel;
+
+    public void setAdminPannel(AdminPannel adminPannel) {
+        this.adminPannel = adminPannel;
+    }
+    
+    //method to refresh related tables and close this window
+    private void close(){
+        this.setVisible(false);
+        adminPannel.populateIngStockTable();
+        adminPannel.populateIngHistoryTable();
+        this.dispose();
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -240,6 +254,7 @@ public class UpdateBlendStock extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
     private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
         this.setVisible(false);
     }//GEN-LAST:event_cancelBtnActionPerformed
@@ -280,7 +295,7 @@ public class UpdateBlendStock extends javax.swing.JFrame {
 
                     if (blend.updateStockQty()) {
                         JOptionPane.showMessageDialog(this, "Updated Successfuly !", "Update Success", JOptionPane.INFORMATION_MESSAGE);
-                        this.setVisible(false);
+                        close();
                     } else {
                         JOptionPane.showMessageDialog(this, "Unable to update !", "Update Fails", JOptionPane.ERROR_MESSAGE);
                     }
@@ -293,7 +308,7 @@ public class UpdateBlendStock extends javax.swing.JFrame {
                     } else {
                         if (blend.updateStockQty()) {
                             JOptionPane.showMessageDialog(this, "Updated Successfuly !", "Update Success", JOptionPane.INFORMATION_MESSAGE);
-                            this.setVisible(false);
+                            close();
                         } else {
                             JOptionPane.showMessageDialog(this, "Unable to update !", "Update Fails", JOptionPane.ERROR_MESSAGE);
                         }

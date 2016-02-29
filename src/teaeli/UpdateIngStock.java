@@ -8,11 +8,6 @@ import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 
 public class UpdateIngStock extends javax.swing.JFrame {
-    private AdminPannel adminPannel;
-
-    public void setAdminPannel(AdminPannel adminPannel) {
-        this.adminPannel = adminPannel;
-    }
     
     public UpdateIngStock() {
         initComponents();
@@ -47,6 +42,12 @@ public class UpdateIngStock extends javax.swing.JFrame {
             public void keyPressed(KeyEvent e) {
             }
         });
+    }
+    
+    private AdminPannel adminPannel;
+
+    public void setAdminPannel(AdminPannel adminPannel) {
+        this.adminPannel = adminPannel;
     }
 
     //method to refresh related tables and close this window
@@ -269,12 +270,14 @@ public class UpdateIngStock extends javax.swing.JFrame {
         int stockChangeQty, oldStockQty;
 
         if (!changeQty.isEmpty()) {
-
+            
+            //set  new updating qty and reason
             stockChangeQty = Integer.parseInt(changeQty);
             String reason = this.reasonTxt.getText();
 
             if (!reason.isEmpty() && (this.stockIncreasedBtn.isSelected() || this.stockDecreaseBtn.isSelected())) {
 
+                //create ing object and call for update
                 Ingredient ingredient = new Ingredient();
                 ingredient.setIngName(this.updateStockItemNameLbl.getText());
                 ingredient.setStockUpdateReason(this.reasonTxt.getText());
@@ -306,7 +309,7 @@ public class UpdateIngStock extends javax.swing.JFrame {
                             JOptionPane.showMessageDialog(this, "Unable to update !", "Update Fails", JOptionPane.ERROR_MESSAGE);
                         }
                     }
-                }
+                }                
             } else {
                 JOptionPane.showMessageDialog(this, "Please fill all fields before save", "Empty Fields", JOptionPane.ERROR_MESSAGE);
                 this.newQtyTxt.setText(null);
@@ -357,6 +360,7 @@ public class UpdateIngStock extends javax.swing.JFrame {
         });
     }
 
+    /* method to test for integer */
     private boolean testForInteger(String text) {
         try {
             Integer.parseInt(text);
