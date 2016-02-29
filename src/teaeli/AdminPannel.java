@@ -330,7 +330,6 @@ public class AdminPannel extends javax.swing.JFrame {
         userTable = new javax.swing.JTable();
         addUserBtn = new javax.swing.JButton();
         deleteUserBtn = new javax.swing.JButton();
-        refreshBtn = new javax.swing.JButton();
         logoLabel = new javax.swing.JLabel();
         timeLabel = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -1049,14 +1048,6 @@ public class AdminPannel extends javax.swing.JFrame {
             }
         });
 
-        refreshBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        refreshBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/teaeli/Refresh.png"))); // NOI18N
-        refreshBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                refreshBtnActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout settingsUserPanelLayout = new javax.swing.GroupLayout(settingsUserPanel);
         settingsUserPanel.setLayout(settingsUserPanelLayout);
         settingsUserPanelLayout.setHorizontalGroup(
@@ -1069,19 +1060,14 @@ public class AdminPannel extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(settingsUserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(deleteUserBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, settingsUserPanelLayout.createSequentialGroup()
-                                .addComponent(addUserBtn)
-                                .addGap(18, 18, 18)
-                                .addComponent(refreshBtn)))))
+                            .addComponent(addUserBtn, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addContainerGap())
         );
         settingsUserPanelLayout.setVerticalGroup(
             settingsUserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(settingsUserPanelLayout.createSequentialGroup()
                 .addGap(19, 19, 19)
-                .addGroup(settingsUserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(refreshBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(addUserBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(addUserBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -1386,10 +1372,6 @@ public class AdminPannel extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_deleteUserBtnActionPerformed
 
-    private void refreshBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshBtnActionPerformed
-        user.viewUser((DefaultTableModel) userTable.getModel());
-    }//GEN-LAST:event_refreshBtnActionPerformed
-
     private void searchStockIngComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchStockIngComboBoxActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_searchStockIngComboBoxActionPerformed
@@ -1488,7 +1470,6 @@ public class AdminPannel extends javax.swing.JFrame {
     private javax.swing.JTable productTable;
     private javax.swing.JButton profileBtn;
     private javax.swing.JButton refreshBlendInventryBtn;
-    private javax.swing.JButton refreshBtn;
     public javax.swing.JButton refreshBtnForBlendStockHistory;
     private javax.swing.JButton refreshBtnForIngredientStockHistory;
     public javax.swing.JComboBox searchBlendComboBox;

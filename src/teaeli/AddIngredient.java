@@ -248,7 +248,7 @@ public class AddIngredient extends javax.swing.JFrame {
         name = txtName.getText();
         type = itemTypeCombo.getSelectedItem().toString();
         supname = supliercombo.getSelectedItem().toString();
-        price = Float.parseFloat(txtPrice.getText());
+        
 
         if (name.isEmpty() || supname.isEmpty() || txtPrice.getText().isEmpty()) {
 
@@ -256,9 +256,10 @@ public class AddIngredient extends javax.swing.JFrame {
 
         } else {
 
-            if (price < 0) {
+            if(Float.parseFloat(txtPrice.getText())<0){
                 JOptionPane.showMessageDialog(this, "Enter valid price");
-            } else {
+            }
+            else {
 
                 int result = ingr.addNewIngredient(name, type, supname, price);
                 if (result == 1) {

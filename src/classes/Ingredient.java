@@ -671,6 +671,7 @@ public class Ingredient {
         System.out.println("ingUsed " + ingUsed);
         return ingUsed;
     }
+    //end of update ingredient method
 
     public int addNewIngredient(String Name, String type, String supplier, float price) {
         Connection connection = null;
@@ -715,5 +716,8 @@ public class Ingredient {
         return rslt3;
     }
 
-     //end of update ingredient method
 }
+
+
+     
+
