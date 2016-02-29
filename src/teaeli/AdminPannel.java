@@ -38,7 +38,7 @@ import static teaeli.TeaELI.loginFrame;
 
 public class AdminPannel extends javax.swing.JFrame {
 
-    public static User user = new User();
+    User user = new User();
     Ingredient ingredient = new Ingredient();
     Blend blend = new Blend();
     StockHistory blendHistoryStock = new StockHistory();
