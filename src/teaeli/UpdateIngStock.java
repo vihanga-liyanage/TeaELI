@@ -8,7 +8,12 @@ import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 
 public class UpdateIngStock extends javax.swing.JFrame {
+    private AdminPannel adminPannel;
 
+    public void setAdminPannel(AdminPannel adminPannel) {
+        this.adminPannel = adminPannel;
+    }
+    
     public UpdateIngStock() {
         initComponents();
 
@@ -308,6 +313,7 @@ public class UpdateIngStock extends javax.swing.JFrame {
             this.stockDecreaseBtn.setSelected(false);
             this.stockIncreasedBtn.setSelected(false);
         }
+        adminPannel.populateIngStockTable();
     }//GEN-LAST:event_saveBtnActionPerformed
 
     /**
