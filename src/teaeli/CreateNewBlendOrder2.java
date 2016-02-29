@@ -6,6 +6,7 @@
 package teaeli;
 
 import classes.Blend;
+import classes.ResultArray;
 import java.awt.Font;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -33,6 +34,7 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
     
     /**
      * Creates new form AddNewOrder
+     * @param cNBO1
      */
     public CreateNewBlendOrder2(CreateNewBlendOrder1 cNBO1) {
         //Add windows look and feel
@@ -73,7 +75,7 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
             blendTBModel.addRow(row);
         }
         
-        //Prompt confirmation on window close
+        //Adding listner to prompt confirmation on window close
         this.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 int confirmed = JOptionPane.showConfirmDialog(null, 
@@ -85,8 +87,52 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
                 }
             }
         });
+        
+        //Populating masterPlanTbl
+        populateMasterPlanTbl();
     }
 
+    private void populateMasterPlanTbl(){
+        for (int i=0; i<blendListTbl.getRowCount(); i++) {
+            String blendName = blendListTbl.getValueAt(i, 0).toString();
+            int qty = parseInt(blendListTbl.getValueAt(i, 1).toString());
+            ResultArray res = blend.getRecipie(blendName);
+            int baseID;
+            while (res.next()) {
+                baseID = parseInt(res.getString(i));
+                System.out.println(res.getString(2));
+            }
+        }
+    }
+    
+    //formatting numbers to add commas
+    private String formatNum(String num){
+        int i = num.length();
+        while (i > 3) {
+            String part1 = num.substring(0, i-3);
+            String part2 = num.substring(i-3);
+            num = part1 + "," + part2;
+            i-=3;
+        }
+        return num;
+    }
+    private String formatNum(int num){
+        return formatNum(String.valueOf(num));
+    }
+    
+    //overiding Integer.parseInt() to accept nums with commas
+    private int parseInt(String num){
+        try{
+            return Integer.parseInt(num);
+        } catch (NumberFormatException e){
+            if (num.matches("[[0-9]{1,2}+,]*")) {
+                num = num.replace(",", "");
+                return Integer.parseInt(num);
+            }
+        }
+        return 0;
+    }
+    
     private CreateNewBlendOrder2() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }

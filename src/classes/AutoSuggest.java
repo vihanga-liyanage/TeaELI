@@ -111,7 +111,7 @@ public class AutoSuggest {
     public void setAutoSuggest(final JComboBox Search, ResultArray rst) {
         Search.removeAllItems();
         if (Search.getItemCount() == 0) {
-            //Search.addItem("");
+            Search.addItem("");
             while (rst.next()){
                 Search.addItem(rst.getString(0));
                 v.addElement(rst.getString(0));
