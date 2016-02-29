@@ -103,6 +103,7 @@ public class AdminPannel extends javax.swing.JFrame {
         });
 
         //set all users details to the users table in the users tab
+        populateUserTable();
 
         /*Start of ingredient class method calls*/
         //populate serch ingredient combobox in settings->ingredient
@@ -123,8 +124,7 @@ public class AdminPannel extends javax.swing.JFrame {
         populateIngStockTable();
 
         /*Populate ingredientstock history*/
-        StockHistory ingredientHistoryStock = new StockHistory();
-        ingredientHistoryStock.populateStockIngredientHistoryTable((DefaultTableModel) ingStockHistoryTbl.getModel());
+        populateIngHistoryTable();
 
         /* populate inventryBlendTable in inventory management */
         blend.populateBlendTable((DefaultTableModel) inventryBlendTable.getModel());
@@ -145,7 +145,7 @@ public class AdminPannel extends javax.swing.JFrame {
         
         /* combox auto suggests in inventory management */
         AutoSuggest searchStockIngComboBoxAutoSuggest = new AutoSuggest();
-        searchStockIngComboBoxAutoSuggest.setAutoSuggest(searchStockIngComboBox, ingredient.loadNameForSearchStockIngComboBox());
+        searchStockIngComboBoxAutoSuggest.setAutoSuggestTwo(searchStockIngComboBox, ingredient.loadNameForSearchStockIngComboBox2());
 
         AutoSuggest searchStockBlendComboBoxAutoSuggest = new AutoSuggest();
         searchStockBlendComboBoxAutoSuggest.setAutoSuggest(searchStockBlendComboBox, blend.loadNameForSearchStockBlendsComboBox());
@@ -200,7 +200,7 @@ public class AdminPannel extends javax.swing.JFrame {
                     if (selectedIngName.isEmpty()) {
                         JOptionPane.showMessageDialog(searchStockIngBtn, "You haven't select any ingredient name !", "Empty Selection", JOptionPane.ERROR_MESSAGE);
                     } else {
-
+                        System.out.println("Name : " + selectedIngName);
                         Ingredient ingredeintForStock = new Ingredient();
 
                         if (ingredeintForStock.checkAndLoadIngredientStockDetails(selectedIngName)) {
@@ -230,7 +230,13 @@ public class AdminPannel extends javax.swing.JFrame {
 
     public void populateIngStockTable(){
         ingredient.populateIngredientTable((DefaultTableModel) inventryIngredientTable.getModel());
-        System.out.println("populateIngStockTable");
+    }
+    public void populateIngHistoryTable() {
+        StockHistory ingredientHistoryStock = new StockHistory();
+        ingredientHistoryStock.populateStockIngredientHistoryTable((DefaultTableModel) ingStockHistoryTbl.getModel());
+    }
+    public void populateUserTable(){
+        user.viewUser((DefaultTableModel) userTable.getModel());
     }
     
     //Setting default font
@@ -894,10 +900,7 @@ public class AdminPannel extends javax.swing.JFrame {
 
         ingStockHistoryTbl.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+
             },
             new String [] {
                 "Date", "Ingredient Name", "Old Qty", "Updated Qty", "Reason", "Updated By"
@@ -911,6 +914,7 @@ public class AdminPannel extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        ingStockHistoryTbl.setRowHeight(23);
         jScrollPane8.setViewportView(ingStockHistoryTbl);
         if (ingStockHistoryTbl.getColumnModel().getColumnCount() > 0) {
             ingStockHistoryTbl.getColumnModel().getColumn(0).setResizable(false);
@@ -1289,6 +1293,7 @@ public class AdminPannel extends javax.swing.JFrame {
 
     private void addUserBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addUserBtnActionPerformed
         AddNewUser newUser = new AddNewUser();
+        newUser.setAdminPannel(this);
         newUser.setVisible(true);
         newUser.setDefaultCloseOperation(HIDE_ON_CLOSE);
     }//GEN-LAST:event_addUserBtnActionPerformed
@@ -1318,11 +1323,12 @@ public class AdminPannel extends javax.swing.JFrame {
     private void searchStockIngBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchStockIngBtnActionPerformed
 
         String selectedIngName = (String) searchStockIngComboBox.getSelectedItem();
-
+        System.out.println("Selec : " + selectedIngName);
         if (selectedIngName.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "You haven't select any ingredient!", "Empty Selection", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "You haven't select any ingredient name !", "Empty Selection", JOptionPane.ERROR_MESSAGE);
         } else {
 
+            System.out.println("Name 2 : " + selectedIngName);
             Ingredient ingredeintForStock = new Ingredient();
 
             if (ingredeintForStock.checkAndLoadIngredientStockDetails(selectedIngName)) {

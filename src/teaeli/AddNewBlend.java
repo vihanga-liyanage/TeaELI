@@ -362,6 +362,7 @@ public class AddNewBlend extends javax.swing.JFrame {
     
     private void ingPerAddBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingPerAddBtnActionPerformed
         if (ingCombo.getSelectedItem().equals("")){
+            //System.out.println("ing combo");
             JOptionPane.showMessageDialog(ingCombo, "Please select a ingredient to add.", "Error", JOptionPane.WARNING_MESSAGE);
             ingCombo.requestFocus();      
     }//GEN-LAST:event_ingPerAddBtnActionPerformed
@@ -467,7 +468,7 @@ public class AddNewBlend extends javax.swing.JFrame {
         blendName = blendNameTxt.getText();
         blendCategory = blendCategoryCombo.getSelectedItem().toString();
         base = baseCombo.getSelectedItem().toString();
-        //System.out.println(base);
+        System.out.println(base);
         if (blendID.isEmpty() || blendName.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Any feild cannot be empty");
         }else{
@@ -485,12 +486,12 @@ public class AddNewBlend extends javax.swing.JFrame {
 
             }else{
                 int ret = blend.addNewBlend(blendID, blendName, base, blendCategory);
-                System.out.println("ret "+ ret);
-                if(ret==1){
+                /*System.out.println("ret "+ ret);
+                if(ret>=1){
                     JOptionPane.showMessageDialog(this, "New Blend Succesfully Added");
                 }else{
                     JOptionPane.showMessageDialog(this, "Error with Adding new blend...Data not Saved");
-                }
+                }*/
             }
         
         }
