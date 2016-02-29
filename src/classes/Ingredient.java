@@ -742,6 +742,4 @@ public class Ingredient {
 
         return rslt3;
     }
-
-     //end of update ingredient method
 }

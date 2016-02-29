@@ -203,7 +203,7 @@ public class LoginFrame extends javax.swing.JFrame {
         }else if (us.checkLogin(userName, password)== 4 | us.checkLogin(userName, password)==3){
 
             if (passwrdCount !=3){
-            JOptionPane.showMessageDialog(this, "Wrong user name or password");//the provided password does not exist in the db
+            JOptionPane.showMessageDialog(this, "Wrong user name password combination");//the provided password does not exist in the db
             txtUsername.setText("");
             txtPassword.setText("");
             txtUsername.requestFocusInWindow();
@@ -254,7 +254,7 @@ public class LoginFrame extends javax.swing.JFrame {
             }else if (us.checkLogin(userName, password)== 4 | us.checkLogin(userName, password)==3){
                 
                 if (passwrdCount !=3){
-                JOptionPane.showMessageDialog(this, "Wrong user name or password");//the provided password does not exist in the db
+                JOptionPane.showMessageDialog(this, "Wrong user name password combination");//the provided password does not exist in the db
                 txtUsername.setText("");
                 txtPassword.setText("");
                 txtUsername.requestFocusInWindow();

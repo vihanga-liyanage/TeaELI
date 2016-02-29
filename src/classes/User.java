@@ -256,28 +256,17 @@ public class User {
     }
 
     public int updateUserName(String firstname, String lastname,String username) {
-        Connection connection = null;
-        PreparedStatement pst = null;
-        connection = dbConn.setConnection();
         String query = "UPDATE user SET firstname =' " + firstname + "', lastname = '" + lastname + "' WHERE username = '" + username + "'";
-        if (dbConn.updateResult(query, connection) == 1) {
-            return 1;
-        } else {
-            return 2;
-        }
+        int rst = dbConn.updateResult(query);
+        return rst;
     }
     
     public  int updatePassword(String firstname, String lastname,String username,String newpassword,String currentpassword){
-        Connection connection = null;
-        PreparedStatement pst = null;
-        connection = dbConn.setConnection();
         String query = "UPDATE user SET firstname =' "+firstname+"', lastname = '"+lastname+"',password = sha1('"+newpassword+"') WHERE username = '"+username+"' and password = sha1('"+currentpassword+"')";
-        if (dbConn.updateResult(query, connection)==1){
-            return 1;
-        }else{
-            return 2;
-        }
+        int rst = dbConn.updateResult(query);
+        return rst;
     }
+    
 }
 
 
