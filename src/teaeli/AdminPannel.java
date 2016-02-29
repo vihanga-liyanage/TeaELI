@@ -102,7 +102,7 @@ public class AdminPannel extends javax.swing.JFrame {
         });
 
         //set all users details to the users table in the users tab
-        user.viewUser((DefaultTableModel) userTable.getModel());
+        populateUserTable();
 
         /*Start of ingredient class method calls*/
         //populate serch ingredient combobox in settings->ingredient
@@ -230,6 +230,9 @@ public class AdminPannel extends javax.swing.JFrame {
     public void populateIngHistoryTable() {
         StockHistory ingredientHistoryStock = new StockHistory();
         ingredientHistoryStock.populateStockIngredientHistoryTable((DefaultTableModel) ingStockHistoryTbl.getModel());
+    }
+    public void populateUserTable(){
+        user.viewUser((DefaultTableModel) userTable.getModel());
     }
     
     //Setting default font
@@ -1286,6 +1289,7 @@ public class AdminPannel extends javax.swing.JFrame {
 
     private void addUserBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addUserBtnActionPerformed
         AddNewUser newUser = new AddNewUser();
+        newUser.setAdminPannel(this);
         newUser.setVisible(true);
         newUser.setDefaultCloseOperation(HIDE_ON_CLOSE);
     }//GEN-LAST:event_addUserBtnActionPerformed
