@@ -647,7 +647,7 @@ public class Ingredient {
             }
 
         }
-        return 0;
+        return insertOK;
     }
 
     public ArrayList<String> getSupplierDetails() {
@@ -792,4 +792,6 @@ public class Ingredient {
     }
 
      //end of update ingredient method
+    
+    
 }

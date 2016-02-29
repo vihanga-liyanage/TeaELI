@@ -121,7 +121,7 @@ public class AdminPannel extends javax.swing.JFrame {
         //end of view all ingredients
 
         /* populate inventryIngredientTable in inventory management -- dont remove this*/
-        ingredient.populateIngredientTable((DefaultTableModel) inventryIngredientTable.getModel());
+        populateIngStockTable();
 
         /*Populate ingredientstock history*/
         StockHistory ingredientHistoryStock = new StockHistory();
@@ -229,6 +229,10 @@ public class AdminPannel extends javax.swing.JFrame {
     ResultSet rs = null;
     Statement st = null;
 
+    public void populateIngStockTable(){
+        ingredient.populateIngredientTable((DefaultTableModel) inventryIngredientTable.getModel());
+        System.out.println("populateIngStockTable");
+    }
     //Setting default font
     public static void setUIFont(javax.swing.plaf.FontUIResource f) {
         java.util.Enumeration keys = UIManager.getDefaults().keys();
@@ -1316,7 +1320,7 @@ public class AdminPannel extends javax.swing.JFrame {
         String selectedIngName = (String) searchStockIngComboBox.getSelectedItem();
 
         if (selectedIngName.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "You haven't select any ingredient name !", "Empty Selection", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "You haven't select any ingredient!", "Empty Selection", JOptionPane.ERROR_MESSAGE);
         } else {
 
             Ingredient ingredeintForStock = new Ingredient();
@@ -1324,14 +1328,15 @@ public class AdminPannel extends javax.swing.JFrame {
             if (ingredeintForStock.checkAndLoadIngredientStockDetails(selectedIngName)) {
                 searchStockIngComboBox.setSelectedIndex(-1);
                 UpdateIngStock updateStock = new UpdateIngStock();
-
+                
+                updateStock.setAdminPannel(this);
                 updateStock.setVisible(true);
                 updateStock.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
                 updateStock.updateStockItemNameLbl.setText(ingredeintForStock.getIngName());
                 updateStock.updateStockCategoryLbl.setText(ingredeintForStock.getIngCategoryName());
                 updateStock.stockQtyLbl.setText(String.valueOf(ingredeintForStock.getVisibleStock()));
             } else {
-                JOptionPane.showMessageDialog(this, "You have selected invalid ingredient name !", "Invalid Name", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "You have selected invalid ingredient!", "Invalid Name", JOptionPane.ERROR_MESSAGE);
                 searchStockIngComboBox.setSelectedIndex(-1);
             }
         }
