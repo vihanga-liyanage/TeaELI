@@ -142,7 +142,7 @@ public class AdminPannel extends javax.swing.JFrame {
 
         /* combox auto suggests in inventory management */
         AutoSuggest searchStockIngComboBoxAutoSuggest = new AutoSuggest();
-        searchStockIngComboBoxAutoSuggest.setAutoSuggest(searchStockIngComboBox, ingredient.loadNameForSearchStockIngComboBox());
+        searchStockIngComboBoxAutoSuggest.setAutoSuggestTwo(searchStockIngComboBox, ingredient.loadNameForSearchStockIngComboBox2());
 
         AutoSuggest searchStockBlendComboBoxAutoSuggest = new AutoSuggest();
         searchStockBlendComboBoxAutoSuggest.setAutoSuggest(searchStockBlendComboBox, blend.loadNameForSearchStockBlendsComboBox());
@@ -197,7 +197,7 @@ public class AdminPannel extends javax.swing.JFrame {
                     if (selectedIngName.isEmpty()) {
                         JOptionPane.showMessageDialog(searchStockIngBtn, "You haven't select any ingredient name !", "Empty Selection", JOptionPane.ERROR_MESSAGE);
                     } else {
-
+                        System.out.println("Name : " + selectedIngName);
                         Ingredient ingredeintForStock = new Ingredient();
 
                         if (ingredeintForStock.checkAndLoadIngredientStockDetails(selectedIngName)) {
@@ -1310,11 +1310,12 @@ public class AdminPannel extends javax.swing.JFrame {
     private void searchStockIngBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchStockIngBtnActionPerformed
 
         String selectedIngName = (String) searchStockIngComboBox.getSelectedItem();
-
+        System.out.println("Selec : " + selectedIngName);
         if (selectedIngName.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "You haven't select any ingredient name !", "Empty Selection", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "You haven't select any ingredient name !", "Empty Selection", JOptionPane.ERROR_MESSAGE);
         } else {
 
+            System.out.println("Name 2 : " + selectedIngName);
             Ingredient ingredeintForStock = new Ingredient();
 
             if (ingredeintForStock.checkAndLoadIngredientStockDetails(selectedIngName)) {
