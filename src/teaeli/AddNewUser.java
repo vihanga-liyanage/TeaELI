@@ -22,6 +22,12 @@ public class AddNewUser extends javax.swing.JFrame {
     //create an instance of the entity class
     User user1 = new User();
     
+    private AdminPannel adminPannel;
+
+    public void setAdminPannel(AdminPannel adminPannel) {
+        this.adminPannel = adminPannel;
+    }
+    
     public AddNewUser() {
         //Add windows look and feel
         try {
@@ -41,6 +47,13 @@ public class AddNewUser extends javax.swing.JFrame {
         setResizable(false);
     }
 
+    //method to refresh related tables and close this window
+    private void close(){
+        this.setVisible(false);
+        adminPannel.populateUserTable();
+        this.dispose();
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -197,7 +210,7 @@ public class AddNewUser extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
-        this.setVisible(false);
+        close();
     }//GEN-LAST:event_cancelBtnActionPerformed
 
     private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
@@ -225,23 +238,21 @@ public class AddNewUser extends javax.swing.JFrame {
                 int result = user1.addNewUser(user1);
                 if (result == 1) {                    
                     JOptionPane.showMessageDialog(this, "New entry has been entered succesfully");
-                    this.setVisible(false);
-                                        
+                    close();                 
                 } else {
                     //if insert is not successful
                     JOptionPane.showMessageDialog(this, "Sorry! Error occured while inserting!\nPlease enter again.");
-                    
                 }
             } else if (x == 0) {
-                JOptionPane.showMessageDialog(this, "UserName already exists!!!");
+                JOptionPane.showMessageDialog(this, "UserName already exists!");
                 usernameTxt.setText("");
             } else {
-                JOptionPane.showMessageDialog(this, "Error occured while checking the userName!!!");
+                JOptionPane.showMessageDialog(this, "Error occured while checking the userName!");
                 return;
             }
 
         } else {
-            JOptionPane.showMessageDialog(this, "Password mismatched!!!");
+            JOptionPane.showMessageDialog(this, "Password mismatched!");
             passwordTxt.setText("");
             cnfrmPasswordTxt.setText("");
         }

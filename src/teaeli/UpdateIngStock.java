@@ -8,7 +8,12 @@ import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 
 public class UpdateIngStock extends javax.swing.JFrame {
+    private AdminPannel adminPannel;
 
+    public void setAdminPannel(AdminPannel adminPannel) {
+        this.adminPannel = adminPannel;
+    }
+    
     public UpdateIngStock() {
         initComponents();
 
@@ -44,6 +49,14 @@ public class UpdateIngStock extends javax.swing.JFrame {
         });
     }
 
+    //method to refresh related tables and close this window
+    private void close(){
+        this.setVisible(false);
+        adminPannel.populateIngStockTable();
+        adminPannel.populateIngHistoryTable();
+        this.dispose();
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -163,11 +176,10 @@ public class UpdateIngStock extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addGap(47, 47, 47)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                                         .addComponent(cancelBtn)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(saveBtn))
                                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(0, 0, Short.MAX_VALUE)))
@@ -209,8 +221,8 @@ public class UpdateIngStock extends javax.swing.JFrame {
                     .addComponent(updateStockReasonName, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cancelBtn)
-                    .addComponent(saveBtn))
+                    .addComponent(saveBtn)
+                    .addComponent(cancelBtn))
                 .addContainerGap(15, Short.MAX_VALUE))
         );
 
@@ -236,6 +248,7 @@ public class UpdateIngStock extends javax.swing.JFrame {
 
     private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
         this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_cancelBtnActionPerformed
 
     private void stockIncreasedBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stockIncreasedBtnActionPerformed
@@ -275,7 +288,7 @@ public class UpdateIngStock extends javax.swing.JFrame {
 
                     if (ingredient.updateStockQty()) {
                         JOptionPane.showMessageDialog(this, "Updated Successfuly !", "Update Success", JOptionPane.INFORMATION_MESSAGE);
-                        this.setVisible(false);
+                        close();
                     } else {
                         JOptionPane.showMessageDialog(this, "Unable to update !", "Update Fails", JOptionPane.ERROR_MESSAGE);
                     }
@@ -288,7 +301,7 @@ public class UpdateIngStock extends javax.swing.JFrame {
                     } else {
                         if (ingredient.updateStockQty()) {
                             JOptionPane.showMessageDialog(this, "Updated Successfuly !", "Update Success", JOptionPane.INFORMATION_MESSAGE);
-                            this.setVisible(false);
+                            close();
                         } else {
                             JOptionPane.showMessageDialog(this, "Unable to update !", "Update Fails", JOptionPane.ERROR_MESSAGE);
                         }
