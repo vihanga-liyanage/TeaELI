@@ -15,6 +15,7 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -385,6 +386,11 @@ public class Blend {
     }
     /* end */
     
+    public ResultArray getIngIDByIngName(String base){
+        String query = "SELECT ingID FROM ingredient WHERE ingName = '" + base + "' ";
+        return dbConn.getResultArray(query);
+    }
+    
     /* start of the method to load values to the productTable in the blends tab*/
     public void populateProductTable(DefaultTableModel tModel){
         Connection connection = null;
@@ -454,14 +460,21 @@ public class Blend {
                     System.err.println("Connection close error : " + e);
                 }
             }
-        }*/
+        }
         
         Connection connection = null;
         int rslt1 = 0, rslt2 = 0;
         connection = dbConn.setConnection();
         String query1 = "SELECT ingID FROM ingredient WHERE ingName = '" + base + "' ";
         ResultSet rs1 = dbConn.getResult(query1, connection);
-        System.out.println(rs1);
+        try{
+            String baseCom = rs1.getString(1);
+            System.out.println(baseCom);
+        }
+        catch(Exception e){
+            System.err.println("Resultset close error : " + e);
+        }
+        
         try {
             while (rs1.next()) {
                 rslt1 = Integer.parseInt(rs1.getString(1));
@@ -470,7 +483,29 @@ public class Blend {
             Logger.getLogger(Ingredient.class.getName()).log(Level.SEVERE, null, ex);
 
         }
-        return rslt1;
+        return rslt1;*/
+       
+        ResultArray res = getIngIDByIngName(base);
+        String baseCom = "";
+        if(res.next()){
+            baseCom = res.getString(0);
+           //System.out.println("base is " +baseCom);
+        }
+        String query = "INSERT INTO blend values('" + blendID + "','" + blendName + "','" + baseCom + "',0,0,0,'" + blendCategory + "') ";
+        int ret = dbConn.updateResult(query);
+        if(ret==1){
+            JOptionPane.showMessageDialog(null, "New Blend Succesfully Added");
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Error");
+        }
+        
+        
+       
+       
+       
+       
+        return 1;
     }
         
         
