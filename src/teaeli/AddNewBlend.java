@@ -10,7 +10,10 @@ import classes.DBConnection;
 import classes.Ingredient;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.util.List;
+import java.util.Vector;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -18,9 +21,8 @@ import javax.swing.JOptionPane;
  */
 public class AddNewBlend extends javax.swing.JFrame {
 
-    /**
-     * Creates new form UpdateProduct
-     */
+    private Ingredient ingredient1;
+    
     DBConnection dbConn = new DBConnection();
     public AddNewBlend() {
         initComponents();
@@ -34,6 +36,8 @@ public class AddNewBlend extends javax.swing.JFrame {
         
         Ingredient flavour = new Ingredient();
         flavour.initFlavourCombo(flavourCombo);
+        
+        ingredient1 = new Ingredient();
     }
 
     /**
@@ -64,10 +68,11 @@ public class AddNewBlend extends javax.swing.JFrame {
         flavourCombo = new javax.swing.JComboBox();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
+        addNewBlendFlavourTbl = new javax.swing.JTable();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jTable4 = new javax.swing.JTable();
+        addNewBlendIngTbl = new javax.swing.JTable();
         baseCombo = new javax.swing.JComboBox();
+        baseAddBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -120,6 +125,11 @@ public class AddNewBlend extends javax.swing.JFrame {
         });
 
         flavourPerAddBtn.setText("Add");
+        flavourPerAddBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                flavourPerAddBtnActionPerformed(evt);
+            }
+        });
 
         addNewBlendBtn.setText("Add New");
 
@@ -144,51 +154,54 @@ public class AddNewBlend extends javax.swing.JFrame {
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel5.setText("Base Composition");
+        jLabel5.setText("Base ");
 
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+        addNewBlendFlavourTbl.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+
             },
             new String [] {
                 "Flavour", "Precentage (%)"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false
+                false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane3.setViewportView(jTable3);
+        addNewBlendFlavourTbl.setRowHeight(24);
+        jScrollPane3.setViewportView(addNewBlendFlavourTbl);
 
-        jTable4.setModel(new javax.swing.table.DefaultTableModel(
+        addNewBlendIngTbl.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+
             },
             new String [] {
                 "Ingredient", "Precentage (%)"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false
+                false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane4.setViewportView(jTable4);
+        addNewBlendIngTbl.setRowHeight(24);
+        jScrollPane4.setViewportView(addNewBlendIngTbl);
 
         baseCombo.setEditable(true);
+
+        baseAddBtn.setText("Add");
+        baseAddBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                baseAddBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -210,20 +223,16 @@ public class AddNewBlend extends javax.swing.JFrame {
                             .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 418, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(88, 88, 88)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(190, 190, 190)
-                                        .addComponent(cancelBtn)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(addNewBlendBtn))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel5)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(baseCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(278, 278, 278)
+                                .addComponent(cancelBtn)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(addNewBlendBtn)
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 402, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 402, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(baseAddBtn, javax.swing.GroupLayout.Alignment.TRAILING)))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(9, 9, 9)
                         .addComponent(jLabel3)
@@ -238,9 +247,15 @@ public class AddNewBlend extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(flavourCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(flavourPerTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(baseCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(flavourCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(flavourPerTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -257,7 +272,8 @@ public class AddNewBlend extends javax.swing.JFrame {
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(blendCodeTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(baseCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(baseCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(baseAddBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -320,17 +336,102 @@ public class AddNewBlend extends javax.swing.JFrame {
     private void blendCodeTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blendCodeTxtActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_blendCodeTxtActionPerformed
-
+    
     private void ingPerAddBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingPerAddBtnActionPerformed
         if (ingCombo.getSelectedItem().equals("")){
             JOptionPane.showMessageDialog(ingCombo, "Please select a ingredient to add.", "Error", JOptionPane.WARNING_MESSAGE);
-            ingCombo.requestFocus();
+            ingCombo.requestFocus();       
     }//GEN-LAST:event_ingPerAddBtnActionPerformed
+       
+        
+       
+            
+        
+        
+        
+        /*addNewBlendIngTbl.setValueAt(ingCombo.getSelectedItem(), 0, 0);
+        System.out.println(addNewBlendIngTbl.getRowCount()); */       
+        
+        
+        else {
+            String ingName = (String) ingCombo.getSelectedItem();
+            float ingPer = Float.parseFloat(ingPerTxt.getText());
+            boolean isNew = true;
+            //Search if the ingredient is already added
+            int rowCount = addNewBlendIngTbl.getRowCount();
+            for (int i = 0; i < rowCount; i++) {
+                if (ingName.equals(addNewBlendIngTbl.getValueAt(i, 0))) {
+                    isNew = false;
+                    break;
+                }
+            }
+            if (isNew) {
+                List<List<String>> res = ingredient1.getIngDataByIngName(ingName);
+                //System.out.println(res);
+                Vector newRow = new Vector();
+                newRow.addElement(res.get(0).get(1));
+                newRow.addElement(ingPer);
+              
+                DefaultTableModel model = (DefaultTableModel) addNewBlendIngTbl.getModel();
+                model.addRow(newRow);
+            }
+            
+            ingPerTxt.setText("");
+            ingCombo.setSelectedIndex(-1);
+            ingCombo.requestFocus();
+        }
+        
     }
+    
+    
     private void flavourComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_flavourComboActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_flavourComboActionPerformed
+
+    private void flavourPerAddBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_flavourPerAddBtnActionPerformed
+        if (flavourCombo.getSelectedItem().equals("")){
+            JOptionPane.showMessageDialog(flavourCombo, "Please select a flavour to add.", "Error", JOptionPane.WARNING_MESSAGE);
+            flavourCombo.requestFocus();
+    }//GEN-LAST:event_flavourPerAddBtnActionPerformed
+        else {
+            String flavourName = (String) flavourCombo.getSelectedItem();
+            float ingPer = Float.parseFloat(flavourPerTxt.getText());
+            boolean isNew = true;
+            //Search if the ingredient is already added
+            int rowCount = addNewBlendFlavourTbl.getRowCount();
+            for (int i = 0; i < rowCount; i++) {
+                if (flavourName.equals(addNewBlendFlavourTbl.getValueAt(i, 0))) {
+                    isNew = false;
+                    break;
+                }
+            }
+            if (isNew) {
+                List<List<String>> res = ingredient1.getIngDataByIngName(flavourName);
+                //System.out.println(res);
+                Vector newRow = new Vector();
+                newRow.addElement(res.get(0).get(1));
+                newRow.addElement(ingPer);
+              
+                DefaultTableModel model = (DefaultTableModel) addNewBlendFlavourTbl.getModel();
+                model.addRow(newRow);
+            }
+            
+            flavourPerTxt.setText("");
+            flavourCombo.setSelectedIndex(-1);
+            flavourCombo.requestFocus();
+        }
     
+    }
+    
+    
+    
+    private void baseAddBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_baseAddBtnActionPerformed
+        if (baseCombo.getSelectedItem().equals("")){
+            JOptionPane.showMessageDialog(baseCombo, "Please select a base to add.", "Error", JOptionPane.WARNING_MESSAGE);
+            baseCombo.requestFocus();
+    }                            
+    }//GEN-LAST:event_baseAddBtnActionPerformed
+   
     public void FillIngCombo(){
         Connection connection = null;
         ResultSet resultSet = null;
@@ -372,12 +473,15 @@ public class AddNewBlend extends javax.swing.JFrame {
                 new AddNewBlend().setVisible(true);
             }
         });
-        
+}
   
-    }
+   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addNewBlendBtn;
+    private javax.swing.JTable addNewBlendFlavourTbl;
+    private javax.swing.JTable addNewBlendIngTbl;
+    private javax.swing.JButton baseAddBtn;
     private javax.swing.JComboBox baseCombo;
     private javax.swing.JTextField blendCodeTxt;
     private javax.swing.JTextField blendNameTxt;
@@ -398,7 +502,5 @@ public class AddNewBlend extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTable jTable3;
-    private javax.swing.JTable jTable4;
     // End of variables declaration//GEN-END:variables
 }

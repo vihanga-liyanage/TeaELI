@@ -13,6 +13,8 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.table.DefaultTableModel;
+import static teaeli.LoginFrame.adminPannel;
 /**
  *
  * @author ASHI
@@ -105,7 +107,7 @@ public class AddNewUser extends javax.swing.JFrame {
         jLabel5.setText("Confirm Password");
 
         jLabel6.setForeground(java.awt.Color.red);
-        jLabel6.setText("* Enter atleast 8 characters");
+        jLabel6.setText("* Enter at least 8 characters");
 
         addUserDesignationCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Manager", "Admin" }));
 
@@ -226,6 +228,7 @@ public class AddNewUser extends javax.swing.JFrame {
                 if (result == 1) {                    
                     JOptionPane.showMessageDialog(this, "New entry has been entered succesfully");
                     this.setVisible(false);
+                    user1.viewUser((DefaultTableModel) adminPannel.userTable.getModel());
                                         
                 } else {
                     //if insert is not successful

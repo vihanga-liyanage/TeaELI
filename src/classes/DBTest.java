@@ -10,12 +10,18 @@ package classes;
  *
  * @author Vihanga Liyanage
  */
-public class Test {
+public class DBTest {
     
     public static void main(String[] args) {
-        DBConnection1 db = new DBConnection1();
+        DBConnection db = new DBConnection();
         String query = "SELECT * FROM blend";
         ResultArray res = db.getResultArray(query);
-        System.out.println(res.size());
+        while (res.next()){
+            int i = 0;
+            while (res.getString(i) != null){
+                System.out.print(res.getString(i++) + " ");
+            }
+            System.out.println("");
+        }
     }
 }
