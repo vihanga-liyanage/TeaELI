@@ -9,12 +9,12 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.JComboBox;
 import java.util.*;
 
 public class Order {
 
     //attributes
-
     private int orderID, placedBy, orderStatus, blendID;
     private String username, blendName;
     private ArrayList<Ingredient> ingredientList = new ArrayList();
@@ -108,11 +108,12 @@ public class Order {
     }
 
     //Populate orderListTable in the order handling tab (NOT FINISHED........!!!!!!!!!)
-    public void populateorderListTable(DefaultTableModel tModel) {
+    public ArrayList<String> populateOrderListTable(DefaultTableModel tModel) {
         Connection connection = null;
         ResultSet resultSet;
         connection = dbConn.setConnection();
-
+        ArrayList<String> result = new ArrayList();
+        
         String query = "SELECT o.orderID, o.orderStatus, o.date, u.username FROM user u JOIN `order` o ON o.placedBy = u.userID ORDER BY o.orderStatus;";
 
         resultSet = dbConn.getResult(query, connection);
@@ -127,10 +128,27 @@ public class Order {
                     status = "Received";
                 }
                 tModel.addRow(new Object[]{resultSet.getString(1), status, resultSet.getString(3), resultSet.getString(4)});
+                result.add(resultSet.getString(1));
             }
         } catch (SQLException ex) {
             System.out.println(ex);
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    System.err.println("Resultset close error : " + e);
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    System.err.println("Connection close error : " + e);
+                }
+            }
         }
+        return result;
     }
 
     //Getting last order ID

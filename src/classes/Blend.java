@@ -2,7 +2,6 @@ package classes;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.DateFormat;
@@ -10,8 +9,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.table.DefaultTableModel;
 
@@ -418,4 +418,58 @@ public class Blend {
         }
     }
     /* end */
-}
+    
+    //Add new blend method
+    public int addNewBlend(String blendID, String blendName, String base, String blendCategory){
+        /*Connection connection = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = dbConn.setConnection();
+            String query = "SELECT ingID FROM ingredient WHERE ingName = '" + base + "'";
+
+            resultSet = dbConn.getResult(query, connection);
+            System.out.println(resultSet);
+            System.out.println("pass");
+
+            if (resultSet.next()) {
+                //this.setIngID(Integer.parseInt(resultSet.getString(1)));
+            }
+        } catch (SQLException | NumberFormatException e) {
+            System.err.println("Exception : " + e);
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (Exception e) {
+                    System.err.println("Resultset close error : " + e);
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (Exception e) {
+                    System.err.println("Connection close error : " + e);
+                }
+            }
+        }*/
+        
+        Connection connection = null;
+        int rslt1 = 0, rslt2 = 0;
+        connection = dbConn.setConnection();
+        String query1 = "SELECT ingID FROM ingredient WHERE ingName = '" + base + "' ";
+        ResultSet rs1 = dbConn.getResult(query1, connection);
+        System.out.println(rs1);
+        try {
+            while (rs1.next()) {
+                rslt1 = Integer.parseInt(rs1.getString(1));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Ingredient.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
+        return rslt1;
+    }
+        
+        
+    }
