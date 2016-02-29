@@ -1,6 +1,4 @@
-
 package classes;
-
 
 public class Validation {
     
@@ -9,7 +7,11 @@ public class Validation {
             Integer.parseInt(str);
             return true;
         }catch(NumberFormatException e){
-            return false;
+            if (str.matches("[[0-9]{1,2}+,]*")) {
+                return true;
+            } else {
+                return false;
+            }
         }
         
     }

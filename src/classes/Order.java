@@ -14,7 +14,6 @@ import java.util.*;
 public class Order {
 
     //attributes
-
     private int orderID, placedBy, orderStatus, blendID;
     private String username, blendName;
     private ArrayList<Ingredient> ingredientList = new ArrayList();
@@ -108,11 +107,11 @@ public class Order {
     }
 
     //Populate orderListTable in the order handling tab (NOT FINISHED........!!!!!!!!!)
-    public void populateorderListTable(DefaultTableModel tModel) {
+    public ResultSet populateOrderListTable(DefaultTableModel tModel) {
         Connection connection = null;
         ResultSet resultSet;
         connection = dbConn.setConnection();
-
+        
         String query = "SELECT o.orderID, o.orderStatus, o.date, u.username FROM user u JOIN `order` o ON o.placedBy = u.userID ORDER BY o.orderStatus;";
 
         resultSet = dbConn.getResult(query, connection);
@@ -130,28 +129,6 @@ public class Order {
             }
         } catch (SQLException ex) {
             System.out.println(ex);
-        }
-    }
-
-    //Getting last order ID
-    public String getLastOrderID() {
-        Connection conn = null;
-        ResultSet resultSet = null;
-
-        try {
-            String query = "SELECT `orderID` FROM `order` ORDER BY `orderID` DESC LIMIT 0 , 1";
-
-            conn = dbConn.setConnection();
-            resultSet = dbConn.getResult(query, conn);
-            String orderID = "";
-            while (resultSet.next()) {
-                orderID = resultSet.getString(1);
-            }
-            return orderID;
-
-        } catch (Exception e) {
-            System.err.println("err : " + e);
-
         } finally {
             if (resultSet != null) {
                 try {
@@ -160,18 +137,25 @@ public class Order {
                     System.err.println("Resultset close error : " + e);
                 }
             }
-            if (conn != null) {
+            if (connection != null) {
                 try {
-                    conn.close();
+                    connection.close();
                 } catch (SQLException e) {
-
-                } catch (Exception e) {
                     System.err.println("Connection close error : " + e);
                 }
             }
-
         }
-        return null;
+        return resultSet;
+    }
 
+    //Getting last order ID
+    public String getLastOrderID(){
+        String query = "SELECT `orderID` FROM `order` ORDER BY `orderID` DESC LIMIT 0 , 1";
+        ResultArray res = dbConn.getResultArray(query);
+        String orderID = "";
+        while(res.next()){
+            orderID = res.getString(0);
+        }
+        return orderID;
     }
 }

@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import javax.swing.table.DefaultTableModel;
 import static teaeli.LoginFrame.adminPannel;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.text.DateFormat;
@@ -14,6 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -169,7 +171,7 @@ public class Ingredient {
     }
 
     /* Get ingredient data when blend name is given */
-    public ResultSet getIngDataByIngName(String ingName) {
+   /* public ResultSet getIngDataByIngName(String ingName) {
         Connection conn = null;
         ResultSet resultSet = null;
 
@@ -182,32 +184,33 @@ public class Ingredient {
             System.err.println("err : " + e);
         }
         return null;
-    }
-    /* end */
-
-    /* start of populateIngredientTable method */
-    public void populateIngredientTable(DefaultTableModel tableModel) {
-
-        Connection connection = null;
+    }*/
+    
+    /* Get blend data when ing name is given -thisara */
+    public List<List<String>> getIngDataByIngName(String ingName){
+        Connection conn = null;
         ResultSet resultSet = null;
+        try{
+            String query = "SELECT * FROM ingredient WHERE ingName='" + ingName + "'";
+            conn = dbConn.setConnection();
+            resultSet = dbConn.getResult(query, conn);
 
-        try {
-            String query = "SELECT ing.categoryName , i.ingName,i.visibleStock,i.invisibleStock FROM ingredient i JOIN ingredientcategory ing ON i.ingCategoryID = ing.ingCategoryID ORDER BY ing.categoryName,i.ingName ";
-
-            connection = dbConn.setConnection();
-            resultSet = dbConn.getResult(query, connection);
-
-            tableModel.setRowCount(0);
-
-            while (resultSet.next()) {
-                Vector newRow = new Vector();
-                for (int i = 1; i <= 4; i++) {
-                    newRow.addElement(resultSet.getObject(i));
+            List<List<String>> result = new ArrayList<>();  // List of list, one per row
+            ResultSetMetaData rsmd = resultSet.getMetaData();
+            int numcols = rsmd.getColumnCount();
+            
+            while (resultSet.next()) { 
+                List<String> row = new ArrayList<>(numcols); // new list per row
+                int i = 1;
+                while (i <= numcols) {  // don't skip the last column, use <=
+                    row.add(resultSet.getString(i++));
                 }
-                tableModel.addRow(newRow);
+                result.add(row); // add it to the result
             }
-
-        } catch (Exception e) {
+            
+            return result;
+            
+        }catch(Exception e){
             System.err.println("err : " + e);
         } finally {
             if (resultSet != null) {
@@ -217,14 +220,41 @@ public class Ingredient {
                     System.err.println("Resultset close error : " + e);
                 }
             }
-            if (connection != null) {
+            if (conn != null) {
                 try {
-                    connection.close();
+                    conn.close();
                 } catch (Exception e) {
                     System.err.println("Connection close error : " + e);
                 }
             }
         }
+        return null;
+    }
+    /* end */
+    /* end */
+
+    /* start of populateIngredientTable method */
+    public void populateIngredientTable(DefaultTableModel tableModel) {
+
+        ResultArray resultSet;
+        
+        try {
+            String query = "SELECT ing.categoryName , i.ingName,i.visibleStock,i.invisibleStock FROM ingredient i JOIN ingredientcategory ing ON i.ingCategoryID = ing.ingCategoryID ORDER BY ing.categoryName,i.ingName ";
+
+            resultSet = dbConn.getResultArray(query);
+
+            tableModel.setRowCount(0);
+
+            while (resultSet.next()) {
+                Vector newRow = new Vector();
+                for (int i = 0; i <= 4; i++) {
+                    newRow.addElement(resultSet.getString(i));
+                }
+                tableModel.addRow(newRow);
+            }
+        } catch (Exception e) {
+            System.err.println("err : " + e);
+        } 
     }
     /* end of populateIngredientTable method */
 
@@ -314,42 +344,6 @@ public class Ingredient {
         return resultSet;
     }
     /* end of loadNameForSearchStockIngComboBox method */
-
-    public ArrayList<String> loadNameForSearchStockIngComboBox2() {
-        Connection connection = null;
-        ResultSet resultSet = null;
-        ArrayList<String> result = new ArrayList();
-        try {
-            connection = dbConn.setConnection();
-
-            String query = "SELECT ingName FROM ingredient";
-
-            resultSet = dbConn.getResult(query, connection);
-
-            while (resultSet.next()) {
-                result.add(resultSet.getString(1));
-            }
-
-        } catch (Exception e) {
-            System.err.println("Exception : " + e);
-        } finally {
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (Exception e) {
-                    System.err.println("Resultset close error : " + e);
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (Exception e) {
-                    System.err.println("Connection close error : " + e);
-                }
-            }
-        }
-        return result;
-    }
 
     /* start of initializing flavours combo in AddNewBlend */
     public void initBaseCombo(JComboBox ingCombo) {
@@ -599,7 +593,7 @@ public class Ingredient {
             }
 
         }
-        return 0;
+        return insertOK;
     }
 
     public ArrayList<String> getSupplierDetails() {
@@ -742,4 +736,11 @@ public class Ingredient {
 
         return rslt3;
     }
+
 }
+
+
+     //end of update ingredient method
+    
+    
+

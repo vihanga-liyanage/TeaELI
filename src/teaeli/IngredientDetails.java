@@ -259,8 +259,7 @@ public class IngredientDetails extends javax.swing.JFrame {
 
             //get ingredient categoryid
             int comboSelectedIgCat = this.itemTypeCombo.getSelectedIndex();
-            
-            
+
             if (comboSelectedIgCat == -1) {
                 JOptionPane.showMessageDialog(null, "Please select a ingredient type!!!");
             } else {
@@ -272,38 +271,34 @@ public class IngredientDetails extends javax.swing.JFrame {
             String SupName = (String) this.supplierCombobox.getSelectedItem();
             int selecetdID = this.supplierCombobox.getSelectedIndex();
             if (selecetdID == 0) {
-                JOptionPane.showMessageDialog(null, "Please select a supplier !!!" ,"No supplier selected",0);
+                JOptionPane.showMessageDialog(null, "Please select a supplier !!!", "No supplier selected", 0);
             }else{
-                
-                        try {
-                supID = supplier.getSupplierIDByName(SupName);
-            } catch (SQLException ex) {
-                System.out.println("SQL eror : "+ ex);
-            }
-
-            //get unit price
-            String unitPriceString = this.unitPriceTxt.getText();
-            unitPrice = Float.parseFloat(unitPriceString);
-            System.out.println("unitPrice" + unitPrice);
-
-            // call update ingredient method
-            try {
-                int updateOK = ingredient.updateIngredient(ingID, ingName, ingCategoryID, supID, unitPrice);
-
-                if (updateOK == 1) {
-                    JOptionPane.showMessageDialog(null, "Ingredient updated successfully", "Successfully Updated", 1);
-                } else {
-                    JOptionPane.showMessageDialog(null, "Ingredient update is not successfull!!!", "Unable to update", 0);
+                  try {
+                    supID = supplier.getSupplierIDByName(SupName);
+                } catch (SQLException ex) {
+                    System.out.println("SQL eror : " + ex);
                 }
-            } catch (SQLException ex) {
-                //Logger.getLogger(IngredientDetails.class.getName()).log(Level.SEVERE, null, ex);
-                System.out.println("sol error id:" + ex);
+
+                //get unit price
+                String unitPriceString = this.unitPriceTxt.getText();
+                unitPrice = Float.parseFloat(unitPriceString);
+                System.out.println("unitPrice" + unitPrice);
+
+                // call update ingredient method
+                try {
+                    int updateOK = ingredient.updateIngredient(ingID, ingName, ingCategoryID, supID, unitPrice);
+
+                    if (updateOK == 1) {
+                        JOptionPane.showMessageDialog(null, "Ingredient updated successfully", "Successfully Updated", 1);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Ingredient update is not successfull!!!", "Unable to update", 0);
+                    }
+                } catch (SQLException ex) {
+                    //Logger.getLogger(IngredientDetails.class.getName()).log(Level.SEVERE, null, ex);
+                    System.out.println("sol error id:" + ex);
+                }
             }
-            
-            } 
-            
-
-
+              
         } else if (response == JOptionPane.CLOSED_OPTION) {
             System.out.println("JOptionPane closed");
         }
