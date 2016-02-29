@@ -171,43 +171,26 @@ public class Blend {
     /* start of populateBlendTable method */
     public void populateBlendTable(DefaultTableModel tableModel){
         
-        Connection connection = null;
-        ResultSet resultSet = null;
+        ResultArray resultSet;
         
         try{
             String query = "SELECT blendCategory,blendName,visibleStock,invisibleStock FROM blend ORDER BY blendCategory, blendName";
             
-            connection = dbConn.setConnection();
-            resultSet = dbConn.getResult(query, connection);
+            resultSet = dbConn.getResultArray(query);
             
             tableModel.setRowCount(0);
             
             while (resultSet.next()) {
                 Vector newRow = new Vector();
-                for (int i = 1; i <= 4; i++) {
-                    newRow.addElement(resultSet.getObject(i));
+                for (int i = 0; i <= 4; i++) {
+                    newRow.addElement(resultSet.getString(i));
                 }
                 tableModel.addRow(newRow);
             }
             
         }catch(Exception e){
             System.err.println("err : " + e);
-        } finally {
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (Exception e) {
-                    System.err.println("Resultset close error : " + e);
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (Exception e) {
-                    System.err.println("Connection close error : " + e);
-                }
-            }
-        }
+        } 
     }
     /* end of populateBlendTable method */
     

@@ -236,43 +236,25 @@ public class Ingredient {
     /* start of populateIngredientTable method */
     public void populateIngredientTable(DefaultTableModel tableModel) {
 
-        Connection connection = null;
-        ResultSet resultSet = null;
-
+        ResultArray resultSet;
+        
         try {
             String query = "SELECT ing.categoryName , i.ingName,i.visibleStock,i.invisibleStock FROM ingredient i JOIN ingredientcategory ing ON i.ingCategoryID = ing.ingCategoryID ORDER BY ing.categoryName,i.ingName ";
 
-            connection = dbConn.setConnection();
-            resultSet = dbConn.getResult(query, connection);
+            resultSet = dbConn.getResultArray(query);
 
             tableModel.setRowCount(0);
 
             while (resultSet.next()) {
                 Vector newRow = new Vector();
-                for (int i = 1; i <= 4; i++) {
-                    newRow.addElement(resultSet.getObject(i));
+                for (int i = 0; i <= 4; i++) {
+                    newRow.addElement(resultSet.getString(i));
                 }
                 tableModel.addRow(newRow);
             }
-
         } catch (Exception e) {
             System.err.println("err : " + e);
-        } finally {
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (Exception e) {
-                    System.err.println("Resultset close error : " + e);
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (Exception e) {
-                    System.err.println("Connection close error : " + e);
-                }
-            }
-        }
+        } 
     }
     /* end of populateIngredientTable method */
 
@@ -362,42 +344,6 @@ public class Ingredient {
         return resultSet;
     }
     /* end of loadNameForSearchStockIngComboBox method */
-
-    public ArrayList<String> loadNameForSearchStockIngComboBox2() {
-        Connection connection = null;
-        ResultSet resultSet = null;
-        ArrayList<String> result = new ArrayList();
-        try {
-            connection = dbConn.setConnection();
-
-            String query = "SELECT ingName FROM ingredient";
-
-            resultSet = dbConn.getResult(query, connection);
-
-            while (resultSet.next()) {
-                result.add(resultSet.getString(1));
-            }
-
-        } catch (Exception e) {
-            System.err.println("Exception : " + e);
-        } finally {
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (Exception e) {
-                    System.err.println("Resultset close error : " + e);
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (Exception e) {
-                    System.err.println("Connection close error : " + e);
-                }
-            }
-        }
-        return result;
-    }
 
     /* start of initializing flavours combo in AddNewBlend */
     public void initBaseCombo(JComboBox ingCombo) {
