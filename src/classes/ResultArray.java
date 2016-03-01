@@ -65,6 +65,11 @@ public class ResultArray implements List{
         }
     }
 
+    //getting the entire row selected by next() method
+    public Object getRow(){
+        return array.get(i);
+    }
+    
     @Override
     public int size() {
         return array.size();

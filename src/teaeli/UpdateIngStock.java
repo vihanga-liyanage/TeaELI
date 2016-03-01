@@ -312,17 +312,9 @@ public class UpdateIngStock extends javax.swing.JFrame {
                 }                
             } else {
                 JOptionPane.showMessageDialog(this, "Please fill all fields before save", "Empty Fields", JOptionPane.ERROR_MESSAGE);
-                this.newQtyTxt.setText(null);
-                this.reasonTxt.setText(null);
-                this.stockDecreaseBtn.setSelected(false);
-                this.stockIncreasedBtn.setSelected(false);
             }
         } else {
             JOptionPane.showMessageDialog(this, "Please fill all fields before save", "Empty Fields", JOptionPane.ERROR_MESSAGE);
-            this.newQtyTxt.setText(null);
-            this.reasonTxt.setText(null);
-            this.stockDecreaseBtn.setSelected(false);
-            this.stockIncreasedBtn.setSelected(false);
         }
     }//GEN-LAST:event_saveBtnActionPerformed
 

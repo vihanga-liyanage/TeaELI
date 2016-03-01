@@ -10,8 +10,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -289,7 +287,6 @@ public class Blend {
         
         //query to update blend stock
         String query = "UPDATE blend SET visibleStock = '" + this.getVisibleStock() + "' WHERE blendID = '" + this.getBlendID() + "'";
-        System.out.println(query);
         
         int i = dbConn.updateResult(query);
         
@@ -405,10 +402,21 @@ public class Blend {
         else{
             JOptionPane.showMessageDialog(null, "Error!, Data not Saved");
         }
-  
-       
         return 1;
     }
         
-        
+    //getting recipie data for blend
+    public ResultArray getRecipie(String blendName){
+        String query = "SELECT b.baseID, r.ingID, r.ingPercent, r.type \n" +
+                        "FROM blend b \n" +
+                        "INNER JOIN recipie r on b.blendID=r.blendID \n" +
+                        "WHERE b.blendName='" + blendName + "'";
+        return dbConn.getResultArray(query);
     }
+    
+    //getting ingredient data by ingID
+    public ResultArray getIngDataByID(String ingID){
+        String query = "SELECT * FROM ingredient WHERE ingID='" + ingID + "'";
+        return dbConn.getResultArray(query);
+    }
+}

@@ -53,7 +53,7 @@ public class UpdateBlendStock extends javax.swing.JFrame {
     private void close(){
         this.setVisible(false);
         adminPannel.populateBlendStockTable();
-        //adminPannel.populateIngHistoryTable();
+        adminPannel.populateBlendHistoryTable();
         this.dispose();
     }
     
@@ -316,17 +316,9 @@ public class UpdateBlendStock extends javax.swing.JFrame {
 
             } else {
                 JOptionPane.showMessageDialog(this, "Please fill all fields before save", "Empty Fields", JOptionPane.ERROR_MESSAGE);
-                this.newQtyTxt.setText(null);
-                this.reasonToChangeTxt.setText(null);
-                this.blendStockDecreasedBtn.setSelected(false);
-                this.blendStockIncreaseBtn.setSelected(false);
             }
         } else {
             JOptionPane.showMessageDialog(this, "Please fill all fields before save", "Empty Fields", JOptionPane.ERROR_MESSAGE);
-            this.newQtyTxt.setText(null);
-            this.reasonToChangeTxt.setText(null);
-            this.blendStockDecreasedBtn.setSelected(false);
-            this.blendStockIncreaseBtn.setSelected(false);
         }
     }//GEN-LAST:event_saveBtnActionPerformed
 
