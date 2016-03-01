@@ -188,7 +188,7 @@ public class Blend {
             }
             
         }catch(Exception e){
-            System.err.println("err : " + e);
+            System.err.println("blend 191 err : " + e);
         } 
     }
     /* end of populateBlendTable method */
@@ -242,7 +242,7 @@ public class Blend {
                 validBlendName = true;
             }
         } catch (NumberFormatException e) {
-            System.err.println("err : " + e);
+            System.err.println("blend 245 err : " + e);
         } 
         return validBlendName;
     }

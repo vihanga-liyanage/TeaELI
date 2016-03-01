@@ -93,7 +93,7 @@ public class StockHistory {
             }
             
         }catch(Exception e){
-            System.err.println("err : " + e);
+            System.err.println("stckhis 96 err : " + e);
         } finally {
             if (resultSet != null) {
                 try {
@@ -136,7 +136,7 @@ public class StockHistory {
             }
             
         }catch(Exception e){
-            System.err.println("err : " + e);
+            System.err.println("stckhis 139 err : " + e);
         } finally {
             if (resultSet != null) {
                 try {
