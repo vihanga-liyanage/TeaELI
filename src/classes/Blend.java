@@ -434,4 +434,10 @@ public class Blend {
                         "WHERE b.blendName='" + blendName + "'";
         return dbConn.getResultArray(query);
     }
+    
+    //getting ingredient data by ingID
+    public ResultArray getIngDataByID(String ingID){
+        String query = "SELECT * FROM ingredient WHERE ingID='" + ingID + "'";
+        return dbConn.getResultArray(query);
+    }
 }
