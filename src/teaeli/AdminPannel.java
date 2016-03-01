@@ -19,7 +19,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.text.DateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -42,7 +41,7 @@ public class AdminPannel extends javax.swing.JFrame {
     Ingredient ingredient = new Ingredient();
     Blend blend = new Blend();
     StockHistory blendHistoryStock = new StockHistory();
-    StockHistory ingredientHistoryStock = new StockHistory();
+    StockHistory ingredientStock = new StockHistory();
     public static IngredientDetails ingredientDetails = new IngredientDetails();
     Order order = new Order();
 
@@ -103,7 +102,7 @@ public class AdminPannel extends javax.swing.JFrame {
         });
 
         //set all users details to the users table in the users tab
-        this.populateUserTable();
+        populateUserTable();
 
         /*Start of ingredient class method calls*/
         //populate serch ingredient combobox in settings->ingredient
@@ -120,42 +119,56 @@ public class AdminPannel extends javax.swing.JFrame {
         }
         //end of view all ingredients
 
-        /* populate inventryIngredientTable in inventory management */
-        this.populateIngStockTable();
-
+        /* populate inventryIngredientTable in inventory management -- dont remove this*/
+        populateIngStockTable();
+        
+        /*populate inventryBlendTable in the inventory management*/
+        populateBlendStockTable();
+        
         /*Populate ingredientstock history*/
-        this.populateIngHistoryTable();
+        populateIngHistoryTable();
+        
+        /*Populate blendstock history*/
+        populatebBlendHistoryTable();
 
-        /* populate inventryBlendTable in inventory management */
-        this.populateBlendStockTable();
+
 
         /*Populate ingredientstock history*/
         this.populateBlendHistoryTable();
+
 
         /* populate product table in the blend tab*/
         blend.populateProductTable((DefaultTableModel) productTable.getModel());
 
         /*populate main order table in the order details tab*/
+        order.populateOrderListTable((DefaultTableModel) orderListTable.getModel());
+        
+        /*load the orderComboBox in the order details tab*/
         AutoSuggest searchOrderComboBoxAutoSuggest = new AutoSuggest();
-
-        searchOrderComboBoxAutoSuggest.setAutoSuggest(orderSearchCombo, order.populateOrderListTable((DefaultTableModel) orderListTable.getModel()));
+        searchOrderComboBoxAutoSuggest.setAutoSuggest(orderSearchCombo, order.loadOrderComboBox());
         orderSearchCombo.setSelectedIndex(-1);
-
-        /* combox auto suggest for ingredient in inventory management */
+        
+        /* combox auto suggests in inventory management */
         AutoSuggest searchStockIngComboBoxAutoSuggest = new AutoSuggest();
-
         searchStockIngComboBoxAutoSuggest.setAutoSuggest(searchStockIngComboBox, ingredient.loadNameForSearchStockIngComboBox());
-        searchStockIngComboBox.setSelectedIndex(-1);
 
-        /* combox auto suggest for blend in inventory management */
         AutoSuggest searchStockBlendComboBoxAutoSuggest = new AutoSuggest();
-
         searchStockBlendComboBoxAutoSuggest.setAutoSuggest(searchStockBlendComboBox, blend.loadNameForSearchStockBlendsComboBox());
+
         searchStockBlendComboBox.setSelectedIndex(-1);
+
 
         /*Auto suggest method loads for the combo box in blends tab*/
         blend.initBlendCombo(searchBlendComboBox);
 
+        /* 
+         AutoSuggest searchBlendIngComboBoxAutoSuggest = new AutoSuggest();
+         searchBlendIngComboBoxAutoSuggest.setAutoSuggest(searchStockBlendComboBox, blend.loadNameForsearchBlendIngComboBox());
+
+         AutoSuggest searchBlendBaseComboBoxAutoSuggest = new AutoSuggest();
+         searchBlendBaseComboBoxAutoSuggest.setAutoSuggest(searchStockBlendComboBox, blend.loadNameForsearchBlendBaseComboBox());
+         */
+        
         //method for combox value setting when table row select in inventryIngredient
         final ListSelectionModel selectionalModForStockIngTable = inventryIngredientTable.getSelectionModel();
         selectionalModForStockIngTable.addListSelectionListener(new ListSelectionListener() {
@@ -170,7 +183,7 @@ public class AdminPannel extends javax.swing.JFrame {
 
         });
 
-        //methods for combox value setting when table row select in inventryBlend
+        //methods for combox value settings when table row select in inventryBlend
         final ListSelectionModel selectionalModForStockBlendTable = inventryBlendTable.getSelectionModel();
         selectionalModForStockBlendTable.addListSelectionListener(new ListSelectionListener() {
 
@@ -183,6 +196,7 @@ public class AdminPannel extends javax.swing.JFrame {
             }
 
         });
+
 
         //method for combox value setting when table row select in settings Ingredient
         final ListSelectionModel selectionalModForSettingsIngTable = settingsIngredientTable.getSelectionModel();
@@ -197,6 +211,7 @@ public class AdminPannel extends javax.swing.JFrame {
             }
 
         });
+
 
         //method for enter key pressed in ingredient
         searchStockIngComboBox.getEditor().getEditorComponent().addKeyListener(new KeyAdapter() {
@@ -236,26 +251,36 @@ public class AdminPannel extends javax.swing.JFrame {
     ResultSet rs = null;
     Statement st = null;
 
-    public void populateIngStockTable() {
+    public void populateIngStockTable(){
         ingredient.populateIngredientTable((DefaultTableModel) inventryIngredientTable.getModel());
     }
+
 
     public void populateBlendStockTable() {
         blend.populateBlendTable((DefaultTableModel) inventryBlendTable.getModel());
     }
 
+
     public void populateIngHistoryTable() {
+        StockHistory ingredientHistoryStock = new StockHistory();
         ingredientHistoryStock.populateStockIngredientHistoryTable((DefaultTableModel) ingStockHistoryTbl.getModel());
     }
+
 
     public void populateBlendHistoryTable() {
         blendHistoryStock.populateStockBlendHistoryTable((DefaultTableModel) blendStockHistoryTbl.getModel());
     }
 
     public void populateUserTable() {
+
         user.viewUser((DefaultTableModel) userTable.getModel());
     }
-
+    
+    public void populatebBlendHistoryTable() {
+        StockHistory blendHistoryStock = new StockHistory();
+        blendHistoryStock.populateStockBlendHistoryTable((DefaultTableModel) blendStockHistoryTbl.getModel());
+    }
+    
     //Setting default font
     public static void setUIFont(javax.swing.plaf.FontUIResource f) {
         java.util.Enumeration keys = UIManager.getDefaults().keys();
@@ -319,7 +344,6 @@ public class AdminPannel extends javax.swing.JFrame {
         inventryBlendTable = new javax.swing.JTable();
         jLabel7 = new javax.swing.JLabel();
         searchStockBlendComboBox = new javax.swing.JComboBox();
-        refreshBlendInventryBtn = new javax.swing.JButton();
         settingsPanel = new javax.swing.JPanel();
         settingsTabbedPane = new javax.swing.JTabbedPane();
         settingsIngPanel = new javax.swing.JPanel();
@@ -598,13 +622,6 @@ public class AdminPannel extends javax.swing.JFrame {
 
         searchStockBlendComboBox.setEditable(true);
 
-        refreshBlendInventryBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/teaeli/Refresh.png"))); // NOI18N
-        refreshBlendInventryBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                refreshBlendInventryBtnActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout inventoryManagementBlendPanelLayout = new javax.swing.GroupLayout(inventoryManagementBlendPanel);
         inventoryManagementBlendPanel.setLayout(inventoryManagementBlendPanelLayout);
         inventoryManagementBlendPanelLayout.setHorizontalGroup(
@@ -612,15 +629,13 @@ public class AdminPannel extends javax.swing.JFrame {
             .addGroup(inventoryManagementBlendPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(inventoryManagementBlendPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(inventoryManagementBlendPanelLayout.createSequentialGroup()
-                        .addComponent(searchStockBlendComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(searchStockBlendsBtn)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(refreshBlendInventryBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 605, Short.MAX_VALUE)
                     .addGroup(inventoryManagementBlendPanelLayout.createSequentialGroup()
                         .addGroup(inventoryManagementBlendPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(inventoryManagementBlendPanelLayout.createSequentialGroup()
+                                .addComponent(searchStockBlendComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(searchStockBlendsBtn))
                             .addComponent(inventoryBlendLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel7))
                         .addGap(0, 0, Short.MAX_VALUE))))
@@ -635,10 +650,9 @@ public class AdminPannel extends javax.swing.JFrame {
                 .addGap(11, 11, 11)
                 .addGroup(inventoryManagementBlendPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(searchStockBlendsBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(searchStockBlendComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(refreshBlendInventryBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(searchStockBlendComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 475, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE))
         );
 
         inventoryManagementSplitPane.setRightComponent(inventoryManagementBlendPanel);
@@ -1248,6 +1262,7 @@ public class AdminPannel extends javax.swing.JFrame {
         editProfile.txtFirstName.setText(user.getFirstName());
         editProfile.txtLastName.setText(user.getLastName());
 
+
     }//GEN-LAST:event_profileBtnActionPerformed
 
     private void addUserBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addUserBtnActionPerformed
@@ -1279,16 +1294,59 @@ public class AdminPannel extends javax.swing.JFrame {
         orderDetails.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
     }//GEN-LAST:event_searchOrderBtnActionPerformed
 
-    /* search stock ingredient button action */
     private void searchStockIngBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchStockIngBtnActionPerformed
 
-        searchStockIngredientCombo();
+        String selectedIngName = (String) searchStockIngComboBox.getSelectedItem();
+        System.out.println("Selec : " + selectedIngName);
+        if (selectedIngName.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "You haven't select any ingredient name !", "Empty Selection", JOptionPane.ERROR_MESSAGE);
+        } else {
+
+            System.out.println("Name 2 : " + selectedIngName);
+            Ingredient ingredeintForStock = new Ingredient();
+
+            if (ingredeintForStock.checkAndLoadIngredientStockDetails(selectedIngName)) {
+                searchStockIngComboBox.setSelectedIndex(-1);
+                UpdateIngStock updateStock = new UpdateIngStock();
+                
+                updateStock.setAdminPannel(this);
+                updateStock.setVisible(true);
+                updateStock.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+                updateStock.updateStockItemNameLbl.setText(ingredeintForStock.getIngName());
+                updateStock.updateStockCategoryLbl.setText(ingredeintForStock.getIngCategoryName());
+                updateStock.stockQtyLbl.setText(String.valueOf(ingredeintForStock.getVisibleStock()));
+            } else {
+                JOptionPane.showMessageDialog(this, "You have selected invalid ingredient!", "Invalid Name", JOptionPane.ERROR_MESSAGE);
+                searchStockIngComboBox.setSelectedIndex(-1);
+            }
+        }
     }//GEN-LAST:event_searchStockIngBtnActionPerformed
 
-    /* search stock blend button action */
     private void searchStockBlendsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchStockBlendsBtnActionPerformed
 
-        searchStockBlendCombo();
+        String selectedBlendName = (String) searchStockBlendComboBox.getSelectedItem();
+
+        if (selectedBlendName.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "You haven't select any blend name !", "Empty Selection", JOptionPane.ERROR_MESSAGE);
+        } else {
+
+            Blend blendForStock = new Blend();
+
+            if (blendForStock.checkAndLoadBlendStockDetails(selectedBlendName)) {
+                searchStockBlendComboBox.setSelectedIndex(-1);
+                UpdateBlendStock updateBlendStock = new UpdateBlendStock();
+                
+                updateBlendStock.setAdminPannel(this);
+                updateBlendStock.setVisible(true);
+                updateBlendStock.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+                updateBlendStock.updateStockItemNameLbl.setText(blendForStock.getBlendName());
+                updateBlendStock.updateStockItemCategoryLbl.setText(blendForStock.getBlendCategory());
+                updateBlendStock.stockQtyLbl.setText(String.valueOf(blendForStock.getVisibleStock()));
+            } else {
+                JOptionPane.showMessageDialog(this, "You have selected invalid blend name !", "Invalid Name", JOptionPane.ERROR_MESSAGE);
+                searchStockBlendComboBox.setSelectedIndex(-1);
+            }
+        }
     }//GEN-LAST:event_searchStockBlendsBtnActionPerformed
 
     private void deleteUserBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteUserBtnActionPerformed
@@ -1326,12 +1384,8 @@ public class AdminPannel extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_searchStockIngComboBoxActionPerformed
 
-    private void refreshBlendInventryBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshBlendInventryBtnActionPerformed
-        blend.populateBlendTable((DefaultTableModel) inventryBlendTable.getModel());
-    }//GEN-LAST:event_refreshBlendInventryBtnActionPerformed
-
     private void refreshBtnForIngredientStockHistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshBtnForIngredientStockHistoryActionPerformed
-        ingredientHistoryStock.populateStockIngredientHistoryTable((DefaultTableModel) ingStockHistoryTbl.getModel());
+        ingredientStock.populateStockIngredientHistoryTable((DefaultTableModel) ingStockHistoryTbl.getModel());
     }//GEN-LAST:event_refreshBtnForIngredientStockHistoryActionPerformed
 
     private void refreshBtnForBlendStockHistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshBtnForBlendStockHistoryActionPerformed
@@ -1341,6 +1395,7 @@ public class AdminPannel extends javax.swing.JFrame {
     private void searchBlendComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBlendComboBoxActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_searchBlendComboBoxActionPerformed
+
 
     /* start of searchStockIngredientCombo method */
     private void searchStockIngredientCombo() {
@@ -1447,6 +1502,7 @@ public class AdminPannel extends javax.swing.JFrame {
     }
     /* start of searchIngredientCombo method */
 
+
     /**
      * @param args the command line arguments
      */
@@ -1524,7 +1580,6 @@ public class AdminPannel extends javax.swing.JFrame {
     private javax.swing.JComboBox orderSearchCombo;
     private javax.swing.JTable productTable;
     private javax.swing.JButton profileBtn;
-    private javax.swing.JButton refreshBlendInventryBtn;
     public javax.swing.JButton refreshBtnForBlendStockHistory;
     private javax.swing.JButton refreshBtnForIngredientStockHistory;
     public javax.swing.JComboBox searchBlendComboBox;
