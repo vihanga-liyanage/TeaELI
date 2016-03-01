@@ -388,7 +388,7 @@ public class Ingredient {
 
             //query to load ingredient details
             String query = "SELECT i.ingName, i.visibleStock, ing.categoryName FROM ingredient i JOIN ingredientcategory ing ON i.ingCategoryID = ing.ingCategoryID WHERE ingName = '" + selectedIngName + "'";
-
+            
             resultArray = dbConn.getResultArray(query);
 
             if (resultArray.next()) {

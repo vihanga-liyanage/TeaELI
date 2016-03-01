@@ -42,7 +42,7 @@ public class AdminPannel extends javax.swing.JFrame {
     Ingredient ingredient = new Ingredient();
     Blend blend = new Blend();
     StockHistory blendHistoryStock = new StockHistory();
-    StockHistory ingredientStock = new StockHistory();
+    StockHistory ingredientHistoryStock = new StockHistory();
     public static IngredientDetails ingredientDetails = new IngredientDetails();
     Order order = new Order();
 
@@ -108,7 +108,7 @@ public class AdminPannel extends javax.swing.JFrame {
         /*Start of ingredient class method calls*/
         //populate serch ingredient combobox in settings->ingredient
         AutoSuggest searchIngredientComboBoxAutoSuggest = new AutoSuggest();
-        searchIngredientComboBoxAutoSuggest.setAutoSuggest(searchIngredientComboBox,ingredient.loadNameForSearchStockIngComboBox());
+        searchIngredientComboBoxAutoSuggest.setAutoSuggest(searchIngredientComboBox, ingredient.loadNameForSearchStockIngComboBox());
 
         //start of view all ingredients
         try {
@@ -127,35 +127,35 @@ public class AdminPannel extends javax.swing.JFrame {
         this.populateIngHistoryTable();
 
         /* populate inventryBlendTable in inventory management */
-        blend.populateBlendTable((DefaultTableModel) inventryBlendTable.getModel());
-
-        /* populate product table in the blend tab*/
-        blend.populateProductTable((DefaultTableModel) productTable.getModel());
+        this.populateBlendStockTable();
 
         /*Populate ingredientstock history*/
-        blendHistoryStock.populateStockBlendHistoryTable((DefaultTableModel) blendStockHistoryTbl.getModel());
-
-        ingredientStock.populateStockIngredientHistoryTable((DefaultTableModel) ingStockHistoryTbl.getModel());
+        this.populateBlendHistoryTable();
+        
+        /* populate product table in the blend tab*/
+        blend.populateProductTable((DefaultTableModel) productTable.getModel());
 
         /*populate main order table in the order details tab*/
         AutoSuggest searchOrderComboBoxAutoSuggest = new AutoSuggest();
 
         searchOrderComboBoxAutoSuggest.setAutoSuggest(orderSearchCombo, order.populateOrderListTable((DefaultTableModel) orderListTable.getModel()));
         orderSearchCombo.setSelectedIndex(-1);
-        
-        /* combox auto suggests in inventory management */
+
+        /* combox auto suggest for ingredient in inventory management */
         AutoSuggest searchStockIngComboBoxAutoSuggest = new AutoSuggest();
-        
+
         searchStockIngComboBoxAutoSuggest.setAutoSuggest(searchStockIngComboBox, ingredient.loadNameForSearchStockIngComboBox());
         searchStockIngComboBox.setSelectedIndex(-1);
 
+        /* combox auto suggest for blend in inventory management */
         AutoSuggest searchStockBlendComboBoxAutoSuggest = new AutoSuggest();
-        
-        searchStockBlendComboBoxAutoSuggest.setAutoSuggest(searchStockBlendComboBox, blend.loadNameForSearchStockBlendsComboBox());
 
+        searchStockBlendComboBoxAutoSuggest.setAutoSuggest(searchStockBlendComboBox, blend.loadNameForSearchStockBlendsComboBox());
+        searchStockBlendComboBox.setSelectedIndex(-1);
+        
         /*Auto suggest method loads for the combo box in blends tab*/
         blend.initBlendCombo(searchBlendComboBox);
-        
+
         //method for combox value setting when table row select in inventryIngredient
         final ListSelectionModel selectionalModForStockIngTable = inventryIngredientTable.getSelectionModel();
         selectionalModForStockIngTable.addListSelectionListener(new ListSelectionListener() {
@@ -170,7 +170,7 @@ public class AdminPannel extends javax.swing.JFrame {
 
         });
 
-        //methods for combox value settings when table row select in inventryBlend
+        //methods for combox value setting when table row select in inventryBlend
         final ListSelectionModel selectionalModForStockBlendTable = inventryBlendTable.getSelectionModel();
         selectionalModForStockBlendTable.addListSelectionListener(new ListSelectionListener() {
 
@@ -184,34 +184,22 @@ public class AdminPannel extends javax.swing.JFrame {
 
         });
 
-        
         //method for enter key pressed in ingredient
         searchStockIngComboBox.getEditor().getEditorComponent().addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent evt) {
                 if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-                    String selectedIngName = (String) searchStockIngComboBox.getSelectedItem();
-
-                    if (selectedIngName.isEmpty()) {
-                        JOptionPane.showMessageDialog(searchStockIngBtn, "You haven't select any ingredient name !", "Empty Selection", JOptionPane.ERROR_MESSAGE);
-                    } else {
-                        System.out.println("Name : " + selectedIngName);
-                        Ingredient ingredeintForStock = new Ingredient();
-
-                        if (ingredeintForStock.checkAndLoadIngredientStockDetails(selectedIngName)) {
-                            searchStockIngComboBox.setSelectedIndex(-1);
-                            UpdateIngStock updateStock = new UpdateIngStock();
-
-                            updateStock.setVisible(true);
-                            updateStock.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-                            updateStock.updateStockItemNameLbl.setText(ingredeintForStock.getIngName());
-                            updateStock.updateStockCategoryLbl.setText(ingredeintForStock.getIngCategoryName());
-                            updateStock.stockQtyLbl.setText(String.valueOf(ingredeintForStock.getVisibleStock()));
-                        } else {
-                            JOptionPane.showMessageDialog(searchStockIngBtn,"You have selected invalid ingredient name !", "Invalid Name", JOptionPane.ERROR_MESSAGE);
-                            searchStockIngComboBox.setSelectedIndex(-1);
-                        }
-                    }
+                    searchStockIngredientCombo();
+                }
+            }
+        });
+        
+        //method for enter key pressed in blend
+        searchStockBlendComboBox.getEditor().getEditorComponent().addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent evt){
+                if (evt.getKeyCode() == KeyEvent.VK_ENTER){
+                    searchStockBlendCombo();
                 }
             }
         });
@@ -223,17 +211,26 @@ public class AdminPannel extends javax.swing.JFrame {
     ResultSet rs = null;
     Statement st = null;
 
-    public void populateIngStockTable(){
+    public void populateIngStockTable() {
         ingredient.populateIngredientTable((DefaultTableModel) inventryIngredientTable.getModel());
     }
+    
+    public void populateBlendStockTable(){
+        blend.populateBlendTable((DefaultTableModel) inventryBlendTable.getModel());
+    }
+
     public void populateIngHistoryTable() {
-        StockHistory ingredientHistoryStock = new StockHistory();
         ingredientHistoryStock.populateStockIngredientHistoryTable((DefaultTableModel) ingStockHistoryTbl.getModel());
     }
-    public void populateUserTable(){
+    
+    public void populateBlendHistoryTable(){
+        blendHistoryStock.populateStockBlendHistoryTable((DefaultTableModel) blendStockHistoryTbl.getModel());
+    }
+
+    public void populateUserTable() {
         user.viewUser((DefaultTableModel) userTable.getModel());
     }
-    
+
     //Setting default font
     public static void setUIFont(javax.swing.plaf.FontUIResource f) {
         java.util.Enumeration keys = UIManager.getDefaults().keys();
@@ -1257,7 +1254,6 @@ public class AdminPannel extends javax.swing.JFrame {
         editProfile.txtFirstName.setText(user.getFirstName());
         editProfile.txtLastName.setText(user.getLastName());
 
-
     }//GEN-LAST:event_profileBtnActionPerformed
 
     private void addUserBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addUserBtnActionPerformed
@@ -1289,56 +1285,16 @@ public class AdminPannel extends javax.swing.JFrame {
         orderDetails.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
     }//GEN-LAST:event_searchOrderBtnActionPerformed
 
+    /* search stock ingredient button action */
     private void searchStockIngBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchStockIngBtnActionPerformed
 
-        String selectedIngName = (String) searchStockIngComboBox.getSelectedItem();
-        
-        if (selectedIngName.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "You haven't select any ingredient name !", "Empty Selection", JOptionPane.ERROR_MESSAGE);
-        } else {
-            Ingredient ingredeintForStock = new Ingredient();
-
-            if (ingredeintForStock.checkAndLoadIngredientStockDetails(selectedIngName)) {
-                searchStockIngComboBox.setSelectedIndex(-1);
-                UpdateIngStock updateStock = new UpdateIngStock();
-                
-                updateStock.setAdminPannel(this);
-                updateStock.setVisible(true);
-                updateStock.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-                updateStock.updateStockItemNameLbl.setText(ingredeintForStock.getIngName());
-                updateStock.updateStockCategoryLbl.setText(ingredeintForStock.getIngCategoryName());
-                updateStock.stockQtyLbl.setText(String.valueOf(ingredeintForStock.getVisibleStock()));
-            } else {
-                JOptionPane.showMessageDialog(this, "You have selected invalid ingredient!", "Invalid Name", JOptionPane.ERROR_MESSAGE);
-                searchStockIngComboBox.setSelectedIndex(-1);
-            }
-        }
+        searchStockIngredientCombo();
     }//GEN-LAST:event_searchStockIngBtnActionPerformed
 
+    /* search stock blend button action */
     private void searchStockBlendsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchStockBlendsBtnActionPerformed
 
-        String selectedBlendName = (String) searchStockBlendComboBox.getSelectedItem();
-
-        if (selectedBlendName.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "You haven't select any blend name !", "Empty Selection", JOptionPane.ERROR_MESSAGE);
-        } else {
-
-            Blend blendForStock = new Blend();
-
-            if (blendForStock.checkAndLoadBlendStockDetails(selectedBlendName)) {
-                searchStockBlendComboBox.setSelectedIndex(-1);
-                UpdateBlendStock updateBlendStock = new UpdateBlendStock();
-
-                updateBlendStock.setVisible(true);
-                updateBlendStock.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-                updateBlendStock.updateStockItemNameLbl.setText(blendForStock.getBlendName());
-                updateBlendStock.updateStockItemCategoryLbl.setText(blendForStock.getBlendCategory());
-                updateBlendStock.stockQtyLbl.setText(String.valueOf(blendForStock.getVisibleStock()));
-            } else {
-                JOptionPane.showMessageDialog(this, "You have selected invalid blend name !", "Invalid Name", JOptionPane.ERROR_MESSAGE);
-                searchStockBlendComboBox.setSelectedIndex(-1);
-            }
-        }
+        searchStockBlendCombo();
     }//GEN-LAST:event_searchStockBlendsBtnActionPerformed
 
     private void deleteUserBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteUserBtnActionPerformed
@@ -1381,7 +1337,7 @@ public class AdminPannel extends javax.swing.JFrame {
     }//GEN-LAST:event_refreshBlendInventryBtnActionPerformed
 
     private void refreshBtnForIngredientStockHistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshBtnForIngredientStockHistoryActionPerformed
-        ingredientStock.populateStockIngredientHistoryTable((DefaultTableModel) ingStockHistoryTbl.getModel());
+        ingredientHistoryStock.populateStockIngredientHistoryTable((DefaultTableModel) ingStockHistoryTbl.getModel());
     }//GEN-LAST:event_refreshBtnForIngredientStockHistoryActionPerformed
 
     private void refreshBtnForBlendStockHistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshBtnForBlendStockHistoryActionPerformed
@@ -1392,6 +1348,70 @@ public class AdminPannel extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_searchBlendComboBoxActionPerformed
 
+    /* start of searchStockIngredientCombo method */
+    private void searchStockIngredientCombo() {
+        
+        int selectedIndex = searchStockIngComboBox.getSelectedIndex();
+
+        if (selectedIndex == -1) {
+            JOptionPane.showMessageDialog(this, "You haven't select any ingredient name !", "Empty Selection", JOptionPane.ERROR_MESSAGE);
+        } else {
+
+            String selectedIngName = (String) searchStockIngComboBox.getSelectedItem();
+            
+            Ingredient ingredeintForStock = new Ingredient();
+
+            if (ingredeintForStock.checkAndLoadIngredientStockDetails(selectedIngName)) {
+                searchStockIngComboBox.setSelectedIndex(-1);
+                
+                UpdateIngStock updateStock = new UpdateIngStock();
+
+                updateStock.setAdminPannel(this);
+                updateStock.setVisible(true);
+                updateStock.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+                updateStock.updateStockItemNameLbl.setText(ingredeintForStock.getIngName());
+                updateStock.updateStockCategoryLbl.setText(ingredeintForStock.getIngCategoryName());
+                updateStock.stockQtyLbl.setText(String.valueOf(ingredeintForStock.getVisibleStock()));
+            } else {
+                JOptionPane.showMessageDialog(this, "You have selected invalid ingredient!", "Invalid Name", JOptionPane.ERROR_MESSAGE);
+                searchStockIngComboBox.setSelectedIndex(-1);
+            }
+        }
+    }
+    /* end of searchStockIngredientCombo method */
+    
+    /* start of searchStockBlendCombo method */
+    private void searchStockBlendCombo() {
+        
+        int selectedIndex = searchStockBlendComboBox.getSelectedIndex();
+
+        if (selectedIndex == -1) {
+            JOptionPane.showMessageDialog(this, "You haven't select any blend name !", "Empty Selection", JOptionPane.ERROR_MESSAGE);
+        } else {
+
+            Blend blendForStock = new Blend();
+
+            String selectedBlendName = (String) searchStockBlendComboBox.getSelectedItem();
+            
+            if (blendForStock.checkAndLoadBlendStockDetails(selectedBlendName)) {
+                searchStockBlendComboBox.setSelectedIndex(-1);
+                
+                UpdateBlendStock updateBlendStock = new UpdateBlendStock();
+
+                updateBlendStock.setAdminPannel(this);
+                updateBlendStock.setVisible(true);
+                updateBlendStock.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+                updateBlendStock.updateStockItemNameLbl.setText(blendForStock.getBlendName());
+                updateBlendStock.updateStockItemCategoryLbl.setText(blendForStock.getBlendCategory());
+                updateBlendStock.stockQtyLbl.setText(String.valueOf(blendForStock.getVisibleStock()));
+            } else {
+                JOptionPane.showMessageDialog(this, "You have selected invalid blend name !", "Invalid Name", JOptionPane.ERROR_MESSAGE);
+                searchStockBlendComboBox.setSelectedIndex(-1);
+            }
+        }
+    }
+    /* end of searchStockBlendCombo method */
+    
     /**
      * @param args the command line arguments
      */

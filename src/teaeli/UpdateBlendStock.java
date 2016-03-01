@@ -53,8 +53,8 @@ public class UpdateBlendStock extends javax.swing.JFrame {
     //method to refresh related tables and close this window
     private void close(){
         this.setVisible(false);
-        adminPannel.populateIngStockTable();
-        adminPannel.populateIngHistoryTable();
+        adminPannel.populateBlendStockTable();
+        adminPannel.populateBlendHistoryTable();
         this.dispose();
     }
     
