@@ -513,11 +513,6 @@ public class AdminPannel extends javax.swing.JFrame {
         }
 
         searchStockIngComboBox.setEditable(true);
-        searchStockIngComboBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchStockIngComboBoxActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout inventoryManagementIngredientPanelLayout = new javax.swing.GroupLayout(inventoryManagementIngredientPanel);
         inventoryManagementIngredientPanel.setLayout(inventoryManagementIngredientPanelLayout);
@@ -845,12 +840,7 @@ public class AdminPannel extends javax.swing.JFrame {
         inventoryBlendLbl1.setText("Blend Details");
 
         searchBlendComboBox.setEditable(true);
-        searchBlendComboBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchBlendComboBoxActionPerformed(evt);
-            }
-        });
-
+        
         javax.swing.GroupLayout settingsBlendPanelLayout = new javax.swing.GroupLayout(settingsBlendPanel);
         settingsBlendPanel.setLayout(settingsBlendPanelLayout);
         settingsBlendPanelLayout.setHorizontalGroup(
@@ -1254,57 +1244,12 @@ public class AdminPannel extends javax.swing.JFrame {
 
     private void searchStockIngBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchStockIngBtnActionPerformed
 
-        String selectedIngName = (String) searchStockIngComboBox.getSelectedItem();
-        System.out.println("Selec : " + selectedIngName);
-        if (selectedIngName.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "You haven't select any ingredient name !", "Empty Selection", JOptionPane.ERROR_MESSAGE);
-        } else {
-
-            System.out.println("Name 2 : " + selectedIngName);
-            Ingredient ingredeintForStock = new Ingredient();
-
-            if (ingredeintForStock.checkAndLoadIngredientStockDetails(selectedIngName)) {
-                searchStockIngComboBox.setSelectedIndex(-1);
-                UpdateIngStock updateStock = new UpdateIngStock();
-                
-                updateStock.setAdminPannel(this);
-                updateStock.setVisible(true);
-                updateStock.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-                updateStock.updateStockItemNameLbl.setText(ingredeintForStock.getIngName());
-                updateStock.updateStockCategoryLbl.setText(ingredeintForStock.getIngCategoryName());
-                updateStock.stockQtyLbl.setText(String.valueOf(ingredeintForStock.getVisibleStock()));
-            } else {
-                JOptionPane.showMessageDialog(this, "You have selected invalid ingredient!", "Invalid Name", JOptionPane.ERROR_MESSAGE);
-                searchStockIngComboBox.setSelectedIndex(-1);
-            }
-        }
+        searchStockIngredientCombo();
     }//GEN-LAST:event_searchStockIngBtnActionPerformed
 
     private void searchStockBlendsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchStockBlendsBtnActionPerformed
 
-        String selectedBlendName = (String) searchStockBlendComboBox.getSelectedItem();
-
-        if (selectedBlendName.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "You haven't select any blend name !", "Empty Selection", JOptionPane.ERROR_MESSAGE);
-        } else {
-
-            Blend blendForStock = new Blend();
-
-            if (blendForStock.checkAndLoadBlendStockDetails(selectedBlendName)) {
-                searchStockBlendComboBox.setSelectedIndex(-1);
-                UpdateBlendStock updateBlendStock = new UpdateBlendStock();
-                
-                updateBlendStock.setAdminPannel(this);
-                updateBlendStock.setVisible(true);
-                updateBlendStock.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-                updateBlendStock.updateStockItemNameLbl.setText(blendForStock.getBlendName());
-                updateBlendStock.updateStockItemCategoryLbl.setText(blendForStock.getBlendCategory());
-                updateBlendStock.stockQtyLbl.setText(String.valueOf(blendForStock.getVisibleStock()));
-            } else {
-                JOptionPane.showMessageDialog(this, "You have selected invalid blend name !", "Invalid Name", JOptionPane.ERROR_MESSAGE);
-                searchStockBlendComboBox.setSelectedIndex(-1);
-            }
-        }
+        searchStockBlendCombo();
     }//GEN-LAST:event_searchStockBlendsBtnActionPerformed
 
     private void deleteUserBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteUserBtnActionPerformed
@@ -1337,14 +1282,6 @@ public class AdminPannel extends javax.swing.JFrame {
 
         }
     }//GEN-LAST:event_deleteUserBtnActionPerformed
-
-    private void searchStockIngComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchStockIngComboBoxActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_searchStockIngComboBoxActionPerformed
-
-    private void searchBlendComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBlendComboBoxActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_searchBlendComboBoxActionPerformed
 
     private void blendDeliveryBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blendDeliveryBtnActionPerformed
         DeliverBlend deliverBlend = new DeliverBlend();
