@@ -289,7 +289,6 @@ public class Blend {
         
         //query to update blend stock
         String query = "UPDATE blend SET visibleStock = '" + this.getVisibleStock() + "' WHERE blendID = '" + this.getBlendID() + "'";
-        System.out.println(query);
         
         int i = dbConn.updateResult(query);
         
