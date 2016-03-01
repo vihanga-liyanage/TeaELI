@@ -6,6 +6,7 @@
 package teaeli;
 
 import classes.Blend;
+import classes.Ingredient;
 import classes.ResultArray;
 import java.awt.Font;
 import java.awt.event.WindowAdapter;
@@ -29,6 +30,7 @@ import javax.swing.table.DefaultTableModel;
 public class CreateNewBlendOrder2 extends javax.swing.JFrame {
     
     private Blend blend;
+    private Ingredient ingredient;
     public CreateNewBlendOrder1 createNewBlendOrder1;
     public List<List<String>> blendList;
     
@@ -56,6 +58,7 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
         
         //Loading required class objects
         blend = new Blend();
+        ingredient = new Ingredient();
         
         //Setting date
         DateFormat formatter = new SimpleDateFormat("EEE, d MMM yyyy");
@@ -97,19 +100,23 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
             String blendName = blendListTbl.getValueAt(i, 0).toString();
             int qty = parseInt(blendListTbl.getValueAt(i, 1).toString());
             ResultArray res = blend.getRecipie(blendName);
-            int baseID;
+            String baseID = "";
             float totalIngPercentage = 0;
             while (res.next()) {
-                baseID = parseInt(res.getString(0));
+                baseID = res.getString(0);
                 String ingID = res.getString(1);
                 float ingPercentage = Float.parseFloat(res.getString(2));
                 if (res.getString(3).equals("0")){
                     totalIngPercentage += ingPercentage;
                 }
-                ResultArray ingData = blend.getIngDataByID(ingID);
+                ResultArray ingData = ingredient.getIngDataByID(ingID);
                 ingData.next();
                 addIngToMasterTbl(qty, ingPercentage, (List<String>) ingData.getRow());
             }
+            //Adding base composition with calculated percentage
+            ResultArray baseData = ingredient.getIngDataByID(baseID);
+            baseData.next();
+            addIngToMasterTbl(qty, 100-totalIngPercentage, (List<String>) baseData.getRow());
         }
     }
     
@@ -144,11 +151,11 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
             newRow.addElement(row.get(1));
             newRow.addElement(formatNum(ingQty));
             newRow.addElement(formatNum(row.get(3)));
-            newRow.addElement(formatNum(row.get(4)));
+            newRow.addElement(formatNum(row.get(5)));
             
             //calculating qty required
             float visible = parseFloat(row.get(3));
-            float invisible = parseFloat(row.get(4));
+            float invisible = parseFloat(row.get(5));
             float balance = 0;
             balance = ingQty - visible;
             if (balance > 0) {
@@ -161,6 +168,7 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
             newRow.addElement(formatNum(balance));
             newRow.addElement(0);
             newRow.addElement(formatNum(balance));
+            newRow.addElement(row.get(6));
             
             DefaultTableModel model = (DefaultTableModel) masterPlanTbl.getModel();
             model.addRow(newRow);
@@ -320,7 +328,7 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
             masterPlanTbl.getColumnModel().getColumn(5).setResizable(false);
             masterPlanTbl.getColumnModel().getColumn(6).setResizable(false);
             masterPlanTbl.getColumnModel().getColumn(7).setResizable(false);
-            masterPlanTbl.getColumnModel().getColumn(7).setPreferredWidth(200);
+            masterPlanTbl.getColumnModel().getColumn(7).setPreferredWidth(230);
         }
 
         confirmBtn.setText("Confirm");

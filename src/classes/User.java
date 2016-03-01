@@ -170,10 +170,6 @@ public class User {
 
 
     public int updateUserName(String firstname, String lastname, String username) {
-        Connection connection = null;
-        PreparedStatement pst = null;
-        connection = dbConn.setConnection();
-
         String query = "UPDATE user SET firstname =' " + firstname + "', lastname = '" + lastname + "' WHERE username = '" + username + "'";
         int rst = dbConn.updateResult(query);
         return rst;

@@ -8,6 +8,11 @@ import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 
 public class UpdateBlendStock extends javax.swing.JFrame {
+    private AdminPannel adminPannel;
+
+    public void setAdminPannel(AdminPannel adminPannel) {
+        this.adminPannel = adminPannel;
+    }
 
     public UpdateBlendStock() {
         initComponents();
@@ -43,18 +48,12 @@ public class UpdateBlendStock extends javax.swing.JFrame {
             }
         });
     }
-
-    private AdminPannel adminPannel;
-
-    public void setAdminPannel(AdminPannel adminPannel) {
-        this.adminPannel = adminPannel;
-    }
     
     //method to refresh related tables and close this window
     private void close(){
         this.setVisible(false);
-        adminPannel.populateIngStockTable();
-        adminPannel.populateIngHistoryTable();
+        adminPannel.populateBlendStockTable();
+        adminPannel.populateBlendHistoryTable();
         this.dispose();
     }
     
@@ -317,17 +316,9 @@ public class UpdateBlendStock extends javax.swing.JFrame {
 
             } else {
                 JOptionPane.showMessageDialog(this, "Please fill all fields before save", "Empty Fields", JOptionPane.ERROR_MESSAGE);
-                this.newQtyTxt.setText(null);
-                this.reasonToChangeTxt.setText(null);
-                this.blendStockDecreasedBtn.setSelected(false);
-                this.blendStockIncreaseBtn.setSelected(false);
             }
         } else {
             JOptionPane.showMessageDialog(this, "Please fill all fields before save", "Empty Fields", JOptionPane.ERROR_MESSAGE);
-            this.newQtyTxt.setText(null);
-            this.reasonToChangeTxt.setText(null);
-            this.blendStockDecreasedBtn.setSelected(false);
-            this.blendStockIncreaseBtn.setSelected(false);
         }
     }//GEN-LAST:event_saveBtnActionPerformed
 
