@@ -410,6 +410,12 @@ public class AdminPannel extends javax.swing.JFrame {
         jLabel15.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel15.setText("Select order ID to view details");
 
+        orderSearchCombo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                orderSearchComboActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout orderHandlingPanelLayout = new javax.swing.GroupLayout(orderHandlingPanel);
         orderHandlingPanel.setLayout(orderHandlingPanelLayout);
         orderHandlingPanelLayout.setHorizontalGroup(
@@ -1286,8 +1292,13 @@ public class AdminPannel extends javax.swing.JFrame {
 
     private void searchOrderBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchOrderBtnActionPerformed
         OrderDetails orderDetails = new OrderDetails();
+        String id = orderSearchCombo.getSelectedItem().toString();
+        Order tmp = order.viewOrder((DefaultTableModel) orderDetails.blendTable.getModel(), (DefaultTableModel) orderDetails.orderDetailsTable.getModel(), id);
+        orderDetails.orderIDLabel.setText(tmp.getOrderID());
+        orderDetails.dateLabel.setText(tmp.getDate());
         orderDetails.setVisible(true);
         orderDetails.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        orderSearchCombo.setSelectedIndex(-1);
     }//GEN-LAST:event_searchOrderBtnActionPerformed
 
     private void searchStockIngBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchStockIngBtnActionPerformed
@@ -1391,6 +1402,10 @@ public class AdminPannel extends javax.swing.JFrame {
     private void searchBlendComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBlendComboBoxActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_searchBlendComboBoxActionPerformed
+
+    private void orderSearchComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderSearchComboActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_orderSearchComboActionPerformed
 
     /**
      * @param args the command line arguments
