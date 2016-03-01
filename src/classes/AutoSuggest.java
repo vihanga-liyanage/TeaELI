@@ -7,7 +7,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 import java.util.Vector;
@@ -27,7 +26,7 @@ public class AutoSuggest {
         try {
             rst.first();
             if (Search.getItemCount() == 0) {
-                Search.addItem("");
+                //Search.addItem("");
                 do {
                     Search.addItem(rst.getString(1));
                     v.addElement(rst.getString(1));

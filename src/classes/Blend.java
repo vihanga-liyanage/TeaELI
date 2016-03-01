@@ -10,8 +10,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -402,7 +400,6 @@ public class Blend {
         } else {
             JOptionPane.showMessageDialog(null, "Error!, Data not Saved");
         }
-
         return 1;
     }
 
@@ -435,5 +432,14 @@ public class Blend {
         return validBlendName;
     }
     /* end ofcheckAndLoadBlendDeliverDetails method */
+
+    //getting recipie data for blend
+    public ResultArray getRecipie(String blendName){
+        String query = "SELECT b.baseID, r.ingID, r.ingPercent, r.type \n" +
+                        "FROM blend b \n" +
+                        "INNER JOIN recipie r on b.blendID=r.blendID \n" +
+                        "WHERE b.blendName='" + blendName + "'";
+        return dbConn.getResultArray(query);
+    }
     
 }
