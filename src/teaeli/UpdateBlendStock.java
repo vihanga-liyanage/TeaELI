@@ -8,6 +8,11 @@ import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 
 public class UpdateBlendStock extends javax.swing.JFrame {
+    private AdminPannel adminPannel;
+
+    public void setAdminPannel(AdminPannel adminPannel) {
+        this.adminPannel = adminPannel;
+    }
 
     public UpdateBlendStock() {
         initComponents();
@@ -42,6 +47,14 @@ public class UpdateBlendStock extends javax.swing.JFrame {
             public void keyPressed(KeyEvent e) {
             }
         });
+    }
+    
+    //method to refresh related tables and close this window
+    private void close(){
+        this.setVisible(false);
+        adminPannel.populateBlendStockTable();
+        //adminPannel.populateIngHistoryTable();
+        this.dispose();
     }
 
     @SuppressWarnings("unchecked")
@@ -280,7 +293,7 @@ public class UpdateBlendStock extends javax.swing.JFrame {
 
                     if (blend.updateStockQty()) {
                         JOptionPane.showMessageDialog(this, "Updated Successfuly !", "Update Success", JOptionPane.INFORMATION_MESSAGE);
-                        this.setVisible(false);
+                        close();
                     } else {
                         JOptionPane.showMessageDialog(this, "Unable to update !", "Update Fails", JOptionPane.ERROR_MESSAGE);
                     }
