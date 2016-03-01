@@ -1176,8 +1176,13 @@ public class AdminPannel extends javax.swing.JFrame {
 
         String[] resultArray = new String[5];
 
-        if ((String) searchIngredientComboBox.getSelectedItem() == "") {
+        String searchItem = (String) searchIngredientComboBox.getSelectedItem();
+
+        if (searchItem.equalsIgnoreCase("")) {
+            System.out.println("inside no select");
             JOptionPane.showMessageDialog(null, "You Haven't selected an Ingredient!!!", "Pleae select", 0);
+            
+                    
         } else {
             try {
                 resultArray = ingredient.viewAllDetailsOfAIngredient((String) searchIngredientComboBox.getSelectedItem());
