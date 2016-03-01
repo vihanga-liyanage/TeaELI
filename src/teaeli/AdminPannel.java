@@ -1498,7 +1498,7 @@ public class AdminPannel extends javax.swing.JFrame {
     public javax.swing.JButton refreshIngredientInventryBtn;
     public javax.swing.JComboBox searchBlendComboBox;
     private javax.swing.JButton searchIngredientBtn;
-    private javax.swing.JComboBox searchIngredientComboBox;
+    public javax.swing.JComboBox searchIngredientComboBox;
     private javax.swing.JButton searchOrderBtn;
     private javax.swing.JButton searchProductBtn;
     private javax.swing.JComboBox searchStockBlendComboBox;
