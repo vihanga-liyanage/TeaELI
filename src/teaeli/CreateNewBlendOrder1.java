@@ -108,7 +108,6 @@ public class CreateNewBlendOrder1 extends javax.swing.JFrame {
         blendsCombo.requestFocus();
         
         //setting focus to qty txt when item selected
-        /*
         blendsCombo.addPopupMenuListener(new PopupMenuListener() {
 
             @Override
@@ -122,7 +121,7 @@ public class CreateNewBlendOrder1 extends javax.swing.JFrame {
             @Override
             public void popupMenuWillBecomeVisible(PopupMenuEvent e) {}
         });
-        */
+
         deleteBtn.setEnabled(false);
         
         //enabling delete button and update excess qty on row select

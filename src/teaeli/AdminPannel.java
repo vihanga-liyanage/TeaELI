@@ -121,13 +121,13 @@ public class AdminPannel extends javax.swing.JFrame {
 
         /* populate inventryIngredientTable in inventory management -- dont remove this*/
         populateIngStockTable();
-        
+
         /*populate inventryBlendTable in the inventory management*/
         populateBlendStockTable();
-        
+
         /*Populate ingredientstock history*/
         populateIngHistoryTable();
-        
+
         /*Populate blendstock history*/
         populateBlendHistoryTable();
 
@@ -136,18 +136,18 @@ public class AdminPannel extends javax.swing.JFrame {
 
         /*populate main order table in the order details tab*/
         order.populateOrderListTable((DefaultTableModel) orderListTable.getModel());
-        
+
         /*load the orderComboBox in the order details tab*/
         AutoSuggest searchOrderComboBoxAutoSuggest = new AutoSuggest();
         searchOrderComboBoxAutoSuggest.setAutoSuggest(orderSearchCombo, order.loadOrderComboBox());
         orderSearchCombo.setSelectedIndex(-1);
-        
+
         /* combox auto suggests in inventory management */
         AutoSuggest searchStockIngComboBoxAutoSuggest = new AutoSuggest();
         searchStockIngComboBoxAutoSuggest.setAutoSuggest(searchStockIngComboBox, ingredient.loadNameForSearchStockIngComboBox());
 
         searchStockIngComboBox.setSelectedIndex(-1);
-        
+
         AutoSuggest searchStockBlendComboBoxAutoSuggest = new AutoSuggest();
         searchStockBlendComboBoxAutoSuggest.setAutoSuggest(searchStockBlendComboBox, blend.loadNameForSearchStockBlendsComboBox());
 
@@ -155,7 +155,7 @@ public class AdminPannel extends javax.swing.JFrame {
 
         /*Auto suggest method loads for the combo box in blends tab*/
         blend.initBlendCombo(searchBlendComboBox);
-        
+
         //method for combox value setting when table row select in inventryIngredient
         final ListSelectionModel selectionalModForStockIngTable = inventryIngredientTable.getSelectionModel();
         selectionalModForStockIngTable.addListSelectionListener(new ListSelectionListener() {
@@ -183,7 +183,6 @@ public class AdminPannel extends javax.swing.JFrame {
             }
 
         });
-
 
         //method for combox value setting when table row select in settings Ingredient
         final ListSelectionModel selectionalModForSettingsIngTable = settingsIngredientTable.getSelectionModel();
@@ -251,7 +250,7 @@ public class AdminPannel extends javax.swing.JFrame {
     ResultSet rs = null;
     Statement st = null;
 
-    public void populateIngStockTable(){
+    public void populateIngStockTable() {
         ingredient.populateIngredientTable((DefaultTableModel) inventryIngredientTable.getModel());
     }
 
@@ -270,7 +269,7 @@ public class AdminPannel extends javax.swing.JFrame {
     public void populateUserTable() {
         user.viewUser((DefaultTableModel) userTable.getModel());
     }
-    
+
     //Setting default font
     public static void setUIFont(javax.swing.plaf.FontUIResource f) {
         java.util.Enumeration keys = UIManager.getDefaults().keys();
@@ -1328,9 +1327,36 @@ public class AdminPannel extends javax.swing.JFrame {
     }//GEN-LAST:event_deleteUserBtnActionPerformed
 
     private void blendDeliveryBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blendDeliveryBtnActionPerformed
-        DeliverBlend deliverBlend = new DeliverBlend();
-        deliverBlend.setVisible(true);
-        deliverBlend.setDefaultCloseOperation(HIDE_ON_CLOSE);
+
+        int selectedIndex = searchStockBlendComboBox.getSelectedIndex();
+
+        if (selectedIndex == -1) {
+            JOptionPane.showMessageDialog(this, "You haven't select any ingredient name !", "Empty Selection", JOptionPane.ERROR_MESSAGE);
+        } else {
+
+            String selectedIngName = (String) searchStockBlendComboBox.getSelectedItem();
+
+            Blend blendDelivery = new Blend();
+
+            if (blendDelivery.checkAndLoadBlendDeliverDetails(selectedIngName)) {
+                
+                searchStockBlendComboBox.setSelectedIndex(-1);
+                
+                DeliverBlend deliverBlend = new DeliverBlend();
+                
+                deliverBlend.setAdminPannel(this);
+                deliverBlend.setVisible(true);
+                deliverBlend.setDefaultCloseOperation(HIDE_ON_CLOSE);
+                deliverBlend.blendNameLbl.setText(blendDelivery.getBlendName());
+                deliverBlend.blendCatgLbl.setText(blendDelivery.getBlendCategory());
+                deliverBlend.allocatedQtyLabel.setText(String.valueOf(blendDelivery.getOrderedStock()));
+                deliverBlend.freeQtyLbl.setText(String.valueOf(blendDelivery.getVisibleStock()));
+                
+            } else {
+                JOptionPane.showMessageDialog(this, "You have selected invalid blend name !", "Invalid Name", JOptionPane.ERROR_MESSAGE);
+                searchStockBlendComboBox.setSelectedIndex(-1);
+            }
+        }
     }//GEN-LAST:event_blendDeliveryBtnActionPerformed
 
     /* start of searchStockIngredientCombo method */
@@ -1438,7 +1464,6 @@ public class AdminPannel extends javax.swing.JFrame {
     }
     /* start of searchIngredientCombo method */
 
-
     private void orderSearchComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderSearchComboActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_orderSearchComboActionPerformed
@@ -1458,6 +1483,7 @@ public class AdminPannel extends javax.swing.JFrame {
     private void searchBlendComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBlendComboBoxActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_searchBlendComboBoxActionPerformed
+
 
     /**
      * @param args the command line arguments
