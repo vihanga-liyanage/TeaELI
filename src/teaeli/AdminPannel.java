@@ -131,7 +131,7 @@ public class AdminPannel extends javax.swing.JFrame {
 
         /*Populate ingredientstock history*/
         this.populateBlendHistoryTable();
-        
+
         /* populate product table in the blend tab*/
         blend.populateProductTable((DefaultTableModel) productTable.getModel());
 
@@ -152,7 +152,7 @@ public class AdminPannel extends javax.swing.JFrame {
 
         searchStockBlendComboBoxAutoSuggest.setAutoSuggest(searchStockBlendComboBox, blend.loadNameForSearchStockBlendsComboBox());
         searchStockBlendComboBox.setSelectedIndex(-1);
-        
+
         /*Auto suggest method loads for the combo box in blends tab*/
         blend.initBlendCombo(searchBlendComboBox);
 
@@ -184,6 +184,20 @@ public class AdminPannel extends javax.swing.JFrame {
 
         });
 
+        //method for combox value setting when table row select in settings Ingredient
+        final ListSelectionModel selectionalModForSettingsIngTable = settingsIngredientTable.getSelectionModel();
+        selectionalModForSettingsIngTable.addListSelectionListener(new ListSelectionListener() {
+
+            @Override
+            public void valueChanged(ListSelectionEvent lsevt) {
+                if (!selectionalModForSettingsIngTable.isSelectionEmpty()) {
+                    int row = selectionalModForSettingsIngTable.getMinSelectionIndex();
+                    searchIngredientComboBox.setSelectedItem(settingsIngredientTable.getValueAt(row, 0));
+                }
+            }
+
+        });
+
         //method for enter key pressed in ingredient
         searchStockIngComboBox.getEditor().getEditorComponent().addKeyListener(new KeyAdapter() {
             @Override
@@ -193,16 +207,27 @@ public class AdminPannel extends javax.swing.JFrame {
                 }
             }
         });
-        
+
         //method for enter key pressed in blend
         searchStockBlendComboBox.getEditor().getEditorComponent().addKeyListener(new KeyAdapter() {
             @Override
-            public void keyPressed(KeyEvent evt){
-                if (evt.getKeyCode() == KeyEvent.VK_ENTER){
+            public void keyPressed(KeyEvent evt) {
+                if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
                     searchStockBlendCombo();
                 }
             }
         });
+
+        //method for enter key pressed in ingredient in settings tab
+        searchIngredientComboBox.getEditor().getEditorComponent().addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent evt) {
+                if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+                    serchIngredientCombo();
+                }
+            }
+        });
+
     }
 
     DBConnection dbcon = new DBConnection();
@@ -214,16 +239,16 @@ public class AdminPannel extends javax.swing.JFrame {
     public void populateIngStockTable() {
         ingredient.populateIngredientTable((DefaultTableModel) inventryIngredientTable.getModel());
     }
-    
-    public void populateBlendStockTable(){
+
+    public void populateBlendStockTable() {
         blend.populateBlendTable((DefaultTableModel) inventryBlendTable.getModel());
     }
 
     public void populateIngHistoryTable() {
         ingredientHistoryStock.populateStockIngredientHistoryTable((DefaultTableModel) ingStockHistoryTbl.getModel());
     }
-    
-    public void populateBlendHistoryTable(){
+
+    public void populateBlendHistoryTable() {
         blendHistoryStock.populateStockBlendHistoryTable((DefaultTableModel) blendStockHistoryTbl.getModel());
     }
 
@@ -694,14 +719,16 @@ public class AdminPannel extends javax.swing.JFrame {
                 .addGroup(settingsIngPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPane10)
                     .addGroup(settingsIngPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 829, Short.MAX_VALUE)
-                        .addComponent(addItemBtn))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, settingsIngPanelLayout.createSequentialGroup()
-                        .addComponent(searchIngredientComboBox, 0, 200, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(searchIngredientBtn)
-                        .addGap(979, 979, 979)))
+                        .addGroup(settingsIngPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(settingsIngPanelLayout.createSequentialGroup()
+                                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 1019, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(settingsIngPanelLayout.createSequentialGroup()
+                                .addComponent(searchIngredientComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(searchIngredientBtn)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 711, Short.MAX_VALUE)))
+                        .addComponent(addItemBtn)))
                 .addContainerGap())
         );
         settingsIngPanelLayout.setVerticalGroup(
@@ -713,11 +740,11 @@ public class AdminPannel extends javax.swing.JFrame {
                     .addComponent(addItemBtn))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(settingsIngPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(searchIngredientComboBox, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
-                    .addComponent(searchIngredientBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(searchIngredientComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(searchIngredientBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 389, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(80, Short.MAX_VALUE))
+                .addContainerGap(73, Short.MAX_VALUE))
         );
 
         settingsTabbedPane.addTab("    Ingredients    ", settingsIngPanel);
@@ -1170,45 +1197,7 @@ public class AdminPannel extends javax.swing.JFrame {
     }//GEN-LAST:event_addProductBtnActionPerformed
 
     private void searchIngredientBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchIngredientBtnActionPerformed
-
-        String[] resultArray = new String[5];
-
-        String searchItem = (String) searchIngredientComboBox.getSelectedItem();
-
-        if (searchItem.equalsIgnoreCase("")) {
-            System.out.println("inside no select");
-            JOptionPane.showMessageDialog(null, "You Haven't selected an Ingredient!!!", "Pleae select", 0);
-            
-                    
-        } else {
-            try {
-                resultArray = ingredient.viewAllDetailsOfAIngredient((String) searchIngredientComboBox.getSelectedItem());
-            } catch (SQLException ex) {
-                Logger.getLogger(AdminPannel.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            IngredientDetails itemDetails = new IngredientDetails();
-            Supplier supplier = new Supplier();
-
-            //set values to fields in IngredientDetails window
-            //load supplier list to combobox
-            AutoSuggest supplierComboboxAutoSuggest = new AutoSuggest();
-            try {
-                supplierComboboxAutoSuggest.setAutoSuggest(itemDetails.supplierCombobox, supplier.loadSuppliersForCombobox());
-            } catch (SQLException ex) {
-                Logger.getLogger(AdminPannel.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-            itemDetails.itemNameTxt.setText(resultArray[0]);
-            itemDetails.setName(resultArray[1]); //set ingid as name
-            itemDetails.itemTypeCombo.setSelectedItem(resultArray[2]);
-            itemDetails.supplierCombobox.setSelectedItem(resultArray[3]);
-            itemDetails.unitPriceTxt.setText(resultArray[4]);
-
-            itemDetails.setVisible(true);
-            itemDetails.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-            searchIngredientComboBox.setSelectedIndex(-1);
-        }
-
+        serchIngredientCombo();
     }//GEN-LAST:event_searchIngredientBtnActionPerformed
 
     private void addNewBlendsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addNewBlendsBtnActionPerformed
@@ -1355,7 +1344,7 @@ public class AdminPannel extends javax.swing.JFrame {
 
     /* start of searchStockIngredientCombo method */
     private void searchStockIngredientCombo() {
-        
+
         int selectedIndex = searchStockIngComboBox.getSelectedIndex();
 
         if (selectedIndex == -1) {
@@ -1363,12 +1352,12 @@ public class AdminPannel extends javax.swing.JFrame {
         } else {
 
             String selectedIngName = (String) searchStockIngComboBox.getSelectedItem();
-            
+
             Ingredient ingredeintForStock = new Ingredient();
 
             if (ingredeintForStock.checkAndLoadIngredientStockDetails(selectedIngName)) {
                 searchStockIngComboBox.setSelectedIndex(-1);
-                
+
                 UpdateIngStock updateStock = new UpdateIngStock();
 
                 updateStock.setAdminPannel(this);
@@ -1384,10 +1373,10 @@ public class AdminPannel extends javax.swing.JFrame {
         }
     }
     /* end of searchStockIngredientCombo method */
-    
+
     /* start of searchStockBlendCombo method */
     private void searchStockBlendCombo() {
-        
+
         int selectedIndex = searchStockBlendComboBox.getSelectedIndex();
 
         if (selectedIndex == -1) {
@@ -1397,10 +1386,10 @@ public class AdminPannel extends javax.swing.JFrame {
             Blend blendForStock = new Blend();
 
             String selectedBlendName = (String) searchStockBlendComboBox.getSelectedItem();
-            
+
             if (blendForStock.checkAndLoadBlendStockDetails(selectedBlendName)) {
                 searchStockBlendComboBox.setSelectedIndex(-1);
-                
+
                 UpdateBlendStock updateBlendStock = new UpdateBlendStock();
 
                 updateBlendStock.setAdminPannel(this);
@@ -1416,7 +1405,48 @@ public class AdminPannel extends javax.swing.JFrame {
         }
     }
     /* end of searchStockBlendCombo method */
-    
+
+    /* start of searchIngredientCombo method */
+    private void serchIngredientCombo() {
+        String[] resultArray = new String[5];
+
+        String searchItem = (String) searchIngredientComboBox.getSelectedItem();
+
+        if (searchItem.equalsIgnoreCase("")) {
+            System.out.println("inside no select");
+            JOptionPane.showMessageDialog(null, "You Haven't selected an Ingredient!!!", "Pleae select", 0);
+
+        } else {
+            try {
+                resultArray = ingredient.viewAllDetailsOfAIngredient((String) searchIngredientComboBox.getSelectedItem());
+            } catch (SQLException ex) {
+                Logger.getLogger(AdminPannel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            IngredientDetails itemDetails = new IngredientDetails();
+            Supplier supplier = new Supplier();
+
+            //set values to fields in IngredientDetails window
+            //load supplier list to combobox
+            AutoSuggest supplierComboboxAutoSuggest = new AutoSuggest();
+            try {
+                supplierComboboxAutoSuggest.setAutoSuggest(itemDetails.supplierCombobox, supplier.loadSuppliersForCombobox());
+            } catch (SQLException ex) {
+                Logger.getLogger(AdminPannel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            itemDetails.itemNameTxt.setText(resultArray[0]);
+            itemDetails.setName(resultArray[1]); //set ingid as name
+            itemDetails.itemTypeCombo.setSelectedItem(resultArray[2]);
+            itemDetails.supplierCombobox.setSelectedItem(resultArray[3]);
+            itemDetails.unitPriceTxt.setText(resultArray[4]);
+
+            itemDetails.setVisible(true);
+            itemDetails.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+            searchIngredientComboBox.setSelectedIndex(-1);
+        }
+    }
+    /* start of searchIngredientCombo method */
+
     /**
      * @param args the command line arguments
      */
