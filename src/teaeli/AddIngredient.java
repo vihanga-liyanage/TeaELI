@@ -5,6 +5,7 @@
  */
 package teaeli;
 
+import classes.AutoSuggest;
 import classes.DBConnection;
 import classes.Ingredient;
 import classes.Supplier;
@@ -33,14 +34,11 @@ import static teaeli.IngredientDetails.supplierCombobox;
 public class AddIngredient extends javax.swing.JFrame {
 
     DBConnection dbcon = new DBConnection();
-    Connection con = null;
-    PreparedStatement pst = null;
-    ResultSet rs = null;
-    Statement st = null;
+    AdminPannel adminpanel = new AdminPannel();
+
     Ingredient ingr = new Ingredient();
 
     Supplier supplier = new Supplier();
-            
 
     public AddIngredient() {
         //Add windows look and feel
@@ -248,7 +246,6 @@ public class AddIngredient extends javax.swing.JFrame {
         name = txtName.getText();
         type = itemTypeCombo.getSelectedItem().toString();
         supname = supliercombo.getSelectedItem().toString();
-        
 
         if (name.isEmpty() || supname.isEmpty() || txtPrice.getText().isEmpty()) {
 
@@ -256,14 +253,24 @@ public class AddIngredient extends javax.swing.JFrame {
 
         } else {
 
-            if(Float.parseFloat(txtPrice.getText())<0){
+            if (Float.parseFloat(txtPrice.getText()) < 0) {
                 JOptionPane.showMessageDialog(this, "Enter valid price");
-            }
-            else {
+            } else {
 
                 int result = ingr.addNewIngredient(name, type, supname, price);
                 if (result == 1) {
                     JOptionPane.showMessageDialog(this, "Ingredient Succesfully Added");
+                    this.setVisible(false);
+                    AutoSuggest searchIngredientComboBoxAutoSuggest = new AutoSuggest();
+                    searchIngredientComboBoxAutoSuggest.setAutoSuggest(adminpanel.searchIngredientComboBox, ingr.loadNameForSearchStockIngComboBox());
+                    
+                    try {
+                        ingr.viewAllIngredients();
+
+                    } catch (SQLException ex) {
+                        System.out.println("SQL error in view all ingredients method" + ex);
+                    }
+
                 } else {
                     JOptionPane.showMessageDialog(this, "Error occurd while updating.. changes will not be saved");
                 }
@@ -274,37 +281,34 @@ public class AddIngredient extends javax.swing.JFrame {
     }//GEN-LAST:event_addBtnActionPerformed
 
     private void btnAddSupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddSupplierActionPerformed
-        try{   
-        String suplierName = JOptionPane.showInputDialog(null, "Enter Supplier Name");
-        
-        
-        
-        if (suplierName.equals("")) { // check for null input
-            JOptionPane.showMessageDialog(this, "Please enter supplier name!!!");
-        } else {
-            try {
-                int inserted = supplier.addNewSupplier(suplierName);
+        try {
+            String suplierName = JOptionPane.showInputDialog(null, "Enter Supplier Name");
 
-                if (inserted == 1) {
-                    JOptionPane.showMessageDialog(null, "New supplier added successfully", "New supplier added", 1);
-                    supliercombo.addItem(suplierName);
-                    supliercombo.setSelectedItem(suplierName);
-                    supplierCombobox.addItem(suplierName);
-                } else {
-                    JOptionPane.showMessageDialog(this, "Error occurd while Adding.. changes will not be saved");
+            if (suplierName.equals("")) { // check for null input
+                JOptionPane.showMessageDialog(this, "Please enter supplier name!!!");
+            } else {
+                try {
+                    int inserted = supplier.addNewSupplier(suplierName);
 
+                    if (inserted == 1) {
+                        JOptionPane.showMessageDialog(null, "New supplier added successfully", "New supplier added", 1);
+                        supliercombo.addItem(suplierName);
+                        supliercombo.setSelectedItem(suplierName);
+                        supplierCombobox.addItem(suplierName);
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Error occurd while Adding.. changes will not be saved");
+
+                    }
+                } catch (SQLException ex) {
+                    System.out.println("SQL error : " + ex);
                 }
-            } catch (SQLException ex) {
-                System.out.println("SQL error : " + ex);
+
             }
 
-        }
-        
-        }
-        catch (NullPointerException e){
+        } catch (NullPointerException e) {
             System.out.println(e);
         }
-        
+
 
     }//GEN-LAST:event_btnAddSupplierActionPerformed
 
