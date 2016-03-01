@@ -167,18 +167,12 @@ public class AutoSuggest {
                     for (int i = 0; i < v.size(); i++) {
                         String str = (String) v.elementAt(i);
                         if(txt.equals("")){
-                            //mhp.amount.requestFocusInWindow();
-                            //spi.amount.requestFocusInWindow();
                             return;
                         }else if (str.toLowerCase().startsWith(txt)) {
                             tx.setText(str);
-                            //mhp.amount.requestFocusInWindow();
-                            //spi.amount.requestFocusInWindow();
                             return;
 
                         } else if (str.equals(tx.getText())) {
-                            //mhp.amount.requestFocusInWindow();
-                            //spi.amount.requestFocusInWindow();
                             return;
                         }
                     }

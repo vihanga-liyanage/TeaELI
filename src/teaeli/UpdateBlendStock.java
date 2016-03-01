@@ -56,7 +56,7 @@ public class UpdateBlendStock extends javax.swing.JFrame {
         //adminPannel.populateIngHistoryTable();
         this.dispose();
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -253,6 +253,7 @@ public class UpdateBlendStock extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
     private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
         this.setVisible(false);
     }//GEN-LAST:event_cancelBtnActionPerformed
@@ -306,7 +307,7 @@ public class UpdateBlendStock extends javax.swing.JFrame {
                     } else {
                         if (blend.updateStockQty()) {
                             JOptionPane.showMessageDialog(this, "Updated Successfuly !", "Update Success", JOptionPane.INFORMATION_MESSAGE);
-                            this.setVisible(false);
+                            close();
                         } else {
                             JOptionPane.showMessageDialog(this, "Unable to update !", "Update Fails", JOptionPane.ERROR_MESSAGE);
                         }

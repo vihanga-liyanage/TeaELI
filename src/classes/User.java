@@ -113,42 +113,25 @@ public class User {
         return rslt;
     }
 
+    /* satrt of getIDByUsername method */
     public void getIDByUsername() {
 
-        Connection connection = null;
-        ResultSet resultSet = null;
+        ResultArray resultArray;
 
         try {
-            connection = dbConn.setConnection();
-
             String query = "SELECT userID FROM user WHERE username = '" + loginFrame.user + "'";
 
-            resultSet = dbConn.getResult(query, connection);
+            resultArray = dbConn.getResultArray(query);
 
-            if (resultSet.next()) {
-                this.setUserID(Integer.parseInt(resultSet.getString(1)));
+            if (resultArray.next()) {
+                this.setUserID(Integer.parseInt(resultArray.getString(0)));
             }
-
-        } catch (SQLException | NumberFormatException e) {
+        } catch (NumberFormatException e) {
             System.out.println("Exception : " + e);
-        } finally {
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (SQLException e) {
-                    System.err.println("Resultset close error : " + e);
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException e) {
-                    System.err.println("Connection close error : " + e);
-                }
-            }
-        }
+        } 
     }
-
+    /* end of getIDByUsername method */
+    
     public int checkLogin(String userName, String password) {
         Connection connection = null;
         PreparedStatement pst = null;
@@ -185,27 +168,22 @@ public class User {
         }
     }
 
+
     public int updateUserName(String firstname, String lastname, String username) {
         Connection connection = null;
         PreparedStatement pst = null;
         connection = dbConn.setConnection();
+
         String query = "UPDATE user SET firstname =' " + firstname + "', lastname = '" + lastname + "' WHERE username = '" + username + "'";
-        if (dbConn.updateResult(query, connection) == 1) {
-            return 1;
-        } else {
-            return 2;
-        }
+        int rst = dbConn.updateResult(query);
+        return rst;
     }
 
-    public int updatePassword(String firstname, String lastname, String username, String newpassword, String currentpassword) {
-        Connection connection = null;
-        PreparedStatement pst = null;
-        connection = dbConn.setConnection();
-        String query = "UPDATE user SET firstname =' " + firstname + "', lastname = '" + lastname + "',password = sha1('" + newpassword + "') WHERE username = '" + username + "' and password = sha1('" + currentpassword + "')";
-        if (dbConn.updateResult(query, connection) == 1) {
-            return 1;
-        } else {
-            return 2;
-        }
-    }
+    
+    public  int updatePassword(String firstname, String lastname,String username,String newpassword,String currentpassword){
+        String query = "UPDATE user SET firstname =' "+firstname+"', lastname = '"+lastname+"',password = sha1('"+newpassword+"') WHERE username = '"+username+"' and password = sha1('"+currentpassword+"')";
+        int rst = dbConn.updateResult(query);
+        return rst;
+
+    }   
 }
