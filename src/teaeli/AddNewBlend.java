@@ -483,25 +483,25 @@ public class AddNewBlend extends javax.swing.JFrame {
                 ingPerCount = ingPerCount + initPer;
                 /*System.out.println(a);*/
             }
-            for(int i=0; i <flavCount;i++){
+            /*for(int i=0; i <flavCount;i++){
                 float initPer = Float.parseFloat(addNewBlendIngTbl.getValueAt(i, 1).toString()); ;
                 flavPerCount = flavPerCount + initPer;
-            }
+            }*/
 
             if(ingPerCount <= 0 || ingPerCount>=100){
                 JOptionPane.showMessageDialog(this, "Invalid percentage");
                 
-            }else if(flavPerCount <= 0 || flavPerCount>=100){
+            }/*else if(flavPerCount <= 0 || flavPerCount>=100){
                 JOptionPane.showMessageDialog(this, "Invalid percentage");
-            }else{
-                int ret = blend.addNewBlend(blendID, blendName, base, blendCategory);
+            }*/else{
+                /*int ret = blend.addNewBlend(blendID, blendName, base, blendCategory);
                 
                 String query1 = "TNSERT INTO recipie VALUES";
                 String q1 ="";
                 
                 for(int i =0; i<ingCount ; i++){
                     
-                }
+                }*/
                
                 
                 

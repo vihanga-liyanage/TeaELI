@@ -108,7 +108,7 @@ public class AdminPannel extends javax.swing.JFrame {
         /*Start of ingredient class method calls*/
         //populate serch ingredient combobox in settings->ingredient
         AutoSuggest searchIngredientComboBoxAutoSuggest = new AutoSuggest();
-        searchIngredientComboBoxAutoSuggest.setAutoSuggestTwo(searchIngredientComboBox, ingredient.loadNameForSearchStockIngComboBox2());
+        //searchIngredientComboBoxAutoSuggest.setAutoSuggest(searchIngredientComboBox, ingredient.loadNameForSearchStockIngComboBox2());
 
         //start of view all ingredients
         try {
@@ -140,12 +140,12 @@ public class AdminPannel extends javax.swing.JFrame {
         /*populate main order table in the order details tab*/
         AutoSuggest searchOrderComboBoxAutoSuggest = new AutoSuggest();
         ArrayList<String> result = order.populateOrderListTable((DefaultTableModel) orderListTable.getModel());
-        searchOrderComboBoxAutoSuggest.setAutoSuggestTwo(orderSearchCombo, result);
+        //searchOrderComboBoxAutoSuggest.setAutoSuggestTwo(orderSearchCombo, result);
         orderSearchCombo.setSelectedIndex(-1);
         
         /* combox auto suggests in inventory management */
         AutoSuggest searchStockIngComboBoxAutoSuggest = new AutoSuggest();
-        searchStockIngComboBoxAutoSuggest.setAutoSuggestTwo(searchStockIngComboBox, ingredient.loadNameForSearchStockIngComboBox2());
+        //searchStockIngComboBoxAutoSuggest.setAutoSuggestTwo(searchStockIngComboBox, ingredient.loadNameForSearchStockIngComboBox2());
 
         AutoSuggest searchStockBlendComboBoxAutoSuggest = new AutoSuggest();
         searchStockBlendComboBoxAutoSuggest.setAutoSuggest(searchStockBlendComboBox, blend.loadNameForSearchStockBlendsComboBox());

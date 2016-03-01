@@ -203,7 +203,7 @@ public class AutoSuggest {
         return m;
     }
     
-    public void setAutoSuggestTwo(final JComboBox Search, ArrayList<String> result) {
+   /* public void setAutoSuggestTwo(final JComboBox Search, ArrayList<String> result) {
 
         Search.removeAllItems();
         int i = 0;
@@ -222,7 +222,7 @@ public class AutoSuggest {
                     }
                 });
                 i++;
-            } while (i<result.size());
+            } while (i<=result.size());
         } else {
             Search.addItem("");
         }
@@ -278,5 +278,5 @@ public class AutoSuggest {
 
         });
     }
-
+*/
 }
