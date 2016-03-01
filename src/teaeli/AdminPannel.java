@@ -199,7 +199,20 @@ public class AdminPannel extends javax.swing.JFrame {
 
         });
 
+        //method for combox value setting when table row select in order main table
+        final ListSelectionModel selectionalModForOrderMainTable = orderListTable.getSelectionModel();
+        selectionalModForOrderMainTable.addListSelectionListener(new ListSelectionListener() {
 
+            @Override
+            public void valueChanged(ListSelectionEvent lsevt) {
+                if (!selectionalModForOrderMainTable.isSelectionEmpty()) {
+                    int row = selectionalModForOrderMainTable.getMinSelectionIndex();
+                    orderSearchCombo.setSelectedItem(orderListTable.getValueAt(row,0));
+                }
+            }
+
+        });
+        
         //method for enter key pressed in ingredient
         searchStockIngComboBox.getEditor().getEditorComponent().addKeyListener(new KeyAdapter() {
             @Override
@@ -519,6 +532,11 @@ public class AdminPannel extends javax.swing.JFrame {
         }
 
         searchStockIngComboBox.setEditable(true);
+        searchStockIngComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchStockIngComboBoxActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout inventoryManagementIngredientPanelLayout = new javax.swing.GroupLayout(inventoryManagementIngredientPanel);
         inventoryManagementIngredientPanel.setLayout(inventoryManagementIngredientPanelLayout);
@@ -598,6 +616,11 @@ public class AdminPannel extends javax.swing.JFrame {
         jLabel7.setText("Start typing blend name to update stock");
 
         searchStockBlendComboBox.setEditable(true);
+        searchStockBlendComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchStockBlendComboBoxActionPerformed(evt);
+            }
+        });
 
         blendDeliveryBtn.setText("Deliver Blend");
         blendDeliveryBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -710,6 +733,11 @@ public class AdminPannel extends javax.swing.JFrame {
         }
 
         searchIngredientComboBox.setEditable(true);
+        searchIngredientComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchIngredientComboBoxActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout settingsIngPanelLayout = new javax.swing.GroupLayout(settingsIngPanel);
         settingsIngPanel.setLayout(settingsIngPanelLayout);
@@ -846,7 +874,12 @@ public class AdminPannel extends javax.swing.JFrame {
         inventoryBlendLbl1.setText("Blend Details");
 
         searchBlendComboBox.setEditable(true);
-        
+        searchBlendComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchBlendComboBoxActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout settingsBlendPanelLayout = new javax.swing.GroupLayout(settingsBlendPanel);
         settingsBlendPanel.setLayout(settingsBlendPanelLayout);
         settingsBlendPanelLayout.setHorizontalGroup(
@@ -1410,6 +1443,22 @@ public class AdminPannel extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_orderSearchComboActionPerformed
 
+    private void searchStockBlendComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchStockBlendComboBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchStockBlendComboBoxActionPerformed
+
+    private void searchIngredientComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchIngredientComboBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchIngredientComboBoxActionPerformed
+
+    private void searchStockIngComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchStockIngComboBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchStockIngComboBoxActionPerformed
+
+    private void searchBlendComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBlendComboBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchBlendComboBoxActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1488,7 +1537,7 @@ public class AdminPannel extends javax.swing.JFrame {
     private javax.swing.JComboBox orderSearchCombo;
     private javax.swing.JTable productTable;
     private javax.swing.JButton profileBtn;
-    public javax.swing.JComboBox searchBlendComboBox;
+    private javax.swing.JComboBox searchBlendComboBox;
     private javax.swing.JButton searchIngredientBtn;
     public javax.swing.JComboBox searchIngredientComboBox;
     private javax.swing.JButton searchOrderBtn;
