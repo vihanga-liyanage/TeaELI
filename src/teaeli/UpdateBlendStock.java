@@ -8,6 +8,11 @@ import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 
 public class UpdateBlendStock extends javax.swing.JFrame {
+    private AdminPannel adminPannel;
+
+    public void setAdminPannel(AdminPannel adminPannel) {
+        this.adminPannel = adminPannel;
+    }
 
     public UpdateBlendStock() {
         initComponents();
@@ -42,12 +47,6 @@ public class UpdateBlendStock extends javax.swing.JFrame {
             public void keyPressed(KeyEvent e) {
             }
         });
-    }
-
-    private AdminPannel adminPannel;
-
-    public void setAdminPannel(AdminPannel adminPannel) {
-        this.adminPannel = adminPannel;
     }
     
     //method to refresh related tables and close this window
