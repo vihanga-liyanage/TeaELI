@@ -107,55 +107,45 @@ public class Order {
     }
 
     //Populate orderListTable in the order handling tab (NOT FINISHED........!!!!!!!!!)
-    public ResultSet populateOrderListTable(DefaultTableModel tModel) {
-        Connection connection = null;
-        ResultSet resultSet;
-        connection = dbConn.setConnection();
-        
+    public void populateOrderListTable(DefaultTableModel tModel) {
+        ResultArray resultSet;
+
         String query = "SELECT o.orderID, o.orderStatus, o.date, u.username FROM user u JOIN `order` o ON o.placedBy = u.userID ORDER BY o.orderStatus;";
 
-        resultSet = dbConn.getResult(query, connection);
-        try {
-            tModel.setRowCount(0);
+        resultSet = dbConn.getResultArray(query);
+        tModel.setRowCount(0);
 
-            String status = null;
-            while (resultSet.next()) {
-                if (resultSet.getInt(2) == 0) {
+        String status = null;
+        while (resultSet.next()) {
+            switch (resultSet.getString(1)) {
+                case "0":
                     status = "Pending";
-                } else if (resultSet.getInt(2) == 1) {
+                    break;
+                case "1":
                     status = "Received";
-                }
-                tModel.addRow(new Object[]{resultSet.getString(1), status, resultSet.getString(3), resultSet.getString(4)});
+                    break;
             }
-        } catch (SQLException ex) {
-            System.out.println(ex);
-        } finally {
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (SQLException e) {
-                    System.err.println("Resultset close error : " + e);
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException e) {
-                    System.err.println("Connection close error : " + e);
-                }
-            }
+            tModel.addRow(new Object[]{resultSet.getString(0), status, resultSet.getString(2), resultSet.getString(3)});
         }
-        return resultSet;
     }
 
     //Getting last order ID
-    public String getLastOrderID(){
+    public String getLastOrderID() {
         String query = "SELECT `orderID` FROM `order` ORDER BY `orderID` DESC LIMIT 0 , 1";
         ResultArray res = dbConn.getResultArray(query);
         String orderID = "";
-        while(res.next()){
+        while (res.next()) {
             orderID = res.getString(0);
         }
         return orderID;
+    }
+    
+    //Loading the orderComboBox in the order handling tab
+    public ResultArray loadOrderComboBox(){
+        ResultArray resultSet;
+        String query = "SELECT orderID, orderStatus FROM `order` ORDER BY orderStatus,date;";
+        resultSet = dbConn.getResultArray(query);
+        
+        return resultSet;
     }
 }

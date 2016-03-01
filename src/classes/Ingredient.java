@@ -388,7 +388,7 @@ public class Ingredient {
 
             //query to load ingredient details
             String query = "SELECT i.ingName, i.visibleStock, ing.categoryName FROM ingredient i JOIN ingredientcategory ing ON i.ingCategoryID = ing.ingCategoryID WHERE ingName = '" + selectedIngName + "'";
-
+            
             resultArray = dbConn.getResultArray(query);
 
             if (resultArray.next()) {
@@ -690,7 +690,7 @@ public class Ingredient {
         }
 
         String query2 = "SELECT supID FROM supplier WHERE supName = '" + supplier + "' ";
-        ResultSet rs2 = dbConn.getResult(query1, connection);
+        ResultSet rs2 = dbConn.getResult(query2, connection);
 
         try {
             while (rs2.next()) {
