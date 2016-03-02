@@ -1342,7 +1342,7 @@ public class AdminPannel extends javax.swing.JFrame {
                 
                 searchStockBlendComboBox.setSelectedIndex(-1);
                 
-                DeliverBlend deliverBlend = new DeliverBlend();
+                DeliverBlendTwo deliverBlend = new DeliverBlendTwo();
                 
                 deliverBlend.setAdminPannel(this);
                 deliverBlend.setVisible(true);
