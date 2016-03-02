@@ -366,6 +366,12 @@ public class AdminPannel extends javax.swing.JFrame {
         settingsBlendHistoryPanel = new javax.swing.JPanel();
         jScrollPane9 = new javax.swing.JScrollPane();
         blendStockHistoryTbl = new javax.swing.JTable();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        BlendStartDate = new org.jdesktop.swingx.JXDatePicker();
+        jLabel12 = new javax.swing.JLabel();
+        blendEndDate = new org.jdesktop.swingx.JXDatePicker();
+        btnGo1 = new javax.swing.JButton();
         settingsUserPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         userTable = new javax.swing.JTable();
@@ -1060,19 +1066,57 @@ public class AdminPannel extends javax.swing.JFrame {
             blendStockHistoryTbl.getColumnModel().getColumn(5).setPreferredWidth(200);
         }
 
+        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel10.setText("Search by date range");
+
+        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel11.setText("Start from");
+
+        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel12.setText("To");
+
+        btnGo1.setText("Go");
+        btnGo1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGo1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout settingsBlendHistoryPanelLayout = new javax.swing.GroupLayout(settingsBlendHistoryPanel);
         settingsBlendHistoryPanel.setLayout(settingsBlendHistoryPanelLayout);
         settingsBlendHistoryPanelLayout.setHorizontalGroup(
             settingsBlendHistoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(settingsBlendHistoryPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane9, javax.swing.GroupLayout.DEFAULT_SIZE, 1230, Short.MAX_VALUE)
+                .addGroup(settingsBlendHistoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane9, javax.swing.GroupLayout.DEFAULT_SIZE, 1230, Short.MAX_VALUE)
+                    .addGroup(settingsBlendHistoryPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(31, 31, 31)
+                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(BlendStartDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(blendEndDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnGo1)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         settingsBlendHistoryPanelLayout.setVerticalGroup(
             settingsBlendHistoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(settingsBlendHistoryPanelLayout.createSequentialGroup()
-                .addGap(48, 48, 48)
+                .addContainerGap()
+                .addGroup(settingsBlendHistoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BlendStartDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(blendEndDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnGo1))
+                .addGap(12, 12, 12)
                 .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(76, Short.MAX_VALUE))
         );
@@ -1530,7 +1574,7 @@ public class AdminPannel extends javax.swing.JFrame {
     }//GEN-LAST:event_searchBlendComboBoxActionPerformed
 
     private void btnGoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGoActionPerformed
-       SimpleDateFormat javadate = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat javadate = new SimpleDateFormat("yyyy-MM-dd");
         if (StartDate.getDate() == null || EndDate.getDate() == null) {
             JOptionPane.showMessageDialog(this, "Please choose date range");
         } 
@@ -1546,6 +1590,25 @@ public class AdminPannel extends javax.swing.JFrame {
             ingredientHistoryStock.populateStockIngredientHistoryTableByDate((DefaultTableModel) ingStockHistoryTbl.getModel(), startdate, enddate);
         }
     }//GEN-LAST:event_btnGoActionPerformed
+
+    private void btnGo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGo1ActionPerformed
+        SimpleDateFormat javadate = new SimpleDateFormat("yyyy-MM-dd");
+        if (BlendStartDate.getDate() == null || blendEndDate.getDate() == null) {
+            JOptionPane.showMessageDialog(this, "Please choose date range");
+        } 
+        else if (BlendStartDate.getDate().after(blendEndDate.getDate())){
+            JOptionPane.showMessageDialog(this, "Please choose valid date range");
+        }
+        else {
+            Date start = StartDate.getDate();
+            Date end = EndDate.getDate();
+            String startdate = javadate.format(start);
+            String enddate = javadate.format(end);
+            StockHistory stockhistory = new StockHistory();
+            stockhistory.populateStockIngredientHistoryTableByDate((DefaultTableModel) blendStockHistoryTbl.getModel(), startdate, enddate);
+                    //populateStockBlendHistoryTableByDate((DefaultTableModel) blendStockHistoryTbl.getModel(),startdate,enddate);
+        }
+    }//GEN-LAST:event_btnGo1ActionPerformed
 
 
     /**
@@ -1584,6 +1647,7 @@ public class AdminPannel extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private org.jdesktop.swingx.JXDatePicker BlendStartDate;
     private org.jdesktop.swingx.JXDatePicker EndDate;
     private org.jdesktop.swingx.JXDatePicker StartDate;
     private javax.swing.JButton addItemBtn;
@@ -1591,8 +1655,10 @@ public class AdminPannel extends javax.swing.JFrame {
     private javax.swing.JButton addProductBtn;
     private javax.swing.JButton addUserBtn;
     private javax.swing.JButton blendDeliveryBtn;
+    private org.jdesktop.swingx.JXDatePicker blendEndDate;
     private javax.swing.JTable blendStockHistoryTbl;
     private javax.swing.JButton btnGo;
+    private javax.swing.JButton btnGo1;
     private javax.swing.JButton deleteUserBtn;
     private javax.swing.JTable ingStockHistoryTbl;
     private javax.swing.JLabel inventoryBlendLbl;
@@ -1605,6 +1671,9 @@ public class AdminPannel extends javax.swing.JFrame {
     private javax.swing.JTable inventryBlendTable;
     private javax.swing.JTable inventryIngredientTable;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
