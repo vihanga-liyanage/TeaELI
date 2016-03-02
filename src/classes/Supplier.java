@@ -67,7 +67,7 @@ public class Supplier {
             insertOK = statement.executeUpdate(query);
             
         } catch (Exception e) {
-            System.err.println("err : " + e);
+            System.err.println("sup 70 err : " + e);
         } finally {            
             if (connection != null) {
                 try {
@@ -101,7 +101,7 @@ public class Supplier {
             }
 
         } catch (Exception e) {
-            System.err.println("err : " + e);
+            System.err.println("sup 104 err : " + e);
         } finally {
             if (resultSet != null) {
                 try {

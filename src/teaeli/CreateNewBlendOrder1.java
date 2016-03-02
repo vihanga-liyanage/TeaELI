@@ -77,6 +77,7 @@ public class CreateNewBlendOrder1 extends javax.swing.JFrame {
         
         //Initialize blendCombo
         blend.initBlendCombo(blendsCombo);
+        blendsCombo.setSelectedIndex(-1);
         
         //Validation on qty, when key released
         blendsQtyTxt.addKeyListener(new KeyAdapter() {
@@ -120,7 +121,7 @@ public class CreateNewBlendOrder1 extends javax.swing.JFrame {
             @Override
             public void popupMenuWillBecomeVisible(PopupMenuEvent e) {}
         });
-        
+
         deleteBtn.setEnabled(false);
         
         //enabling delete button and update excess qty on row select
@@ -173,17 +174,29 @@ public class CreateNewBlendOrder1 extends javax.swing.JFrame {
     
     //formatting numbers to add commas
     private String formatNum(String num){
-        int i = num.length();
+        String decimal=num, point = null;
+        if(num.contains(".")){
+            String[] temp = num.split("\\.");
+            decimal = temp[0];
+            point = temp[1];
+        }
+        int i = decimal.length();
         while (i > 3) {
-            String part1 = num.substring(0, i-3);
-            String part2 = num.substring(i-3);
-            num = part1 + "," + part2;
+            String part1 = decimal.substring(0, i-3);
+            String part2 = decimal.substring(i-3);
+            decimal = part1 + "," + part2;
             i-=3;
         }
-        return num;
+        if (point != null){
+            decimal += "." + point;
+        }
+        return decimal;
     }
     private String formatNum(int num){
         return formatNum(String.valueOf(num));
+    }
+    private String formatNum(float num){
+        return formatNum(Float.toString(num));
     }
     
     //overiding Integer.parseInt() to accept nums with commas
@@ -194,6 +207,19 @@ public class CreateNewBlendOrder1 extends javax.swing.JFrame {
             if (num.matches("[[0-9]{1,2}+,]*")) {
                 num = num.replace(",", "");
                 return Integer.parseInt(num);
+            }
+        }
+        return 0;
+    }
+    
+    //overiding Float.parseFloat() to accept nums with commas
+    private float parseFloat(String num){
+        try{
+            return Float.parseFloat(num);
+        } catch (NumberFormatException e){
+            if (num.matches("[[0-9]{1,2}+,]*.[0-9]*")) {
+                num = num.replace(",", "");
+                return Float.parseFloat(num);
             }
         }
         return 0;
@@ -543,7 +569,7 @@ public class CreateNewBlendOrder1 extends javax.swing.JFrame {
                     int balance = 0;
                     balance = blendQty - visible;
                     if (balance > 0) {
-                        balance = blendQty - visible - invisible;
+                        balance = balance - invisible;
                     }
                     if (balance < 0) {
                         balance = 0;
@@ -570,7 +596,7 @@ public class CreateNewBlendOrder1 extends javax.swing.JFrame {
                 int balance = 0;
                 balance = blendQty - visible;
                 if (balance > 0) {
-                    balance = blendQty - visible - invisible;
+                    balance = balance - invisible;
                 }
                 if (balance < 0) {
                     balance = 0;

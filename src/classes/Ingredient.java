@@ -24,10 +24,10 @@ import javax.swing.JComboBox;
 public class Ingredient {
 
     // attributes
-    private int ingID, ingCategoryID, visibleStock, orderedStock, invisibleStock, supID;
+    private int ingID, ingCategoryID, supID;
     private int orderReqQty, orderExcessQty, oldStockQty, updatedStockQTy;
     private String ingName, ingCategoryName, stockUpdateReason;
-    private float unitPrice;
+    private float unitPrice, visibleStock, orderedStock, invisibleStock;
 
     DBConnection dbConn = new DBConnection();
 
@@ -66,27 +66,27 @@ public class Ingredient {
         this.ingCategoryID = ingCategoryID;
     }
 
-    public int getVisibleStock() {
+    public float getVisibleStock() {
         return visibleStock;
     }
 
-    public void setVisibleStock(int visibleStock) {
+    public void setVisibleStock(float visibleStock) {
         this.visibleStock = visibleStock;
     }
 
-    public int getOrderedStock() {
+    public float getOrderedStock() {
         return orderedStock;
     }
 
-    public void setOrderedStock(int orderedStock) {
+    public void setOrderedStock(float orderedStock) {
         this.orderedStock = orderedStock;
     }
 
-    public int getInvisibleStock() {
+    public float getInvisibleStock() {
         return invisibleStock;
     }
 
-    public void setInvisibleStock(int invisibleStock) {
+    public void setInvisibleStock(float invisibleStock) {
         this.invisibleStock = invisibleStock;
     }
 
@@ -210,7 +210,7 @@ public class Ingredient {
             return result;
 
         } catch (Exception e) {
-            System.err.println("err : " + e);
+            System.err.println("ing 213 err : " + e);
         } finally {
             if (resultSet != null) {
                 try {
@@ -234,190 +234,82 @@ public class Ingredient {
 
     /* start of populateIngredientTable method */
     public void populateIngredientTable(DefaultTableModel tableModel) {
-
         ResultArray resultSet;
-
-        try {
-            String query = "SELECT ing.categoryName , i.ingName,i.visibleStock,i.invisibleStock FROM ingredient i JOIN ingredientcategory ing ON i.ingCategoryID = ing.ingCategoryID ORDER BY ing.categoryName,i.ingName ";
-
-            resultSet = dbConn.getResultArray(query);
-
-            tableModel.setRowCount(0);
-
-            while (resultSet.next()) {
-                Vector newRow = new Vector();
-                for (int i = 0; i <= 4; i++) {
-                    newRow.addElement(resultSet.getString(i));
-                }
-                tableModel.addRow(newRow);
+        String query = "SELECT ing.categoryName , i.ingName,i.visibleStock,i.invisibleStock FROM ingredient i JOIN ingredientcategory ing ON i.ingCategoryID = ing.ingCategoryID ORDER BY ing.categoryName,i.ingName ";
+        resultSet = dbConn.getResultArray(query);
+        tableModel.setRowCount(0);
+        while (resultSet.next()) {
+            Vector newRow = new Vector();
+            for (int i = 0; i <= 4; i++) {
+                newRow.addElement(resultSet.getString(i));
             }
-        } catch (Exception e) {
-            System.err.println("err : " + e);
+            tableModel.addRow(newRow);
         }
     }
-    /* end of populateIngredientTable method */
 
     /* start of initializing ing combo in AddNewBlend */
     public void initIngCombo(JComboBox ingCombo) {
-        Connection conn = null;
-        ResultSet resultSet = null;
+        ResultArray res = null;
         AutoSuggest autoSuggest = new AutoSuggest();
+        String query = "SELECT ingName FROM ingredient WHERE ingCategoryID=1 OR ingCategoryID=3 OR ingCategoryID=4 OR ingCategoryID=5 OR ingCategoryID=6 ORDER BY ingName";
+        res = dbConn.getResultArray(query);
+        autoSuggest.setAutoSuggest(ingCombo, res);
 
-        try {
-            String query = "SELECT ingName FROM ingredient WHERE ingCategoryID=1 OR ingCategoryID=3 OR ingCategoryID=4 OR ingCategoryID=5 OR ingCategoryID=6 ORDER BY ingName";
-
-            conn = dbConn.setConnection();
-            resultSet = dbConn.getResult(query, conn);
-
-            autoSuggest.setAutoSuggest(ingCombo, resultSet);
-
-        } catch (Exception e) {
-            System.err.println("err : " + e);
-        } finally {
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (Exception e) {
-                    System.err.println("Resultset close error : " + e);
-                }
-            }
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (Exception e) {
-                    System.err.println("Connection close error : " + e);
-                }
-            }
-        }
     }
 
     /* start of initializing flavour combo in AddNewBlend */
     public void initFlavourCombo(JComboBox ingCombo) {
-        Connection conn = null;
-        ResultSet resultSet = null;
+        ResultArray res = null;
         AutoSuggest autoSuggest = new AutoSuggest();
-
-        try {
-            String query = "SELECT ingName FROM ingredient WHERE ingCategoryID=2 ORDER BY ingName";
-
-            conn = dbConn.setConnection();
-            resultSet = dbConn.getResult(query, conn);
-
-            autoSuggest.setAutoSuggest(ingCombo, resultSet);
-
-        } catch (Exception e) {
-            System.err.println("err : " + e);
-        } finally {
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (Exception e) {
-                    System.err.println("Resultset close error : " + e);
-                }
-            }
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (Exception e) {
-                    System.err.println("Connection close error : " + e);
-                }
-            }
-        }
+        String query = "SELECT ingName FROM ingredient WHERE ingCategoryID=2 ORDER BY ingName";
+        res = dbConn.getResultArray(query);
+        autoSuggest.setAutoSuggest(ingCombo, res);
     }
 
     /* start of loadNameForSearchStockIngComboBox method*/
     public ResultArray loadNameForSearchStockIngComboBox() {
-
-        ResultArray resultArray = null;
-
-        try {
-
-            String query = "SELECT ingName FROM ingredient";
-
-            resultArray = dbConn.getResultArray(query);
-
-        } catch (Exception e) {
-            System.err.println("Exception : " + e);
-        }
-        return resultArray;
+        String query = "SELECT ingName FROM ingredient";
+        return dbConn.getResultArray(query);
     }
-    /* end of loadNameForSearchStockIngComboBox method */
 
     /* start of initializing flavours combo in AddNewBlend */
     public void initBaseCombo(JComboBox ingCombo) {
-        Connection conn = null;
-        ResultSet resultSet = null;
+        ResultArray res = null;
         AutoSuggest autoSuggest = new AutoSuggest();
-
-        try {
-            String query = "SELECT ingName FROM ingredient WHERE ingCategoryID=2 OR ingCategoryID=3 OR ingCategoryID=4 OR ingCategoryID=5 OR ingCategoryID=6 ORDER BY ingName";
-
-            conn = dbConn.setConnection();
-            resultSet = dbConn.getResult(query, conn);
-
-            autoSuggest.setAutoSuggest(ingCombo, resultSet);
-
-        } catch (Exception e) {
-            System.err.println("err : " + e);
-        } finally {
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (Exception e) {
-                    System.err.println("Resultset close error : " + e);
-                }
-            }
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (Exception e) {
-                    System.err.println("Connection close error : " + e);
-                }
-            }
-        }
+        String query = "SELECT ingName FROM ingredient WHERE ingCategoryID=2 OR ingCategoryID=3 OR ingCategoryID=4 OR ingCategoryID=5 OR ingCategoryID=6 ORDER BY ingName";
+        res = dbConn.getResultArray(query);
+        autoSuggest.setAutoSuggest(ingCombo, res);
     }
 
     /* start of checkAndLoadIngredientStockDetails method */
     public boolean checkAndLoadIngredientStockDetails(String selectedIngName) {
- 
-        boolean validIngName = false;
-        
+        boolean validIngName = false;     
         ResultArray resultArray;
-
         try {
-
             //query to load ingredient details
             String query = "SELECT i.ingName, i.visibleStock, ing.categoryName FROM ingredient i JOIN ingredientcategory ing ON i.ingCategoryID = ing.ingCategoryID WHERE ingName = '" + selectedIngName + "'";
-            
             resultArray = dbConn.getResultArray(query);
-
             if (resultArray.next()) {
 
                 //set ingeredient attribute values
                 this.setIngName(resultArray.getString(0));
-                this.setVisibleStock(Integer.parseInt(resultArray.getString(1)));
+                this.setVisibleStock(Float.parseFloat(resultArray.getString(1)));
                 this.setIngCategoryName(resultArray.getString(2));
                 
                 validIngName = true;
             }
         } catch (NumberFormatException e) {
-            System.err.println("err : " + e);
+            System.err.println("ing 302 err : " + e);
         }
         return validIngName;
     }
-    /* end ofcheckAndLoadIngredientStockDetails method */
 
     /* start of getIngIDFromIngName method */
     public void getIngIDFromIngName() {
-
         ResultArray resultArray;
-
         try {
-
             String query = "SELECT ingID FROM ingredient WHERE ingName = '" + this.getIngName() + "'";
-
             resultArray = dbConn.getResultArray(query);
-
             if (resultArray.next()) {
                 this.setIngID(Integer.parseInt(resultArray.getString(0)));
             }
@@ -425,7 +317,6 @@ public class Ingredient {
             System.err.println("Exception : " + e);
         }
     }
-    /* end of getIngIDFromIngName method */
 
     /* start of updateStockQty method */
     public boolean updateStockQty() {
@@ -467,39 +358,15 @@ public class Ingredient {
 
     //start of view all ingredients method
     public void viewAllIngredients() throws SQLException {
-
-        Connection connection = dbConn.setConnection();
-        ResultSet resultSet = null;
+        ResultArray res = null;
         String query = "SELECT ingName,unitPrice,supName FROM ingredient,supplier where ingredient.supID = supplier.supID";
-        try {
-            resultSet = dbConn.getResult(query, connection);
+        res = dbConn.getResultArray(query);
 
-            while (resultSet.next()) {
-                DefaultTableModel model = (DefaultTableModel) adminPannel.settingsIngredientTable.getModel();
-                model.addRow(new Object[]{resultSet.getString(1), resultSet.getString(3), resultSet.getString(2)});
-            }
-
-        } catch (Exception e) {
-            System.err.println("err : " + e);
-        } finally {
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (Exception e) {
-                    System.err.println("Resultset close error : " + e);
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (Exception e) {
-                    System.err.println("Connection close error : " + e);
-                }
-            }
+        while (res.next()) {
+            DefaultTableModel model = (DefaultTableModel) adminPannel.settingsIngredientTable.getModel();
+            model.addRow(new Object[]{res.getString(0), res.getString(2), res.getString(3)});
         }
-
     }
-    //end of view all ingredients method
 
     //start of view all details of a ingredient
     public String[] viewAllDetailsOfAIngredient(String ingredientName) throws SQLException {
@@ -519,7 +386,7 @@ public class Ingredient {
                 }
             }
         } catch (Exception e) {
-            System.err.println("err : " + e);
+            System.err.println("ing 389 err : " + e);
         } finally {
             if (resultSet != null) {
                 try {
@@ -553,7 +420,7 @@ public class Ingredient {
             statement = connection.createStatement();
             insertOK = statement.executeUpdate(query);
         } catch (Exception e) {
-            System.err.println("err : " + e);
+            System.err.println("ing 423 err : " + e);
         } finally {
             if (resultSet != null) {
                 try {
@@ -591,7 +458,7 @@ public class Ingredient {
             return result;
 
         } catch (Exception e) {
-            System.err.println("err : " + e);
+            System.err.println("ing 461 err : " + e);
         } finally {
             if (rs != null) {
                 try {
@@ -651,7 +518,7 @@ public class Ingredient {
                 int insertOK = statement.executeUpdate(queryDelete);
             }
         } catch (Exception e) {
-            System.err.println("err : " + e);
+            System.err.println("ing 521 err : " + e);
         } finally {
             if (resultSet != null) {
                 try {
@@ -715,11 +582,15 @@ public class Ingredient {
 
         return rslt3;
     }
-    
-    
-} 
-    
 
+    //getting ingredient data by ingID
+    public ResultArray getIngDataByID(String ingID){
+        String query = "SELECT i.ingID, i.ingName, i.ingCategoryID, i.visibleStock, i.orderedStock, i.invisibleStock, s.supName  \n" +
+                        "FROM ingredient i INNER JOIN supplier s ON i.supID=s.supID \n" +
+                        "WHERE ingID='" + ingID + "'";
+        return dbConn.getResultArray(query);
+    }
+}
 
 
      
