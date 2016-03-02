@@ -5,40 +5,36 @@
  */
 package classes;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import javax.swing.table.DefaultTableModel;
 import java.util.*;
 
 public class Order {
 
     //attributes
-    private int orderID, placedBy, orderStatus, blendID;
-    private String username, blendName;
+    private int placedBy, orderStatus;
+    private String username, blendName, date, orderID, blendID;
     private ArrayList<Ingredient> ingredientList = new ArrayList();
     private ArrayList<Blend> blendList = new ArrayList();
-    private Date date;
 
     DBConnection dbConn = new DBConnection();
 
     //constructor
     public Order() {
-        this.orderID = 0;
+        this.orderID = "";
         this.placedBy = 0;
         this.orderStatus = 0;
-        this.blendID = 0;
+        this.blendID = "";
         this.username = null;
         this.blendName = null;
         this.date = null;
     }
 
     //getters and setters
-    public int getOrderID() {
+    public String getOrderID() {
         return orderID;
     }
 
-    public void setOrderID(int orderID) {
+    public void setOrderID(String orderID) {
         this.orderID = orderID;
     }
 
@@ -58,11 +54,11 @@ public class Order {
         this.orderStatus = orderStatus;
     }
 
-    public int getblendID() {
+    public String getblendID() {
         return blendID;
     }
 
-    public void setblendID(int blendID) {
+    public void setblendID(String blendID) {
         this.blendID = blendID;
     }
 
@@ -82,11 +78,11 @@ public class Order {
         this.username = username;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
@@ -147,5 +143,30 @@ public class Order {
         resultSet = dbConn.getResultArray(query);
         
         return resultSet;
+    }
+    
+    //view the selected order
+    public Order viewOrder(DefaultTableModel tModelBlend, DefaultTableModel tModelIng, String orderID){
+        Order temp = new Order();
+        ResultArray resultSet1, resultSet2;
+        tModelBlend.setRowCount(0);
+        tModelIng.setRowCount(0);
+        
+        String query1 = "select o.orderID, o.date, ob.blendID, ob.requiredQty, ob.excessQty, b.blendName from `order` o inner join orderblend ob on o.orderID = ob.orderID inner join blend b on ob.blendID = b.blendID where o.orderID = '"+orderID+"';";
+        resultSet1 = dbConn.getResultArray(query1);
+        while (resultSet1.next()){
+            tModelBlend.addRow(new Object[]{resultSet1.getString(2), resultSet1.getString(5), resultSet1.getString(3), resultSet1.getString(4)});
+            temp.setDate(resultSet1.getString(1));
+        }
+        
+        String query2 = "select i.ingName, s.supName, oi.requiredQty, oi.excessQty, oi.remarks from orderingredient oi inner join ingredient i on oi.ingID = i.ingID inner join supplier s on i.supID = s.supID where oi.orderID = '"+orderID+"';";
+        resultSet2 = dbConn.getResultArray(query2);
+        while (resultSet2.next()){
+            tModelIng.addRow(new Object[]{resultSet2.getString(0), resultSet2.getString(2), resultSet2.getString(3), 0, resultSet2.getString(4), resultSet2.getString(1)});
+        }
+        
+        temp.setOrderID(orderID);
+        
+        return temp;
     }
 }
