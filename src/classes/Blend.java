@@ -411,7 +411,7 @@ public class Blend {
         int ret = dbConn.updateResult(query);
 
         System.out.println(ret);
-        if(ret==1){
+        /*if(ret==1){
 
         if (ret == 1) {
 
@@ -419,7 +419,7 @@ public class Blend {
         } else {
             JOptionPane.showMessageDialog(null, "Error!, Data not Saved");
         }
-        }
+        }*/
         return 1;
     }
     
