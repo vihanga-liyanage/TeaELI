@@ -410,7 +410,7 @@ public class Blend {
         String query = "INSERT INTO blend values('" + blendID + "','" + blendName + "','" + baseCom + "',0,0,0,'" + blendCategory + "') ";
         int ret = dbConn.updateResult(query);
 
-        System.out.println(ret);
+        //System.out.println(ret);
         /*if(ret==1){
 
         if (ret == 1) {
@@ -420,7 +420,7 @@ public class Blend {
             JOptionPane.showMessageDialog(null, "Error!, Data not Saved");
         }
         }*/
-        return 1;
+        return ret;
     }
     
     /* start of checkAndLoadBlendDeliverDetails method */

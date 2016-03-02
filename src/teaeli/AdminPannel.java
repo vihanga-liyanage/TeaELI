@@ -1365,9 +1365,15 @@ public class AdminPannel extends javax.swing.JFrame {
 
     private void searchProductBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchProductBtnActionPerformed
         BlendDetails updateProduct = new BlendDetails();
-        updateProduct.setVisible(true);
-        updateProduct.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        searchBlendComboBox.setSelectedIndex(-1);
+        
+        if(searchBlendComboBox.getSelectedIndex()==-1){
+            JOptionPane.showMessageDialog(null, "Please Select a Blend");
+        }else{
+            updateProduct.setVisible(true);
+            updateProduct.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+            searchBlendComboBox.setSelectedIndex(-1);
+        }
+        
     }//GEN-LAST:event_searchProductBtnActionPerformed
 
 
