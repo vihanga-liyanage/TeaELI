@@ -77,6 +77,7 @@ public class CreateNewBlendOrder1 extends javax.swing.JFrame {
         
         //Initialize blendCombo
         blend.initBlendCombo(blendsCombo);
+        blendsCombo.setSelectedIndex(-1);
         
         //Validation on qty, when key released
         blendsQtyTxt.addKeyListener(new KeyAdapter() {
@@ -120,7 +121,7 @@ public class CreateNewBlendOrder1 extends javax.swing.JFrame {
             @Override
             public void popupMenuWillBecomeVisible(PopupMenuEvent e) {}
         });
-        
+
         deleteBtn.setEnabled(false);
         
         //enabling delete button and update excess qty on row select
@@ -186,7 +187,7 @@ public class CreateNewBlendOrder1 extends javax.swing.JFrame {
             decimal = part1 + "," + part2;
             i-=3;
         }
-        if (point == null){
+        if (point != null){
             decimal += "." + point;
         }
         return decimal;
@@ -568,7 +569,7 @@ public class CreateNewBlendOrder1 extends javax.swing.JFrame {
                     int balance = 0;
                     balance = blendQty - visible;
                     if (balance > 0) {
-                        balance = blendQty - visible - invisible;
+                        balance = balance - invisible;
                     }
                     if (balance < 0) {
                         balance = 0;
@@ -595,7 +596,7 @@ public class CreateNewBlendOrder1 extends javax.swing.JFrame {
                 int balance = 0;
                 balance = blendQty - visible;
                 if (balance > 0) {
-                    balance = blendQty - visible - invisible;
+                    balance = balance - invisible;
                 }
                 if (balance < 0) {
                     balance = 0;

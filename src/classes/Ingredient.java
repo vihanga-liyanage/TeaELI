@@ -24,10 +24,10 @@ import javax.swing.JComboBox;
 public class Ingredient {
 
     // attributes
-    private int ingID, ingCategoryID, visibleStock, orderedStock, invisibleStock, supID;
+    private int ingID, ingCategoryID, supID;
     private int orderReqQty, orderExcessQty, oldStockQty, updatedStockQTy;
     private String ingName, ingCategoryName, stockUpdateReason;
-    private float unitPrice;
+    private float unitPrice, visibleStock, orderedStock, invisibleStock;
 
     DBConnection dbConn = new DBConnection();
 
@@ -66,27 +66,27 @@ public class Ingredient {
         this.ingCategoryID = ingCategoryID;
     }
 
-    public int getVisibleStock() {
+    public float getVisibleStock() {
         return visibleStock;
     }
 
-    public void setVisibleStock(int visibleStock) {
+    public void setVisibleStock(float visibleStock) {
         this.visibleStock = visibleStock;
     }
 
-    public int getOrderedStock() {
+    public float getOrderedStock() {
         return orderedStock;
     }
 
-    public void setOrderedStock(int orderedStock) {
+    public void setOrderedStock(float orderedStock) {
         this.orderedStock = orderedStock;
     }
 
-    public int getInvisibleStock() {
+    public float getInvisibleStock() {
         return invisibleStock;
     }
 
-    public void setInvisibleStock(int invisibleStock) {
+    public void setInvisibleStock(float invisibleStock) {
         this.invisibleStock = invisibleStock;
     }
 
@@ -210,7 +210,7 @@ public class Ingredient {
             return result;
 
         } catch (Exception e) {
-            System.err.println("err : " + e);
+            System.err.println("ing 213 err : " + e);
         } finally {
             if (resultSet != null) {
                 try {
@@ -293,13 +293,13 @@ public class Ingredient {
 
                 //set ingeredient attribute values
                 this.setIngName(resultArray.getString(0));
-                this.setVisibleStock(Integer.parseInt(resultArray.getString(1)));
+                this.setVisibleStock(Float.parseFloat(resultArray.getString(1)));
                 this.setIngCategoryName(resultArray.getString(2));
                 
                 validIngName = true;
             }
         } catch (NumberFormatException e) {
-            System.err.println("err : " + e);
+            System.err.println("ing 302 err : " + e);
         }
         return validIngName;
     }
@@ -364,7 +364,7 @@ public class Ingredient {
 
         while (res.next()) {
             DefaultTableModel model = (DefaultTableModel) adminPannel.settingsIngredientTable.getModel();
-            model.addRow(new Object[]{res.getString(1), res.getString(3), res.getString(2)});
+            model.addRow(new Object[]{res.getString(0), res.getString(2), res.getString(3)});
         }
     }
 
@@ -386,7 +386,7 @@ public class Ingredient {
                 }
             }
         } catch (Exception e) {
-            System.err.println("err : " + e);
+            System.err.println("ing 389 err : " + e);
         } finally {
             if (resultSet != null) {
                 try {
@@ -420,7 +420,7 @@ public class Ingredient {
             statement = connection.createStatement();
             insertOK = statement.executeUpdate(query);
         } catch (Exception e) {
-            System.err.println("err : " + e);
+            System.err.println("ing 423 err : " + e);
         } finally {
             if (resultSet != null) {
                 try {
@@ -458,7 +458,7 @@ public class Ingredient {
             return result;
 
         } catch (Exception e) {
-            System.err.println("err : " + e);
+            System.err.println("ing 461 err : " + e);
         } finally {
             if (rs != null) {
                 try {
@@ -518,7 +518,7 @@ public class Ingredient {
                 int insertOK = statement.executeUpdate(queryDelete);
             }
         } catch (Exception e) {
-            System.err.println("err : " + e);
+            System.err.println("ing 521 err : " + e);
         } finally {
             if (resultSet != null) {
                 try {

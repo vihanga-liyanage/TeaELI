@@ -134,7 +134,7 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
                 float balance = 0;
                 balance = ingQty - visible;
                 if (balance > 0) {
-                    balance = ingQty - visible - invisible;
+                    balance = balance - invisible;
                 }
                 if (balance < 0) {
                     balance = 0;
@@ -159,7 +159,7 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
             float balance = 0;
             balance = ingQty - visible;
             if (balance > 0) {
-                balance = ingQty - visible - invisible;
+                balance = balance - invisible;
             }
             if (balance < 0) {
                 balance = 0;
@@ -190,7 +190,7 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
             decimal = part1 + "," + part2;
             i-=3;
         }
-        if (point == null){
+        if (point != null){
             decimal += "." + point;
         }
         return decimal;
