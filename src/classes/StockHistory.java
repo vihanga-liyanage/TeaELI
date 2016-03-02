@@ -155,4 +155,45 @@ public class StockHistory {
         }
     }
     /* end of populateStockBlendHistoryTable method */
+    
+    public void populateStockIngredientHistoryTableByDate(DefaultTableModel tableModel,String startdate, String enddate){
+        
+        Connection connection = null;
+        ResultSet resultSet = null;
+        
+        try{
+            String query = "SELECT S.date,I.ingName,S.oldQty,S.updatedQty,S.reason,U.username FROM ingredient I, ingredientstockhistory S, user U WHERE S.updatedBy=U.userID AND S.ingID=I.ingID AND s.date BETWEEN '"+startdate+"' AND '"+enddate+"'";
+            
+            connection = dbConn.setConnection();
+            resultSet = dbConn.getResult(query, connection);
+            
+            tableModel.setRowCount(0);
+            
+            while (resultSet.next()) {
+                Vector newRow = new Vector();
+                for (int i = 1; i <= 6; i++) {
+                    newRow.addElement(resultSet.getObject(i));
+                }
+                tableModel.addRow(newRow);
+            }
+            
+        }catch(Exception e){
+            System.err.println("err : " + e);
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (Exception e) {
+                    System.err.println("Resultset close error : " + e);
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (Exception e) {
+                    System.err.println("Connection close error : " + e);
+                }
+            }
+        }
+    }
 }
