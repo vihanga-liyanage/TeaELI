@@ -172,43 +172,26 @@ public class Blend {
     /* start of populateBlendTable method */
     public void populateBlendTable(DefaultTableModel tableModel){
         
-        Connection connection = null;
-        ResultSet resultSet = null;
+        ResultArray resultArray;
         
         try{
             String query = "SELECT blendCategory,blendName,visibleStock,invisibleStock FROM blend ORDER BY blendCategory, blendName";
             
-            connection = dbConn.setConnection();
-            resultSet = dbConn.getResult(query, connection);
+            resultArray = dbConn.getResultArray(query);
             
             tableModel.setRowCount(0);
             
-            while (resultSet.next()) {
+            while (resultArray.next()) {
                 Vector newRow = new Vector();
-                for (int i = 1; i <= 4; i++) {
-                    newRow.addElement(resultSet.getObject(i));
+                for (int i = 0; i <= 4; i++) {
+                    newRow.addElement(resultArray.getString(i));
                 }
                 tableModel.addRow(newRow);
             }
             
         }catch(Exception e){
             System.err.println("err : " + e);
-        } finally {
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (Exception e) {
-                    System.err.println("Resultset close error : " + e);
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (Exception e) {
-                    System.err.println("Connection close error : " + e);
-                }
-            }
-        }
+        } 
     }
     /* end of populateBlendTable method */
     
@@ -221,121 +204,101 @@ public class Blend {
     }
     
     /* start of loadNameForSearchStockBlendsComboBox method */
-    public ResultSet loadNameForSearchStockBlendsComboBox(){
-        Connection connection = null;
-        ResultSet resultSet = null;
+    public ResultArray loadNameForSearchStockBlendsComboBox(){
+        
+        ResultArray resultArray = null;
         
         try{
-            connection = dbConn.setConnection();
+            
             String query = "SELECT blendName FROM blend ";
-            resultSet = dbConn.getResult(query, connection);
+            
+            resultArray = dbConn.getResultArray(query);
+            
         } catch(Exception e){
             System.err.println("Exception : " + e);
         }
-        return resultSet; 
+        return resultArray; 
     }
     /* end of loadNameForSearchStockBlendsComboBox method */
     
     /* start of checkAndLoadBlendStockDetails method */
     public boolean checkAndLoadBlendStockDetails(String selectedBlendName) {
 
-        Connection connection = null;
-        ResultSet resultSet = null;
         boolean validBlendName = false;
+        
+        ResultArray resultArray;
 
         try {
-            connection = dbConn.setConnection();
 
             String query = "SELECT blendName, visibleStock, blendCategory FROM blend WHERE blendName = '" + selectedBlendName + "'";
 
-            resultSet = dbConn.getResult(query, connection);
+            resultArray = dbConn.getResultArray(query);
 
-            if (resultSet.next()) {
+            if (resultArray.next()) {
 
+                //set blend details
+                this.setBlendName(resultArray.getString(0));
+                this.setVisibleStock(Integer.parseInt(resultArray.getString(1)));
+                this.setBlendCategory(resultArray.getString(2));
+                
                 validBlendName = true;
-
-                this.setBlendName(resultSet.getString(1));
-                this.setVisibleStock(Integer.parseInt(resultSet.getString(2)));
-                this.setBlendCategory(resultSet.getString(3));
             }
-        } catch (SQLException | NumberFormatException e) {
+        } catch (NumberFormatException e) {
             System.err.println("err : " + e);
-        } finally {
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (Exception e) {
-                    System.err.println("Resultset close error : " + e);
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (Exception e) {
-                    System.err.println("Connection close error : " + e);
-                }
-            }
-        }
+        } 
         return validBlendName;
     }
     /* end ofcheckAndLoadBlendStockDetails method */
     
     /* start of getBlendIDFromBlendName method */
     public void getBlendIDFromBlendName(){
-        Connection connection = null;
-        ResultSet resultSet = null;
+
+        ResultArray resultArray;
         
         try{
-            connection = dbConn.setConnection();
             String query = "SELECT blendID FROM blend WHERE blendName = '" + this.getBlendName() + "'";
             
-            resultSet = dbConn.getResult(query, connection);
+            resultArray = dbConn.getResultArray(query);
             
-            if(resultSet.next()){
-                this.setBlendID(resultSet.getString(1));
+            if(resultArray.next()){
+                this.setBlendID(resultArray.getString(0));
             }
         }catch(Exception e){
             System.err.println("Exception : " + e);
-        }finally{
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (Exception e) {
-                    System.err.println("Resultset close error : " + e);
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (Exception e) {
-                    System.err.println("Connection close error : " + e);
-                }
-            }
         }
     }
     /* end of getBlendIDFromBlendName method */
     
     /* start of updateStockQty method */
     public boolean updateStockQty() {
-        boolean updated = false;
-        Connection connection = null;
-        ResultSet resultSet = null;
 
+        boolean updated = false;
+
+        //to get current date
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date currentDate = Calendar.getInstance().getTime();
         dateFormat.format(currentDate);
         Timestamp date = new Timestamp(currentDate.getTime());
         
+        //get current user id
         User updatedUser = new User();
         updatedUser.getIDByUsername();
-        connection = dbConn.setConnection();
+
+        //get blendID
         this.getBlendIDFromBlendName();
-        String query = "INSERT INTO blendstockhistory VALUES ('0','" + this.getBlendID() + "','" + date + "','" + this.getOldStockQty() + "','" + this.getUpdatedStockQTy() + "','" + this.getStockUpdateReason() + "','" + updatedUser.getUserID() + "')";
-        int i = dbConn.updateResult(query, connection);
+        
+        //query to update blend stock
+        String query = "UPDATE blend SET visibleStock = '" + this.getVisibleStock() + "' WHERE blendID = '" + this.getBlendID() + "'";
+        System.out.println(query);
+        
+        int i = dbConn.updateResult(query);
+        
         if (i == 1) {
-            query = "UPDATE blend SET visibleStock = '" + this.getVisibleStock() + "' WHERE blendID = '" + this.getBlendID() + "'";
+        
+            //query to insert into stock history table
+            query = "INSERT INTO blendstockhistory VALUES ('0','" + this.getBlendID() + "','" + date + "','" + this.getOldStockQty() + "','" + this.getUpdatedStockQTy() + "','" + this.getStockUpdateReason() + "','" + updatedUser.getUserID() + "')";
             
-            i = dbConn.updateResult(query, connection);
+            i = dbConn.updateResult(query);
             
             if (i == 1) {
                 updated = true;
@@ -389,6 +352,17 @@ public class Blend {
         return dbConn.getResultArray(query);
     }
     
+    public int getIngIDRecByIngName(String ingName){
+        String query = "SELECT ingID FROM ingredient WHERE ingName = '" + ingName + "' ";
+        int ID = 0;
+        ResultArray res = new ResultArray();
+        res = dbConn.getResultArray(query);
+        if(res.next()){
+            ID = Integer.parseInt(res.getString(0));
+        }
+        return ID;
+    }
+    
     /* start of the method to load values to the productTable in the blends tab*/
     public void populateProductTable(DefaultTableModel tModel){
         Connection connection = null;
@@ -436,6 +410,7 @@ public class Blend {
         }
         String query = "INSERT INTO blend values('" + blendID + "','" + blendName + "','" + baseCom + "',0,0,0,'" + blendCategory + "') ";
         int ret = dbConn.updateResult(query);
+        System.out.println(ret);
         if(ret==1){
             JOptionPane.showMessageDialog(null, "New Blend Succesfully Added");
         }

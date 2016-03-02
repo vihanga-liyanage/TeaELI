@@ -12,6 +12,8 @@ import classes.Validation;
 import java.awt.Font;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -133,6 +135,18 @@ public class CreateNewBlendOrder1 extends javax.swing.JFrame {
                     for (int i=0; i<count; i++) {
                         setExcessQty(i);
                     }
+                }
+            }
+        });
+        
+        //Prompt confirmation on window close
+        this.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                int confirmed = JOptionPane.showConfirmDialog(null, 
+                    "Are you sure you want to close the window?\nAll data you entered will be lost.", "Confirm window close",
+                    JOptionPane.YES_NO_OPTION);
+                if (confirmed == JOptionPane.YES_OPTION) {
+                    dispose();
                 }
             }
         });

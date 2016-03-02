@@ -111,7 +111,7 @@ public class AutoSuggest {
     public void setAutoSuggest(final JComboBox Search, ResultArray rst) {
         Search.removeAllItems();
         if (Search.getItemCount() == 0) {
-            Search.addItem("");
+            //Search.addItem("");
             while (rst.next()){
                 Search.addItem(rst.getString(0));
                 v.addElement(rst.getString(0));
@@ -167,18 +167,12 @@ public class AutoSuggest {
                     for (int i = 0; i < v.size(); i++) {
                         String str = (String) v.elementAt(i);
                         if(txt.equals("")){
-                            //mhp.amount.requestFocusInWindow();
-                            //spi.amount.requestFocusInWindow();
                             return;
                         }else if (str.toLowerCase().startsWith(txt)) {
                             tx.setText(str);
-                            //mhp.amount.requestFocusInWindow();
-                            //spi.amount.requestFocusInWindow();
                             return;
 
                         } else if (str.equals(tx.getText())) {
-                            //mhp.amount.requestFocusInWindow();
-                            //spi.amount.requestFocusInWindow();
                             return;
                         }
                     }
@@ -203,6 +197,7 @@ public class AutoSuggest {
         return m;
     }
     
+
    /* public void setAutoSuggestTwo(final JComboBox Search, ArrayList<String> result) {
 
         Search.removeAllItems();
@@ -279,4 +274,5 @@ public class AutoSuggest {
         });
     }
 */
+
 }

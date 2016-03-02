@@ -7,6 +7,8 @@ package teaeli;
 
 import classes.Blend;
 import java.awt.Font;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -71,6 +73,18 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
             blendTBModel.addRow(row);
         }
         
+        //Prompt confirmation on window close
+        this.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                int confirmed = JOptionPane.showConfirmDialog(null, 
+                    "Are you sure you want to cancel phase 2?", "Confirm window close",
+                    JOptionPane.YES_NO_OPTION);
+                if (confirmed == JOptionPane.YES_OPTION) {
+                    createNewBlendOrder1.setVisible(true);
+                    dispose();
+                }
+            }
+        });
     }
 
     private CreateNewBlendOrder2() {
@@ -265,7 +279,7 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(cancelBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(confirmBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -283,7 +297,7 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(tblMasterPlanScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 389, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(confirmBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cancelBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
@@ -324,10 +338,10 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
     }//GEN-LAST:event_confirmBtnActionPerformed
 
     private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
-        int dialogResult = JOptionPane.showConfirmDialog(this, "Are you sure you want to cancel phase 2?", "Confirm Cancel", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+        int dialogResult = JOptionPane.showConfirmDialog(this, "Are you sure you want to cancel phase 2?", "Confirm window close", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
         if (dialogResult == JOptionPane.YES_OPTION){
             createNewBlendOrder1.setVisible(true);
-            this.setVisible(false);
+            this.dispose();
         }
     }//GEN-LAST:event_cancelBtnActionPerformed
 

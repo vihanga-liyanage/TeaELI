@@ -10,6 +10,7 @@ import classes.DBConnection;
 import classes.Ingredient;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.JOptionPane;
@@ -483,25 +484,37 @@ public class AddNewBlend extends javax.swing.JFrame {
                 ingPerCount = ingPerCount + initPer;
                 /*System.out.println(a);*/
             }
-            /*for(int i=0; i <flavCount;i++){
+            for(int i=0; i <flavCount;i++){
                 float initPer = Float.parseFloat(addNewBlendIngTbl.getValueAt(i, 1).toString()); ;
                 flavPerCount = flavPerCount + initPer;
-            }*/
+            }
 
             if(ingPerCount <= 0 || ingPerCount>=100){
                 JOptionPane.showMessageDialog(this, "Invalid percentage");
                 
-            }/*else if(flavPerCount <= 0 || flavPerCount>=100){
+            }else if(flavPerCount <= 0 || flavPerCount>=100){
                 JOptionPane.showMessageDialog(this, "Invalid percentage");
-            }*/else{
-                /*int ret = blend.addNewBlend(blendID, blendName, base, blendCategory);
+            }else{
+                int ret = blend.addNewBlend(blendID, blendName, base, blendCategory);
                 
-                String query1 = "TNSERT INTO recipie VALUES";
+                ArrayList <Integer> ingID = new ArrayList<>();
+                for(int i=0;i<ingCount;i++){
+                    Blend a = new Blend();
+                    //ingID.add(Integer.parseInt(addNewBlendIngTbl.getValueAt(i, 0).toString()));
+                    ingID.add(a.getIngIDRecByIngName(addNewBlendIngTbl.getValueAt(i, 0).toString()));
+                }
+                System.out.println(ingID.get(0)+2);
+                int a = ingID.get(0);
+                double b = Double.parseDouble(addNewBlendIngTbl.getValueAt(0, 1).toString());
+                String query1 = "INSERT INTO recipie (blendID, ingID, ingPercent, type) VALUES ('"+ blendID +"','"+ a +"','"+ b +"',0)";
+                //String query1 = "TNSERT INTO recipie (blendID, ingID, ingPercent, type) VALUES ('"+ blendID +"',26,2.3,0)";
+                int x = dbConn.updateResult(query1);
+                System.out.println("x is"+ x);
                 String q1 ="";
                 
                 for(int i =0; i<ingCount ; i++){
-                    
-                }*/
+                   q1 ="" ;
+                }
                
                 
                 
