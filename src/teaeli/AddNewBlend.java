@@ -498,11 +498,20 @@ public class AddNewBlend extends javax.swing.JFrame {
                 int ret = blend.addNewBlend(blendID, blendName, base, blendCategory);
                 
                 ArrayList <Integer> ingID = new ArrayList<>();
+                ArrayList <Integer> flavourID = new ArrayList<>();
                 for(int i=0;i<ingCount;i++){
                     Blend a = new Blend();
                     //ingID.add(Integer.parseInt(addNewBlendIngTbl.getValueAt(i, 0).toString()));
                     ingID.add(a.getIngIDRecByIngName(addNewBlendIngTbl.getValueAt(i, 0).toString()));
                 }
+                
+                for(int i=0;i<flavCount;i++){
+                    Blend a = new Blend();
+                    //ingID.add(Integer.parseInt(addNewBlendIngTbl.getValueAt(i, 0).toString()));
+                    flavourID.add(a.getIngIDRecByIngName(addNewBlendFlavourTbl.getValueAt(i, 0).toString()));
+                }
+                
+                
                 //System.out.println(ingID.get(0)+2);
                 
                 //String query1 = "INSERT INTO recipie (blendID, ingID, ingPercent, type) VALUES ('"+ blendID +"','"+ a +"','"+ b +"',0)";
@@ -510,22 +519,30 @@ public class AddNewBlend extends javax.swing.JFrame {
                 
                 //System.out.println("x is"+ x);
                 //String q1 ="";
-                
+                int x = 0;
+                int y = 0;
                 for(int i =0; i<ingCount ; i++){
                    int a = ingID.get(i);
                    double b = Double.parseDouble(addNewBlendIngTbl.getValueAt(i, 1).toString());
                    String query1 = "INSERT INTO recipie (blendID, ingID, ingPercent, type) VALUES ('"+ blendID +"','"+ a +"','"+ b +"',0)";
-                   int x = dbConn.updateResult(query1);
-                   if(x==1){
+                   x = dbConn.updateResult(query1);
+                   
+                }
+                
+                for(int j =0; j<flavCount ; j++){
+                   int c = flavourID.get(j);
+                   double d = Double.parseDouble(addNewBlendFlavourTbl.getValueAt(j, 1).toString());
+                   String query2 = "INSERT INTO recipie (blendID, ingID, ingPercent, type) VALUES ('"+ blendID +"','"+ c +"','"+ d +"',0)";
+                   y = dbConn.updateResult(query2);
+                   
+                }
+                
+                if(x==1 && y==1){
                        JOptionPane.showMessageDialog(null, "New Blend Succesfully Added");
                    }else{
                        JOptionPane.showMessageDialog(null, "Error!, Data not Saved");
                    }
-                }
-               
-                
-                
-                
+                    
             }
         
         }
