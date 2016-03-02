@@ -532,7 +532,7 @@ public class AddNewBlend extends javax.swing.JFrame {
                 for(int j =0; j<flavCount ; j++){
                    int c = flavourID.get(j);
                    double d = Double.parseDouble(addNewBlendFlavourTbl.getValueAt(j, 1).toString());
-                   String query2 = "INSERT INTO recipie (blendID, ingID, ingPercent, type) VALUES ('"+ blendID +"','"+ c +"','"+ d +"',0)";
+                   String query2 = "INSERT INTO recipie (blendID, ingID, ingPercent, type) VALUES ('"+ blendID +"','"+ c +"','"+ d +"',1)";
                    y = dbConn.updateResult(query2);
                    
                 }
