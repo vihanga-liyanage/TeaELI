@@ -1459,7 +1459,7 @@ public class AdminPannel extends javax.swing.JFrame {
                 deliverBlend.setDefaultCloseOperation(HIDE_ON_CLOSE);
                 deliverBlend.blendNameLbl.setText(blendDelivery.getBlendName());
                 deliverBlend.blendCatgLbl.setText(blendDelivery.getBlendCategory());
-                deliverBlend.allocatedQtyLabel.setText(String.valueOf(blendDelivery.getOrderedStock()));
+                deliverBlend.allocatedQtyLbl.setText(String.valueOf(blendDelivery.getOrderedStock()));
                 deliverBlend.freeQtyLbl.setText(String.valueOf(blendDelivery.getVisibleStock()));
                 
             } else {
