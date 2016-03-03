@@ -27,8 +27,6 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.event.PopupMenuEvent;
-import javax.swing.event.PopupMenuListener;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -131,7 +129,8 @@ public class CreateNewBlendOrder1 extends javax.swing.JFrame {
                     for (int i=0; i<count; i++) {
                         setExcessQty(i);
                     }
-                    jScrollPane1.repaint();
+                    DefaultTableModel model = (DefaultTableModel)blendListTbl.getModel();
+                    model.fireTableDataChanged();
                 }
             }
         });
@@ -524,6 +523,10 @@ public class CreateNewBlendOrder1 extends javax.swing.JFrame {
     }//GEN-LAST:event_blendListTblPropertyChange
 
     private void createOrderBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createOrderBtnActionPerformed
+        int count = blendListTbl.getRowCount();
+        for (int i=0; i<count; i++) {
+            setExcessQty(i);
+        }
         if (blendListTbl.getRowCount() > 0) {
             int dialogResult = JOptionPane.showConfirmDialog(this, "Are you sure you want to move into next phase?", "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
             if (dialogResult == JOptionPane.YES_OPTION){

@@ -87,6 +87,7 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
         
         //Adding listner to prompt confirmation on window close
         this.addWindowListener(new WindowAdapter() {
+            @Override
             public void windowClosing(WindowEvent e) {
                 int confirmed = JOptionPane.showConfirmDialog(null, 
                     "Are you sure you want to cancel phase 2?", "Confirm window close",
