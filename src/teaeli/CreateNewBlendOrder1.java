@@ -131,6 +131,7 @@ public class CreateNewBlendOrder1 extends javax.swing.JFrame {
                     for (int i=0; i<count; i++) {
                         setExcessQty(i);
                     }
+                    jScrollPane1.repaint();
                 }
             }
         });
