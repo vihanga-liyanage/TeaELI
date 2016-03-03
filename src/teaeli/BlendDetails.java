@@ -51,7 +51,6 @@ public class BlendDetails extends javax.swing.JFrame {
         ingTable = new javax.swing.JTable();
         jScrollPane4 = new javax.swing.JScrollPane();
         flavourTable = new javax.swing.JTable();
-        deleteBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -100,7 +99,7 @@ public class BlendDetails extends javax.swing.JFrame {
 
         flavoursPerAddBtn.setText("Add");
 
-        updateBtn.setText("Update");
+        updateBtn.setText("Update & Add new");
 
         blendCodeTxt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -161,8 +160,6 @@ public class BlendDetails extends javax.swing.JFrame {
         });
         jScrollPane4.setViewportView(flavourTable);
 
-        deleteBtn.setText("Delete");
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -193,9 +190,7 @@ public class BlendDetails extends javax.swing.JFrame {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                         .addComponent(cancelBtn)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(deleteBtn)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGap(18, 18, 18)
                                         .addComponent(updateBtn))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel4)
@@ -253,8 +248,7 @@ public class BlendDetails extends javax.swing.JFrame {
                 .addGap(17, 17, 17)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(updateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cancelBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(deleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cancelBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -339,7 +333,6 @@ public class BlendDetails extends javax.swing.JFrame {
     private javax.swing.JTextField blendCodeTxt;
     private javax.swing.JTextField blendNameTxt;
     private javax.swing.JButton cancelBtn;
-    private javax.swing.JButton deleteBtn;
     private javax.swing.JTable flavourTable;
     private javax.swing.JComboBox flavoursCombo;
     private javax.swing.JButton flavoursPerAddBtn;
