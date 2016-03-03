@@ -108,20 +108,15 @@ public class CreateNewBlendOrder1 extends javax.swing.JFrame {
         blendsCombo.requestFocus();
         
         //setting focus to qty txt when item selected
-        blendsCombo.addPopupMenuListener(new PopupMenuListener() {
-
+        blendsCombo.getEditor().getEditorComponent().addKeyListener(new KeyAdapter() {
             @Override
-            public void popupMenuCanceled(PopupMenuEvent e) {}
-
-            @Override
-            public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
-                blendsQtyTxt.requestFocus();
+            public void keyPressed(KeyEvent evt) {
+                if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+                    blendsQtyTxt.requestFocus();
+                }
             }
-
-            @Override
-            public void popupMenuWillBecomeVisible(PopupMenuEvent e) {}
         });
-
+        
         deleteBtn.setEnabled(false);
         
         //enabling delete button and update excess qty on row select
@@ -544,9 +539,10 @@ public class CreateNewBlendOrder1 extends javax.swing.JFrame {
     }//GEN-LAST:event_createOrderBtnActionPerformed
 
     private void blendAddBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blendAddBtnActionPerformed
-        if (blendsCombo.getSelectedItem().equals("")){
+        if (blendsCombo.getSelectedIndex() == -1){
             JOptionPane.showMessageDialog(blendsCombo, "Please select a blend to add.", "Error", JOptionPane.WARNING_MESSAGE);
             blendsCombo.requestFocus();
+            blendsCombo.setSelectedIndex(-1);
         } else if (blendsQtyTxt.getText().equals("")) {
             JOptionPane.showMessageDialog(blendsQtyTxt, "Please enter blend quantity to add.", "Error", JOptionPane.WARNING_MESSAGE);
             blendsQtyTxt.requestFocus();

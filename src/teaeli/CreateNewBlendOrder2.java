@@ -11,6 +11,8 @@ import classes.ResultArray;
 import java.awt.Font;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -123,8 +125,9 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
     
     //Adding an ingredient into master plan
     private void addIngToMasterTbl(int blendQty, float percentage, List<String> row){
+        
         boolean isNew = true;
-        float ingQty = blendQty * percentage / 100;
+        float ingQty = (float)blendQty * percentage / 100.0f;
         for (int i=0; i<masterPlanTbl.getRowCount(); i++) {
             if (masterPlanTbl.getValueAt(i, 0).equals(row.get(1))) {
                 ingQty += parseFloat(masterPlanTbl.getValueAt(i, 1).toString());
@@ -133,6 +136,7 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
                 float visible = parseFloat(masterPlanTbl.getValueAt(i, 2).toString());
                 float invisible = parseFloat(masterPlanTbl.getValueAt(i, 3).toString());
                 float balance = 0;
+                
                 balance = ingQty - visible;
                 if (balance > 0) {
                     balance = balance - invisible;
@@ -176,6 +180,15 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
         }
     }
     
+    //Rounding method for doubles
+    public static float round(float num, int places){
+        if (places < 0)
+            throw new IllegalArgumentException();
+        BigDecimal bd = new BigDecimal(num);
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.floatValue();
+    }
+    
     //formatting numbers to add commas
     private String formatNum(String num){
         String decimal=num, point = null;
@@ -200,6 +213,7 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
         return formatNum(String.valueOf(num));
     }
     private String formatNum(float num){
+        num = round(num, 2);
         return formatNum(Float.toString(num));
     }
     
@@ -484,9 +498,15 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
     }//GEN-LAST:event_masterPlanTblPropertyChange
 
     private void confirmBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmBtnActionPerformed
-        OrderConfirmation oc = new OrderConfirmation();
-        oc.setVisible(true);
-        oc.setDefaultCloseOperation(HIDE_ON_CLOSE);
+        int dialogResult = JOptionPane.showConfirmDialog(this, "Are you sure you want to place this order?\nYou cannot undo after the confirmation.", "Confirm order placing", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+        if (dialogResult == JOptionPane.YES_OPTION){
+            OrderConfirmation oc = new OrderConfirmation();
+            oc.setVisible(true);
+            oc.setDefaultCloseOperation(HIDE_ON_CLOSE);
+            createNewBlendOrder1.dispose();
+            this.dispose();
+        }
+        
     }//GEN-LAST:event_confirmBtnActionPerformed
 
     private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed

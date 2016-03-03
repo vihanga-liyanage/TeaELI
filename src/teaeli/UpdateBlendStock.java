@@ -256,7 +256,7 @@ public class UpdateBlendStock extends javax.swing.JFrame {
 
     
     private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
-        this.setVisible(false);
+        this.close();
     }//GEN-LAST:event_cancelBtnActionPerformed
 
 	private void blendStockIncreaseBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blendStockIncreaseBtnActionPerformed

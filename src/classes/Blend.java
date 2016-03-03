@@ -347,6 +347,21 @@ public class Blend {
         return dbConn.getResultArray(query);
     }
 
+    
+    public int getIngIDRecByIngName(String ingName){
+        String query = "SELECT ingID FROM ingredient WHERE ingName = '" + ingName + "' ";
+        int ID = 0;
+        ResultArray res = new ResultArray();
+        res = dbConn.getResultArray(query);
+        if(res.next()){
+            ID = Integer.parseInt(res.getString(0));
+        }
+        return ID;
+    }
+    
+
+
+
     /* start of the method to load values to the productTable in the blends tab*/
     public void populateProductTable(DefaultTableModel tModel) {
         Connection connection = null;
@@ -394,14 +409,20 @@ public class Blend {
         }
         String query = "INSERT INTO blend values('" + blendID + "','" + blendName + "','" + baseCom + "',0,0,0,'" + blendCategory + "') ";
         int ret = dbConn.updateResult(query);
+
+        //System.out.println(ret);
+        /*if(ret==1){
+
         if (ret == 1) {
+
             JOptionPane.showMessageDialog(null, "New Blend Succesfully Added");
         } else {
             JOptionPane.showMessageDialog(null, "Error!, Data not Saved");
         }
-        return 1;
+        }*/
+        return ret;
     }
-
+    
     /* start of checkAndLoadBlendDeliverDetails method */
     public boolean checkAndLoadBlendDeliverDetails(String selectedBlendName) {
 
