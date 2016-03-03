@@ -272,9 +272,7 @@ public class IngredientDetails extends javax.swing.JFrame {
             //get supplier id by name
             String SupName = (String) this.supplierCombobox.getSelectedItem();
             int selecetdID = this.supplierCombobox.getSelectedIndex();
-            if (selecetdID == 0) {
-                JOptionPane.showMessageDialog(null, "Please select a supplier !!!", "No supplier selected", 0);
-            }else{
+            
                   try {
                     supID = supplier.getSupplierIDByName(SupName);
                 } catch (SQLException ex) {
@@ -299,7 +297,7 @@ public class IngredientDetails extends javax.swing.JFrame {
                     //Logger.getLogger(IngredientDetails.class.getName()).log(Level.SEVERE, null, ex);
                     System.out.println("sol error id:" + ex);
                 }
-            }
+            
               
         } else if (response == JOptionPane.CLOSED_OPTION) {
             System.out.println("JOptionPane closed");

@@ -120,7 +120,11 @@ public class AdminPannel extends javax.swing.JFrame {
         /*Start of ingredient class method calls*/
         //populate serch ingredient combobox in settings->ingredient
         AutoSuggest searchIngredientComboBoxAutoSuggest = new AutoSuggest();
+
+        //searchIngredientComboBoxAutoSuggest.setAutoSuggest(searchIngredientComboBox, ingredient.loadNameForSearchStockIngComboBox2());
+
         searchIngredientComboBoxAutoSuggest.setAutoSuggest(searchIngredientComboBox, ingredient.loadNameForSearchStockIngComboBox());
+
 
         //start of view all ingredients
         try {
@@ -152,14 +156,25 @@ public class AdminPannel extends javax.swing.JFrame {
 
         /*load the orderComboBox in the order details tab*/
         AutoSuggest searchOrderComboBoxAutoSuggest = new AutoSuggest();
+
+        //ArrayList<String> result = order.populateOrderListTable((DefaultTableModel) orderListTable.getModel());
+        //searchOrderComboBoxAutoSuggest.setAutoSuggestTwo(orderSearchCombo, result);
+
         searchOrderComboBoxAutoSuggest.setAutoSuggest(orderSearchCombo, order.loadOrderComboBox());
+
         orderSearchCombo.setSelectedIndex(-1);
 
         /* combox auto suggests in inventory management */
         AutoSuggest searchStockIngComboBoxAutoSuggest = new AutoSuggest();
+
+        //searchStockIngComboBoxAutoSuggest.setAutoSuggestTwo(searchStockIngComboBox, ingredient.loadNameForSearchStockIngComboBox2());
+
         searchStockIngComboBoxAutoSuggest.setAutoSuggest(searchStockIngComboBox, ingredient.loadNameForSearchStockIngComboBox());
 
+
+
         searchStockIngComboBox.setSelectedIndex(-1);
+
 
         AutoSuggest searchStockBlendComboBoxAutoSuggest = new AutoSuggest();
         searchStockBlendComboBoxAutoSuggest.setAutoSuggest(searchStockBlendComboBox, blend.loadNameForSearchStockBlendsComboBox());
@@ -1389,9 +1404,15 @@ public class AdminPannel extends javax.swing.JFrame {
 
     private void searchProductBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchProductBtnActionPerformed
         BlendDetails updateProduct = new BlendDetails();
-        updateProduct.setVisible(true);
-        updateProduct.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        searchBlendComboBox.setSelectedIndex(-1);
+        
+        if(searchBlendComboBox.getSelectedIndex()==-1){
+            JOptionPane.showMessageDialog(null, "Please Select a Blend");
+        }else{
+            updateProduct.setVisible(true);
+            updateProduct.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+            searchBlendComboBox.setSelectedIndex(-1);
+        }
+        
     }//GEN-LAST:event_searchProductBtnActionPerformed
 
 
