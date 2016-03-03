@@ -1365,23 +1365,48 @@ public class AdminPannel extends javax.swing.JFrame {
 
     private void searchOrderBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchOrderBtnActionPerformed
         OrderDetails orderDetails = new OrderDetails();
-        String id = orderSearchCombo.getSelectedItem().toString();
-        Order tmp = order.viewOrder((DefaultTableModel) orderDetails.blendTable.getModel(), (DefaultTableModel) orderDetails.orderDetailsTable.getModel(), id);
-        orderDetails.orderIDLabel.setText(tmp.getOrderID());
-        orderDetails.dateLabel.setText(tmp.getDate());
-        orderDetails.setVisible(true);
-        orderDetails.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        orderSearchCombo.setSelectedIndex(-1);
+        String id = "";
+        try{
+            id = orderSearchCombo.getSelectedItem().toString();
+            Order tmp = order.viewOrder((DefaultTableModel) orderDetails.blendTable.getModel(), (DefaultTableModel) orderDetails.orderDetailsTable.getModel(), id);
+            orderDetails.orderIDLabel.setText(tmp.getOrderID());
+            orderDetails.dateLabel.setText(tmp.getDate());
+            
+            for(int i = 0; i < orderListTable.getRowCount(); i++){
+                if(id.equals(orderListTable.getValueAt(i, 0).toString())){
+                    if(null != orderListTable.getValueAt(i, 1).toString())switch (orderListTable.getValueAt(i, 1).toString()) {
+                        case "Pending":
+                            orderDetails.orderCompletedBtn.setVisible(false);
+                            break;
+                        case "Received":
+                            orderDetails.orderReceivedBtn.setVisible(false);
+                            orderDetails.updateOrderBtn.setVisible(false);
+                            orderDetails.orderDetailsTable.setEnabled(false);
+                            break;
+                        case "Completed":
+                            orderDetails.orderCompletedBtn.setVisible(false);
+                            orderDetails.orderReceivedBtn.setVisible(false);
+                            orderDetails.updateOrderBtn.setVisible(false);
+                            orderDetails.orderDetailsTable.setEnabled(false);
+                            break;
+                    }
+                }
+            }
+            
+            orderDetails.setVisible(true);
+            orderDetails.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+            orderSearchCombo.setSelectedIndex(-1);
+        }catch(NullPointerException e){
+            JOptionPane.showMessageDialog(this, "You haven't select any order ID !", "Empty Selection", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_searchOrderBtnActionPerformed
 
     private void searchStockIngBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchStockIngBtnActionPerformed
-
         searchStockIngredientCombo();
     }//GEN-LAST:event_searchStockIngBtnActionPerformed
 
     private void searchStockBlendsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchStockBlendsBtnActionPerformed
-
-        searchStockBlendCombo();
+       searchStockBlendCombo();
     }//GEN-LAST:event_searchStockBlendsBtnActionPerformed
 
     private void deleteUserBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteUserBtnActionPerformed

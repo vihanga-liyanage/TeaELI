@@ -120,6 +120,9 @@ public class Order {
                 case "1":
                     status = "Received";
                     break;
+                case "2":
+                    status = "Completed";
+                    break;
             }
             tModel.addRow(new Object[]{resultSet.getString(0), status, resultSet.getString(2), resultSet.getString(3)});
         }
@@ -155,18 +158,75 @@ public class Order {
         String query1 = "select o.orderID, o.date, ob.blendID, ob.requiredQty, ob.excessQty, b.blendName from `order` o inner join orderblend ob on o.orderID = ob.orderID inner join blend b on ob.blendID = b.blendID where o.orderID = '"+orderID+"';";
         resultSet1 = dbConn.getResultArray(query1);
         while (resultSet1.next()){
-            tModelBlend.addRow(new Object[]{resultSet1.getString(2), resultSet1.getString(5), resultSet1.getString(3), resultSet1.getString(4)});
+            String req = formatNum(resultSet1.getString(3));
+            String exes = formatNum(resultSet1.getString(4));
+            tModelBlend.addRow(new Object[]{resultSet1.getString(2), resultSet1.getString(5), req, exes});
             temp.setDate(resultSet1.getString(1));
         }
-        
+       
         String query2 = "select i.ingName, s.supName, oi.requiredQty, oi.excessQty, oi.remarks from orderingredient oi inner join ingredient i on oi.ingID = i.ingID inner join supplier s on i.supID = s.supID where oi.orderID = '"+orderID+"';";
         resultSet2 = dbConn.getResultArray(query2);
         while (resultSet2.next()){
-            tModelIng.addRow(new Object[]{resultSet2.getString(0), resultSet2.getString(2), resultSet2.getString(3), 0, resultSet2.getString(4), resultSet2.getString(1)});
+            String req = resultSet2.getString(2);
+            String exes = resultSet2.getString(3);
+            tModelIng.addRow(new Object[]{resultSet2.getString(0), req, exes, 0, resultSet2.getString(4), resultSet2.getString(1)});
         }
         
         temp.setOrderID(orderID);
         
         return temp;
+    }
+    
+    //formatting numbers to add commas
+    private String formatNum(String num){
+        String decimal=num, point = null;
+        if(num.contains(".")){
+            String[] temp = num.split("\\.");
+            decimal = temp[0];
+            point = temp[1];
+        }
+        int i = decimal.length();
+        while (i > 3) {
+            String part1 = decimal.substring(0, i-3);
+            String part2 = decimal.substring(i-3);
+            decimal = part1 + "," + part2;
+            i-=3;
+        }
+        if (point != null){
+            decimal += "." + point;
+        }
+        return decimal;
+    }
+    private String formatNum(int num){
+        return formatNum(String.valueOf(num));
+    }
+    private String formatNum(float num){
+        return formatNum(Float.toString(num));
+    }
+    
+    //overiding Integer.parseInt() to accept nums with commas
+    private int parseInt(String num){
+        try{
+            return Integer.parseInt(num);
+        } catch (NumberFormatException e){
+            if (num.matches("[[0-9]{1,2}+,]*")) {
+                num = num.replace(",", "");
+                return Integer.parseInt(num);
+            }
+        }
+        return 0;
+    }
+    
+    //overiding Float.parseFloat() to accept nums with commas
+    private float parseFloat(String num){
+        try{
+            return Float.parseFloat(num);
+        } catch (NumberFormatException e){
+            if (num.matches("[[0-9]{1,2}+,]*.[0-9]*")) {
+                num = num.replace(",", "");
+                return Float.parseFloat(num);
+            }
+        }
+        return 0;
     }
 }
