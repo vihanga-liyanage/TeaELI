@@ -177,6 +177,19 @@ public class Order {
         return temp;
     }
     
+    public int updateOrderStatus(int status, String id){
+        if(status == 1){
+            String query = "UPDATE `order` SET orderStatus = 1 WHERE orderID = '"+id+"'";          
+            int result = dbConn.updateResult(query);
+            return result;
+        }else if(status == 2){
+            String query = "UPDATE `order` SET orderStatus = 2 WHERE orderID = '"+id+"'";          
+            int result = dbConn.updateResult(query);
+            return result;
+        }
+        return -1;
+    }
+    
     //formatting numbers to add commas
     private String formatNum(String num){
         String decimal=num, point = null;
