@@ -164,7 +164,7 @@ public class DeliverBlend extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Deliver Blend");
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Deliver Blend", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI Semibold", 0, 16))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, " Deliver Blend ", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI Semibold", 0, 16))); // NOI18N
 
         blendName.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         blendName.setText("Blend Name");
