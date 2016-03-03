@@ -105,7 +105,7 @@ public class AdminPannel extends javax.swing.JFrame {
             public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
                 BlendDetails updateProduct = new BlendDetails();
                 updateProduct.setVisible(true);
-                updateProduct.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+                updateProduct.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 searchBlendComboBox.setSelectedIndex(-1);
             }
 
@@ -1329,13 +1329,13 @@ public class AdminPannel extends javax.swing.JFrame {
     private void addItemBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addItemBtnActionPerformed
         AddIngredient addItem = new AddIngredient();
         addItem.setVisible(true);
-        addItem.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        addItem.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_addItemBtnActionPerformed
 
     private void addProductBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addProductBtnActionPerformed
         AddNewBlend addNewProduct = new AddNewBlend();
         addNewProduct.setVisible(true);
-        addNewProduct.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        addNewProduct.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
     }//GEN-LAST:event_addProductBtnActionPerformed
 
@@ -1346,14 +1346,13 @@ public class AdminPannel extends javax.swing.JFrame {
     private void addNewBlendsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addNewBlendsBtnActionPerformed
         CreateNewBlendOrder1 createNewBlendOrder = new CreateNewBlendOrder1();
         createNewBlendOrder.setVisible(true);
-        createNewBlendOrder.setDefaultCloseOperation(HIDE_ON_CLOSE);
     }//GEN-LAST:event_addNewBlendsBtnActionPerformed
 
     private void profileBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profileBtnActionPerformed
 
         EditProfile editProfile = new EditProfile();
         editProfile.setVisible(true);
-        editProfile.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        editProfile.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         //String UserName = new LoginFrame().user;
         String userName = loginFrame.user;
@@ -1386,7 +1385,7 @@ public class AdminPannel extends javax.swing.JFrame {
         }
 
         editProfile.setVisible(true);
-        editProfile.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        editProfile.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         editProfile.lblUserName.setText(user.getUserName());
         editProfile.txtFirstName.setText(user.getFirstName());
         editProfile.txtLastName.setText(user.getLastName());
@@ -1409,7 +1408,7 @@ public class AdminPannel extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Please Select a Blend");
         }else{
             updateProduct.setVisible(true);
-            updateProduct.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+            updateProduct.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             searchBlendComboBox.setSelectedIndex(-1);
         }
         
@@ -1454,7 +1453,7 @@ public class AdminPannel extends javax.swing.JFrame {
             }
             
             orderDetails.setVisible(true);
-            orderDetails.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+            orderDetails.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             orderSearchCombo.setSelectedIndex(-1);
         }catch(NullPointerException e){
             JOptionPane.showMessageDialog(this, "You haven't select any order ID !", "Empty Selection", JOptionPane.ERROR_MESSAGE);
@@ -1553,7 +1552,7 @@ public class AdminPannel extends javax.swing.JFrame {
 
                 updateStock.setAdminPannel(this);
                 updateStock.setVisible(true);
-                updateStock.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+                updateStock.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 updateStock.updateStockItemNameLbl.setText(ingredeintForStock.getIngName());
                 updateStock.updateStockCategoryLbl.setText(ingredeintForStock.getIngCategoryName());
                 updateStock.stockQtyLbl.setText(String.valueOf(ingredeintForStock.getVisibleStock()));
@@ -1585,7 +1584,7 @@ public class AdminPannel extends javax.swing.JFrame {
 
                 updateBlendStock.setAdminPannel(this);
                 updateBlendStock.setVisible(true);
-                updateBlendStock.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+                updateBlendStock.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 updateBlendStock.updateStockItemNameLbl.setText(blendForStock.getBlendName());
                 updateBlendStock.updateStockItemCategoryLbl.setText(blendForStock.getBlendCategory());
                 updateBlendStock.stockQtyLbl.setText(String.valueOf(blendForStock.getVisibleStock()));
@@ -1632,7 +1631,7 @@ public class AdminPannel extends javax.swing.JFrame {
             itemDetails.unitPriceTxt.setText(resultArray[4]);
 
             itemDetails.setVisible(true);
-            itemDetails.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+            itemDetails.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             searchIngredientComboBox.setSelectedIndex(-1);
         }
     }
