@@ -1683,9 +1683,9 @@ public class AdminPannel extends javax.swing.JFrame {
         try {
             String reportdate = today.replace(":", "_");
             //New PDF File will be created as ACCReport2016_01_01 //today's date
-            PdfWriter.getInstance(document, new FileOutputStream("E:\\TeaELI\\src\\New Folder\\" + reportdate + "" + ".pdf"));
+            PdfWriter.getInstance(document, new FileOutputStream("C:\\Teaeli\\Ingredient Stock History\\" + reportdate + "" + ".pdf"));
             document.open();
-            Image image2 = Image.getInstance("E:\\TeaELI\\src\\teaeli\\logo-new (Custom).png");
+            Image image2 = Image.getInstance("C:\\Teaeli\\Logos\\logo-new (Custom).png");
             document.add(image2);
             Paragraph paragraph1 = new Paragraph("leafspice (pvt)Ltd.\nAddress: 1/52, Galle Road,Colombo 03.\nT.P:0112552225\n\n");
             document.add(paragraph1);
@@ -1737,11 +1737,11 @@ public class AdminPannel extends javax.swing.JFrame {
             }
             document.add(t);
 
-            if ((new File("E:\\TeaELI\\src\\New Folder\\" + reportdate + "" + ".pdf")).exists()) {
+            if ((new File("C:\\Teaeli\\Ingredient Stock History\\" + reportdate + "" + ".pdf")).exists()) {
 
                 Process p = Runtime
                         .getRuntime()
-                        .exec("rundll32 url.dll,FileProtocolHandler E:\\TeaELI\\src\\New Folder\\" + reportdate + "" + ".pdf");
+                        .exec("rundll32 url.dll,FileProtocolHandler C:\\Teaeli\\Ingredient Stock History\\" + reportdate + "" + ".pdf");
                 p.waitFor();
             }
 
