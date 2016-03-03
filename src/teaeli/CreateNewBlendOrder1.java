@@ -129,8 +129,6 @@ public class CreateNewBlendOrder1 extends javax.swing.JFrame {
                     for (int i=0; i<count; i++) {
                         setExcessQty(i);
                     }
-                    DefaultTableModel model = (DefaultTableModel)blendListTbl.getModel();
-                    model.fireTableDataChanged();
                 }
             }
         });
@@ -140,7 +138,7 @@ public class CreateNewBlendOrder1 extends javax.swing.JFrame {
             public void windowClosing(WindowEvent e) {
                 int confirmed = JOptionPane.showConfirmDialog(null, 
                     "Are you sure you want to close the window?\nAll data you entered will be lost.", "Confirm window close",
-                    JOptionPane.YES_NO_OPTION);
+                    JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
                 if (confirmed == JOptionPane.YES_OPTION) {
                     dispose();
                 }
@@ -260,7 +258,7 @@ public class CreateNewBlendOrder1 extends javax.swing.JFrame {
 
         jLabel1.setText("jLabel1");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Create New Blend Order");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, " Create New Blend Order - Phase 1 ", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI Semibold", 0, 16))); // NOI18N
@@ -531,7 +529,7 @@ public class CreateNewBlendOrder1 extends javax.swing.JFrame {
             int dialogResult = JOptionPane.showConfirmDialog(this, "Are you sure you want to move into next phase?", "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
             if (dialogResult == JOptionPane.YES_OPTION){
                 CreateNewBlendOrder2 creatNewBlendOrder2 = new CreateNewBlendOrder2(this);
-                creatNewBlendOrder2.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+                creatNewBlendOrder2.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
                 creatNewBlendOrder2.setVisible(true);
                 this.setVisible(false);
             }

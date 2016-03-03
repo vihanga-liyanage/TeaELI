@@ -21,10 +21,12 @@ import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.WindowConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
@@ -113,6 +115,18 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
                     for (int i=0; i<count; i++) {
                         setExcessQty(i);
                     }
+                }
+            }
+        });
+        
+        //Prompt confirmation on window close
+        this.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                int confirmed = JOptionPane.showConfirmDialog(null, 
+                    "Are you sure you want to close the window?\nAll data you entered will be lost.", "Confirm window close",
+                    JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+                if (confirmed == JOptionPane.YES_OPTION) {
+                    dispose();
                 }
             }
         });
@@ -537,11 +551,15 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
     }//GEN-LAST:event_masterPlanTblPropertyChange
 
     private void confirmBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmBtnActionPerformed
+        int count = blendListTbl.getRowCount();
+        for (int i=0; i<count; i++) {
+            setExcessQty(i);
+        }
         int dialogResult = JOptionPane.showConfirmDialog(this, "Are you sure you want to place this order?\nYou cannot undo after the confirmation.", "Confirm order placing", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
         if (dialogResult == JOptionPane.YES_OPTION){
             OrderConfirmation oc = new OrderConfirmation();
             oc.setVisible(true);
-            oc.setDefaultCloseOperation(HIDE_ON_CLOSE);
+            oc.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             createNewBlendOrder1.dispose();
             this.dispose();
         }

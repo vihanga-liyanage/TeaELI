@@ -483,7 +483,7 @@ public class ManagerPannel extends javax.swing.JFrame {
         }
             EditProfile editProfile = new EditProfile();
             editProfile.setVisible(true);
-            editProfile.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE); 
+            editProfile.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); 
             editProfile.lblUserName.setText(user.getUserName());
             editProfile.txtFirstName.setText(user.getFirstName());
             editProfile.txtLastName.setText(user.getLastName());
@@ -492,7 +492,7 @@ public class ManagerPannel extends javax.swing.JFrame {
     private void searchOrderBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchOrderBtnActionPerformed
         OrderDetails orderDetails = new OrderDetails();
         orderDetails.setVisible(true);
-        orderDetails.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        orderDetails.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_searchOrderBtnActionPerformed
 
     private void addNewBlendsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addNewBlendsBtnActionPerformed
@@ -505,7 +505,7 @@ public class ManagerPannel extends javax.swing.JFrame {
     private void searchStockBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchStockBtnActionPerformed
         UpdateIngStock updateStock = new UpdateIngStock();
         updateStock.setVisible(true);
-        updateStock.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        updateStock.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_searchStockBtnActionPerformed
 
     private void logoutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutBtnActionPerformed
