@@ -286,7 +286,9 @@ public class UpdateBlendStock extends javax.swing.JFrame {
                 blend.setBlendName(this.updateStockItemNameLbl.getText());
                 blend.setStockUpdateReason(this.reasonToChangeTxt.getText());
 
-                oldStockQty = Integer.parseInt(this.stockQtyLbl.getText());
+                String oldStock = this.stockQtyLbl.getText().replace(" g", "");
+                
+                oldStockQty = Integer.parseInt(oldStock);
                 blend.setOldStockQty(oldStockQty);
                 blend.setUpdatedStockQTy(stockChangeQty);
 

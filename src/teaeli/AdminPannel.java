@@ -1523,11 +1523,11 @@ public class AdminPannel extends javax.swing.JFrame {
 
                 deliverBlend.setAdminPannel(this);
                 deliverBlend.setVisible(true);
-                deliverBlend.setDefaultCloseOperation(HIDE_ON_CLOSE);
+                deliverBlend.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
                 deliverBlend.blendNameLbl.setText(blendDelivery.getBlendName());
                 deliverBlend.blendCatgLbl.setText(blendDelivery.getBlendCategory());
-                deliverBlend.allocatedQtyLbl.setText(String.valueOf(blendDelivery.getOrderedStock()));
-                deliverBlend.freeQtyLbl.setText(String.valueOf(blendDelivery.getVisibleStock()));
+                deliverBlend.allocatedQtyLbl.setText(String.valueOf(blendDelivery.getOrderedStock()) + " g");
+                deliverBlend.freeQtyLbl.setText(String.valueOf(blendDelivery.getVisibleStock()) + " g");
 
             } else {
                 JOptionPane.showMessageDialog(this, "You have selected invalid blend name !", "Invalid Name", JOptionPane.ERROR_MESSAGE);
@@ -1559,7 +1559,7 @@ public class AdminPannel extends javax.swing.JFrame {
                 updateStock.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 updateStock.updateStockItemNameLbl.setText(ingredeintForStock.getIngName());
                 updateStock.updateStockCategoryLbl.setText(ingredeintForStock.getIngCategoryName());
-                updateStock.stockQtyLbl.setText(String.valueOf(ingredeintForStock.getVisibleStock()));
+                updateStock.stockQtyLbl.setText(String.valueOf(ingredeintForStock.getVisibleStock()) + " g");
             } else {
                 JOptionPane.showMessageDialog(this, "You have selected invalid ingredient!", "Invalid Name", JOptionPane.ERROR_MESSAGE);
                 searchStockIngComboBox.setSelectedIndex(-1);
@@ -1591,7 +1591,7 @@ public class AdminPannel extends javax.swing.JFrame {
                 updateBlendStock.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 updateBlendStock.updateStockItemNameLbl.setText(blendForStock.getBlendName());
                 updateBlendStock.updateStockItemCategoryLbl.setText(blendForStock.getBlendCategory());
-                updateBlendStock.stockQtyLbl.setText(String.valueOf(blendForStock.getVisibleStock()));
+                updateBlendStock.stockQtyLbl.setText(String.valueOf(blendForStock.getVisibleStock()) + " g");
             } else {
                 JOptionPane.showMessageDialog(this, "You have selected invalid blend name !", "Invalid Name", JOptionPane.ERROR_MESSAGE);
                 searchStockBlendComboBox.setSelectedIndex(-1);
