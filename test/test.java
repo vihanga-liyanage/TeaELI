@@ -1,6 +1,5 @@
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
+import classes.Order;
 
 
 
@@ -15,16 +14,10 @@ import java.math.RoundingMode;
  * @author Vihanga Liyanage
  */
 public class test {
-    public static double round(float num, int places){
-        if (places < 0)
-            throw new IllegalArgumentException();
-        BigDecimal bd = new BigDecimal(num);
-        bd = bd.setScale(places, RoundingMode.HALF_UP);
-        return bd.floatValue();
-    }
+
     public static void main(String[] args) {
-        
-        System.out.println(round(1234.00003f, 2));
+        Order order = new Order();
+
     }
     
     
