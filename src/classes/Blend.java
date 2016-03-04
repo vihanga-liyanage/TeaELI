@@ -23,6 +23,7 @@ public class Blend {
     private ArrayList<Ingredient> ingredientArray;
     private ArrayList<Ingredient> flavourArray;
 
+    Ingredient ingredient;
     DBConnection dbConn = new DBConnection();
 
     //constructor
@@ -45,6 +46,8 @@ public class Blend {
         this.sampleQty = 0;
         this.ingredientArray = new ArrayList();
         this.flavourArray = new ArrayList();
+        
+        ingredient = new Ingredient();
     }
 
     /* Start of setters and getters */
@@ -368,11 +371,12 @@ public class Blend {
         String query = "SELECT * FROM blend WHERE blendName='" + blendName + "'";
         return dbConn.getResultArray(query);
     }
-    /* end */
-
-    public ResultArray getIngIDByIngName(String base) {
-        String query = "SELECT ingID FROM ingredient WHERE ingName = '" + base + "' ";
-        return dbConn.getResultArray(query);
+    
+    public String getBlendIDByBlendName(String blendName) {
+        String query = "SELECT blendID FROM blend WHERE blendName = '" + blendName + "' ";
+        ResultArray res = dbConn.getResultArray(query);
+        res.next();
+        return res.getString(0);
     }
 
     public int getIngIDRecByIngName(String ingName) {
@@ -425,11 +429,7 @@ public class Blend {
     //Add new blend method
     public int addNewBlend(String blendID, String blendName, String base, String blendCategory) {
 
-        ResultArray res = getIngIDByIngName(base);
-        String baseCom = "";
-        if (res.next()) {
-            baseCom = res.getString(0);
-        }
+        String baseCom = ingredient.getIngIDByIngName(base);
         String query = "INSERT INTO blend values('" + blendID + "','" + blendName + "','" + baseCom + "',0,0,0,'" + blendCategory + "') ";
         int ret = dbConn.updateResult(query);
         return ret;
@@ -548,4 +548,9 @@ public class Blend {
         return dbConn.getResultArray(query);
     }
 
+    //updating blend stocks after a new order
+    public boolean updateBlendStock(String[] data){
+        String query = "UPDATE blend SET visibleStock='" + data[0] + "', invisibleStock='" + data[1] + "' WHERE blendID='" + data[2] + "'";
+        return (dbConn.updateResult(query) == 1);
+    }
 }

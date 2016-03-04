@@ -575,6 +575,19 @@ public class Ingredient {
                         "WHERE ingID='" + ingID + "'";
         return dbConn.getResultArray(query);
     }
+    
+    public String getIngIDByIngName(String base) {
+        String query = "SELECT ingID FROM ingredient WHERE ingName = '" + base + "' ";
+        ResultArray res = dbConn.getResultArray(query);
+        res.next();
+        return res.getString(0);
+    }
+    
+    //updating blend stocks after a new order
+    public boolean updateIngredientStock(String[] data){
+        String query = "UPDATE ingredient SET visibleStock='" + data[0] + "', invisibleStock='" + data[1] + "' WHERE ingID='" + data[2] + "'";
+        return (dbConn.updateResult(query) == 1);
+    }
 }
 
 
