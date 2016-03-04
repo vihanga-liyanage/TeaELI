@@ -1717,10 +1717,11 @@ public class AdminPannel extends javax.swing.JFrame {
 
     private void btnIngredientHistoryReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngredientHistoryReportActionPerformed
 
-        if (blendGo == 0) {
+        if (StartDate.getDate()!=null && EndDate.getDate() != null &&blendGo == 0) {
             JOptionPane.showMessageDialog(this, "Please Press Go button to filter By date or Press Cancel ");
         } else {
             ingredientHistoryStock.IngStockHistoryPdfGeneration();
+            blendGo =0;
         }
     }//GEN-LAST:event_btnIngredientHistoryReportActionPerformed
 
@@ -1740,10 +1741,11 @@ public class AdminPannel extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelIngHistoryActionPerformed
 
     private void btnBlendHistoryReportGenerationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBlendHistoryReportGenerationActionPerformed
-        if (blendGo == 0) {
+        if (BlendStartDate.getDate() != null && blendEndDate.getDate() != null && blendGo == 0) {
             JOptionPane.showMessageDialog(this, "Please Press Go button to filter By date or Press Cancel");
         } else {
             blendHistoryStock.BlendStockHistoryPdfGeneration();
+            blendGo =0;
         }
     }//GEN-LAST:event_btnBlendHistoryReportGenerationActionPerformed
 

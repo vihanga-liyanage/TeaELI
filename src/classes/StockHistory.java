@@ -1,16 +1,20 @@
 package classes;
 
+import com.itextpdf.text.BaseColor;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.Date;
 import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
 import com.itextpdf.text.Document;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
+import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -259,7 +263,10 @@ public class StockHistory {
         SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy:MM:dd");
         String today = sdf2.format(date);
         Document document = new Document(PageSize.A4, 50, 50, 50, 50);
+        
         SimpleDateFormat javadate = new SimpleDateFormat("yyyy-MM-dd");
+        Font redFont = new Font(Font.FontFamily.TIMES_ROMAN, 12,Font.NORMAL, BaseColor.RED);
+        Font smallItalic = new Font(Font.FontFamily.HELVETICA, 8,Font.ITALIC);
         /*Date start = StartDate.getDate();
          Date end = EndDate.getDate();
          String startdate = javadate.format(start);
@@ -275,47 +282,53 @@ public class StockHistory {
             document.add(paragraph1);
             Paragraph paragraph2 = new Paragraph("Date : " + today + "", FontFactory.getFont(FontFactory.HELVETICA, 12));
             document.add(paragraph2);
-            paragraph1 = new Paragraph("                Ingredient Stock History, Date:" + today + "   ", FontFactory.getFont(FontFactory.HELVETICA, 16));
+            paragraph1 = new Paragraph("                                Ingredient Stock History\n\n", FontFactory.getFont(FontFactory.HELVETICA, 16));
             document.add(paragraph1);
             //adding a table
             PdfPTable t = new PdfPTable(6);
-            t.setSpacingBefore(15);
-            t.setSpacingAfter(15);
+            t.setSpacingBefore(5);
+            t.setSpacingAfter(5);
+            t.setWidthPercentage(100);
+            t.getDefaultCell().setBorder(Rectangle.NO_BORDER);
+            t.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
+            t.getDefaultCell().setVerticalAlignment(Element.ALIGN_MIDDLE);
+            t.getDefaultCell().setFixedHeight(70);
+            
 
-            t.addCell(new PdfPCell(new Phrase("Date")));
-            t.addCell(new PdfPCell(new Phrase("Ingredient Name")));
-            t.addCell(new PdfPCell(new Phrase("Old Qty")));
-            t.addCell(new PdfPCell(new Phrase("Updated Qty")));
-            t.addCell(new PdfPCell(new Phrase("Reason")));
-            t.addCell(new PdfPCell(new Phrase("Updated By")));
+            t.addCell(new PdfPCell(new Phrase("Date",redFont)));
+            t.addCell(new PdfPCell(new Phrase("Ingredient Name",redFont)));
+            t.addCell(new PdfPCell(new Phrase("Old Qty",redFont)));
+            t.addCell(new PdfPCell(new Phrase("Updated Qty",redFont)));
+            t.addCell(new PdfPCell(new Phrase("Reason",redFont)));
+            t.addCell(new PdfPCell(new Phrase("Updated By",redFont)));
             int rows = admin.ingStockHistoryTbl.getRowCount();
 
             for (int i = 0; i < rows; i++) {
-                t.addCell(new PdfPCell(new Phrase(admin.ingStockHistoryTbl.getValueAt(i, 0) + "")));
+                t.addCell(new PdfPCell(new Phrase(admin.ingStockHistoryTbl.getValueAt(i, 0) + "",smallItalic)));
                 if (admin.ingStockHistoryTbl.getValueAt(i, 1) == null) {
                     t.addCell(new PdfPCell(new Phrase("-")));
                 } else {
-                    t.addCell(new PdfPCell(new Phrase(admin.ingStockHistoryTbl.getValueAt(i, 1) + "")));
+                    t.addCell(new PdfPCell(new Phrase(admin.ingStockHistoryTbl.getValueAt(i, 1) + "",smallItalic)));
                 }
                 if (admin.ingStockHistoryTbl.getValueAt(i, 2) == null) {
                     t.addCell(new PdfPCell(new Phrase("-")));
                 } else {
-                    t.addCell(new PdfPCell(new Phrase(admin.ingStockHistoryTbl.getValueAt(i, 2) + "")));
+                    t.addCell(new PdfPCell(new Phrase(admin.ingStockHistoryTbl.getValueAt(i, 2) + "",smallItalic)));
                 }
                 if (admin.ingStockHistoryTbl.getValueAt(i, 3) == null) {
                     t.addCell(new PdfPCell(new Phrase("-")));
                 } else {
-                    t.addCell(new PdfPCell(new Phrase(admin.ingStockHistoryTbl.getValueAt(i, 3) + "")));
+                    t.addCell(new PdfPCell(new Phrase(admin.ingStockHistoryTbl.getValueAt(i, 3) + "",smallItalic)));
                 }
                 if (admin.ingStockHistoryTbl.getValueAt(i, 4) == null) {
                     t.addCell(new PdfPCell(new Phrase("-")));
                 } else {
-                    t.addCell(new PdfPCell(new Phrase(admin.ingStockHistoryTbl.getValueAt(i, 4) + "")));
+                    t.addCell(new PdfPCell(new Phrase(admin.ingStockHistoryTbl.getValueAt(i, 4) + "",smallItalic)));
                 }
                 if (admin.ingStockHistoryTbl.getValueAt(i, 5) == null) {
                     t.addCell(new PdfPCell(new Phrase("-")));
                 } else {
-                    t.addCell(new PdfPCell(new Phrase(admin.ingStockHistoryTbl.getValueAt(i, 5) + "")));
+                    t.addCell(new PdfPCell(new Phrase(admin.ingStockHistoryTbl.getValueAt(i, 5) + "",smallItalic)));
                 }
 
             }
@@ -343,6 +356,8 @@ public class StockHistory {
         String today = sdf2.format(date);
         Document document = new Document(PageSize.A4, 50, 50, 50, 50);
         SimpleDateFormat javadate = new SimpleDateFormat("yyyy-MM-dd");
+        Font redFont = new Font(Font.FontFamily.TIMES_ROMAN, 12,Font.NORMAL, BaseColor.RED);
+        Font smallItalic = new Font(Font.FontFamily.HELVETICA, 8,Font.ITALIC);
         /*Date start = StartDate.getDate();
          Date end = EndDate.getDate();
          String startdate = javadate.format(start);
@@ -358,47 +373,52 @@ public class StockHistory {
             document.add(paragraph1);
             Paragraph paragraph2 = new Paragraph("Date : " + today + "", FontFactory.getFont(FontFactory.HELVETICA, 12));
             document.add(paragraph2);
-            paragraph1 = new Paragraph("                Blend Stock History Date:" + today + "   ", FontFactory.getFont(FontFactory.HELVETICA, 16));
+            paragraph1 = new Paragraph("                        Blend Stock History\n\n", FontFactory.getFont(FontFactory.HELVETICA, 16));
             document.add(paragraph1);
             //adding a table
             PdfPTable t = new PdfPTable(6);
-            t.setSpacingBefore(25);
-            t.setSpacingAfter(25);
+            t.setSpacingBefore(5);
+            t.setSpacingAfter(5);
+            t.setWidthPercentage(100);
+            t.getDefaultCell().setBorder(Rectangle.NO_BORDER);
+            t.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
+            t.getDefaultCell().setVerticalAlignment(Element.ALIGN_MIDDLE);
+            t.getDefaultCell().setFixedHeight(70);
 
-            t.addCell(new PdfPCell(new Phrase("Date")));
-            t.addCell(new PdfPCell(new Phrase("Blend Name")));
-            t.addCell(new PdfPCell(new Phrase("Old Qty")));
-            t.addCell(new PdfPCell(new Phrase("Updated Qty")));
-            t.addCell(new PdfPCell(new Phrase("Reason")));
-            t.addCell(new PdfPCell(new Phrase("Updated By")));
+            t.addCell(new PdfPCell(new Phrase("Date",redFont)));
+            t.addCell(new PdfPCell(new Phrase("Blend Name",redFont)));
+            t.addCell(new PdfPCell(new Phrase("Old Qty",redFont)));
+            t.addCell(new PdfPCell(new Phrase("Updated Qty",redFont)));
+            t.addCell(new PdfPCell(new Phrase("Reason",redFont)));
+            t.addCell(new PdfPCell(new Phrase("Updated By",redFont)));
             int rows = admin.blendStockHistoryTbl.getRowCount();
 
             for (int i = 0; i < rows; i++) {
-                t.addCell(new PdfPCell(new Phrase(admin.blendStockHistoryTbl.getValueAt(i, 0) + "")));
+                t.addCell(new PdfPCell(new Phrase(admin.blendStockHistoryTbl.getValueAt(i, 0) + "",smallItalic)));
                 if (admin.blendStockHistoryTbl.getValueAt(i, 1) == null) {
                     t.addCell(new PdfPCell(new Phrase("-")));
                 } else {
-                    t.addCell(new PdfPCell(new Phrase(admin.blendStockHistoryTbl.getValueAt(i, 1) + "")));
+                    t.addCell(new PdfPCell(new Phrase(admin.blendStockHistoryTbl.getValueAt(i, 1) + "",smallItalic)));
                 }
                 if (admin.blendStockHistoryTbl.getValueAt(i, 2) == null) {
                     t.addCell(new PdfPCell(new Phrase("-")));
                 } else {
-                    t.addCell(new PdfPCell(new Phrase(admin.blendStockHistoryTbl.getValueAt(i, 2) + "")));
+                    t.addCell(new PdfPCell(new Phrase(admin.blendStockHistoryTbl.getValueAt(i, 2) + "",smallItalic)));
                 }
                 if (admin.blendStockHistoryTbl.getValueAt(i, 3) == null) {
                     t.addCell(new PdfPCell(new Phrase("-")));
                 } else {
-                    t.addCell(new PdfPCell(new Phrase(admin.blendStockHistoryTbl.getValueAt(i, 3) + "")));
+                    t.addCell(new PdfPCell(new Phrase(admin.blendStockHistoryTbl.getValueAt(i, 3) + "",smallItalic)));
                 }
                 if (admin.blendStockHistoryTbl.getValueAt(i, 4) == null) {
                     t.addCell(new PdfPCell(new Phrase("-")));
                 } else {
-                    t.addCell(new PdfPCell(new Phrase(admin.blendStockHistoryTbl.getValueAt(i, 4) + "")));
+                    t.addCell(new PdfPCell(new Phrase(admin.blendStockHistoryTbl.getValueAt(i, 4) + "",smallItalic)));
                 }
                 if (admin.blendStockHistoryTbl.getValueAt(i, 5) == null) {
                     t.addCell(new PdfPCell(new Phrase("-")));
                 } else {
-                    t.addCell(new PdfPCell(new Phrase(admin.blendStockHistoryTbl.getValueAt(i, 5) + "")));
+                    t.addCell(new PdfPCell(new Phrase(admin.blendStockHistoryTbl.getValueAt(i, 5) + "",smallItalic)));
                 }
 
             }
