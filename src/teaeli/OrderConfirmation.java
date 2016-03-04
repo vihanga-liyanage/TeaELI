@@ -200,12 +200,12 @@ public class OrderConfirmation extends javax.swing.JFrame {
 
 
         //Re-generating the admin panel since the data is changed
-        if( pannel.getClass().getName() == "teaeli.AdminPannel") {
+        if( "teaeli.AdminPannel".equals(pannel.getClass().getName())) {
             AdminPannel adminPannel = new AdminPannel();
             adminPannel.setVisible(true);
             AdminPannel old = (AdminPannel) pannel;
             old.dispose();
-        } else if( pannel.getClass().getName() == "teaeli.ManagerPannel") {
+        } else if( "teaeli.ManagerPannel".equals(pannel.getClass().getName())) {
             ManagerPannel managerPannel = new ManagerPannel();
             managerPannel.setVisible(true);
             ManagerPannel old = (ManagerPannel) pannel;

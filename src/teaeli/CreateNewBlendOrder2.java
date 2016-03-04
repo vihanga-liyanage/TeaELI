@@ -27,7 +27,6 @@ import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.WindowConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
@@ -303,6 +302,30 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    private void readBlendListTbl(){
+        DefaultTableModel model = createNewBlendOrder1.getBlendListTbl();
+        for (int i=0; i<model.getRowCount(); i++) {
+            String blendName = model.getValueAt(i, 0).toString();
+            String reqQty = String.valueOf(parseInt(model.getValueAt(i, 1).toString()));
+            String visibleStock = String.valueOf(parseInt(model.getValueAt(i, 2).toString()));
+            String invisibleStock = String.valueOf(parseInt(model.getValueAt(i, 3).toString()));
+            String balanceQty = String.valueOf(parseInt(model.getValueAt(i, 4).toString()));
+            String excessQty = String.valueOf(parseInt(model.getValueAt(i, 5).toString()));
+            
+            String blendID = blend.getBlendIDByBlendName(blendName);
+            
+            //placing order blend
+            String[] data = {orderIDLabel.getText(), blendID, balanceQty, excessQty};
+            if (!order.placeOrderBlends(data)){
+                JOptionPane.showMessageDialog(rootPane, "There were some issues with the database. Please contact developers.");
+                System.exit(0);
+            }
+            
+            //updating blend stock
+            
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -560,11 +583,14 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
         }
         int dialogResult = JOptionPane.showConfirmDialog(this, "Are you sure you want to place this order?\nYou cannot undo after the confirmation.", "Confirm order placing", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
         if (dialogResult == JOptionPane.YES_OPTION){
-            //Placing the order in order table
+            //placing the order in order table
             if (!order.placeOrder(orderIDLabel.getText())){
                 JOptionPane.showMessageDialog(rootPane, "There were some issues with the database. Please contact developers.");
                 System.exit(0);
             }
+            //placing orderBlends and updating blend table
+            readBlendListTbl();
+            
             OrderConfirmation oc = new OrderConfirmation();
             oc.setVisible(true);
             oc.pannel = this.pannel;

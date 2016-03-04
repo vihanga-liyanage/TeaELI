@@ -185,6 +185,11 @@ public class Order {
                 "VALUES ('" + orderID + "' , '" + user.getUserID() + "', '0')";
         return (dbConn.updateResult(query) == 1);
     }
+    //placing orderBlends
+    public boolean placeOrderBlends(String[] data) {
+        String query = "INSERT INTO orderblend VALUES('" + data[0] + "', '" + data[1] + "', '" + data[2] + "', '" + data[3] + "')";
+        return (dbConn.updateResult(query) == 1);
+    }
         
     public int updateOrderStatus(int status, String id){
         if(status == 1){

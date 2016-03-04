@@ -368,11 +368,17 @@ public class Blend {
         String query = "SELECT * FROM blend WHERE blendName='" + blendName + "'";
         return dbConn.getResultArray(query);
     }
-    /* end */
 
     public ResultArray getIngIDByIngName(String base) {
         String query = "SELECT ingID FROM ingredient WHERE ingName = '" + base + "' ";
         return dbConn.getResultArray(query);
+    }
+    
+    public String getBlendIDByBlendName(String blendName) {
+        String query = "SELECT blendID FROM blend WHERE blendName = '" + blendName + "' ";
+        ResultArray res = dbConn.getResultArray(query);
+        res.next();
+        return res.getString(0);
     }
 
     public int getIngIDRecByIngName(String ingName) {
@@ -444,7 +450,7 @@ public class Blend {
 
         try {
 
-            String query = "SELECT blendName, visibleStock, orderedStock, blendCategory FROM blend WHERE blendName = '" + selectedBlendName + "'";
+            String query = "SELECT blendName, visibleStock, alocatedStock, blendCategory FROM blend WHERE blendName = '" + selectedBlendName + "'";
 
             resultArray = dbConn.getResultArray(query);
 
@@ -484,7 +490,7 @@ public class Blend {
         this.getBlendIDFromBlendName();
 
         //query to update blend stock
-        String query = "UPDATE blend SET visibleStock = '" + this.getVisibleStock() + "' , orderedStock = '"
+        String query = "UPDATE blend SET visibleStock = '" + this.getVisibleStock() + "' , alocatedStock = '"
                 + this.getOrderedStock() + "' WHERE blendID = '" + this.getBlendID() + "'";
         
         int i = dbConn.updateResult(query);
