@@ -111,13 +111,12 @@ public class DeliverBlend extends javax.swing.JFrame {
 
         //Prompt confirmation on window close
         this.addWindowListener(new WindowAdapter() {
-            @Override
             public void windowClosing(WindowEvent e) {
-                int confirmed = JOptionPane.showConfirmDialog(null,
-                        "Are you sure you want to close the window? \n All data you entered will be lost.", "Confirm window close",
-                        JOptionPane.YES_NO_OPTION);
+                int confirmed = JOptionPane.showConfirmDialog(null, 
+                    "Are you sure you want to close the window?\nAll data you entered will be lost.", "Confirm window close",
+                    JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
                 if (confirmed == JOptionPane.YES_OPTION) {
-                    close();
+                    dispose();
                 }
             }
         });
@@ -422,8 +421,8 @@ public class DeliverBlend extends javax.swing.JFrame {
 
     private void deliverBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deliverBtnActionPerformed
 
-        allocatedStockQty = Integer.parseInt(allocatedQtyLbl.getText());
-        freeQty = Integer.parseInt(freeQtyLbl.getText());
+        allocatedStockQty = Integer.parseInt(allocatedQtyLbl.getText().replace(" g", ""));
+        freeQty = Integer.parseInt(freeQtyLbl.getText().replace(" g", ""));
 
         if (!deliverQtyCheck()) {
             JOptionPane.showMessageDialog(this, "Deliver quantity should be less than or equal to "

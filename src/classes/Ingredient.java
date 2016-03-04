@@ -25,7 +25,7 @@ public class Ingredient {
 
     // attributes
     private int ingID, ingCategoryID, supID;
-    private int orderReqQty, orderExcessQty, oldStockQty, updatedStockQTy;
+    private float orderReqQty, orderExcessQty, oldStockQty, updatedStockQTy;
     private String ingName, ingCategoryName, stockUpdateReason;
     private float unitPrice, visibleStock, orderedStock, invisibleStock;
 
@@ -114,27 +114,27 @@ public class Ingredient {
         this.unitPrice = unitPrice;
     }
 
-    public int getOrderReqQty() {
+    public float getOrderReqQty() {
         return orderReqQty;
     }
 
-    public void setOrderReqQty(int orderReqQty) {
+    public void setOrderReqQty(float orderReqQty) {
         this.orderReqQty = orderReqQty;
     }
 
-    public int getOrderExessQty() {
+    public float getOrderExessQty() {
         return orderExcessQty;
     }
 
-    public void setOrderExessQty(int orderExessQty) {
+    public void setOrderExessQty(float orderExessQty) {
         this.orderExcessQty = orderExessQty;
     }
 
-    public int getOrderExcessQty() {
+    public float getOrderExcessQty() {
         return orderExcessQty;
     }
 
-    public void setOrderExcessQty(int orderExcessQty) {
+    public void setOrderExcessQty(float orderExcessQty) {
         this.orderExcessQty = orderExcessQty;
     }
 
@@ -154,37 +154,22 @@ public class Ingredient {
         this.stockUpdateReason = stockUpdateReason;
     }
 
-    public int getOldStockQty() {
+    public float getOldStockQty() {
         return oldStockQty;
     }
 
-    public void setOldStockQty(int oldStockQty) {
+    public void setOldStockQty(float oldStockQty) {
         this.oldStockQty = oldStockQty;
     }
 
-    public int getUpdatedStockQTy() {
+    public float getUpdatedStockQTy() {
         return updatedStockQTy;
     }
 
-    public void setUpdatedStockQTy(int updatedStockQTy) {
+    public void setUpdatedStockQTy(float updatedStockQTy) {
         this.updatedStockQTy = updatedStockQTy;
     }
 
-    /* Get ingredient data when blend name is given */
-    /* public ResultSet getIngDataByIngName(String ingName) {
-     Connection conn = null;
-     ResultSet resultSet = null;
-
-     try {
-     String query = "SELECT * FROM ingredient WHERE ingName='" + ingName + "'";
-     conn = dbConn.setConnection();
-     resultSet = dbConn.getResult(query, conn);
-     return resultSet;
-     } catch (Exception e) {
-     System.err.println("err : " + e);
-     }
-     return null;
-     }*/
     /* Get blend data when ing name is given -thisara */
     public List<List<String>> getIngDataByIngName(String ingName) {
         Connection conn = null;
