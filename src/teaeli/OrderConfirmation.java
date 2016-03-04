@@ -5,8 +5,7 @@
  */
 package teaeli;
 
-import java.awt.Dimension;
-import java.awt.Toolkit;
+import javax.swing.JFrame;
 
 /**
  *
@@ -14,6 +13,7 @@ import java.awt.Toolkit;
  */
 public class OrderConfirmation extends javax.swing.JFrame {
 
+    public Object pannel;
     /**
      * Creates new form OrderConfirmation
      */
@@ -22,6 +22,9 @@ public class OrderConfirmation extends javax.swing.JFrame {
         this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
         
         setResizable(false);
+        
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        
     }
 
     /**
@@ -104,6 +107,11 @@ public class OrderConfirmation extends javax.swing.JFrame {
         }
 
         generatePdfBtn.setText("Generate PDF");
+        generatePdfBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                generatePdfBtnActionPerformed(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Segoe UI Semibold", 0, 16)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -186,6 +194,25 @@ public class OrderConfirmation extends javax.swing.JFrame {
     private void tblMasterPlanEditingView1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_tblMasterPlanEditingView1PropertyChange
         // TODO add your handling code here:
     }//GEN-LAST:event_tblMasterPlanEditingView1PropertyChange
+
+    private void generatePdfBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generatePdfBtnActionPerformed
+        //Some code goes hear
+
+
+        //Re-generating the admin panel since the data is changed
+        if( pannel.getClass().getName() == "teaeli.AdminPannel") {
+            AdminPannel adminPannel = new AdminPannel();
+            adminPannel.setVisible(true);
+            AdminPannel old = (AdminPannel) pannel;
+            old.dispose();
+        } else if( pannel.getClass().getName() == "teaeli.ManagerPannel") {
+            ManagerPannel managerPannel = new ManagerPannel();
+            managerPannel.setVisible(true);
+            ManagerPannel old = (ManagerPannel) pannel;
+            old.dispose();
+        }
+        this.dispose();
+    }//GEN-LAST:event_generatePdfBtnActionPerformed
 
     /**
      * @param args the command line arguments

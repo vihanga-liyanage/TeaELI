@@ -34,6 +34,8 @@ public class CreateNewBlendOrder1 extends javax.swing.JFrame {
     
     private Blend blend;
     
+    public Object pannel;
+    
     /**
      * Creates new form AddNewOrder
      */
@@ -135,6 +137,7 @@ public class CreateNewBlendOrder1 extends javax.swing.JFrame {
         
         //Prompt confirmation on window close
         this.addWindowListener(new WindowAdapter() {
+            @Override
             public void windowClosing(WindowEvent e) {
                 int confirmed = JOptionPane.showConfirmDialog(null, 
                     "Are you sure you want to close the window?\nAll data you entered will be lost.", "Confirm window close",
@@ -531,6 +534,7 @@ public class CreateNewBlendOrder1 extends javax.swing.JFrame {
                 CreateNewBlendOrder2 creatNewBlendOrder2 = new CreateNewBlendOrder2(this);
                 creatNewBlendOrder2.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
                 creatNewBlendOrder2.setVisible(true);
+                creatNewBlendOrder2.pannel = this.pannel;
                 this.setVisible(false);
             }
         } else {

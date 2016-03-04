@@ -7,6 +7,7 @@ package teaeli;
 
 import classes.Blend;
 import classes.Ingredient;
+import classes.Order;
 import classes.ResultArray;
 import classes.Validation;
 import java.awt.Font;
@@ -39,6 +40,8 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
     
     private Blend blend;
     private Ingredient ingredient;
+    private Order order;
+    public Object pannel;
     public CreateNewBlendOrder1 createNewBlendOrder1;
     public List<List<String>> blendList;
     
@@ -67,6 +70,7 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
         //Loading required class objects
         blend = new Blend();
         ingredient = new Ingredient();
+        order = new Order();
         
         //Setting date
         DateFormat formatter = new SimpleDateFormat("EEE, d MMM yyyy");
@@ -83,7 +87,6 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
             Vector row = new Vector();
             row.add(model.getValueAt(i, 0));
             row.add(model.getValueAt(i, 6));
-            System.out.println(model.getValueAt(i, 5));
             blendTBModel.addRow(row);
         }
         
@@ -557,8 +560,14 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
         }
         int dialogResult = JOptionPane.showConfirmDialog(this, "Are you sure you want to place this order?\nYou cannot undo after the confirmation.", "Confirm order placing", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
         if (dialogResult == JOptionPane.YES_OPTION){
+            //Placing the order in order table
+            if (!order.placeOrder(orderIDLabel.getText())){
+                JOptionPane.showMessageDialog(rootPane, "There were some issues with the database. Please contact developers.");
+                System.exit(0);
+            }
             OrderConfirmation oc = new OrderConfirmation();
             oc.setVisible(true);
+            oc.pannel = this.pannel;
             oc.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             createNewBlendOrder1.dispose();
             this.dispose();

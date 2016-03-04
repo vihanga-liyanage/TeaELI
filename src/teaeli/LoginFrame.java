@@ -173,7 +173,6 @@ public class LoginFrame extends javax.swing.JFrame {
          if (1==1){
              
             AdminPannel adminPannel = new AdminPannel();//the provided username & password matched
-            adminPannel.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);//Keep the window fullscreen
             adminPannel.setVisible(true);
             user =userName;
             this.setVisible(false);
