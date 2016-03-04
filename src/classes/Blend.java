@@ -11,7 +11,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Vector;
 import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class Blend {
@@ -20,6 +19,7 @@ public class Blend {
     private String blendID, blendName, baseName, blendCategory, stockUpdateReason;
     private int baseID, visibleStock, orderedStock, invisibleStock;
     private int orderReqQty, orderExcessQty, oldStockQty, updatedStockQTy;
+    private int deliverQty, delRemoveQty, sampleQty;
     private ArrayList<Ingredient> ingredientArray;
     private ArrayList<Ingredient> flavourArray;
 
@@ -40,6 +40,9 @@ public class Blend {
         this.orderReqQty = 0;
         this.oldStockQty = 0;
         this.updatedStockQTy = 0;
+        this.deliverQty = 0;
+        this.delRemoveQty = 0;
+        this.sampleQty = 0;
         this.ingredientArray = new ArrayList();
         this.flavourArray = new ArrayList();
     }
@@ -164,6 +167,31 @@ public class Blend {
     public void setUpdatedStockQTy(int updatedStockQTy) {
         this.updatedStockQTy = updatedStockQTy;
     }
+
+    public int getDeliverQty() {
+        return deliverQty;
+    }
+
+    public void setDeliverQty(int deliverQty) {
+        this.deliverQty = deliverQty;
+    }
+
+    public int getDelRemoveQty() {
+        return delRemoveQty;
+    }
+
+    public void setDelRemoveQty(int delRemoveQty) {
+        this.delRemoveQty = delRemoveQty;
+    }
+
+    public int getSampleQty() {
+        return sampleQty;
+    }
+
+    public void setSampleQty(int sampleQty) {
+        this.sampleQty = sampleQty;
+    }
+
     /* End of setters and getters */
 
     /* start of populateBlendTable method */
@@ -185,9 +213,9 @@ public class Blend {
                 }
                 tableModel.addRow(newRow);
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             System.err.println("blend 191 err : " + e);
-        } 
+        }
     }
     /* end of populateBlendTable method */
 
@@ -347,20 +375,16 @@ public class Blend {
         return dbConn.getResultArray(query);
     }
 
-    
-    public int getIngIDRecByIngName(String ingName){
+    public int getIngIDRecByIngName(String ingName) {
         String query = "SELECT ingID FROM ingredient WHERE ingName = '" + ingName + "' ";
         int ID = 0;
         ResultArray res = new ResultArray();
         res = dbConn.getResultArray(query);
-        if(res.next()){
+        if (res.next()) {
             ID = Integer.parseInt(res.getString(0));
         }
         return ID;
     }
-    
-
-
 
     /* start of the method to load values to the productTable in the blends tab*/
     public void populateProductTable(DefaultTableModel tModel) {
@@ -405,29 +429,17 @@ public class Blend {
         String baseCom = "";
         if (res.next()) {
             baseCom = res.getString(0);
-            //System.out.println("base is " +baseCom);
         }
         String query = "INSERT INTO blend values('" + blendID + "','" + blendName + "','" + baseCom + "',0,0,0,'" + blendCategory + "') ";
         int ret = dbConn.updateResult(query);
-
-        //System.out.println(ret);
-        /*if(ret==1){
-
-        if (ret == 1) {
-
-            JOptionPane.showMessageDialog(null, "New Blend Succesfully Added");
-        } else {
-            JOptionPane.showMessageDialog(null, "Error!, Data not Saved");
-        }
-        }*/
         return ret;
     }
-    
+
     /* start of checkAndLoadBlendDeliverDetails method */
     public boolean checkAndLoadBlendDeliverDetails(String selectedBlendName) {
 
         boolean validBlendName = false;
-        
+
         ResultArray resultArray;
 
         try {
@@ -443,23 +455,97 @@ public class Blend {
                 this.setVisibleStock(Integer.parseInt(resultArray.getString(1)));
                 this.setOrderedStock(Integer.parseInt(resultArray.getString(2)));
                 this.setBlendCategory(resultArray.getString(3));
-                
+
                 validBlendName = true;
             }
         } catch (NumberFormatException e) {
             System.err.println("err : " + e);
-        } 
+        }
         return validBlendName;
     }
     /* end ofcheckAndLoadBlendDeliverDetails method */
 
+    /* start of updateDeliverDetails method */
+    public boolean updateDeliverDetails() {
+
+        boolean updated = false;
+
+        //to get current date
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date currentDate = Calendar.getInstance().getTime();
+        dateFormat.format(currentDate);
+        Timestamp date = new Timestamp(currentDate.getTime());
+
+        //get current user id
+        User updatedUser = new User();
+        updatedUser.getIDByUsername();
+
+        //get blendID
+        this.getBlendIDFromBlendName();
+
+        //query to update blend stock
+        String query = "UPDATE blend SET visibleStock = '" + this.getVisibleStock() + "' , orderedStock = '"
+                + this.getOrderedStock() + "' WHERE blendID = '" + this.getBlendID() + "'";
+        
+        int i = dbConn.updateResult(query);
+
+        if (i == 1) {
+
+            String reason = "Blend Deliver (From allocated stock) : " + this.getStockUpdateReason();
+
+            //query to insert into stock history table about delivered amount
+            query = "INSERT INTO blendstockhistory VALUES ('0','" + this.getBlendID() + "','" + date + "','"
+                    + this.getOldStockQty() + "','" + this.getUpdatedStockQTy() + "','" + reason
+                    + "','" + updatedUser.getUserID() + "')";
+
+            i = dbConn.updateResult(query);
+
+            if (this.getSampleQty() > 0 && i == 1) {
+
+                int oldStock = ((this.getVisibleStock() + this.sampleQty) - this.delRemoveQty);
+                int updatedStock = this.sampleQty;
+                reason = "Deliver Sample Amount (From free stock) : " + this.getStockUpdateReason();
+
+                //query to insert into stock history table about sample deliver amount
+                query = "INSERT INTO blendstockhistory VALUES ('0','" + this.getBlendID() + "','" + date + "','"
+                        + oldStock + "','" + updatedStock + "','" + reason + "','" + updatedUser.getUserID() + "')";
+
+                i = dbConn.updateResult(query);
+
+                if (this.delRemoveQty > 0 && i == 1) {
+
+                    oldStock = this.getVisibleStock() - this.delRemoveQty;
+                    updatedStock = this.delRemoveQty;
+                    
+                    reason = "Undelivered Amount (To free stock) : " + this.getStockUpdateReason();
+
+                    //query to insert into stock history table about ubdelivered amount
+                    query = "INSERT INTO blendstockhistory VALUES ('0','" + this.getBlendID() + "','" + date + "','"
+                            + oldStock + "','" + updatedStock + "','" + reason + "','" + updatedUser.getUserID() + "')";
+
+                    i = dbConn.updateResult(query);
+
+                    if (i == 1){
+                        updated = true;
+                    }
+                } else if (i == 1) {
+                    updated = true;
+                }
+            } else if (i == 1) {
+                updated = true;
+            }
+        }
+        return updated;
+    }
+    /* end of updateDeliverDetails method */
+
     //getting recipie data for blend
-    public ResultArray getRecipie(String blendName){
-        String query = "SELECT b.baseID, r.ingID, r.ingPercent, r.type \n" +
-                        "FROM blend b \n" +
-                        "INNER JOIN recipie r on b.blendID=r.blendID \n" +
-                        "WHERE b.blendName='" + blendName + "'";
+    public ResultArray getRecipie(String blendName) {
+        String query = "SELECT b.baseID, r.ingID, r.ingPercent, r.type \n"
+                + "FROM blend b \n"
+                + "INNER JOIN recipie r on b.blendID=r.blendID \n"
+                + "WHERE b.blendName='" + blendName + "'";
         return dbConn.getResultArray(query);
     }
-    
+
 }

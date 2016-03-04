@@ -1,5 +1,6 @@
 package teaeli;
 
+import classes.Blend;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
@@ -115,11 +116,8 @@ public class DeliverBlend extends javax.swing.JFrame {
                 int confirmed = JOptionPane.showConfirmDialog(null,
                         "Are you sure you want to close the window? \n All data you entered will be lost.", "Confirm window close",
                         JOptionPane.YES_NO_OPTION);
-                System.out.println("COnfirmed : " + confirmed);
                 if (confirmed == JOptionPane.YES_OPTION) {
                     close();
-                } else {
-                    System.out.println("OKKK");
                 }
             }
         });
@@ -138,6 +136,10 @@ public class DeliverBlend extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        deliverNoteTxt = new javax.swing.JTextArea();
+        deliverNote = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         blendName = new javax.swing.JLabel();
         blendNameLbl = new javax.swing.JLabel();
@@ -160,6 +162,18 @@ public class DeliverBlend extends javax.swing.JFrame {
         sampleDeliverCombo = new javax.swing.JComboBox();
         cancelBtn = new javax.swing.JButton();
         deliverBtn = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        deliverReasonTxt = new javax.swing.JTextArea();
+        deliverReason = new javax.swing.JLabel();
+
+        deliverNoteTxt.setColumns(20);
+        deliverNoteTxt.setRows(5);
+        jScrollPane1.setViewportView(deliverNoteTxt);
+
+        deliverNote.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        deliverNote.setText("Deliver Note");
+
+        jTextField1.setText("jTextField1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Deliver Blend");
@@ -252,6 +266,13 @@ public class DeliverBlend extends javax.swing.JFrame {
             }
         });
 
+        deliverReasonTxt.setColumns(20);
+        deliverReasonTxt.setRows(5);
+        jScrollPane2.setViewportView(deliverReasonTxt);
+
+        deliverReason.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        deliverReason.setText("Deliver Note");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -259,6 +280,7 @@ public class DeliverBlend extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(32, 32, 32)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(deliverReason)
                     .addComponent(blendCatg)
                     .addComponent(blendName)
                     .addComponent(allocatedQty)
@@ -267,31 +289,36 @@ public class DeliverBlend extends javax.swing.JFrame {
                     .addComponent(unallocatingQty)
                     .addComponent(SampleQty))
                 .addGap(38, 38, 38)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(unallocateQtyTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(unAllocatingQtyTypeCombo, 0, 1, Short.MAX_VALUE))
-                    .addComponent(blendCatgLbl)
-                    .addComponent(blendNameLbl)
-                    .addComponent(allocatedQtyLbl)
-                    .addComponent(freeQtyLbl)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(deliverQtyTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(deliverQtyTypeCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(allocateFreeStockCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(sampleDeliverCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(cancelBtn)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(deliverBtn))
-                            .addComponent(sampleQtyTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel1)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(unallocateQtyTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(unAllocatingQtyTypeCombo, 0, 1, Short.MAX_VALUE))
+                        .addComponent(blendCatgLbl)
+                        .addComponent(blendNameLbl)
+                        .addComponent(allocatedQtyLbl)
+                        .addComponent(freeQtyLbl)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(deliverQtyTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(deliverQtyTypeCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(allocateFreeStockCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(sampleDeliverCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(sampleQtyTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jLabel1)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(56, 56, 56)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(cancelBtn)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(deliverBtn)
+                .addGap(68, 68, 68))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -325,19 +352,23 @@ public class DeliverBlend extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(unallocateQtyTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(unAllocatingQtyTypeCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(sampleDeliverCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(SampleQty, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(SampleQty, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(sampleDeliverCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(sampleQtyTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(deliverReason, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(deliverBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cancelBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(19, Short.MAX_VALUE))
+                    .addComponent(cancelBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(deliverBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -399,21 +430,58 @@ public class DeliverBlend extends javax.swing.JFrame {
                     + allocatedStockQty + " g. ", "Stock Quantiy Exceeds", JOptionPane.ERROR_MESSAGE);
             deliverQtyTxt.setText(null);
         } else {
+
             if (!unallocateQtyCheck()) {
                 JOptionPane.showMessageDialog(this, "Unallocating quantity should be less than or equal to "
                         + (allocatedStockQty - deliverStockQty) + " g. ", "Stock Quantiy Exceeds", JOptionPane.ERROR_MESSAGE);
                 unallocateQtyTxt.setText(null);
             } else {
                 if (!smapleQtyCheck()) {
-                    JOptionPane.showMessageDialog(this, "Sample quantity exceeds free stock quantity"
-                            , "Stock Quantiy Exceeds", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Sample quantity exceeds free stock quantity", "Stock Quantiy Exceeds", JOptionPane.ERROR_MESSAGE);
                     unallocateQtyTxt.setText(null);
                 } else {
+                    Blend blendDeliver = new Blend();
 
+                    blendDeliver.setBlendName(blendNameLbl.getText());
+
+                    //set old stock qty and updated qty for blend deliver history
+                    blendDeliver.setOldStockQty(allocatedStockQty);
+                    blendDeliver.setUpdatedStockQTy(deliverStockQty);
+                    blendDeliver.setStockUpdateReason(deliverReasonTxt.getText());
+
+                    blendDeliver.setDeliverQty(deliverStockQty);
+
+                    //set deliver remove qty if allocate to free stock combo is Yes or other
+                    if (allocateFreeStockCombo.getSelectedIndex() == 1) {
+
+                        unallocatedStockQty = allocatedStockQty - deliverStockQty;
+                        blendDeliver.setDelRemoveQty(unallocatedStockQty);
+
+                    } else if (allocateFreeStockCombo.getSelectedIndex() == 2) {
+                        blendDeliver.setDelRemoveQty(unallocatedStockQty);
+                    }
+
+                    //set sample qty if sample delive combo is yes
+                    if (sampleDeliverCombo.getSelectedIndex() == 1) {
+                        blendDeliver.setSampleQty(sampleStockQty);
+                    }
+
+                    //set new ordered stock
+                    int leftOrderedStock = allocatedStockQty - (deliverStockQty + unallocatedStockQty);
+                    blendDeliver.setOrderedStock(leftOrderedStock);
+
+                    //set new visible stock
+                    blendDeliver.setVisibleStock((freeQty + unallocatedStockQty) - sampleStockQty);
+
+                    if (blendDeliver.updateDeliverDetails()) {
+                        JOptionPane.showMessageDialog(this, "Updated Successfuly !", "Update Success", JOptionPane.INFORMATION_MESSAGE);
+                        close();
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Unable to update !", "Update Fails", JOptionPane.ERROR_MESSAGE);
+                    }
                 }
             }
         }
-
     }//GEN-LAST:event_deliverBtnActionPerformed
 
     public static void main(String args[]) {
@@ -497,13 +565,20 @@ public class DeliverBlend extends javax.swing.JFrame {
     public javax.swing.JLabel blendNameLbl;
     public javax.swing.JButton cancelBtn;
     public javax.swing.JButton deliverBtn;
+    private javax.swing.JLabel deliverNote;
+    public javax.swing.JTextArea deliverNoteTxt;
     private javax.swing.JLabel deliverQty;
     public javax.swing.JTextField deliverQtyTxt;
     public javax.swing.JComboBox deliverQtyTypeCombo;
+    private javax.swing.JLabel deliverReason;
+    public javax.swing.JTextArea deliverReasonTxt;
     public javax.swing.JLabel freeQtyLbl;
     private javax.swing.JLabel freeStockQty;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextField jTextField1;
     public javax.swing.JComboBox sampleDeliverCombo;
     public javax.swing.JTextField sampleQtyTxt;
     public javax.swing.JComboBox unAllocatingQtyTypeCombo;

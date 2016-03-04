@@ -6,22 +6,18 @@
 
 package teaeli;
 
-import java.awt.Component;
+import classes.Order;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import javax.swing.DefaultCellEditor;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.table.DefaultTableModel;
-import org.jdesktop.swingx.JXTable;
 /**
  *
  * @author Vihanga Liyanage
  */
 public class OrderDetails extends javax.swing.JFrame  {
+    Order order = new Order();
     
     public OrderDetails() {
         initComponents();
@@ -146,8 +142,18 @@ public class OrderDetails extends javax.swing.JFrame  {
         });
 
         orderReceivedBtn.setText("Order Received");
+        orderReceivedBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                orderReceivedBtnActionPerformed(evt);
+            }
+        });
 
         orderCompletedBtn.setText("Order Completed");
+        orderCompletedBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                orderCompletedBtnActionPerformed(evt);
+            }
+        });
 
         jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -294,6 +300,29 @@ public class OrderDetails extends javax.swing.JFrame  {
     private void updateOrderBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateOrderBtnActionPerformed
     
     }//GEN-LAST:event_updateOrderBtnActionPerformed
+
+    private void orderReceivedBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderReceivedBtnActionPerformed
+        int result = order.updateOrderStatus(1, orderIDLabel.getText());
+        if(result == 1){
+            JOptionPane.showMessageDialog(this, "Order status changed successfully !", "Changes Succeeded", 1);
+            orderCompletedBtn.setVisible(true);
+            orderReceivedBtn.setVisible(false);
+        }else{
+            JOptionPane.showMessageDialog(this, "Changes did not affected !", "Changes Failed", 0);
+        }
+    }//GEN-LAST:event_orderReceivedBtnActionPerformed
+
+    private void orderCompletedBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderCompletedBtnActionPerformed
+        int result = order.updateOrderStatus(2, orderIDLabel.getText());
+        if(result == 1){
+            JOptionPane.showMessageDialog(this, "Order status changed successfully !", "Changes Succeeded", 1);
+            orderCompletedBtn.setVisible(false);
+            orderReceivedBtn.setVisible(false);
+            updateOrderBtn.setVisible(false);
+        }else{
+            JOptionPane.showMessageDialog(this, "Changes did not affected !", "Changes Failed", 0);
+        }
+    }//GEN-LAST:event_orderCompletedBtnActionPerformed
 
     /**
      * @param args the command line arguments
