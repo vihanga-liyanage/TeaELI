@@ -471,8 +471,8 @@ public class DeliverBlend extends javax.swing.JFrame {
                     }
 
                     //set new ordered stock
-                    int leftOrderedStock = allocatedStockQty - (deliverStockQty + unallocatedStockQty);
-                    blendDeliver.setOrderedStock(leftOrderedStock);
+                    int leftAlocatedStock = allocatedStockQty - (deliverStockQty + unallocatedStockQty);
+                    blendDeliver.setAlocatedStock(leftAlocatedStock);
 
                     //set new visible stock
                     blendDeliver.setVisibleStock((freeQty + unallocatedStockQty) - sampleStockQty);

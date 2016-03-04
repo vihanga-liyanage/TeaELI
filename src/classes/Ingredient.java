@@ -27,7 +27,7 @@ public class Ingredient {
     private int ingID, ingCategoryID, supID;
     private float orderReqQty, orderExcessQty, oldStockQty, updatedStockQTy;
     private String ingName, ingCategoryName, stockUpdateReason;
-    private float unitPrice, visibleStock, orderedStock, invisibleStock;
+    private float unitPrice, visibleStock, alocatedStock, invisibleStock;
 
     DBConnection dbConn = new DBConnection();
 
@@ -36,7 +36,7 @@ public class Ingredient {
         this.ingID = 0;
         this.ingCategoryID = 0;
         this.visibleStock = 0;
-        this.orderedStock = 0;
+        this.alocatedStock = 0;
         this.invisibleStock = 0;
         this.ingName = "";
         this.ingCategoryName = "";
@@ -74,12 +74,12 @@ public class Ingredient {
         this.visibleStock = visibleStock;
     }
 
-    public float getOrderedStock() {
-        return orderedStock;
+    public float getAlocatedStock() {
+        return alocatedStock;
     }
 
-    public void setOrderedStock(float orderedStock) {
-        this.orderedStock = orderedStock;
+    public void setAlocatedStock(float alocatedStock) {
+        this.alocatedStock = alocatedStock;
     }
 
     public float getInvisibleStock() {

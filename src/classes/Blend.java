@@ -17,7 +17,7 @@ public class Blend {
 
     //attributes
     private String blendID, blendName, baseName, blendCategory, stockUpdateReason;
-    private int baseID, visibleStock, orderedStock, invisibleStock;
+    private int baseID, visibleStock, alocatedStock, invisibleStock;
     private int orderReqQty, orderExcessQty, oldStockQty, updatedStockQTy;
     private int deliverQty, delRemoveQty, sampleQty;
     private ArrayList<Ingredient> ingredientArray;
@@ -35,7 +35,7 @@ public class Blend {
         this.stockUpdateReason = "";
         this.baseID = 0;
         this.visibleStock = 0;
-        this.orderedStock = 0;
+        this.alocatedStock = 0;
         this.invisibleStock = 0;
         this.orderExcessQty = 0;
         this.orderReqQty = 0;
@@ -91,12 +91,12 @@ public class Blend {
         this.visibleStock = visibleStock;
     }
 
-    public int getOrderedStock() {
-        return orderedStock;
+    public int getAlocatedStock() {
+        return alocatedStock;
     }
 
-    public void setOrderedStock(int orderedStock) {
-        this.orderedStock = orderedStock;
+    public void setAlocatedStock(int alocatedStock) {
+        this.alocatedStock = alocatedStock;
     }
 
     public int getInvisibleStock() {
@@ -453,7 +453,7 @@ public class Blend {
                 //set blend details
                 this.setBlendName(resultArray.getString(0));
                 this.setVisibleStock(Integer.parseInt(resultArray.getString(1)));
-                this.setOrderedStock(Integer.parseInt(resultArray.getString(2)));
+                this.setAlocatedStock(Integer.parseInt(resultArray.getString(2)));
                 this.setBlendCategory(resultArray.getString(3));
 
                 validBlendName = true;
@@ -485,7 +485,7 @@ public class Blend {
 
         //query to update blend stock
         String query = "UPDATE blend SET visibleStock = '" + this.getVisibleStock() + "' , alocatedStock = '"
-                + this.getOrderedStock() + "' WHERE blendID = '" + this.getBlendID() + "'";
+                + this.getAlocatedStock() + "' WHERE blendID = '" + this.getBlendID() + "'";
         
         int i = dbConn.updateResult(query);
 
