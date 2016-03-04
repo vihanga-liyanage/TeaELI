@@ -112,9 +112,9 @@ public class DeliverBlend extends javax.swing.JFrame {
         //Prompt confirmation on window close
         this.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
-                int confirmed = JOptionPane.showConfirmDialog(null, 
-                    "Are you sure you want to close the window?\nAll data you entered will be lost.", "Confirm window close",
-                    JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+                int confirmed = JOptionPane.showConfirmDialog(null,
+                        "Are you sure you want to close the window?\nAll data you entered will be lost.", "Confirm window close",
+                        JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
                 if (confirmed == JOptionPane.YES_OPTION) {
                     dispose();
                 }
@@ -416,7 +416,12 @@ public class DeliverBlend extends javax.swing.JFrame {
 
     private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
 
-        this.close();
+        int confirmed = JOptionPane.showConfirmDialog(null,
+                "Are you sure you want to close the window?\nAll data you entered will be lost.", "Confirm window close",
+                JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+        if (confirmed == JOptionPane.YES_OPTION) {
+            dispose();
+        }
     }//GEN-LAST:event_cancelBtnActionPerformed
 
     private void deliverBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deliverBtnActionPerformed
