@@ -5,8 +5,12 @@
  */
 package classes;
 
+import java.sql.Connection;
+import java.text.ParseException;
 import javax.swing.table.DefaultTableModel;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Order {
 
@@ -106,7 +110,7 @@ public class Order {
     public void populateOrderListTable(DefaultTableModel tModel) {
         ResultArray resultSet;
 
-        String query = "SELECT o.orderID, o.orderStatus, o.date, u.username FROM user u JOIN `order` o ON o.placedBy = u.userID ORDER BY o.orderStatus;";
+        String query = "SELECT o.orderID, o.orderStatus, o.date, u.username FROM user u JOIN `order` o ON o.placedBy = u.userID ORDER BY o.orderStatus, o.orderID;";
 
         resultSet = dbConn.getResultArray(query);
         tModel.setRowCount(0);
@@ -124,7 +128,10 @@ public class Order {
                     status = "Completed";
                     break;
             }
-            tModel.addRow(new Object[]{resultSet.getString(0), status, resultSet.getString(2), resultSet.getString(3)});
+            String date = resultSet.getString(2);
+            date = date.substring(0, date.indexOf('.'));
+            
+            tModel.addRow(new Object[]{resultSet.getString(0), status, date, resultSet.getString(3)});
         }
     }
 
@@ -161,7 +168,9 @@ public class Order {
             String req = formatNum(resultSet1.getString(3));
             String exes = formatNum(resultSet1.getString(4));
             tModelBlend.addRow(new Object[]{resultSet1.getString(2), resultSet1.getString(5), req, exes});
-            temp.setDate(resultSet1.getString(1));
+            String date = resultSet1.getString(1);
+            date = date.substring(0, date.indexOf('.'));
+            temp.setDate(date);
         }
        
         String query2 = "select i.ingName, s.supName, oi.requiredQty, oi.excessQty, oi.remarks from orderingredient oi inner join ingredient i on oi.ingID = i.ingID inner join supplier s on i.supID = s.supID where oi.orderID = '"+orderID+"';";
@@ -261,4 +270,5 @@ public class Order {
         }
         return 0;
     }
+
 }
