@@ -70,6 +70,9 @@ public class AdminPannel extends javax.swing.JFrame {
 
         startClock();
 
+        //Keep the window fullscreen
+        this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
+        
         //method to view the selected row details of a jtable
         final ListSelectionModel mod = productTable.getSelectionModel();
         mod.addListSelectionListener(new ListSelectionListener() {
@@ -95,7 +98,7 @@ public class AdminPannel extends javax.swing.JFrame {
             public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
                 BlendDetails updateProduct = new BlendDetails();
                 updateProduct.setVisible(true);
-                updateProduct.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+                updateProduct.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 searchBlendComboBox.setSelectedIndex(-1);
             }
 
@@ -1345,13 +1348,13 @@ public class AdminPannel extends javax.swing.JFrame {
     private void addItemBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addItemBtnActionPerformed
         AddIngredient addItem = new AddIngredient();
         addItem.setVisible(true);
-        addItem.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        addItem.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_addItemBtnActionPerformed
 
     private void addProductBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addProductBtnActionPerformed
         AddNewBlend addNewProduct = new AddNewBlend();
         addNewProduct.setVisible(true);
-        addNewProduct.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        addNewProduct.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
     }//GEN-LAST:event_addProductBtnActionPerformed
 
@@ -1362,14 +1365,14 @@ public class AdminPannel extends javax.swing.JFrame {
     private void addNewBlendsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addNewBlendsBtnActionPerformed
         CreateNewBlendOrder1 createNewBlendOrder = new CreateNewBlendOrder1();
         createNewBlendOrder.setVisible(true);
-        createNewBlendOrder.setDefaultCloseOperation(HIDE_ON_CLOSE);
+        createNewBlendOrder.pannel = this;
     }//GEN-LAST:event_addNewBlendsBtnActionPerformed
 
     private void profileBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profileBtnActionPerformed
 
         EditProfile editProfile = new EditProfile();
         editProfile.setVisible(true);
-        editProfile.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        editProfile.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         //String UserName = new LoginFrame().user;
         String userName = loginFrame.user;
@@ -1402,7 +1405,7 @@ public class AdminPannel extends javax.swing.JFrame {
         }
 
         editProfile.setVisible(true);
-        editProfile.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        editProfile.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         editProfile.lblUserName.setText(user.getUserName());
         editProfile.txtFirstName.setText(user.getFirstName());
         editProfile.txtLastName.setText(user.getLastName());
@@ -1425,7 +1428,7 @@ public class AdminPannel extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Please Select a Blend");
         } else {
             updateProduct.setVisible(true);
-            updateProduct.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+            updateProduct.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             searchBlendComboBox.setSelectedIndex(-1);
         }
 
@@ -1441,23 +1444,48 @@ public class AdminPannel extends javax.swing.JFrame {
 
     private void searchOrderBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchOrderBtnActionPerformed
         OrderDetails orderDetails = new OrderDetails();
-        String id = orderSearchCombo.getSelectedItem().toString();
-        Order tmp = order.viewOrder((DefaultTableModel) orderDetails.blendTable.getModel(), (DefaultTableModel) orderDetails.orderDetailsTable.getModel(), id);
-        orderDetails.orderIDLabel.setText(tmp.getOrderID());
-        orderDetails.dateLabel.setText(tmp.getDate());
-        orderDetails.setVisible(true);
-        orderDetails.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        orderSearchCombo.setSelectedIndex(-1);
+        String id = "";
+        try{
+            id = orderSearchCombo.getSelectedItem().toString();
+            Order tmp = order.viewOrder((DefaultTableModel) orderDetails.blendTable.getModel(), (DefaultTableModel) orderDetails.orderDetailsTable.getModel(), id);
+            orderDetails.orderIDLabel.setText(tmp.getOrderID());
+            orderDetails.dateLabel.setText(tmp.getDate());
+            
+            for(int i = 0; i < orderListTable.getRowCount(); i++){
+                if(id.equals(orderListTable.getValueAt(i, 0).toString())){
+                    if(null != orderListTable.getValueAt(i, 1).toString())switch (orderListTable.getValueAt(i, 1).toString()) {
+                        case "Pending":
+                            orderDetails.orderCompletedBtn.setVisible(false);
+                            break;
+                        case "Received":
+                            orderDetails.orderReceivedBtn.setVisible(false);
+                            orderDetails.updateOrderBtn.setVisible(false);
+                            orderDetails.orderDetailsTable.setEnabled(false);
+                            break;
+                        case "Completed":
+                            orderDetails.orderCompletedBtn.setVisible(false);
+                            orderDetails.orderReceivedBtn.setVisible(false);
+                            orderDetails.updateOrderBtn.setVisible(false);
+                            orderDetails.orderDetailsTable.setEnabled(false);
+                            break;
+                    }
+                }
+            }
+            
+            orderDetails.setVisible(true);
+            orderDetails.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            orderSearchCombo.setSelectedIndex(-1);
+        }catch(NullPointerException e){
+            JOptionPane.showMessageDialog(this, "You haven't select any order ID !", "Empty Selection", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_searchOrderBtnActionPerformed
 
     private void searchStockIngBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchStockIngBtnActionPerformed
-
         searchStockIngredientCombo();
     }//GEN-LAST:event_searchStockIngBtnActionPerformed
 
     private void searchStockBlendsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchStockBlendsBtnActionPerformed
-
-        searchStockBlendCombo();
+       searchStockBlendCombo();
     }//GEN-LAST:event_searchStockBlendsBtnActionPerformed
 
     private void deleteUserBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteUserBtnActionPerformed
@@ -1511,11 +1539,11 @@ public class AdminPannel extends javax.swing.JFrame {
 
                 deliverBlend.setAdminPannel(this);
                 deliverBlend.setVisible(true);
-                deliverBlend.setDefaultCloseOperation(HIDE_ON_CLOSE);
+                deliverBlend.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
                 deliverBlend.blendNameLbl.setText(blendDelivery.getBlendName());
                 deliverBlend.blendCatgLbl.setText(blendDelivery.getBlendCategory());
-                deliverBlend.allocatedQtyLabel.setText(String.valueOf(blendDelivery.getOrderedStock()));
-                deliverBlend.freeQtyLbl.setText(String.valueOf(blendDelivery.getVisibleStock()));
+                deliverBlend.allocatedQtyLbl.setText(String.valueOf(blendDelivery.getAlocatedStock()) + " g");
+                deliverBlend.freeQtyLbl.setText(String.valueOf(blendDelivery.getVisibleStock()) + " g");
 
             } else {
                 JOptionPane.showMessageDialog(this, "You have selected invalid blend name !", "Invalid Name", JOptionPane.ERROR_MESSAGE);
@@ -1544,10 +1572,10 @@ public class AdminPannel extends javax.swing.JFrame {
 
                 updateStock.setAdminPannel(this);
                 updateStock.setVisible(true);
-                updateStock.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+                updateStock.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 updateStock.updateStockItemNameLbl.setText(ingredeintForStock.getIngName());
                 updateStock.updateStockCategoryLbl.setText(ingredeintForStock.getIngCategoryName());
-                updateStock.stockQtyLbl.setText(String.valueOf(ingredeintForStock.getVisibleStock()));
+                updateStock.stockQtyLbl.setText(String.valueOf(ingredeintForStock.getVisibleStock()) + " g");
             } else {
                 JOptionPane.showMessageDialog(this, "You have selected invalid ingredient!", "Invalid Name", JOptionPane.ERROR_MESSAGE);
                 searchStockIngComboBox.setSelectedIndex(-1);
@@ -1576,10 +1604,10 @@ public class AdminPannel extends javax.swing.JFrame {
 
                 updateBlendStock.setAdminPannel(this);
                 updateBlendStock.setVisible(true);
-                updateBlendStock.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+                updateBlendStock.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 updateBlendStock.updateStockItemNameLbl.setText(blendForStock.getBlendName());
                 updateBlendStock.updateStockItemCategoryLbl.setText(blendForStock.getBlendCategory());
-                updateBlendStock.stockQtyLbl.setText(String.valueOf(blendForStock.getVisibleStock()));
+                updateBlendStock.stockQtyLbl.setText(String.valueOf(blendForStock.getVisibleStock()) + " g");
             } else {
                 JOptionPane.showMessageDialog(this, "You have selected invalid blend name !", "Invalid Name", JOptionPane.ERROR_MESSAGE);
                 searchStockBlendComboBox.setSelectedIndex(-1);
@@ -1623,7 +1651,7 @@ public class AdminPannel extends javax.swing.JFrame {
             itemDetails.unitPriceTxt.setText(resultArray[4]);
 
             itemDetails.setVisible(true);
-            itemDetails.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+            itemDetails.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             searchIngredientComboBox.setSelectedIndex(-1);
         }
     }
@@ -1688,12 +1716,14 @@ public class AdminPannel extends javax.swing.JFrame {
     }//GEN-LAST:event_EndDateActionPerformed
 
     private void btnIngredientHistoryReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngredientHistoryReportActionPerformed
+
         if (blendGo == 0) {
             JOptionPane.showMessageDialog(this, "Please Press Go button to filter By date or Press Cancel ");
         } else {
             ingredientHistoryStock.IngStockHistoryPdfGeneration();
         }
     }//GEN-LAST:event_btnIngredientHistoryReportActionPerformed
+
 
     private void BtnCancelBlendHistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCancelBlendHistoryActionPerformed
         BlendStartDate.getEditor().setText("");

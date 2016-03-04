@@ -27,7 +27,7 @@ public class UpdateIngStock extends javax.swing.JFrame {
             public void keyReleased(KeyEvent e) {
                 String newQty = newQtyTxt.getText();
                 if (newQty.length() > 0) {
-                    if (!testForInteger(newQty)) {
+                    if (!testForFloat(newQty)) {
                         JOptionPane.showMessageDialog(newQtyTxt, "Change Qty value must be a valid number", "Invalid Input", JOptionPane.ERROR_MESSAGE);
                         newQtyTxt.setText(null);
                     }
@@ -267,12 +267,12 @@ public class UpdateIngStock extends javax.swing.JFrame {
     private void saveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBtnActionPerformed
 
         String changeQty = this.newQtyTxt.getText();
-        int stockChangeQty, oldStockQty;
+        float stockChangeQty, oldStockQty;
 
         if (!changeQty.isEmpty()) {
             
             //set  new updating qty and reason
-            stockChangeQty = Integer.parseInt(changeQty);
+            stockChangeQty = Float.parseFloat(changeQty);
             String reason = this.reasonTxt.getText();
 
             if (!reason.isEmpty() && (this.stockIncreasedBtn.isSelected() || this.stockDecreaseBtn.isSelected())) {
@@ -282,7 +282,9 @@ public class UpdateIngStock extends javax.swing.JFrame {
                 ingredient.setIngName(this.updateStockItemNameLbl.getText());
                 ingredient.setStockUpdateReason(this.reasonTxt.getText());
 
-                oldStockQty = Integer.parseInt(this.stockQtyLbl.getText());
+                String oldStock = this.stockQtyLbl.getText().replace(" g", "");
+                
+                oldStockQty = Float.parseFloat(oldStock);
                 ingredient.setOldStockQty(oldStockQty);
                 ingredient.setUpdatedStockQTy(stockChangeQty);
 
@@ -352,10 +354,10 @@ public class UpdateIngStock extends javax.swing.JFrame {
         });
     }
 
-    /* method to test for integer */
-    private boolean testForInteger(String text) {
+    /* method to test for float */
+    private boolean testForFloat(String text) {
         try {
-            Integer.parseInt(text);
+            Float.parseFloat(text);
             return true;
         } catch (NumberFormatException e) {
             System.out.println("Num Exception : " + e);

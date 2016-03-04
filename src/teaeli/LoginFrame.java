@@ -14,7 +14,6 @@ import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -174,10 +173,9 @@ public class LoginFrame extends javax.swing.JFrame {
          if (1==1){
              
             AdminPannel adminPannel = new AdminPannel();//the provided username & password matched
-            adminPannel.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);//Keep the window fullscreen
             adminPannel.setVisible(true);
             user =userName;
-            this.setVisible(false);
+             setVisible(false);
 
         }else if (us.checkLogin(userName, password)==2){
 
@@ -185,32 +183,19 @@ public class LoginFrame extends javax.swing.JFrame {
             managerPannel.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);//Keep the window fullscreen
             managerPannel.setVisible(true);
             user =userName;
-            this.setVisible(false);
-
-        /*}else if (checkLogin(userName, password)==3){
-
-            if (passwrdCount !=3){
-            JOptionPane.showMessageDialog(this, "Wrong user name or password");//the provided password does not exist in the db
-            txtUsername.setText("");
-            txtPassword.setText("");
-            txtUsername.requestFocusInWindow();
-            passwrdCount++;
-            }else if (passwrdCount==3){
-                JOptionPane.showMessageDialog(this, "ERROR!!! System will close!");
-                this.dispose();
-            }*/
+            setVisible(false);
 
         }else if (us.checkLogin(userName, password)== 4 | us.checkLogin(userName, password)==3){
 
             if (passwrdCount !=3){
-            JOptionPane.showMessageDialog(this, "Wrong user name password combination");//the provided password does not exist in the db
+            JOptionPane.showMessageDialog(this, "Invalid username or password");//the provided password does not exist in the db
             txtUsername.setText("");
             txtPassword.setText("");
             txtUsername.requestFocusInWindow();
             passwrdCount++;
             }else if (passwrdCount==3){
                 JOptionPane.showMessageDialog(this, "ERROR!!! System will close!");
-                this.dispose();
+                setVisible(false);
             }
         }
 
@@ -219,53 +204,8 @@ public class LoginFrame extends javax.swing.JFrame {
     private void txtPasswordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPasswordKeyPressed
         int code = evt.getKeyCode();
         if (code== KeyEvent.VK_ENTER) {
-            userName = txtUsername.getText();
-            password = txtPassword.getText();
-         
-            if (us.checkLogin(userName, password)==1){
-                
-                AdminPannel adminPannel = new AdminPannel();//the provided username & password matched
-                adminPannel.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);//Keep the window fullscreen
-                adminPannel.setVisible(true);
-                user =userName;
-                this.setVisible(false);
-                
-            }else if (us.checkLogin(userName, password)==2){
-                
-                ManagerPannel managerPannel = new ManagerPannel();//the provided username & password matched
-                managerPannel.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);//Keep the window fullscreen
-                managerPannel.setVisible(true);
-                user =userName;
-                this.setVisible(false);
-                
-            /*}else if (checkLogin(userName, password)==3){
-                
-                if (passwrdCount !=3){
-                JOptionPane.showMessageDialog(this, "Wrong user name or password");//the provided password does not exist in the db
-                txtUsername.setText("");
-                txtPassword.setText("");
-                txtUsername.requestFocusInWindow();
-                passwrdCount++;
-                }else if (passwrdCount==3){
-                    JOptionPane.showMessageDialog(this, "ERROR!!! System will close!");
-                    this.dispose();
-                    
-                }*/
-            }else if (us.checkLogin(userName, password)== 4 | us.checkLogin(userName, password)==3){
-                
-                if (passwrdCount !=3){
-                JOptionPane.showMessageDialog(this, "Wrong user name password combination");//the provided password does not exist in the db
-                txtUsername.setText("");
-                txtPassword.setText("");
-                txtUsername.requestFocusInWindow();
-                passwrdCount++;
-                }else if (passwrdCount==3){
-                    JOptionPane.showMessageDialog(this, "ERROR!!! System will close!");
-                    this.dispose();
-                }
-            }
+            btnSubmit.doClick();
         }
-        
     }//GEN-LAST:event_txtPasswordKeyPressed
     
     
