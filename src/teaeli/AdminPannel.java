@@ -80,6 +80,9 @@ public class AdminPannel extends javax.swing.JFrame {
 
         startClock();
 
+        //Keep the window fullscreen
+        this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
+        
         //method to view the selected row details of a jtable
         final ListSelectionModel mod = productTable.getSelectionModel();
         mod.addListSelectionListener(new ListSelectionListener() {
@@ -1346,6 +1349,7 @@ public class AdminPannel extends javax.swing.JFrame {
     private void addNewBlendsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addNewBlendsBtnActionPerformed
         CreateNewBlendOrder1 createNewBlendOrder = new CreateNewBlendOrder1();
         createNewBlendOrder.setVisible(true);
+        createNewBlendOrder.pannel = this;
     }//GEN-LAST:event_addNewBlendsBtnActionPerformed
 
     private void profileBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profileBtnActionPerformed

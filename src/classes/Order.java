@@ -177,6 +177,15 @@ public class Order {
         return temp;
     }
     
+    //Placing an order
+    public boolean placeOrder(String orderID){
+        User user = new User();
+        user.getIDByUsername();
+        String query = "INSERT INTO `order` (`orderID` ,`placedBy` ,`orderStatus`) " +
+                "VALUES ('" + orderID + "' , '" + user.getUserID() + "', '0')";
+        return (dbConn.updateResult(query) == 1);
+    }
+        
     public int updateOrderStatus(int status, String id){
         if(status == 1){
             String query = "UPDATE `order` SET orderStatus = 1 WHERE orderID = '"+id+"'";          
