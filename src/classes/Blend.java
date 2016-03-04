@@ -554,4 +554,9 @@ public class Blend {
         return dbConn.getResultArray(query);
     }
 
+    //updating blend stocks after a new order
+    public boolean updateBlendStock(String[] data){
+        String query = "UPDATE blend SET visibleStock='" + data[0] + "', invisibleStock='" + data[1] + "' WHERE blendID='" + data[2] + "'";
+        return (dbConn.updateResult(query) == 1);
+    }
 }

@@ -306,9 +306,9 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
         DefaultTableModel model = createNewBlendOrder1.getBlendListTbl();
         for (int i=0; i<model.getRowCount(); i++) {
             String blendName = model.getValueAt(i, 0).toString();
-            String reqQty = String.valueOf(parseInt(model.getValueAt(i, 1).toString()));
-            String visibleStock = String.valueOf(parseInt(model.getValueAt(i, 2).toString()));
-            String invisibleStock = String.valueOf(parseInt(model.getValueAt(i, 3).toString()));
+            int reqQty = (parseInt(model.getValueAt(i, 1).toString()));
+            int visibleStock = parseInt(model.getValueAt(i, 2).toString());
+            int invisibleStock = parseInt(model.getValueAt(i, 3).toString());            
             String balanceQty = String.valueOf(parseInt(model.getValueAt(i, 4).toString()));
             String excessQty = String.valueOf(parseInt(model.getValueAt(i, 5).toString()));
             
@@ -321,8 +321,25 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
                 System.exit(0);
             }
             
-            //updating blend stock
+            //calculating stocks
+            if (reqQty > visibleStock) {
+                reqQty -= visibleStock;
+                visibleStock = 0;
+                if (reqQty > invisibleStock){
+                    invisibleStock = 0;
+                } else {
+                    invisibleStock -= reqQty;
+                }
+            } else {
+                visibleStock -= reqQty;
+            }
             
+            //updating blend stock
+            data = new String[]{String.valueOf(visibleStock), String.valueOf(invisibleStock), blendID};
+            if (!blend.updateBlendStock(data)){
+                JOptionPane.showMessageDialog(rootPane, "There were some issues with the database. Please contact developers.");
+                System.exit(0);
+            }
         }
     }
     
