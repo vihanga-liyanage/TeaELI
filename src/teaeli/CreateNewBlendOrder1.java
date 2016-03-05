@@ -147,6 +147,10 @@ public class CreateNewBlendOrder1 extends javax.swing.JFrame {
                 }
             }
         });
+        
+        //enabling sorting
+        blendListTbl.setAutoCreateRowSorter(true);
+        
     }
     //End of constructor =======================================================
     

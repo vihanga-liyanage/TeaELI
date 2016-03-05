@@ -19,14 +19,10 @@ import java.math.RoundingMode;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.UIManager;
@@ -34,7 +30,6 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
-import static teaeli.LoginFrame.adminPannel;
 
 /**
  *
@@ -144,6 +139,10 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
         
         //Removing the category colum from master table
         masterPlanTbl.removeColumn(masterPlanTbl.getColumn(masterPlanTbl.getColumnName(8)));
+        
+        //enabling sorting
+        blendListTbl.setAutoCreateRowSorter(true);
+        masterPlanTbl.setAutoCreateRowSorter(true);
     }
 
     private void populateMasterPlanTbl() {
@@ -684,10 +683,10 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
             //Generating master plan PDF
             pdf.generateMasterPlanPDF(null);
             oc.setVisible(true);
-            /*
-             oc.pannel = this.pannel;
-             createNewBlendOrder1.dispose();
-             this.dispose();*/
+
+            oc.pannel = this.pannel;
+            createNewBlendOrder1.dispose();
+            //this.dispose();
         }
 
     }//GEN-LAST:event_confirmBtnActionPerformed
