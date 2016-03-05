@@ -1372,6 +1372,10 @@ public class AdminPannel extends javax.swing.JFrame {
             updateProduct.setVisible(true);
             updateProduct.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
             searchBlendComboBox.setSelectedIndex(-1);
+            
+            Blend blend = new Blend();
+            blend.getBlendDataByBlendName(searchBlendComboBox.getSelectedItem().toString());
+            //blendCodeTxt.set
         }
         
     }//GEN-LAST:event_searchProductBtnActionPerformed
