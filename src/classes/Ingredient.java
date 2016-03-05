@@ -232,8 +232,23 @@ public class Ingredient {
         }
     }
     
-    //Populate Blend detail ingredients table according to blend
+    //Populate Blend detail's ingredients table according to blend
     public void populateBlendIngTable(DefaultTableModel tableModel, String blendID){
+        ResultArray resultSet;
+        String query = "SELECT I.ingName, R.ingPercent FROM ingredient I, recipie R WHERE I.ingID = R.ingID AND R.blendID = '" + blendID + "' AND R.type = 0";
+        resultSet = dbConn.getResultArray(query);
+        tableModel.setRowCount(0);
+        while (resultSet.next()) {
+            Vector newRow = new Vector();
+            for (int i = 0; i <= 2; i++) {
+                newRow.addElement(resultSet.getString(i));
+            }
+            tableModel.addRow(newRow);
+        }
+    }
+    
+    //Populate Blend detail's flavours table according to blend
+    public void populateBlendFlavourTable(DefaultTableModel tableModel, String blendID){
         ResultArray resultSet;
         String query = "SELECT I.ingName, R.ingPercent FROM ingredient I, recipie R WHERE I.ingID = R.ingID AND R.blendID = '" + blendID + "' AND R.type = 1";
         resultSet = dbConn.getResultArray(query);

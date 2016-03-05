@@ -1465,6 +1465,8 @@ public class AdminPannel extends javax.swing.JFrame {
             blendDetails.baseCombo.setSelectedItem(base);
             
             ingredient.populateBlendIngTable((DefaultTableModel) blendDetails.ingTable.getModel(), blendID);
+            ingredient.populateBlendFlavourTable((DefaultTableModel) blendDetails.flavourTable.getModel(), blendID);
+            
             
             
             
