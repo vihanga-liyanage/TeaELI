@@ -570,8 +570,8 @@ public class Ingredient {
 
     //getting ingredient data by ingID
     public ResultArray getIngDataByID(String ingID){
-        String query = "SELECT i.ingID, i.ingName, i.ingCategoryID, i.visibleStock, i.alocatedStock, i.invisibleStock, s.supName  \n" +
-                        "FROM ingredient i INNER JOIN supplier s ON i.supID=s.supID \n" +
+        String query = "SELECT i.ingID, i.ingName, ic.categoryName, i.visibleStock, i.alocatedStock, i.invisibleStock, s.supName  \n" +
+                        "FROM ingredient i INNER JOIN supplier s ON i.supID=s.supID INNER JOIN ingredientcategory ic ON i.ingCategoryID=ic.ingCategoryID\n" +
                         "WHERE ingID='" + ingID + "'";
         return dbConn.getResultArray(query);
     }

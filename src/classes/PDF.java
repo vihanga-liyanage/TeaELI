@@ -1,3 +1,10 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package classes;
 
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
@@ -16,25 +23,61 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import javax.swing.JOptionPane;
-
-
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Vihanga Liyanage
  */
-public class test {
+public class PDF {
+    private String font = "Calibri";
 
-    public static String font = "Calibri";
-    public static void main(String[] args) {
-        
-        try {
+    public PDF() {
+    }
+    
+    private PdfPCell getTableHeaderCell(String name){
+        PdfPCell cell = new PdfPCell(new Paragraph(name, FontFactory.getFont(font, 10, Font.BOLD, BaseColor.WHITE)));
+        cell.setPadding(5);
+        cell.setPaddingBottom(7);
+        cell.setBackgroundColor(BaseColor.DARK_GRAY);
+        return cell;
+    }
+    
+    private PdfPCell getIngCategoryCell(String name){
+        PdfPCell cell = new PdfPCell(new Paragraph(name, FontFactory.getFont(font, 9, Font.BOLD, BaseColor.WHITE)));
+        cell.setPadding(2);
+        cell.setPaddingBottom(3);
+        cell.setBackgroundColor(BaseColor.GRAY);
+        cell.setColspan(100);
+        return cell;
+    }
+    
+    private PdfPCell getTableDataCell(String name){
+        PdfPCell cell = new PdfPCell(new Paragraph(name, FontFactory.getFont(font, 9, Font.NORMAL, BaseColor.BLACK)));
+        cell.setPadding(2);
+        cell.setPaddingBottom(3);
+        cell.setBackgroundColor(new BaseColor(242, 242, 242));
+        return cell;
+    }
+    
+    private PdfPCell getHeaderNameCell(String name){
+        PdfPCell cell = new PdfPCell(new Paragraph(name, FontFactory.getFont(font, 9, Font.BOLD, BaseColor.BLACK)));
+        cell.setPadding(2);
+        cell.setPaddingBottom(3);
+        cell.setBackgroundColor(new BaseColor(242, 242, 242));
+        return cell;
+    }
+    
+    private PdfPCell getHeaderDataCell(String name){
+        PdfPCell cell = new PdfPCell(new Paragraph(name, FontFactory.getFont(font, 9, Font.BOLD, BaseColor.BLACK)));
+        cell.setPadding(2);
+        cell.setPaddingBottom(3);
+        cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+        return cell;
+    }
+    
+    public void generateMasterPlanPDF(DefaultTableModel model){
+         try {
             Document doc = new Document(PageSize.A4, 20, 20, 20, 20);
             PdfWriter.getInstance(doc, new FileOutputStream("test.pdf"));
             doc.open();
@@ -99,49 +142,5 @@ public class test {
         } catch (IOException | InterruptedException ex) {
             JOptionPane.showMessageDialog(null, "Error : " + ex);
         }
-        
-        
-    }
-    
-    //required methods
-    private static PdfPCell getTableHeaderCell(String name){
-        PdfPCell cell = new PdfPCell(new Paragraph(name, FontFactory.getFont(font, 10, Font.BOLD, BaseColor.WHITE)));
-        cell.setPadding(5);
-        cell.setPaddingBottom(7);
-        cell.setBackgroundColor(BaseColor.DARK_GRAY);
-        return cell;
-    }
-    
-    private static PdfPCell getIngCategoryCell(String name){
-        PdfPCell cell = new PdfPCell(new Paragraph(name, FontFactory.getFont(font, 9, Font.BOLD, BaseColor.WHITE)));
-        cell.setPadding(2);
-        cell.setPaddingBottom(3);
-        cell.setBackgroundColor(BaseColor.GRAY);
-        cell.setColspan(100);
-        return cell;
-    }
-    
-    private static PdfPCell getTableDataCell(String name){
-        PdfPCell cell = new PdfPCell(new Paragraph(name, FontFactory.getFont(font, 9, Font.NORMAL, BaseColor.BLACK)));
-        cell.setPadding(2);
-        cell.setPaddingBottom(3);
-        cell.setBackgroundColor(new BaseColor(242, 242, 242));
-        return cell;
-    }
-    
-    private static PdfPCell getHeaderNameCell(String name){
-        PdfPCell cell = new PdfPCell(new Paragraph(name, FontFactory.getFont(font, 9, Font.BOLD, BaseColor.BLACK)));
-        cell.setPadding(2);
-        cell.setPaddingBottom(3);
-        cell.setBackgroundColor(new BaseColor(242, 242, 242));
-        return cell;
-    }
-    
-    private static PdfPCell getHeaderDataCell(String name){
-        PdfPCell cell = new PdfPCell(new Paragraph(name, FontFactory.getFont(font, 9, Font.BOLD, BaseColor.BLACK)));
-        cell.setPadding(2);
-        cell.setPaddingBottom(3);
-        cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
-        return cell;
     }
 }

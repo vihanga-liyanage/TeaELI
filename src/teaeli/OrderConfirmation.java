@@ -5,7 +5,17 @@
  */
 package teaeli;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 import javax.swing.JFrame;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
+import teaeli.CreateNewBlendOrder2;
 
 /**
  *
@@ -14,19 +24,120 @@ import javax.swing.JFrame;
 public class OrderConfirmation extends javax.swing.JFrame {
 
     public Object pannel;
+
     /**
      * Creates new form OrderConfirmation
      */
-    public OrderConfirmation() {
+    public OrderConfirmation(CreateNewBlendOrder2 cnb) { // pass CreateNewBlendOrder2 object to get the master list in the interface
         initComponents();
         this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
-        
+
         setResizable(false);
-        
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+
+        //set supplier names in the table
+        Set<String> supplierList = getSupplierNames(cnb);
+        DefaultTableModel model = (DefaultTableModel) tblMasterPlanEditingView.getModel();
+        for (String supplierName : supplierList) {
+            model.addRow(new Object[]{supplierName, 0.00, 0.00});
+        }
+        //group details supplierwise
+       final List<List> mainList =  groupDetailsSupplierwise(supplierList ,cnb);
         
+
+        //method for view supplierwise details when supplier name is seleced in the table
+        final ListSelectionModel selectionalModForSupplierwiseTable = tblMasterPlanEditingView.getSelectionModel();
+        selectionalModForSupplierwiseTable.addListSelectionListener(new ListSelectionListener() {
+            DefaultTableModel tpmodel = (DefaultTableModel) tblMasterPlanEditingView1.getModel();
+            @Override
+            public void valueChanged(ListSelectionEvent lsevt) {
+                tpmodel.setRowCount(0);
+                if (!selectionalModForSupplierwiseTable.isSelectionEmpty()) {
+                    int row = selectionalModForSupplierwiseTable.getMinSelectionIndex();
+                    int rowid = tblMasterPlanEditingView.getSelectedRow();
+                    
+                    viewPOOrder(rowid,mainList,tpmodel);
+                }
+            }
+
+        });
+
+      
+
+        /*
+         String [][] supplierwiseDetails = new String [numOfInsideArrays][3];
+         for(int i = 0; i<numOfInsideArrays ; i++ ){
+         for(int j =0 ; j<3 ; j++){
+                            
+         }
+         }*/
+        /*
+         //creaate a object of a master table         
+         DefaultTableModel model = (DefaultTableModel) cnb.masterPlanTbl.getModel();
+         for (int i = 0; i < model.getRowCount(); i++) {
+         System.out.println(model.getValueAt(i, 7).toString());
+            
+         }*/
     }
 
+    private OrderConfirmation() {
+        initComponents();
+        this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
+        setResizable(false);
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+    }
+
+    //get distinct supplier list from master table
+    public Set<String> getSupplierNames(CreateNewBlendOrder2 cnb) {
+        String[] suppliers = null;
+
+        DefaultTableModel model = (DefaultTableModel) cnb.masterPlanTbl.getModel();
+        Set<String> set = new HashSet<String>();
+        String supName;
+        for (int i = 0; i < model.getRowCount(); i++) {
+            supName = model.getValueAt(i, 7).toString();
+            set.add(supName);
+        }
+        TreeSet sortedSet = new TreeSet<String>(set);
+        System.out.println(set);
+        System.out.println(sortedSet);
+
+        return sortedSet;
+    }
+
+    public List<List> groupDetailsSupplierwise(Set<String> supplierList ,CreateNewBlendOrder2 cnb ){
+          //create arrays for the suppliers 
+        List<List> mainList = new ArrayList<List>();
+        DefaultTableModel masterTableModel = (DefaultTableModel) cnb.masterPlanTbl.getModel();
+        for (String supName : supplierList) {
+            List<String> supwiseDetails = new ArrayList<String>();
+            for (int i = 0; i < masterTableModel.getRowCount(); i++) {
+                String supNameFromMaster = masterTableModel.getValueAt(i, 7).toString();
+                if(supName.equals(supNameFromMaster)){
+                    supwiseDetails.add(masterTableModel.getValueAt(i,0).toString());
+                    supwiseDetails.add(masterTableModel.getValueAt(i,6).toString());
+                     
+                }
+            }
+            mainList.add(supwiseDetails);
+        }
+        return mainList;
+    }
+    public void viewPOOrder(int rowid,List<List> mainList,DefaultTableModel tpmodel){
+        List lst = mainList.get(rowid);
+        
+        System.out.println("list size" +lst.size());
+                for(int i = 0; i< lst.size();i++){
+                    if(i%2 == 1){
+                        tblMasterPlanEditingView1.setValueAt(lst.get(i), i/2, 1);
+                        
+                        //System.out.println("right "+ lst.get(i));
+                    }else{                        
+                         tpmodel.addRow(new Object[]{lst.get(i),0, 0,0});
+                    }
+                }
+       
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -53,7 +164,7 @@ public class OrderConfirmation extends javax.swing.JFrame {
 
         tblMasterPlanEditingView.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null}
+
             },
             new String [] {
                 "Supplier Name", "Discount", "Tax"
@@ -67,6 +178,7 @@ public class OrderConfirmation extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tblMasterPlanEditingView.setRowHeight(24);
         tblMasterPlanEditingView.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 tblMasterPlanEditingViewPropertyChange(evt);
@@ -74,8 +186,13 @@ public class OrderConfirmation extends javax.swing.JFrame {
         });
         tblMasterPlanScrollPane.setViewportView(tblMasterPlanEditingView);
         if (tblMasterPlanEditingView.getColumnModel().getColumnCount() > 0) {
-            tblMasterPlanEditingView.getColumnModel().getColumn(1).setPreferredWidth(20);
-            tblMasterPlanEditingView.getColumnModel().getColumn(2).setPreferredWidth(20);
+            tblMasterPlanEditingView.getColumnModel().getColumn(0).setMinWidth(25);
+            tblMasterPlanEditingView.getColumnModel().getColumn(1).setMinWidth(70);
+            tblMasterPlanEditingView.getColumnModel().getColumn(1).setPreferredWidth(10);
+            tblMasterPlanEditingView.getColumnModel().getColumn(1).setMaxWidth(70);
+            tblMasterPlanEditingView.getColumnModel().getColumn(2).setMinWidth(70);
+            tblMasterPlanEditingView.getColumnModel().getColumn(2).setPreferredWidth(10);
+            tblMasterPlanEditingView.getColumnModel().getColumn(2).setMaxWidth(70);
         }
 
         tblMasterPlanEditingView1.setModel(new javax.swing.table.DefaultTableModel(
@@ -198,14 +315,13 @@ public class OrderConfirmation extends javax.swing.JFrame {
     private void generatePdfBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generatePdfBtnActionPerformed
         //Some code goes hear
 
-
         //Re-generating the admin panel since the data is changed
-        if( "teaeli.AdminPannel".equals(pannel.getClass().getName())) {
+        if ("teaeli.AdminPannel".equals(pannel.getClass().getName())) {
             AdminPannel adminPannel = new AdminPannel();
             adminPannel.setVisible(true);
             AdminPannel old = (AdminPannel) pannel;
             old.dispose();
-        } else if( "teaeli.ManagerPannel".equals(pannel.getClass().getName())) {
+        } else if ("teaeli.ManagerPannel".equals(pannel.getClass().getName())) {
             ManagerPannel managerPannel = new ManagerPannel();
             managerPannel.setVisible(true);
             ManagerPannel old = (ManagerPannel) pannel;
