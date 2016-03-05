@@ -442,14 +442,14 @@ public class BlendDetails extends javax.swing.JFrame {
     private javax.swing.JTextField blendCodeTxt;
     public javax.swing.JTextField blendNameTxt;
     private javax.swing.JButton cancelBtn;
-    private javax.swing.JTable flavourTable;
+    public javax.swing.JTable flavourTable;
     private javax.swing.JComboBox flavoursCombo;
     private javax.swing.JButton flavoursPerAddBtn;
     private javax.swing.JTextField flavoursPerTxt;
     private javax.swing.JComboBox ingCombo;
     private javax.swing.JButton ingPerAddBtn;
     private javax.swing.JTextField ingPerTxt;
-    private javax.swing.JTable ingTable;
+    public javax.swing.JTable ingTable;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

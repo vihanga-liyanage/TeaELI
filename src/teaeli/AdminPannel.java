@@ -47,6 +47,7 @@ public class AdminPannel extends javax.swing.JFrame {
     public static IngredientDetails ingredientDetails = new IngredientDetails();
     Order order = new Order();
     int blendGo = 0, ingredientGo = 0;
+    private Object ingTable;
 
     /**
      * Creates new form AdminPannel
@@ -1437,7 +1438,7 @@ public class AdminPannel extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Please Select a Blend");
         } else {
             
-            /*updateProduct.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            /*;
             
             
             Blend blend = new Blend();
@@ -1463,12 +1464,11 @@ public class AdminPannel extends javax.swing.JFrame {
             
             blendDetails.baseCombo.setSelectedItem(base);
             
+            ingredient.populateBlendIngTable((DefaultTableModel) blendDetails.ingTable.getModel(), blendID);
             
             
             
-            //Order tmp = order.viewOrder((DefaultTableModel) orderDetails.blendTable.getModel(), (DefaultTableModel) orderDetails.orderDetailsTable.getModel(), id);
-            //orderDetails.orderIDLabel.setText(tmp.getOrderID());
-            //orderDetails.dateLabel.setText(tmp.getDate());
+            
             
             /*for(int i = 0; i < orderListTable.getRowCount(); i++){
                 if(id.equals(orderListTable.getValueAt(i, 0).toString())){
