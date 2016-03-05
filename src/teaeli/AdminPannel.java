@@ -19,6 +19,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
@@ -45,6 +46,7 @@ public class AdminPannel extends javax.swing.JFrame {
     StockHistory ingredientHistoryStock = new StockHistory();
     public static IngredientDetails ingredientDetails = new IngredientDetails();
     Order order = new Order();
+    int blendGo = 0, ingredientGo = 0;
 
     /**
      * Creates new form AdminPannel
@@ -68,6 +70,9 @@ public class AdminPannel extends javax.swing.JFrame {
 
         startClock();
 
+        //Keep the window fullscreen
+        this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
+        
         //method to view the selected row details of a jtable
         final ListSelectionModel mod = productTable.getSelectionModel();
         mod.addListSelectionListener(new ListSelectionListener() {
@@ -93,7 +98,7 @@ public class AdminPannel extends javax.swing.JFrame {
             public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
                 BlendDetails updateProduct = new BlendDetails();
                 updateProduct.setVisible(true);
-                updateProduct.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+                updateProduct.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 searchBlendComboBox.setSelectedIndex(-1);
             }
 
@@ -110,9 +115,7 @@ public class AdminPannel extends javax.swing.JFrame {
         AutoSuggest searchIngredientComboBoxAutoSuggest = new AutoSuggest();
 
         //searchIngredientComboBoxAutoSuggest.setAutoSuggest(searchIngredientComboBox, ingredient.loadNameForSearchStockIngComboBox2());
-
         searchIngredientComboBoxAutoSuggest.setAutoSuggest(searchIngredientComboBox, ingredient.loadNameForSearchStockIngComboBox());
-
 
         //start of view all ingredients
         try {
@@ -140,14 +143,13 @@ public class AdminPannel extends javax.swing.JFrame {
         blend.populateProductTable((DefaultTableModel) productTable.getModel());
 
         /*populate main order table in the order details tab*/
-        order.populateOrderListTable((DefaultTableModel) orderListTable.getModel());
+        populateOrderListTable();
 
         /*load the orderComboBox in the order details tab*/
         AutoSuggest searchOrderComboBoxAutoSuggest = new AutoSuggest();
 
         //ArrayList<String> result = order.populateOrderListTable((DefaultTableModel) orderListTable.getModel());
         //searchOrderComboBoxAutoSuggest.setAutoSuggestTwo(orderSearchCombo, result);
-
         searchOrderComboBoxAutoSuggest.setAutoSuggest(orderSearchCombo, order.loadOrderComboBox());
 
         orderSearchCombo.setSelectedIndex(-1);
@@ -156,13 +158,9 @@ public class AdminPannel extends javax.swing.JFrame {
         AutoSuggest searchStockIngComboBoxAutoSuggest = new AutoSuggest();
 
         //searchStockIngComboBoxAutoSuggest.setAutoSuggestTwo(searchStockIngComboBox, ingredient.loadNameForSearchStockIngComboBox2());
-
         searchStockIngComboBoxAutoSuggest.setAutoSuggest(searchStockIngComboBox, ingredient.loadNameForSearchStockIngComboBox());
 
-
-
         searchStockIngComboBox.setSelectedIndex(-1);
-
 
         AutoSuggest searchStockBlendComboBoxAutoSuggest = new AutoSuggest();
         searchStockBlendComboBoxAutoSuggest.setAutoSuggest(searchStockBlendComboBox, blend.loadNameForSearchStockBlendsComboBox());
@@ -222,12 +220,12 @@ public class AdminPannel extends javax.swing.JFrame {
             public void valueChanged(ListSelectionEvent lsevt) {
                 if (!selectionalModForOrderMainTable.isSelectionEmpty()) {
                     int row = selectionalModForOrderMainTable.getMinSelectionIndex();
-                    orderSearchCombo.setSelectedItem(orderListTable.getValueAt(row,0));
+                    orderSearchCombo.setSelectedItem(orderListTable.getValueAt(row, 0));
                 }
             }
 
         });
-        
+
         //method for enter key pressed in ingredient
         searchStockIngComboBox.getEditor().getEditorComponent().addKeyListener(new KeyAdapter() {
             @Override
@@ -284,6 +282,10 @@ public class AdminPannel extends javax.swing.JFrame {
 
     public void populateUserTable() {
         user.viewUser((DefaultTableModel) userTable.getModel());
+    }
+    
+    public void populateOrderListTable(){
+        order.populateOrderListTable((DefaultTableModel) orderListTable.getModel());
     }
 
     //Setting default font
@@ -377,7 +379,9 @@ public class AdminPannel extends javax.swing.JFrame {
         StartDate = new org.jdesktop.swingx.JXDatePicker();
         jLabel8 = new javax.swing.JLabel();
         EndDate = new org.jdesktop.swingx.JXDatePicker();
-        btnGo = new javax.swing.JButton();
+        btnIngredientGo = new javax.swing.JButton();
+        btnIngredientHistoryReport = new javax.swing.JButton();
+        btnCancelIngHistory = new javax.swing.JButton();
         settingsBlendHistoryPanel = new javax.swing.JPanel();
         jScrollPane9 = new javax.swing.JScrollPane();
         blendStockHistoryTbl = new javax.swing.JTable();
@@ -386,7 +390,9 @@ public class AdminPannel extends javax.swing.JFrame {
         BlendStartDate = new org.jdesktop.swingx.JXDatePicker();
         jLabel12 = new javax.swing.JLabel();
         blendEndDate = new org.jdesktop.swingx.JXDatePicker();
-        btnGo1 = new javax.swing.JButton();
+        btnBlendGo = new javax.swing.JButton();
+        btnBlendHistoryReportGeneration = new javax.swing.JButton();
+        BtnCancelBlendHistory = new javax.swing.JButton();
         settingsUserPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         userTable = new javax.swing.JTable();
@@ -991,18 +997,41 @@ public class AdminPannel extends javax.swing.JFrame {
         }
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Search by date range");
+        jLabel2.setText("Search History By Date Range");
+        jLabel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Start from");
+        jLabel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel8.setText("To");
+        jLabel8.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        btnGo.setText("Go");
-        btnGo.addActionListener(new java.awt.event.ActionListener() {
+        EndDate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGoActionPerformed(evt);
+                EndDateActionPerformed(evt);
+            }
+        });
+
+        btnIngredientGo.setText("Go");
+        btnIngredientGo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIngredientGoActionPerformed(evt);
+            }
+        });
+
+        btnIngredientHistoryReport.setText("Generate Report");
+        btnIngredientHistoryReport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIngredientHistoryReportActionPerformed(evt);
+            }
+        });
+
+        btnCancelIngHistory.setText("Cancel");
+        btnCancelIngHistory.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelIngHistoryActionPerformed(evt);
             }
         });
 
@@ -1015,8 +1044,8 @@ public class AdminPannel extends javax.swing.JFrame {
                 .addGroup(settingsIngHistoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 1230, Short.MAX_VALUE)
                     .addGroup(settingsIngHistoryPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(31, 31, 31)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(StartDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1025,8 +1054,13 @@ public class AdminPannel extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(EndDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnGo)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(btnIngredientGo)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnCancelIngHistory)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, settingsIngHistoryPanelLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnIngredientHistoryReport, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         settingsIngHistoryPanelLayout.setVerticalGroup(
@@ -1039,10 +1073,13 @@ public class AdminPannel extends javax.swing.JFrame {
                     .addComponent(StartDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(EndDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnGo))
+                    .addComponent(btnIngredientGo)
+                    .addComponent(btnCancelIngHistory))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(74, Short.MAX_VALUE))
+                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnIngredientHistoryReport, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(80, Short.MAX_VALUE))
         );
 
         settingsTabbedPane.addTab("    Ingredient Stock History    ", settingsIngHistoryPanel);
@@ -1082,18 +1119,35 @@ public class AdminPannel extends javax.swing.JFrame {
         }
 
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel10.setText("Search by date range");
+        jLabel10.setText("Search History By Date Range");
+        jLabel10.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel11.setText("Start from");
+        jLabel11.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel12.setText("To");
+        jLabel12.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        btnGo1.setText("Go");
-        btnGo1.addActionListener(new java.awt.event.ActionListener() {
+        btnBlendGo.setText("Go");
+        btnBlendGo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGo1ActionPerformed(evt);
+                btnBlendGoActionPerformed(evt);
+            }
+        });
+
+        btnBlendHistoryReportGeneration.setText("Generate Report");
+        btnBlendHistoryReportGeneration.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBlendHistoryReportGenerationActionPerformed(evt);
+            }
+        });
+
+        BtnCancelBlendHistory.setText("Cancel");
+        BtnCancelBlendHistory.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnCancelBlendHistoryActionPerformed(evt);
             }
         });
 
@@ -1106,8 +1160,8 @@ public class AdminPannel extends javax.swing.JFrame {
                 .addGroup(settingsBlendHistoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane9, javax.swing.GroupLayout.DEFAULT_SIZE, 1230, Short.MAX_VALUE)
                     .addGroup(settingsBlendHistoryPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(31, 31, 31)
+                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(BlendStartDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1116,8 +1170,13 @@ public class AdminPannel extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(blendEndDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnGo1)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(btnBlendGo)
+                        .addGap(18, 18, 18)
+                        .addComponent(BtnCancelBlendHistory)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, settingsBlendHistoryPanelLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnBlendHistoryReportGeneration, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         settingsBlendHistoryPanelLayout.setVerticalGroup(
@@ -1130,10 +1189,13 @@ public class AdminPannel extends javax.swing.JFrame {
                     .addComponent(BlendStartDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(blendEndDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnGo1))
+                    .addComponent(btnBlendGo)
+                    .addComponent(BtnCancelBlendHistory))
                 .addGap(12, 12, 12)
-                .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(76, Short.MAX_VALUE))
+                .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnBlendHistoryReportGeneration, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(77, Short.MAX_VALUE))
         );
 
         settingsTabbedPane.addTab("    Blend Stock History    ", settingsBlendHistoryPanel);
@@ -1290,13 +1352,13 @@ public class AdminPannel extends javax.swing.JFrame {
     private void addItemBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addItemBtnActionPerformed
         AddIngredient addItem = new AddIngredient();
         addItem.setVisible(true);
-        addItem.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        addItem.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_addItemBtnActionPerformed
 
     private void addProductBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addProductBtnActionPerformed
         AddNewBlend addNewProduct = new AddNewBlend();
         addNewProduct.setVisible(true);
-        addNewProduct.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        addNewProduct.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
     }//GEN-LAST:event_addProductBtnActionPerformed
 
@@ -1307,14 +1369,14 @@ public class AdminPannel extends javax.swing.JFrame {
     private void addNewBlendsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addNewBlendsBtnActionPerformed
         CreateNewBlendOrder1 createNewBlendOrder = new CreateNewBlendOrder1();
         createNewBlendOrder.setVisible(true);
-        createNewBlendOrder.setDefaultCloseOperation(HIDE_ON_CLOSE);
+        createNewBlendOrder.pannel = this;
     }//GEN-LAST:event_addNewBlendsBtnActionPerformed
 
     private void profileBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profileBtnActionPerformed
 
         EditProfile editProfile = new EditProfile();
         editProfile.setVisible(true);
-        editProfile.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        editProfile.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         //String UserName = new LoginFrame().user;
         String userName = loginFrame.user;
@@ -1347,7 +1409,7 @@ public class AdminPannel extends javax.swing.JFrame {
         }
 
         editProfile.setVisible(true);
-        editProfile.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        editProfile.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         editProfile.lblUserName.setText(user.getUserName());
         editProfile.txtFirstName.setText(user.getFirstName());
         editProfile.txtLastName.setText(user.getLastName());
@@ -1365,19 +1427,19 @@ public class AdminPannel extends javax.swing.JFrame {
 
     private void searchProductBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchProductBtnActionPerformed
         BlendDetails updateProduct = new BlendDetails();
-        
-        if(searchBlendComboBox.getSelectedIndex()==-1){
+
+        if (searchBlendComboBox.getSelectedIndex() == -1) {
             JOptionPane.showMessageDialog(null, "Please Select a Blend");
-        }else{
+        } else {
             updateProduct.setVisible(true);
-            updateProduct.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+            updateProduct.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             searchBlendComboBox.setSelectedIndex(-1);
             
             Blend blend = new Blend();
             blend.getBlendDataByBlendName(searchBlendComboBox.getSelectedItem().toString());
             //blendCodeTxt.set
         }
-        
+
     }//GEN-LAST:event_searchProductBtnActionPerformed
 
 
@@ -1390,23 +1452,49 @@ public class AdminPannel extends javax.swing.JFrame {
 
     private void searchOrderBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchOrderBtnActionPerformed
         OrderDetails orderDetails = new OrderDetails();
-        String id = orderSearchCombo.getSelectedItem().toString();
-        Order tmp = order.viewOrder((DefaultTableModel) orderDetails.blendTable.getModel(), (DefaultTableModel) orderDetails.orderDetailsTable.getModel(), id);
-        orderDetails.orderIDLabel.setText(tmp.getOrderID());
-        orderDetails.dateLabel.setText(tmp.getDate());
-        orderDetails.setVisible(true);
-        orderDetails.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        orderSearchCombo.setSelectedIndex(-1);
+        orderDetails.setAdminPannel(this);
+        String id = "";
+        try{
+            id = orderSearchCombo.getSelectedItem().toString();
+            Order tmp = order.viewOrder((DefaultTableModel) orderDetails.blendTable.getModel(), (DefaultTableModel) orderDetails.orderDetailsTable.getModel(), id);
+            orderDetails.orderIDLabel.setText(tmp.getOrderID());
+            orderDetails.dateLabel.setText(tmp.getDate());
+            
+            for(int i = 0; i < orderListTable.getRowCount(); i++){
+                if(id.equals(orderListTable.getValueAt(i, 0).toString())){
+                    if(null != orderListTable.getValueAt(i, 1).toString())switch (orderListTable.getValueAt(i, 1).toString()) {
+                        case "Pending":
+                            orderDetails.orderCompletedBtn.setVisible(false);
+                            break;
+                        case "Received":
+                            orderDetails.orderReceivedBtn.setVisible(false);
+                            orderDetails.updateOrderBtn.setVisible(false);
+                            orderDetails.orderDetailsTable.setEnabled(false);
+                            break;
+                        case "Completed":
+                            orderDetails.orderCompletedBtn.setVisible(false);
+                            orderDetails.orderReceivedBtn.setVisible(false);
+                            orderDetails.updateOrderBtn.setVisible(false);
+                            orderDetails.orderDetailsTable.setEnabled(false);
+                            break;
+                    }
+                }
+            }
+            
+            orderDetails.setVisible(true);
+            orderDetails.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            orderSearchCombo.setSelectedIndex(-1);
+        }catch(NullPointerException e){
+            JOptionPane.showMessageDialog(this, "You haven't select any order ID !", "Empty Selection", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_searchOrderBtnActionPerformed
 
     private void searchStockIngBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchStockIngBtnActionPerformed
-
         searchStockIngredientCombo();
     }//GEN-LAST:event_searchStockIngBtnActionPerformed
 
     private void searchStockBlendsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchStockBlendsBtnActionPerformed
-
-        searchStockBlendCombo();
+       searchStockBlendCombo();
     }//GEN-LAST:event_searchStockBlendsBtnActionPerformed
 
     private void deleteUserBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteUserBtnActionPerformed
@@ -1453,19 +1541,19 @@ public class AdminPannel extends javax.swing.JFrame {
             Blend blendDelivery = new Blend();
 
             if (blendDelivery.checkAndLoadBlendDeliverDetails(selectedIngName)) {
-                
+
                 searchStockBlendComboBox.setSelectedIndex(-1);
-                
-                DeliverBlendTwo deliverBlend = new DeliverBlendTwo();
-                
+
+                DeliverBlend deliverBlend = new DeliverBlend();
+
                 deliverBlend.setAdminPannel(this);
                 deliverBlend.setVisible(true);
-                deliverBlend.setDefaultCloseOperation(HIDE_ON_CLOSE);
+                deliverBlend.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
                 deliverBlend.blendNameLbl.setText(blendDelivery.getBlendName());
                 deliverBlend.blendCatgLbl.setText(blendDelivery.getBlendCategory());
-                deliverBlend.allocatedQtyLabel.setText(String.valueOf(blendDelivery.getOrderedStock()));
-                deliverBlend.freeQtyLbl.setText(String.valueOf(blendDelivery.getVisibleStock()));
-                
+                deliverBlend.allocatedQtyLbl.setText(String.valueOf(blendDelivery.getAlocatedStock()) + " g");
+                deliverBlend.freeQtyLbl.setText(String.valueOf(blendDelivery.getVisibleStock()) + " g");
+
             } else {
                 JOptionPane.showMessageDialog(this, "You have selected invalid blend name !", "Invalid Name", JOptionPane.ERROR_MESSAGE);
                 searchStockBlendComboBox.setSelectedIndex(-1);
@@ -1493,10 +1581,10 @@ public class AdminPannel extends javax.swing.JFrame {
 
                 updateStock.setAdminPannel(this);
                 updateStock.setVisible(true);
-                updateStock.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+                updateStock.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 updateStock.updateStockItemNameLbl.setText(ingredeintForStock.getIngName());
                 updateStock.updateStockCategoryLbl.setText(ingredeintForStock.getIngCategoryName());
-                updateStock.stockQtyLbl.setText(String.valueOf(ingredeintForStock.getVisibleStock()));
+                updateStock.stockQtyLbl.setText(String.valueOf(ingredeintForStock.getVisibleStock()) + " g");
             } else {
                 JOptionPane.showMessageDialog(this, "You have selected invalid ingredient!", "Invalid Name", JOptionPane.ERROR_MESSAGE);
                 searchStockIngComboBox.setSelectedIndex(-1);
@@ -1525,10 +1613,10 @@ public class AdminPannel extends javax.swing.JFrame {
 
                 updateBlendStock.setAdminPannel(this);
                 updateBlendStock.setVisible(true);
-                updateBlendStock.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+                updateBlendStock.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 updateBlendStock.updateStockItemNameLbl.setText(blendForStock.getBlendName());
                 updateBlendStock.updateStockItemCategoryLbl.setText(blendForStock.getBlendCategory());
-                updateBlendStock.stockQtyLbl.setText(String.valueOf(blendForStock.getVisibleStock()));
+                updateBlendStock.stockQtyLbl.setText(String.valueOf(blendForStock.getVisibleStock()) + " g");
             } else {
                 JOptionPane.showMessageDialog(this, "You have selected invalid blend name !", "Invalid Name", JOptionPane.ERROR_MESSAGE);
                 searchStockBlendComboBox.setSelectedIndex(-1);
@@ -1572,7 +1660,7 @@ public class AdminPannel extends javax.swing.JFrame {
             itemDetails.unitPriceTxt.setText(resultArray[4]);
 
             itemDetails.setVisible(true);
-            itemDetails.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+            itemDetails.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             searchIngredientComboBox.setSelectedIndex(-1);
         }
     }
@@ -1598,15 +1686,13 @@ public class AdminPannel extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_searchBlendComboBoxActionPerformed
 
-    private void btnGoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGoActionPerformed
+    private void btnIngredientGoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngredientGoActionPerformed
         SimpleDateFormat javadate = new SimpleDateFormat("yyyy-MM-dd");
         if (StartDate.getDate() == null || EndDate.getDate() == null) {
             JOptionPane.showMessageDialog(this, "Please choose date range");
-        } 
-        else if (StartDate.getDate().after(EndDate.getDate())){
+        } else if (StartDate.getDate().after(EndDate.getDate())) {
             JOptionPane.showMessageDialog(this, "Please choose valid date range");
-        }
-        else {
+        } else {
             Date start = StartDate.getDate();
             Date end = EndDate.getDate();
             String startdate = javadate.format(start);
@@ -1614,27 +1700,63 @@ public class AdminPannel extends javax.swing.JFrame {
             StockHistory ingredientHistoryStock = new StockHistory();
             ingredientHistoryStock.populateStockIngredientHistoryTableByDate((DefaultTableModel) ingStockHistoryTbl.getModel(), startdate, enddate);
         }
-    }//GEN-LAST:event_btnGoActionPerformed
+    }//GEN-LAST:event_btnIngredientGoActionPerformed
 
-    private void btnGo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGo1ActionPerformed
+    private void btnBlendGoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBlendGoActionPerformed
         SimpleDateFormat javadate = new SimpleDateFormat("yyyy-MM-dd");
         if (BlendStartDate.getDate() == null || blendEndDate.getDate() == null) {
             JOptionPane.showMessageDialog(this, "Please choose date range");
-        } 
-        else if (BlendStartDate.getDate().after(blendEndDate.getDate())){
+        } else if (BlendStartDate.getDate().after(blendEndDate.getDate())) {
             JOptionPane.showMessageDialog(this, "Please choose valid date range");
-        }
-        else {
+        } else {
             Date start = StartDate.getDate();
             Date end = EndDate.getDate();
             String startdate = javadate.format(start);
             String enddate = javadate.format(end);
             StockHistory stockhistory = new StockHistory();
-            stockhistory.populateStockIngredientHistoryTableByDate((DefaultTableModel) blendStockHistoryTbl.getModel(), startdate, enddate);
-                    //populateStockBlendHistoryTableByDate((DefaultTableModel) blendStockHistoryTbl.getModel(),startdate,enddate);
+            stockhistory.populateStockBlendHistoryTableByDate((DefaultTableModel) blendStockHistoryTbl.getModel(), startdate, enddate);
+            blendGo = 1;
+            //populateStockBlendHistoryTableByDate((DefaultTableModel) blendStockHistoryTbl.getModel(),startdate,enddate);
         }
-    }//GEN-LAST:event_btnGo1ActionPerformed
+    }//GEN-LAST:event_btnBlendGoActionPerformed
 
+    private void EndDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EndDateActionPerformed
+
+    }//GEN-LAST:event_EndDateActionPerformed
+
+    private void btnIngredientHistoryReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngredientHistoryReportActionPerformed
+
+        if (StartDate.getDate()!=null && EndDate.getDate() != null &&blendGo == 0) {
+            JOptionPane.showMessageDialog(this, "Please Press Go button to filter By date or Press Cancel ");
+        } else {
+            ingredientHistoryStock.IngStockHistoryPdfGeneration();
+            blendGo =0;
+        }
+    }//GEN-LAST:event_btnIngredientHistoryReportActionPerformed
+
+
+    private void BtnCancelBlendHistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCancelBlendHistoryActionPerformed
+        BlendStartDate.getEditor().setText("");
+        blendEndDate.getEditor().setText("");
+        StockHistory stockhistory = new StockHistory();
+        stockhistory.populateStockBlendHistoryTable((DefaultTableModel) blendStockHistoryTbl.getModel());
+    }//GEN-LAST:event_BtnCancelBlendHistoryActionPerformed
+
+    private void btnCancelIngHistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelIngHistoryActionPerformed
+        StartDate.getEditor().setText("");
+        EndDate.getEditor().setText("");
+        StockHistory ingredientHistoryStock = new StockHistory();
+        ingredientHistoryStock.populateStockIngredientHistoryTable((DefaultTableModel) ingStockHistoryTbl.getModel());
+    }//GEN-LAST:event_btnCancelIngHistoryActionPerformed
+
+    private void btnBlendHistoryReportGenerationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBlendHistoryReportGenerationActionPerformed
+        if (BlendStartDate.getDate() != null && blendEndDate.getDate() != null && blendGo == 0) {
+            JOptionPane.showMessageDialog(this, "Please Press Go button to filter By date or Press Cancel");
+        } else {
+            blendHistoryStock.BlendStockHistoryPdfGeneration();
+            blendGo =0;
+        }
+    }//GEN-LAST:event_btnBlendHistoryReportGenerationActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1673,6 +1795,7 @@ public class AdminPannel extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.jdesktop.swingx.JXDatePicker BlendStartDate;
+    private javax.swing.JButton BtnCancelBlendHistory;
     private org.jdesktop.swingx.JXDatePicker EndDate;
     private org.jdesktop.swingx.JXDatePicker StartDate;
     private javax.swing.JButton addItemBtn;
@@ -1681,11 +1804,14 @@ public class AdminPannel extends javax.swing.JFrame {
     private javax.swing.JButton addUserBtn;
     private javax.swing.JButton blendDeliveryBtn;
     private org.jdesktop.swingx.JXDatePicker blendEndDate;
-    private javax.swing.JTable blendStockHistoryTbl;
-    private javax.swing.JButton btnGo;
-    private javax.swing.JButton btnGo1;
+    public javax.swing.JTable blendStockHistoryTbl;
+    private javax.swing.JButton btnBlendGo;
+    private javax.swing.JButton btnBlendHistoryReportGeneration;
+    private javax.swing.JButton btnCancelIngHistory;
+    private javax.swing.JButton btnIngredientGo;
+    private javax.swing.JButton btnIngredientHistoryReport;
     private javax.swing.JButton deleteUserBtn;
-    private javax.swing.JTable ingStockHistoryTbl;
+    public javax.swing.JTable ingStockHistoryTbl;
     private javax.swing.JLabel inventoryBlendLbl;
     private javax.swing.JLabel inventoryBlendLbl1;
     private javax.swing.JLabel inventoryIngredientsLbl;

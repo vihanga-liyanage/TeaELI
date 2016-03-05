@@ -7,10 +7,14 @@ package teaeli;
 
 import classes.Blend;
 import classes.Ingredient;
+import classes.Order;
 import classes.ResultArray;
+import classes.Validation;
 import java.awt.Font;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -18,9 +22,13 @@ import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -31,6 +39,8 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
     
     private Blend blend;
     private Ingredient ingredient;
+    private Order order;
+    public Object pannel;
     public CreateNewBlendOrder1 createNewBlendOrder1;
     public List<List<String>> blendList;
     
@@ -59,6 +69,7 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
         //Loading required class objects
         blend = new Blend();
         ingredient = new Ingredient();
+        order = new Order();
         
         //Setting date
         DateFormat formatter = new SimpleDateFormat("EEE, d MMM yyyy");
@@ -80,6 +91,7 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
         
         //Adding listner to prompt confirmation on window close
         this.addWindowListener(new WindowAdapter() {
+            @Override
             public void windowClosing(WindowEvent e) {
                 int confirmed = JOptionPane.showConfirmDialog(null, 
                     "Are you sure you want to cancel phase 2?", "Confirm window close",
@@ -93,37 +105,85 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
         
         //Populating masterPlanTbl
         populateMasterPlanTbl();
+        
+        //update excess qty on row select
+        final ListSelectionModel mod = masterPlanTbl.getSelectionModel();
+        mod.addListSelectionListener(new ListSelectionListener() {
+
+            @Override
+            public void valueChanged(ListSelectionEvent lse) {
+                if (!mod.isSelectionEmpty()) {
+                    int count = masterPlanTbl.getRowCount();
+                    for (int i=0; i<count; i++) {
+                        setExcessQty(i);
+                    }
+                }
+            }
+        });
+        
+        //Prompt confirmation on window close
+        this.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                int confirmed = JOptionPane.showConfirmDialog(null, 
+                    "Are you sure you want to close the window?\nAll data you entered will be lost.", "Confirm window close",
+                    JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+                if (confirmed == JOptionPane.YES_OPTION) {
+                    dispose();
+                }
+            }
+        });
     }
 
     private void populateMasterPlanTbl(){
         for (int i=0; i<blendListTbl.getRowCount(); i++) {
             String blendName = blendListTbl.getValueAt(i, 0).toString();
-            int qty = parseInt(blendListTbl.getValueAt(i, 1).toString());
-            ResultArray res = blend.getRecipie(blendName);
-            String baseID = "";
-            float totalIngPercentage = 0;
-            while (res.next()) {
-                baseID = res.getString(0);
-                String ingID = res.getString(1);
-                float ingPercentage = Float.parseFloat(res.getString(2));
-                if (res.getString(3).equals("0")){
-                    totalIngPercentage += ingPercentage;
+            int blendQty = parseInt(blendListTbl.getValueAt(i, 1).toString());
+            if (blendQty > 0) {
+                ResultArray res = blend.getRecipie(blendName);
+                String baseID = "";
+                float totalIngPercentage = 0;
+                while (res.next()) {
+                    baseID = res.getString(0);
+                    String ingID = res.getString(1);
+                    float ingPercentage = Float.parseFloat(res.getString(2));
+                    if (res.getString(3).equals("0")){
+                        totalIngPercentage += ingPercentage;
+                    }
+                    ResultArray ingData = ingredient.getIngDataByID(ingID);
+                    ingData.next();
+                    addIngToMasterTbl(blendQty, ingPercentage, (List<String>) ingData.getRow());
                 }
-                ResultArray ingData = ingredient.getIngDataByID(ingID);
-                ingData.next();
-                addIngToMasterTbl(qty, ingPercentage, (List<String>) ingData.getRow());
+                //Adding base composition with calculated percentage
+                ResultArray baseData = ingredient.getIngDataByID(baseID);
+                baseData.next();
+                addIngToMasterTbl(blendQty, 100-totalIngPercentage, (List<String>) baseData.getRow());
             }
-            //Adding base composition with calculated percentage
-            ResultArray baseData = ingredient.getIngDataByID(baseID);
-            baseData.next();
-            addIngToMasterTbl(qty, 100-totalIngPercentage, (List<String>) baseData.getRow());
+        }
+    }
+    
+    //method to reset excess qty
+    private void setExcessQty(int row){
+        String ingName = masterPlanTbl.getValueAt(row, 0).toString();
+        float requiredQty = parseFloat(masterPlanTbl.getValueAt(row, 4).toString());
+        if (new Validation().isFloat(masterPlanTbl.getValueAt(row, 6).toString())) {
+            float finalQty = parseFloat(masterPlanTbl.getValueAt(row, 6).toString());
+            if (finalQty < requiredQty) {
+                JOptionPane.showMessageDialog(masterPlanTbl, "<html>You cannot decrease the <b>" + ingName + "</b> final quantity less than required quantity!</html>", "Error", JOptionPane.WARNING_MESSAGE);
+                masterPlanTbl.setValueAt(formatNum(requiredQty), row, 6);
+            } else {
+                masterPlanTbl.setValueAt(formatNum(finalQty - requiredQty), row, 5);
+            }
+        } else {
+            JOptionPane.showMessageDialog(masterPlanTbl, "<html>Please enter a valid final quantity for <b>" + ingName + "</b>.</html>", "Error", JOptionPane.WARNING_MESSAGE);
+            masterPlanTbl.setValueAt(formatNum(requiredQty), row, 6);
         }
     }
     
     //Adding an ingredient into master plan
     private void addIngToMasterTbl(int blendQty, float percentage, List<String> row){
+        
         boolean isNew = true;
-        float ingQty = blendQty * percentage / 100;
+        float ingQty = (float)blendQty * percentage / 100.0f;
         for (int i=0; i<masterPlanTbl.getRowCount(); i++) {
             if (masterPlanTbl.getValueAt(i, 0).equals(row.get(1))) {
                 ingQty += parseFloat(masterPlanTbl.getValueAt(i, 1).toString());
@@ -132,6 +192,7 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
                 float visible = parseFloat(masterPlanTbl.getValueAt(i, 2).toString());
                 float invisible = parseFloat(masterPlanTbl.getValueAt(i, 3).toString());
                 float balance = 0;
+                
                 balance = ingQty - visible;
                 if (balance > 0) {
                     balance = balance - invisible;
@@ -150,12 +211,13 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
             Vector newRow = new Vector();
             newRow.addElement(row.get(1));
             newRow.addElement(formatNum(ingQty));
-            newRow.addElement(formatNum(row.get(3)));
-            newRow.addElement(formatNum(row.get(5)));
-            
-            //calculating qty required
+
             float visible = parseFloat(row.get(3));
             float invisible = parseFloat(row.get(5));
+            newRow.addElement(formatNum(visible));
+            newRow.addElement(formatNum(invisible));
+            
+            //calculating qty required
             float balance = 0;
             balance = ingQty - visible;
             if (balance > 0) {
@@ -173,6 +235,15 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
             DefaultTableModel model = (DefaultTableModel) masterPlanTbl.getModel();
             model.addRow(newRow);
         }
+    }
+    
+    //Rounding method for doubles
+    public static float round(float num, int places){
+        if (places < 0)
+            throw new IllegalArgumentException();
+        BigDecimal bd = new BigDecimal(num);
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.floatValue();
     }
     
     //formatting numbers to add commas
@@ -199,6 +270,7 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
         return formatNum(String.valueOf(num));
     }
     private String formatNum(float num){
+        num = round(num, 2);
         return formatNum(Float.toString(num));
     }
     
@@ -232,6 +304,87 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    private void readBlendListTbl(){
+        DefaultTableModel model = createNewBlendOrder1.getBlendListTbl();
+        for (int i=0; i<model.getRowCount(); i++) {
+            String blendName = model.getValueAt(i, 0).toString();
+            int reqQty = (parseInt(model.getValueAt(i, 1).toString()));
+            int visibleStock = parseInt(model.getValueAt(i, 2).toString());
+            int invisibleStock = parseInt(model.getValueAt(i, 3).toString());            
+            String balanceQty = String.valueOf(parseInt(model.getValueAt(i, 4).toString()));
+            String excessQty = String.valueOf(parseInt(model.getValueAt(i, 5).toString()));
+            
+            String blendID = blend.getBlendIDByBlendName(blendName);
+            
+            //placing order blend
+            String[] data = {orderIDLabel.getText(), blendID, balanceQty, excessQty};
+            if (!order.placeOrderBlends(data)){
+                JOptionPane.showMessageDialog(rootPane, "There were some issues with the database. Please contact developers.");
+                System.exit(0);
+            }
+            
+            //calculating stocks
+            if (reqQty > visibleStock) {
+                reqQty -= visibleStock;
+                visibleStock = 0;
+                if (reqQty > invisibleStock){
+                    invisibleStock = 0;
+                } else {
+                    invisibleStock -= reqQty;
+                }
+            } else {
+                visibleStock -= reqQty;
+            }
+            
+            //updating blend stock
+            data = new String[]{String.valueOf(visibleStock), String.valueOf(invisibleStock), blendID};
+            if (!blend.updateBlendStock(data)){
+                JOptionPane.showMessageDialog(rootPane, "There were some issues with the database. Please contact developers.");
+                System.exit(0);
+            }
+        }
+    }
+    
+    private void readMasterPlanTbl(){
+        DefaultTableModel model = (DefaultTableModel) masterPlanTbl.getModel();
+        for (int i=0; i<model.getRowCount(); i++) {
+            String ingName = model.getValueAt(i, 0).toString();
+            float reqQty = (parseFloat(model.getValueAt(i, 1).toString()));
+            float visibleStock = parseFloat(model.getValueAt(i, 2).toString());
+            float invisibleStock = parseFloat(model.getValueAt(i, 3).toString());            
+            String balanceQty = String.valueOf(parseFloat(model.getValueAt(i, 4).toString()));
+            String excessQty = String.valueOf(parseFloat(model.getValueAt(i, 5).toString()));
+            
+            String ingID = ingredient.getIngIDByIngName(ingName);
+            
+            //placing order ingredients
+            String[] data = {orderIDLabel.getText(), ingID, balanceQty, excessQty};
+            if (!order.placeOrderIngredients(data)){
+                JOptionPane.showMessageDialog(rootPane, "There were some issues with the database. Please contact developers.");
+                System.exit(0);
+            }
+            
+            //calculating stocks
+            if (reqQty > visibleStock) {
+                reqQty -= visibleStock;
+                visibleStock = 0;
+                if (reqQty > invisibleStock){
+                    invisibleStock = 0;
+                } else {
+                    invisibleStock -= reqQty;
+                }
+            } else {
+                visibleStock -= reqQty;
+            }
+            
+            //updating ingredient stock
+            data = new String[]{String.valueOf(visibleStock), String.valueOf(invisibleStock), ingID};
+            if (!ingredient.updateIngredientStock(data)){
+                JOptionPane.showMessageDialog(rootPane, "There were some issues with the database. Please contact developers.");
+                System.exit(0);
+            }
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -483,9 +636,30 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
     }//GEN-LAST:event_masterPlanTblPropertyChange
 
     private void confirmBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmBtnActionPerformed
-        OrderConfirmation oc = new OrderConfirmation();
-        oc.setVisible(true);
-        oc.setDefaultCloseOperation(HIDE_ON_CLOSE);
+        int count = blendListTbl.getRowCount();
+        for (int i=0; i<count; i++) {
+            setExcessQty(i);
+        }
+        int dialogResult = JOptionPane.showConfirmDialog(this, "Are you sure you want to place this order?\nYou cannot undo after the confirmation.", "Confirm order placing", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+        if (dialogResult == JOptionPane.YES_OPTION){
+            //placing the order in order table
+            if (!order.placeOrder(orderIDLabel.getText())){
+                JOptionPane.showMessageDialog(rootPane, "There were some issues with the database. Please contact developers.");
+                System.exit(0);
+            }
+            //placing orderBlends and updating blend table
+            readBlendListTbl();
+            
+            //placing orderIngredients and updating ingredient table
+            readMasterPlanTbl();
+            
+            OrderConfirmation oc = new OrderConfirmation();
+            oc.setVisible(true);
+            oc.pannel = this.pannel;
+            createNewBlendOrder1.dispose();
+            this.dispose();
+        }
+        
     }//GEN-LAST:event_confirmBtnActionPerformed
 
     private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed

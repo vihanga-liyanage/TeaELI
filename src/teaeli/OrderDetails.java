@@ -6,13 +6,24 @@
 
 package teaeli;
 
+import classes.Order;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author Vihanga Liyanage
  */
-public class OrderDetails extends javax.swing.JFrame {
+public class OrderDetails extends javax.swing.JFrame  {
+    Order order = new Order();
+    private AdminPannel adminPannel;
+
+    public void setAdminPannel(AdminPannel adminPannel) {
+        this.adminPannel = adminPannel;
+    }
     
     public OrderDetails() {
         initComponents();
@@ -25,6 +36,17 @@ public class OrderDetails extends javax.swing.JFrame {
         y=(screenSize.height-frameSize.height)/4;
         setLocation(x, y);
         setResizable(false);
+        
+        //Adding listner to prompt confirmation on window close
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                int confirmed = JOptionPane.showConfirmDialog(null, "Are you sure you want to cancel viewing the order", "Confirm window close",JOptionPane.YES_NO_OPTION);
+                if (confirmed == JOptionPane.YES_OPTION) {
+                    dispose();
+                }
+            }
+        });
     }
 
     /**
@@ -72,15 +94,22 @@ public class OrderDetails extends javax.swing.JFrame {
                 "Ingredient", "Required Qty (g)", "Excess Qty (g)", "Additional Qty (g)", "Remarks", "Supplier"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, true, false
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Double.class, java.lang.String.class, java.lang.Object.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, true, true, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        orderDetailsTable.setRowHeight(20);
+        orderDetailsTable.setRowHeight(24);
         jScrollPane3.setViewportView(orderDetailsTable);
         if (orderDetailsTable.getColumnModel().getColumnCount() > 0) {
             orderDetailsTable.getColumnModel().getColumn(0).setResizable(false);
@@ -108,15 +137,36 @@ public class OrderDetails extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        blendTable.setRowHeight(24);
         jScrollPane1.setViewportView(blendTable);
 
         updateOrderBtn.setText("Update Order");
+        updateOrderBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateOrderBtnActionPerformed(evt);
+            }
+        });
 
         cancelBtn.setText("Cancel");
+        cancelBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelBtnActionPerformed(evt);
+            }
+        });
 
         orderReceivedBtn.setText("Order Received");
+        orderReceivedBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                orderReceivedBtnActionPerformed(evt);
+            }
+        });
 
         orderCompletedBtn.setText("Order Completed");
+        orderCompletedBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                orderCompletedBtnActionPerformed(evt);
+            }
+        });
 
         jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -186,10 +236,19 @@ public class OrderDetails extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 846, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 846, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 846, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 846, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(blendLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(rawMaterialLbl, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(cancelBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -197,16 +256,7 @@ public class OrderDetails extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(orderReceivedBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(updateOrderBtn))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(blendLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(rawMaterialLbl, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(updateOrderBtn)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -251,6 +301,68 @@ public class OrderDetails extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
+        int dialogButton = JOptionPane.YES_NO_OPTION;
+        int a = JOptionPane.showConfirmDialog(null, "Are you sure you want to cancel viewing the order", "Confirm window close", dialogButton);
+        if (a == JOptionPane.YES_OPTION){
+            dispose();
+        }
+    }//GEN-LAST:event_cancelBtnActionPerformed
+
+    private void updateOrderBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateOrderBtnActionPerformed
+        orderDetailsTable.getCellEditor().stopCellEditing();
+        for(int i = 0; i < orderDetailsTable.getRowCount(); i++){
+            double additional = 0;
+            String str,remark = "";
+            
+            try{
+                str = orderDetailsTable.getValueAt(i, 3).toString();
+                remark = orderDetailsTable.getValueAt(i, 4).toString();
+            }catch(NullPointerException e){
+                str = "0";
+                remark = "";
+            }
+            
+            try{
+                additional = Double.parseDouble(str);  
+            }catch(NumberFormatException ex){
+                additional = 0;
+            }
+            
+            String orderID = orderIDLabel.getText();           
+            String ing = orderDetailsTable.getValueAt(i, 0).toString();
+            
+            int result = order.updateOrderRowWise(orderID, additional, remark, ing);
+        }
+        JOptionPane.showMessageDialog(this, "Values saved successfully !", "Update Success", 1);
+        order.viewOrder((DefaultTableModel) blendTable.getModel(), (DefaultTableModel) orderDetailsTable.getModel(), orderIDLabel.getText());
+    }//GEN-LAST:event_updateOrderBtnActionPerformed
+
+    private void orderReceivedBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderReceivedBtnActionPerformed
+        int result = order.updateOrderStatus(1, orderIDLabel.getText());
+        if(result == 1){
+            JOptionPane.showMessageDialog(this, "Order status changed successfully !", "Changes Succeeded", 1);
+            adminPannel.populateOrderListTable();
+            orderCompletedBtn.setVisible(true);
+            orderReceivedBtn.setVisible(false);
+        }else{
+            JOptionPane.showMessageDialog(this, "Changes did not affected !", "Changes Failed", 0);
+        }
+    }//GEN-LAST:event_orderReceivedBtnActionPerformed
+
+    private void orderCompletedBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderCompletedBtnActionPerformed
+        int result = order.updateOrderStatus(2, orderIDLabel.getText());
+        if(result == 1){
+            JOptionPane.showMessageDialog(this, "Order status changed successfully !", "Changes Succeeded", 1);
+            adminPannel.populateOrderListTable();
+            orderCompletedBtn.setVisible(false);
+            orderReceivedBtn.setVisible(false);
+            updateOrderBtn.setVisible(false);
+        }else{
+            JOptionPane.showMessageDialog(this, "Changes did not affected !", "Changes Failed", 0);
+        }
+    }//GEN-LAST:event_orderCompletedBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -299,11 +411,11 @@ public class OrderDetails extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JButton orderCompletedBtn;
+    public javax.swing.JButton orderCompletedBtn;
     public javax.swing.JTable orderDetailsTable;
     public javax.swing.JLabel orderIDLabel;
-    private javax.swing.JButton orderReceivedBtn;
+    public javax.swing.JButton orderReceivedBtn;
     private javax.swing.JLabel rawMaterialLbl;
-    private javax.swing.JButton updateOrderBtn;
+    public javax.swing.JButton updateOrderBtn;
     // End of variables declaration//GEN-END:variables
 }

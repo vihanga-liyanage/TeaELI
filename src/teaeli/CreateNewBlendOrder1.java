@@ -27,14 +27,14 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.event.PopupMenuEvent;
-import javax.swing.event.PopupMenuListener;
 import javax.swing.table.DefaultTableModel;
 
 
 public class CreateNewBlendOrder1 extends javax.swing.JFrame {
     
     private Blend blend;
+    
+    public Object pannel;
     
     /**
      * Creates new form AddNewOrder
@@ -108,20 +108,15 @@ public class CreateNewBlendOrder1 extends javax.swing.JFrame {
         blendsCombo.requestFocus();
         
         //setting focus to qty txt when item selected
-        blendsCombo.addPopupMenuListener(new PopupMenuListener() {
-
+        blendsCombo.getEditor().getEditorComponent().addKeyListener(new KeyAdapter() {
             @Override
-            public void popupMenuCanceled(PopupMenuEvent e) {}
-
-            @Override
-            public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
-                blendsQtyTxt.requestFocus();
+            public void keyPressed(KeyEvent evt) {
+                if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+                    blendsQtyTxt.requestFocus();
+                }
             }
-
-            @Override
-            public void popupMenuWillBecomeVisible(PopupMenuEvent e) {}
         });
-
+        
         deleteBtn.setEnabled(false);
         
         //enabling delete button and update excess qty on row select
@@ -142,10 +137,11 @@ public class CreateNewBlendOrder1 extends javax.swing.JFrame {
         
         //Prompt confirmation on window close
         this.addWindowListener(new WindowAdapter() {
+            @Override
             public void windowClosing(WindowEvent e) {
                 int confirmed = JOptionPane.showConfirmDialog(null, 
                     "Are you sure you want to close the window?\nAll data you entered will be lost.", "Confirm window close",
-                    JOptionPane.YES_NO_OPTION);
+                    JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
                 if (confirmed == JOptionPane.YES_OPTION) {
                     dispose();
                 }
@@ -265,7 +261,7 @@ public class CreateNewBlendOrder1 extends javax.swing.JFrame {
 
         jLabel1.setText("jLabel1");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Create New Blend Order");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, " Create New Blend Order - Phase 1 ", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI Semibold", 0, 16))); // NOI18N
@@ -528,13 +524,25 @@ public class CreateNewBlendOrder1 extends javax.swing.JFrame {
     }//GEN-LAST:event_blendListTblPropertyChange
 
     private void createOrderBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createOrderBtnActionPerformed
+        int count = blendListTbl.getRowCount();
+        int totalFinalQty = 0;
+        for (int i=0; i<count; i++) {
+            setExcessQty(i);
+            totalFinalQty += parseInt(blendListTbl.getValueAt(i, 6).toString());
+        }
         if (blendListTbl.getRowCount() > 0) {
-            int dialogResult = JOptionPane.showConfirmDialog(this, "Are you sure you want to move into next phase?", "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-            if (dialogResult == JOptionPane.YES_OPTION){
-                CreateNewBlendOrder2 creatNewBlendOrder2 = new CreateNewBlendOrder2(this);
-                creatNewBlendOrder2.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-                creatNewBlendOrder2.setVisible(true);
-                this.setVisible(false);
+            if (totalFinalQty > 0) {
+                int dialogResult = JOptionPane.showConfirmDialog(this, "Are you sure you want to move into next phase?", "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+                if (dialogResult == JOptionPane.YES_OPTION){
+                    CreateNewBlendOrder2 creatNewBlendOrder2 = new CreateNewBlendOrder2(this);
+                    creatNewBlendOrder2.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+                    creatNewBlendOrder2.setVisible(true);
+                    creatNewBlendOrder2.pannel = this.pannel;
+                    this.setVisible(false);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Final order quantity is zero. Please add more blends.", "Error", JOptionPane.WARNING_MESSAGE);
+                blendsCombo.requestFocus();
             }
         } else {
             JOptionPane.showMessageDialog(this, "Please add at least one blend to create an order.", "Error", JOptionPane.WARNING_MESSAGE);
@@ -544,9 +552,10 @@ public class CreateNewBlendOrder1 extends javax.swing.JFrame {
     }//GEN-LAST:event_createOrderBtnActionPerformed
 
     private void blendAddBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blendAddBtnActionPerformed
-        if (blendsCombo.getSelectedItem().equals("")){
+        if (blendsCombo.getSelectedIndex() == -1){
             JOptionPane.showMessageDialog(blendsCombo, "Please select a blend to add.", "Error", JOptionPane.WARNING_MESSAGE);
             blendsCombo.requestFocus();
+            blendsCombo.setSelectedIndex(-1);
         } else if (blendsQtyTxt.getText().equals("")) {
             JOptionPane.showMessageDialog(blendsQtyTxt, "Please enter blend quantity to add.", "Error", JOptionPane.WARNING_MESSAGE);
             blendsQtyTxt.requestFocus();

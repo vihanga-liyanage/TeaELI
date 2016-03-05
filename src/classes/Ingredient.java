@@ -25,9 +25,9 @@ public class Ingredient {
 
     // attributes
     private int ingID, ingCategoryID, supID;
-    private int orderReqQty, orderExcessQty, oldStockQty, updatedStockQTy;
+    private float orderReqQty, orderExcessQty, oldStockQty, updatedStockQTy;
     private String ingName, ingCategoryName, stockUpdateReason;
-    private float unitPrice, visibleStock, orderedStock, invisibleStock;
+    private float unitPrice, visibleStock, alocatedStock, invisibleStock;
 
     DBConnection dbConn = new DBConnection();
 
@@ -36,7 +36,7 @@ public class Ingredient {
         this.ingID = 0;
         this.ingCategoryID = 0;
         this.visibleStock = 0;
-        this.orderedStock = 0;
+        this.alocatedStock = 0;
         this.invisibleStock = 0;
         this.ingName = "";
         this.ingCategoryName = "";
@@ -74,12 +74,12 @@ public class Ingredient {
         this.visibleStock = visibleStock;
     }
 
-    public float getOrderedStock() {
-        return orderedStock;
+    public float getAlocatedStock() {
+        return alocatedStock;
     }
 
-    public void setOrderedStock(float orderedStock) {
-        this.orderedStock = orderedStock;
+    public void setAlocatedStock(float alocatedStock) {
+        this.alocatedStock = alocatedStock;
     }
 
     public float getInvisibleStock() {
@@ -114,27 +114,27 @@ public class Ingredient {
         this.unitPrice = unitPrice;
     }
 
-    public int getOrderReqQty() {
+    public float getOrderReqQty() {
         return orderReqQty;
     }
 
-    public void setOrderReqQty(int orderReqQty) {
+    public void setOrderReqQty(float orderReqQty) {
         this.orderReqQty = orderReqQty;
     }
 
-    public int getOrderExessQty() {
+    public float getOrderExessQty() {
         return orderExcessQty;
     }
 
-    public void setOrderExessQty(int orderExessQty) {
+    public void setOrderExessQty(float orderExessQty) {
         this.orderExcessQty = orderExessQty;
     }
 
-    public int getOrderExcessQty() {
+    public float getOrderExcessQty() {
         return orderExcessQty;
     }
 
-    public void setOrderExcessQty(int orderExcessQty) {
+    public void setOrderExcessQty(float orderExcessQty) {
         this.orderExcessQty = orderExcessQty;
     }
 
@@ -154,37 +154,22 @@ public class Ingredient {
         this.stockUpdateReason = stockUpdateReason;
     }
 
-    public int getOldStockQty() {
+    public float getOldStockQty() {
         return oldStockQty;
     }
 
-    public void setOldStockQty(int oldStockQty) {
+    public void setOldStockQty(float oldStockQty) {
         this.oldStockQty = oldStockQty;
     }
 
-    public int getUpdatedStockQTy() {
+    public float getUpdatedStockQTy() {
         return updatedStockQTy;
     }
 
-    public void setUpdatedStockQTy(int updatedStockQTy) {
+    public void setUpdatedStockQTy(float updatedStockQTy) {
         this.updatedStockQTy = updatedStockQTy;
     }
 
-    /* Get ingredient data when blend name is given */
-    /* public ResultSet getIngDataByIngName(String ingName) {
-     Connection conn = null;
-     ResultSet resultSet = null;
-
-     try {
-     String query = "SELECT * FROM ingredient WHERE ingName='" + ingName + "'";
-     conn = dbConn.setConnection();
-     resultSet = dbConn.getResult(query, conn);
-     return resultSet;
-     } catch (Exception e) {
-     System.err.println("err : " + e);
-     }
-     return null;
-     }*/
     /* Get blend data when ing name is given -thisara */
     public List<List<String>> getIngDataByIngName(String ingName) {
         Connection conn = null;
@@ -585,10 +570,23 @@ public class Ingredient {
 
     //getting ingredient data by ingID
     public ResultArray getIngDataByID(String ingID){
-        String query = "SELECT i.ingID, i.ingName, i.ingCategoryID, i.visibleStock, i.orderedStock, i.invisibleStock, s.supName  \n" +
+        String query = "SELECT i.ingID, i.ingName, i.ingCategoryID, i.visibleStock, i.alocatedStock, i.invisibleStock, s.supName  \n" +
                         "FROM ingredient i INNER JOIN supplier s ON i.supID=s.supID \n" +
                         "WHERE ingID='" + ingID + "'";
         return dbConn.getResultArray(query);
+    }
+    
+    public String getIngIDByIngName(String base) {
+        String query = "SELECT ingID FROM ingredient WHERE ingName = '" + base + "' ";
+        ResultArray res = dbConn.getResultArray(query);
+        res.next();
+        return res.getString(0);
+    }
+    
+    //updating blend stocks after a new order
+    public boolean updateIngredientStock(String[] data){
+        String query = "UPDATE ingredient SET visibleStock='" + data[0] + "', invisibleStock='" + data[1] + "' WHERE ingID='" + data[2] + "'";
+        return (dbConn.updateResult(query) == 1);
     }
 }
 

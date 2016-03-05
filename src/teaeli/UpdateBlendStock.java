@@ -256,7 +256,7 @@ public class UpdateBlendStock extends javax.swing.JFrame {
 
     
     private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
-        this.setVisible(false);
+        this.close();
     }//GEN-LAST:event_cancelBtnActionPerformed
 
 	private void blendStockIncreaseBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blendStockIncreaseBtnActionPerformed
@@ -286,7 +286,9 @@ public class UpdateBlendStock extends javax.swing.JFrame {
                 blend.setBlendName(this.updateStockItemNameLbl.getText());
                 blend.setStockUpdateReason(this.reasonToChangeTxt.getText());
 
-                oldStockQty = Integer.parseInt(this.stockQtyLbl.getText());
+                String oldStock = this.stockQtyLbl.getText().replace(" g", "");
+                
+                oldStockQty = Integer.parseInt(oldStock);
                 blend.setOldStockQty(oldStockQty);
                 blend.setUpdatedStockQTy(stockChangeQty);
 
