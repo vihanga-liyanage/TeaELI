@@ -8,6 +8,7 @@ package teaeli;
 import classes.Blend;
 import classes.Ingredient;
 import classes.Order;
+import classes.PDF;
 import classes.ResultArray;
 import classes.Validation;
 import java.awt.Font;
@@ -39,6 +40,7 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
     
     private Blend blend;
     private Ingredient ingredient;
+    private PDF pdf;
     private Order order;
     public Object pannel;
     public CreateNewBlendOrder1 createNewBlendOrder1;
@@ -70,6 +72,7 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
         blend = new Blend();
         ingredient = new Ingredient();
         order = new Order();
+        pdf = new PDF();
         
         //Setting date
         DateFormat formatter = new SimpleDateFormat("EEE, d MMM yyyy");
@@ -132,6 +135,9 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
                 }
             }
         });
+        
+        //Removing the category colum from master table
+        masterPlanTbl.removeColumn(masterPlanTbl.getColumn(masterPlanTbl.getColumnName(8)));
     }
 
     private void populateMasterPlanTbl(){
@@ -211,7 +217,6 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
             Vector newRow = new Vector();
             newRow.addElement(row.get(1));
             newRow.addElement(formatNum(ingQty));
-
             float visible = parseFloat(row.get(3));
             float invisible = parseFloat(row.get(5));
             newRow.addElement(formatNum(visible));
@@ -231,6 +236,8 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
             newRow.addElement(0);
             newRow.addElement(formatNum(balance));
             newRow.addElement(row.get(6));
+            //setting category into the hidden field
+            newRow.addElement(row.get(2));
             
             DefaultTableModel model = (DefaultTableModel) masterPlanTbl.getModel();
             model.addRow(newRow);
@@ -452,11 +459,11 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Ingredient", "Qty Required (g)", "Visible Stock (g)", "Invisible Stock (g)", "Balance Qty Required (g)", "Excess Qty (g)", "Final Qty (g)", "Supplier Name"
+                "Ingredient", "Qty Required (g)", "Visible Stock (g)", "Invisible Stock (g)", "Balance Qty Required (g)", "Excess Qty (g)", "Final Qty (g)", "Supplier Name", "category"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, true, false
+                false, false, false, false, false, false, true, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -476,12 +483,15 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
             masterPlanTbl.getColumnModel().getColumn(1).setResizable(false);
             masterPlanTbl.getColumnModel().getColumn(2).setResizable(false);
             masterPlanTbl.getColumnModel().getColumn(3).setResizable(false);
+            masterPlanTbl.getColumnModel().getColumn(3).setPreferredWidth(80);
             masterPlanTbl.getColumnModel().getColumn(4).setResizable(false);
             masterPlanTbl.getColumnModel().getColumn(4).setPreferredWidth(120);
             masterPlanTbl.getColumnModel().getColumn(5).setResizable(false);
+            masterPlanTbl.getColumnModel().getColumn(5).setPreferredWidth(55);
             masterPlanTbl.getColumnModel().getColumn(6).setResizable(false);
             masterPlanTbl.getColumnModel().getColumn(7).setResizable(false);
             masterPlanTbl.getColumnModel().getColumn(7).setPreferredWidth(230);
+            masterPlanTbl.getColumnModel().getColumn(8).setResizable(false);
         }
 
         confirmBtn.setText("Confirm");
@@ -652,6 +662,9 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
             
             //placing orderIngredients and updating ingredient table
             readMasterPlanTbl();
+            
+            //Generating master plan PDF
+            pdf.generateMasterPlanPDF(null);
             
             OrderConfirmation oc = new OrderConfirmation();
             oc.setVisible(true);
