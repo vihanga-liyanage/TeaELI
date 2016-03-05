@@ -161,21 +161,15 @@ public class LoginFrame extends javax.swing.JFrame {
 
     private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
          
-         userName = txtUsername.getText();
-         password = txtPassword.getText();
+        userName = txtUsername.getText();
+        password = txtPassword.getText();
          
-         /*
-         changed due to inconvinience on testing, original code below
-         if (checkLogin(userName, password)==1){
-         Vihanga
-         */
-         
-         if (1==1){
-             
+        if (us.checkLogin(userName, password)==1){
+
             AdminPannel adminPannel = new AdminPannel();//the provided username & password matched
             adminPannel.setVisible(true);
             user =userName;
-             setVisible(false);
+            setVisible(false);
 
         }else if (us.checkLogin(userName, password)==2){
 

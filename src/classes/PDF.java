@@ -18,23 +18,27 @@ import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import java.awt.Desktop;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.JTable;
 
 /**
  *
  * @author Vihanga Liyanage
  */
 public class PDF {
-    private String font = "Calibri";
+    private String font = "Segoe UI Semilight";
+    private String path = "C:\\Teaeli\\";
 
     public PDF() {
     }
-    
+    //private methods ==========================================================
     private PdfPCell getTableHeaderCell(String name){
         PdfPCell cell = new PdfPCell(new Paragraph(name, FontFactory.getFont(font, 10, Font.BOLD, BaseColor.WHITE)));
         cell.setPadding(5);
@@ -54,8 +58,8 @@ public class PDF {
     
     private PdfPCell getTableDataCell(String name){
         PdfPCell cell = new PdfPCell(new Paragraph(name, FontFactory.getFont(font, 9, Font.NORMAL, BaseColor.BLACK)));
-        cell.setPadding(2);
-        cell.setPaddingBottom(3);
+        cell.setPadding(3);
+        cell.setPaddingBottom(4);
         cell.setBackgroundColor(new BaseColor(242, 242, 242));
         return cell;
     }
@@ -75,20 +79,26 @@ public class PDF {
         cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
         return cell;
     }
+    //end of private methods ===================================================
     
-    public void generateMasterPlanPDF(DefaultTableModel model){
+    public void generateMasterPlanPDF(JTable table, String[] data){
          try {
-            Document doc = new Document(PageSize.A4, 20, 20, 20, 20);
-            PdfWriter.getInstance(doc, new FileOutputStream("test.pdf"));
+            Document doc = new Document(PageSize.A4.rotate(), 20, 20, 20, 20);
+            
+            //Creating the directory for the order
+            String tempPath = path + "RM-Orders\\" + data[0] + "\\";
+            new File(tempPath).mkdirs();
+
+            PdfWriter.getInstance(doc, new FileOutputStream(tempPath + "RM_Order_Master_Plan-" + data[0] + ".pdf"));
             doc.open();
             
-            float[] coloumWidths = {5, 3, 3, 2.2f, 5};
+            float[] coloumWidths = {5, 2, 2, 2, 2, 2, 2, 5};
             PdfPTable masterTable = new PdfPTable(coloumWidths);
             masterTable.setWidthPercentage(100);
         
             //Adding logo
             PdfPCell logoCell = new PdfPCell(Image.getInstance("D:\\Developer\\My Projects\\TeaELI\\TeaELI\\src\\teaeli\\logo-new (Custom).png"));
-            logoCell.setColspan(2);
+            logoCell.setColspan(3);
             masterTable.addCell(logoCell);
             
             //Adding master plan header data as another table
@@ -100,46 +110,56 @@ public class PDF {
             titleCell.setHorizontalAlignment(Element.ALIGN_CENTER);
             headerTable.addCell(titleCell);
             headerTable.addCell(getHeaderNameCell("MASTER PLAN #"));
-            headerTable.addCell(getHeaderDataCell("RM_MSTR-025"));
-            headerTable.addCell(getHeaderNameCell("PRODUCTION PLAN(S) #"));
-            headerTable.addCell(getHeaderDataCell("TCAD_008"));
+            headerTable.addCell(getHeaderDataCell(data[0]));
             headerTable.addCell(getHeaderNameCell("DATE"));
-            headerTable.addCell(getHeaderDataCell("03.08.2015"));
+            headerTable.addCell(getHeaderDataCell(data[1]));
             headerTable.addCell(getHeaderNameCell("Client"));
             headerTable.addCell(getHeaderDataCell(""));
             headerTable.addCell(getHeaderNameCell("Invoice Ref"));
             headerTable.addCell(getHeaderDataCell("SAMPLES"));
             
             PdfPCell headerDataCell = new PdfPCell(headerTable);
-            headerDataCell.setColspan(3);
+            headerDataCell.setColspan(5);
             masterTable.addCell(headerDataCell);
                  
             //Adding master table headers
             masterTable.addCell(getTableHeaderCell("Item Description"));
-            masterTable.addCell(getTableHeaderCell("Qty needed (g)"));
-            masterTable.addCell(getTableHeaderCell("Qty in stock (g)"));
-            masterTable.addCell(getTableHeaderCell("Balance (g)"));
+            masterTable.addCell(getTableHeaderCell("Qty Needed"));
+            masterTable.addCell(getTableHeaderCell("Visible Stock"));
+            masterTable.addCell(getTableHeaderCell("Invisible Stock"));
+            masterTable.addCell(getTableHeaderCell("Balance"));
+            masterTable.addCell(getTableHeaderCell("Excess Qty"));
+            masterTable.addCell(getTableHeaderCell("Final Order"));
             masterTable.addCell(getTableHeaderCell("Supplier Name"));
             
-            //Adding category
-            masterTable.addCell(getIngCategoryCell("HERBS"));
+            //Adding data from master table
+            String category = table.getValueAt(0, 8).toString();
+            masterTable.addCell(getIngCategoryCell(category.toUpperCase()));
             
-            for(int i=0; i<100; i++){
-                masterTable.addCell(getTableDataCell("data " + i));
+            for(int i=0; i<table.getRowCount(); i++){
+                if (!category.equals(table.getValueAt(i, 8).toString())){
+                    category = table.getValueAt(i, 8).toString();
+                    masterTable.addCell(getIngCategoryCell(category.toUpperCase()));
+                }
+                masterTable.addCell(getTableDataCell(table.getValueAt(i, 0).toString()));
+                masterTable.addCell(getTableDataCell(table.getValueAt(i, 1).toString()));
+                masterTable.addCell(getTableDataCell(table.getValueAt(i, 2).toString()));
+                masterTable.addCell(getTableDataCell(table.getValueAt(i, 3).toString()));
+                masterTable.addCell(getTableDataCell(table.getValueAt(i, 4).toString()));
+                masterTable.addCell(getTableDataCell(table.getValueAt(i, 5).toString()));
+                masterTable.addCell(getTableDataCell(table.getValueAt(i, 6).toString()));
+                masterTable.addCell(getTableDataCell(table.getValueAt(i, 7).toString()));
             }
             doc.add(masterTable);
-            
-            
+
             doc.close();
-            //Opening the new file
-            if ((new File("test.pdf")).exists()) {
-                Process p = Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler test.pdf");
-                p.waitFor();
-            }
+            
+            //Opening the new directory
+            Desktop.getDesktop().open(new File(tempPath));
         
         } catch (FileNotFoundException | DocumentException ex) {
             JOptionPane.showMessageDialog(null, "Error : " + ex);
-        } catch (IOException | InterruptedException ex) {
+        } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Error : " + ex);
         }
     }
