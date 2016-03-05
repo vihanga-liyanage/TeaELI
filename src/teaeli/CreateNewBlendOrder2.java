@@ -24,6 +24,7 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -666,6 +667,7 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
         }
         int dialogResult = JOptionPane.showConfirmDialog(this, "Are you sure you want to place this order?\nYou cannot undo after the confirmation.", "Confirm order placing", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
         if (dialogResult == JOptionPane.YES_OPTION) {
+
             //placing the order in order table
             if (!order.placeOrder(orderIDLabel.getText())) {
                 JOptionPane.showMessageDialog(rootPane, "There were some issues with the database. Please contact developers.");
@@ -677,11 +679,17 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
             //placing orderIngredients and updating ingredient table
             readMasterPlanTbl();
 
-            
-
             OrderConfirmation oc = new OrderConfirmation(this);
+
             //Generating master plan PDF
-            pdf.generateMasterPlanPDF(null);
+            DefaultTableModel model = (DefaultTableModel) masterPlanTbl.getModel();
+            JTable temp = new JTable(model);
+            temp.setAutoCreateRowSorter(true);
+            temp.getRowSorter().toggleSortOrder(8);
+            DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+            Date today = new Date();
+            String[] data = {orderIDLabel.getText(), formatter.format(today)};
+            pdf.generateMasterPlanPDF(temp, data);
             oc.setVisible(true);
 
             oc.pannel = this.pannel;
