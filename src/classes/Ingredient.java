@@ -352,6 +352,17 @@ public class Ingredient {
             model.addRow(new Object[]{res.getString(0), res.getString(2), res.getString(3)});
         }
     }
+    
+    public String getUnitPriceByIngName(String ingName){
+        String unitPrice = "";
+        ResultArray res = null;
+        String query = "SELECT unitPrice FROM ingredient where ingredient.ingName = '" + ingName + "' ";
+        res = dbConn.getResultArray(query);
+        if(res.next()){
+            unitPrice = res.getString(0);
+        }
+        return unitPrice;
+    }
 
     //start of view all details of a ingredient
     public String[] viewAllDetailsOfAIngredient(String ingredientName) throws SQLException {

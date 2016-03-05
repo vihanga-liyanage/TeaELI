@@ -682,7 +682,7 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
 
             OrderConfirmation oc = new OrderConfirmation(this);
             //Generating master plan PDF
-            pdf.generateMasterPlanPDF(null);
+           // pdf.generateMasterPlanPDF(null);
             oc.setVisible(true);
             /*
              oc.pannel = this.pannel;
