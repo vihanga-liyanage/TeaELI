@@ -59,54 +59,6 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="jScrollPane3" pref="0" max="32767" attributes="0"/>
-                              <Group type="102" attributes="0">
-                                  <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
-                                          <Component id="ingCombo" min="-2" pref="200" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="ingPerTxt" min="-2" pref="50" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <EmptySpace min="-2" pref="290" max="-2" attributes="0"/>
-                                          <Component id="ingPerAddBtn" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <EmptySpace min="37" pref="37" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="102" alignment="1" attributes="0">
-                                          <Component id="cancelBtn" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                                          <Component id="updateBtn" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Group type="102" alignment="1" attributes="0">
-                                          <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                          <Component id="flavoursCombo" min="-2" pref="200" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="flavoursPerTxt" min="-2" pref="50" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                          <Component id="flavoursPerAddBtn" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                              </Group>
-                              <Component id="jScrollPane4" pref="0" max="32767" attributes="0"/>
-                          </Group>
-                      </Group>
-                      <Group type="102" attributes="0">
                           <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="blendCodeTxt" min="-2" pref="100" max="-2" attributes="0"/>
@@ -118,6 +70,54 @@
                           <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="baseCombo" min="-2" pref="200" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jScrollPane3" alignment="0" min="-2" pref="410" max="-2" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="ingCombo" min="-2" pref="200" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="ingPerTxt" min="-2" pref="50" max="-2" attributes="0"/>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="ingPerAddBtn" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jScrollPane4" pref="0" max="32767" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="102" attributes="0">
+                                          <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                          <Component id="flavoursCombo" min="-2" pref="200" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="flavoursPerTxt" min="-2" pref="50" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="jLabel7" min="-2" pref="11" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="flavoursPerAddBtn" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" attributes="0">
+                                          <EmptySpace min="-2" pref="187" max="-2" attributes="0"/>
+                                          <Component id="cancelBtn" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="updateBtn" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="category" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="blendCategoryCombo" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -138,18 +138,23 @@
                   </Group>
                   <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="category" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                      <Component id="blendCategoryCombo" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace pref="29" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel3" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
-                      <Component id="flavoursPerTxt" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                      <Component id="ingCombo" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                      <Component id="ingPerTxt" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                       <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="ingPerAddBtn" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                       <Component id="jLabel4" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
-                      <Component id="ingPerTxt" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                      <Component id="flavoursCombo" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                      <Component id="flavoursPerTxt" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                       <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="flavoursPerAddBtn" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
-                      <Component id="ingCombo" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
-                      <Component id="flavoursCombo" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="11" max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="jScrollPane3" pref="385" max="32767" attributes="0"/>
                       <Component id="jScrollPane4" pref="0" max="32767" attributes="0"/>
@@ -378,6 +383,56 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="baseComboActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="category">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI" size="14" style="0"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Category"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="blendCategoryCombo">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="30">
+                <StringItem index="0" value="Artisian Special V26"/>
+                <StringItem index="1" value="Artisian Special V27"/>
+                <StringItem index="2" value="Artisian Special V28"/>
+                <StringItem index="3" value="Artisian Special V29"/>
+                <StringItem index="4" value="Artisian Special V30"/>
+                <StringItem index="5" value="Artisian Special V31"/>
+                <StringItem index="6" value="Artisian Special V32"/>
+                <StringItem index="7" value="Artisian Special V33"/>
+                <StringItem index="8" value="Artisian Special V34"/>
+                <StringItem index="9" value="Artisian Special V35"/>
+                <StringItem index="10" value="Artisian Special V36"/>
+                <StringItem index="11" value="Artisian Special V37"/>
+                <StringItem index="12" value="Artisian Special V38"/>
+                <StringItem index="13" value="Artisian Special V39"/>
+                <StringItem index="14" value="Artisian Special V40"/>
+                <StringItem index="15" value="Artisian Special V41"/>
+                <StringItem index="16" value="Artisian Special V42"/>
+                <StringItem index="17" value="Artisian Special V43"/>
+                <StringItem index="18" value="Artisian Special V44"/>
+                <StringItem index="19" value="Artisian Special V45"/>
+                <StringItem index="20" value="Artisian Special V46"/>
+                <StringItem index="21" value="Artisian Special V47"/>
+                <StringItem index="22" value="Artisian Special V48"/>
+                <StringItem index="23" value="Artisian Special V49"/>
+                <StringItem index="24" value="Artisian Special V50"/>
+                <StringItem index="25" value="Black"/>
+                <StringItem index="26" value="Green Tea"/>
+                <StringItem index="27" value="Organic Black"/>
+                <StringItem index="28" value="Infusions"/>
+                <StringItem index="29" value="Iced Teas"/>
+              </StringArray>
+            </Property>
+            <Property name="toolTipText" type="java.lang.String" value=""/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="blendCategoryComboActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
