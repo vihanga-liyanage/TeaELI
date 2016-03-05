@@ -1699,6 +1699,7 @@ public class AdminPannel extends javax.swing.JFrame {
             String enddate = javadate.format(end);
             StockHistory ingredientHistoryStock = new StockHistory();
             ingredientHistoryStock.populateStockIngredientHistoryTableByDate((DefaultTableModel) ingStockHistoryTbl.getModel(), startdate, enddate);
+            ingredientGo = 1;
         }
     }//GEN-LAST:event_btnIngredientGoActionPerformed
 
