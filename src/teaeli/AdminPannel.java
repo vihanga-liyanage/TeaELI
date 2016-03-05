@@ -1690,6 +1690,7 @@ public class AdminPannel extends javax.swing.JFrame {
             String enddate = javadate.format(end);
             StockHistory ingredientHistoryStock = new StockHistory();
             ingredientHistoryStock.populateStockIngredientHistoryTableByDate((DefaultTableModel) ingStockHistoryTbl.getModel(), startdate, enddate);
+            ingredientGo = 1;
         }
     }//GEN-LAST:event_btnIngredientGoActionPerformed
 
@@ -1717,7 +1718,7 @@ public class AdminPannel extends javax.swing.JFrame {
 
     private void btnIngredientHistoryReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngredientHistoryReportActionPerformed
 
-        if (blendGo == 0) {
+        if (ingredientGo == 0) {
             JOptionPane.showMessageDialog(this, "Please Press Go button to filter By date or Press Cancel ");
         } else {
             ingredientHistoryStock.IngStockHistoryPdfGeneration();

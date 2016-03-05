@@ -5,12 +5,8 @@
  */
 package classes;
 
-import java.sql.Connection;
-import java.text.ParseException;
 import javax.swing.table.DefaultTableModel;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Order {
 
