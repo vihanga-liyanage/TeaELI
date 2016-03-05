@@ -214,6 +214,32 @@ public class Order {
         return -1;
     }
     
+    public int updateOrderRowWise(String oID, double additional, String remark, String ing){
+        ResultArray resultSet0, resultSet1;
+        
+        String query0 = "SELECT ingID FROM ingredient WHERE ingName = '"+ing+"'";
+        resultSet0 = dbConn.getResultArray(query0);
+        int ingID = 0;
+        while(resultSet0.next()){
+           ingID = Integer.parseInt(resultSet0.getString(0));
+           break;
+        }
+
+        String query1 = "SELECT excessQty FROM orderingredient WHERE orderID = '"+oID+"' AND ingID = '"+ingID+"'";
+        resultSet1 = dbConn.getResultArray(query1);
+        double exess = 0;
+        while(resultSet1.next()){
+            exess = Double.parseDouble(resultSet1.getString(0));
+            break;
+        }
+        
+        double newExess = exess + additional;
+        
+        String query2 = "UPDATE orderingredient SET excessQty = '"+newExess+"', remarks = '"+remark+"' WHERE orderID = '"+oID+"' AND ingID = '"+ingID+"'";          
+        int result = dbConn.updateResult(query2);
+        return result;
+    }
+    
     //formatting numbers to add commas
     private String formatNum(String num){
         String decimal=num, point = null;

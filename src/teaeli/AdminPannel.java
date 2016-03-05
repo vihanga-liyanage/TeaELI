@@ -143,7 +143,7 @@ public class AdminPannel extends javax.swing.JFrame {
         blend.populateProductTable((DefaultTableModel) productTable.getModel());
 
         /*populate main order table in the order details tab*/
-        order.populateOrderListTable((DefaultTableModel) orderListTable.getModel());
+        populateOrderListTable();
 
         /*load the orderComboBox in the order details tab*/
         AutoSuggest searchOrderComboBoxAutoSuggest = new AutoSuggest();
@@ -282,6 +282,10 @@ public class AdminPannel extends javax.swing.JFrame {
 
     public void populateUserTable() {
         user.viewUser((DefaultTableModel) userTable.getModel());
+    }
+    
+    public void populateOrderListTable(){
+        order.populateOrderListTable((DefaultTableModel) orderListTable.getModel());
     }
 
     //Setting default font
@@ -1430,6 +1434,10 @@ public class AdminPannel extends javax.swing.JFrame {
             updateProduct.setVisible(true);
             updateProduct.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             searchBlendComboBox.setSelectedIndex(-1);
+            
+            Blend blend = new Blend();
+            blend.getBlendDataByBlendName(searchBlendComboBox.getSelectedItem().toString());
+            //blendCodeTxt.set
         }
 
     }//GEN-LAST:event_searchProductBtnActionPerformed
@@ -1444,6 +1452,7 @@ public class AdminPannel extends javax.swing.JFrame {
 
     private void searchOrderBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchOrderBtnActionPerformed
         OrderDetails orderDetails = new OrderDetails();
+        orderDetails.setAdminPannel(this);
         String id = "";
         try{
             id = orderSearchCombo.getSelectedItem().toString();
@@ -1718,10 +1727,11 @@ public class AdminPannel extends javax.swing.JFrame {
 
     private void btnIngredientHistoryReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngredientHistoryReportActionPerformed
 
-        if (ingredientGo == 0) {
+        if (StartDate.getDate()!=null && EndDate.getDate() != null &&blendGo == 0) {
             JOptionPane.showMessageDialog(this, "Please Press Go button to filter By date or Press Cancel ");
         } else {
             ingredientHistoryStock.IngStockHistoryPdfGeneration();
+            blendGo =0;
         }
     }//GEN-LAST:event_btnIngredientHistoryReportActionPerformed
 
@@ -1741,10 +1751,11 @@ public class AdminPannel extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelIngHistoryActionPerformed
 
     private void btnBlendHistoryReportGenerationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBlendHistoryReportGenerationActionPerformed
-        if (blendGo == 0) {
+        if (BlendStartDate.getDate() != null && blendEndDate.getDate() != null && blendGo == 0) {
             JOptionPane.showMessageDialog(this, "Please Press Go button to filter By date or Press Cancel");
         } else {
             blendHistoryStock.BlendStockHistoryPdfGeneration();
+            blendGo =0;
         }
     }//GEN-LAST:event_btnBlendHistoryReportGenerationActionPerformed
 

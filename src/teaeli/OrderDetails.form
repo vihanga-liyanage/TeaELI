@@ -145,8 +145,8 @@
                     <Column editable="false" title="Ingredient" type="java.lang.Object"/>
                     <Column editable="false" title="Required Qty (g)" type="java.lang.Object"/>
                     <Column editable="false" title="Excess Qty (g)" type="java.lang.Object"/>
-                    <Column editable="true" title="Additional Qty (g)" type="java.lang.Object"/>
-                    <Column editable="true" title="Remarks" type="java.lang.Object"/>
+                    <Column editable="true" title="Additional Qty (g)" type="java.lang.Double"/>
+                    <Column editable="true" title="Remarks" type="java.lang.String"/>
                     <Column editable="false" title="Supplier" type="java.lang.Object"/>
                   </Table>
                 </Property>
