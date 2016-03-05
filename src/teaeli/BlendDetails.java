@@ -5,18 +5,52 @@
  */
 package teaeli;
 
+import classes.Blend;
+import classes.DBConnection;
+import classes.Ingredient;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.util.Vector;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Thisara Salgado
  */
+   
+
 public class BlendDetails extends javax.swing.JFrame {
 
     /**
      * Creates new form UpdateProduct
      */
+    
+     private Ingredient ingredient1;
+     private Blend blend;
+     private BlendDetails blendDetails;
+     
+     DBConnection dbConn = new DBConnection();
+     
     public BlendDetails() {
         initComponents();
         setResizable(false);
+        
+        Ingredient ingredient = new Ingredient();
+        ingredient.initIngCombo(ingCombo);
+        
+        Ingredient base = new Ingredient();
+        base.initIngCombo(baseCombo);
+        
+        Ingredient flavour = new Ingredient();
+        flavour.initFlavourCombo(flavoursCombo);
+        
+        //BlendDetails blendDetails = new BlendDetails();
+        //blendDetails.identifyBlendDetails(b);
+        
+        ingredient1 = new Ingredient();
+        blend = new Blend();
+        //blendCodeTxt.setText("Thisara");
     }
 
     /**
@@ -45,12 +79,12 @@ public class BlendDetails extends javax.swing.JFrame {
         blendCodeTxt = new javax.swing.JTextField();
         ingCombo = new javax.swing.JComboBox();
         flavoursCombo = new javax.swing.JComboBox();
-        baseCompositionTxt = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         ingTable = new javax.swing.JTable();
         jScrollPane4 = new javax.swing.JScrollPane();
         flavourTable = new javax.swing.JTable();
+        baseCombo = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -110,17 +144,15 @@ public class BlendDetails extends javax.swing.JFrame {
         ingCombo.setEditable(true);
         ingCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         ingCombo.setSelectedIndex(-1);
+        ingCombo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ingComboActionPerformed(evt);
+            }
+        });
 
         flavoursCombo.setEditable(true);
         flavoursCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         flavoursCombo.setSelectedIndex(-1);
-
-        baseCompositionTxt.setText("OP1 BLACK TEA ");
-        baseCompositionTxt.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                baseCompositionTxtActionPerformed(evt);
-            }
-        });
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -159,6 +191,15 @@ public class BlendDetails extends javax.swing.JFrame {
             }
         });
         jScrollPane4.setViewportView(flavourTable);
+
+        baseCombo.setEditable(true);
+        baseCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        baseCombo.setSelectedIndex(-1);
+        baseCombo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                baseComboActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -215,7 +256,7 @@ public class BlendDetails extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(baseCompositionTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(baseCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -228,7 +269,7 @@ public class BlendDetails extends javax.swing.JFrame {
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(blendCodeTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(baseCompositionTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(baseCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -272,6 +313,70 @@ public class BlendDetails extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    //Identify belnd name by ID and populte ingredient and flavour table to update blend details
+    
+   /* public String sendBlendID(String blendID){
+        String res = blendID;
+        return res;
+    }
+    public void identifyBlendDetails(String blendID){
+        String blendName = "";
+        blendName = blend.getBlendNameByBlendID(blendID);
+        blendCodeTxt.setText("Thisara");
+        
+        
+       
+        System.out.println(blendName);
+        
+        
+        
+        
+    }*/
+    /*public void populateIngredients(DefaultTableModel tableModel) {
+
+        Connection connection = null;
+        ResultSet resultSet = null;
+        
+        String blendID = "";
+
+        try {
+            String query = "SELECT I.ingName,R.ingPercent FROM ingredient I, recipie R WHERE R.blendID = '"+ blendID + "' AND R.type=1";
+
+            connection = dbConn.setConnection();
+            resultSet = dbConn.getResult(query, connection);
+
+            tableModel.setRowCount(0);
+
+            while (resultSet.next()) {
+                Vector newRow = new Vector();
+                for (int i = 1; i <= 6; i++) {
+                    newRow.addElement(resultSet.getObject(i));
+                }
+                tableModel.addRow(newRow);
+            }
+
+        } catch (Exception e) {
+            System.err.println("stckhis 96 err : " + e);
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (Exception e) {
+                    System.err.println("Resultset close error : " + e);
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (Exception e) {
+                    System.err.println("Connection close error : " + e);
+                }
+            }
+        }
+    }*/
+    
+    
+    
     private void blendNameTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blendNameTxtActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_blendNameTxtActionPerformed
@@ -288,9 +393,13 @@ public class BlendDetails extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_blendCodeTxtActionPerformed
 
-    private void baseCompositionTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_baseCompositionTxtActionPerformed
+    private void ingComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingComboActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_baseCompositionTxtActionPerformed
+    }//GEN-LAST:event_ingComboActionPerformed
+
+    private void baseComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_baseComboActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_baseComboActionPerformed
 
     /**
      * @param args the command line arguments
@@ -329,9 +438,9 @@ public class BlendDetails extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField baseCompositionTxt;
+    public javax.swing.JComboBox baseCombo;
     private javax.swing.JTextField blendCodeTxt;
-    private javax.swing.JTextField blendNameTxt;
+    public javax.swing.JTextField blendNameTxt;
     private javax.swing.JButton cancelBtn;
     private javax.swing.JTable flavourTable;
     private javax.swing.JComboBox flavoursCombo;
@@ -353,4 +462,12 @@ public class BlendDetails extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JButton updateBtn;
     // End of variables declaration//GEN-END:variables
+
+    void identifyBlend(String blendID) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private String getBlendNameByBlendID(String blendID) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

@@ -88,7 +88,7 @@ public class AdminPannel extends javax.swing.JFrame {
         });
 
         //view the blend details when enter key pressed  in blends tab
-        searchBlendComboBox.addPopupMenuListener(new PopupMenuListener() {
+        /*searchBlendComboBox.addPopupMenuListener(new PopupMenuListener() {
 
             @Override
             public void popupMenuCanceled(PopupMenuEvent e) {
@@ -105,7 +105,7 @@ public class AdminPannel extends javax.swing.JFrame {
             @Override
             public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
             }
-        });
+        });*/
 
         //set all users details to the users table in the users tab
         populateUserTable();
@@ -1426,18 +1426,77 @@ public class AdminPannel extends javax.swing.JFrame {
 
 
     private void searchProductBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchProductBtnActionPerformed
-        BlendDetails updateProduct = new BlendDetails();
+        BlendDetails blendDetails = new BlendDetails();
+        String blendID ="";
+        String blendName = "";
+        int baseID= 0;
+        String base = "";
+        int ret =0;
 
         if (searchBlendComboBox.getSelectedIndex() == -1) {
             JOptionPane.showMessageDialog(null, "Please Select a Blend");
         } else {
-            updateProduct.setVisible(true);
-            updateProduct.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            searchBlendComboBox.setSelectedIndex(-1);
+            
+            /*updateProduct.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            
             
             Blend blend = new Blend();
-            blend.getBlendDataByBlendName(searchBlendComboBox.getSelectedItem().toString());
+            blendName = searchBlendComboBox.getSelectedItem().toString();
+            blendID= blend.getBlendIDByBlendName(blendName);
             //blendCodeTxt.set
+            
+            updateProduct.blendNameTxt.setText(blendID);
+            /*BlendDetails ID = new BlendDetails();
+            ID.identifyBlendDetails(blendID);
+            updateProduct.setVisible(true);
+            ID.sendBlendID(blendID);*/
+            //searchBlendComboBox.setSelectedIndex(-1);*/
+            
+            try{
+            blendName = searchBlendComboBox.getSelectedItem().toString();
+            blendID= blend.getBlendIDByBlendName(blendName);
+            blendDetails.blendNameTxt.setText(blendName);
+            
+            Blend blend = new Blend();
+            baseID = blend.getBaseByBlendID(blendID);
+            base = blend.getIngByBaseName(baseID);
+            
+            blendDetails.baseCombo.setSelectedItem(base);
+            
+            
+            
+            
+            //Order tmp = order.viewOrder((DefaultTableModel) orderDetails.blendTable.getModel(), (DefaultTableModel) orderDetails.orderDetailsTable.getModel(), id);
+            //orderDetails.orderIDLabel.setText(tmp.getOrderID());
+            //orderDetails.dateLabel.setText(tmp.getDate());
+            
+            /*for(int i = 0; i < orderListTable.getRowCount(); i++){
+                if(id.equals(orderListTable.getValueAt(i, 0).toString())){
+                    if(null != orderListTable.getValueAt(i, 1).toString())switch (orderListTable.getValueAt(i, 1).toString()) {
+                        case "Pending":
+                            orderDetails.orderCompletedBtn.setVisible(false);
+                            break;
+                        case "Received":
+                            orderDetails.orderReceivedBtn.setVisible(false);
+                            orderDetails.updateOrderBtn.setVisible(false);
+                            orderDetails.orderDetailsTable.setEnabled(false);
+                            break;
+                        case "Completed":
+                            orderDetails.orderCompletedBtn.setVisible(false);
+                            orderDetails.orderReceivedBtn.setVisible(false);
+                            orderDetails.updateOrderBtn.setVisible(false);
+                            orderDetails.orderDetailsTable.setEnabled(false);
+                            break;
+                    }
+                }
+            }*/
+            
+            blendDetails.setVisible(true);
+            blendDetails.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            orderSearchCombo.setSelectedIndex(-1);
+        }catch(NullPointerException e){
+            JOptionPane.showMessageDialog(this, "You haven't select any order ID !", "Empty Selection", JOptionPane.ERROR_MESSAGE);
+        }
         }
 
     }//GEN-LAST:event_searchProductBtnActionPerformed
@@ -1684,6 +1743,7 @@ public class AdminPannel extends javax.swing.JFrame {
 
     private void searchBlendComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBlendComboBoxActionPerformed
         // TODO add your handling code here:
+        //searchBlendComboBox.setEnabled(true);
     }//GEN-LAST:event_searchBlendComboBoxActionPerformed
 
     private void btnIngredientGoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngredientGoActionPerformed
