@@ -62,7 +62,11 @@ public class OrderConfirmation extends javax.swing.JFrame {
         //method for view supplierwise details when supplier name is seleced in the table
         final ListSelectionModel selectionalModForSupplierwiseTable = tblMasterPlanEditingView.getSelectionModel();
         selectionalModForSupplierwiseTable.addListSelectionListener(new ListSelectionListener() {
-            DefaultTableModel tpmodel = (DefaultTableModel) tblMasterPlanEditingView1.getModel();
+
+            
+
+
+            DefaultTableModel tpmodel = (DefaultTableModel) supplierWiseOrderDetailsTbl.getModel();
 
             @Override
             public void valueChanged(ListSelectionEvent lsevt) {
@@ -75,6 +79,11 @@ public class OrderConfirmation extends javax.swing.JFrame {
             }
 
         });
+
+
+        //enabling sorting
+        tblMasterPlanEditingView.setAutoCreateRowSorter(true);
+        supplierWiseOrderDetailsTbl.setAutoCreateRowSorter(true);
 
         /*
          String [][] supplierwiseDetails = new String [numOfInsideArrays][3];
@@ -139,6 +148,7 @@ public class OrderConfirmation extends javax.swing.JFrame {
     public void viewPOOrder(int rowid, List<List> mainList, DefaultTableModel tpmodel) {
         List lst = mainList.get(rowid);
 
+
         for (int i = 0; i < lst.size(); i++) {
             if (i % 2 == 0) {
                 float unitPrice = parseFloat(ing.getUnitPriceByIngName(lst.get(i).toString()));
@@ -164,6 +174,7 @@ public class OrderConfirmation extends javax.swing.JFrame {
                     float total = (qty / 1000) * unitPrice;
                     unitPriceAndTotalList.add(Float.toString(unitPrice));
                     unitPriceAndTotalList.add(Float.toString(total));
+
                 }
             }
             mainList2.add(unitPriceAndTotalList);
@@ -198,7 +209,7 @@ public class OrderConfirmation extends javax.swing.JFrame {
         tblMasterPlanScrollPane = new javax.swing.JScrollPane();
         tblMasterPlanEditingView = new javax.swing.JTable();
         tblMasterPlanScrollPane1 = new javax.swing.JScrollPane();
-        tblMasterPlanEditingView1 = new javax.swing.JTable();
+        supplierWiseOrderDetailsTbl = new javax.swing.JTable();
         generatePdfBtn = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -242,7 +253,7 @@ public class OrderConfirmation extends javax.swing.JFrame {
             tblMasterPlanEditingView.getColumnModel().getColumn(2).setMaxWidth(70);
         }
 
-        tblMasterPlanEditingView1.setModel(new javax.swing.table.DefaultTableModel(
+        supplierWiseOrderDetailsTbl.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -258,23 +269,22 @@ public class OrderConfirmation extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tblMasterPlanEditingView1.setRowHeight(24);
-        tblMasterPlanEditingView1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+
+        supplierWiseOrderDetailsTbl.setRowHeight(24);
+        
+        supplierWiseOrderDetailsTbl.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                tblMasterPlanEditingView1PropertyChange(evt);
+                supplierWiseOrderDetailsTblPropertyChange(evt);
             }
         });
-        tblMasterPlanScrollPane1.setViewportView(tblMasterPlanEditingView1);
-        if (tblMasterPlanEditingView1.getColumnModel().getColumnCount() > 0) {
-            tblMasterPlanEditingView1.getColumnModel().getColumn(1).setMinWidth(80);
-            tblMasterPlanEditingView1.getColumnModel().getColumn(1).setPreferredWidth(2);
-            tblMasterPlanEditingView1.getColumnModel().getColumn(1).setMaxWidth(80);
-            tblMasterPlanEditingView1.getColumnModel().getColumn(2).setMinWidth(80);
-            tblMasterPlanEditingView1.getColumnModel().getColumn(2).setPreferredWidth(20);
-            tblMasterPlanEditingView1.getColumnModel().getColumn(2).setMaxWidth(80);
-            tblMasterPlanEditingView1.getColumnModel().getColumn(3).setMinWidth(80);
-            tblMasterPlanEditingView1.getColumnModel().getColumn(3).setPreferredWidth(20);
-            tblMasterPlanEditingView1.getColumnModel().getColumn(3).setMaxWidth(80);
+
+        tblMasterPlanScrollPane1.setViewportView(supplierWiseOrderDetailsTbl);
+        if (supplierWiseOrderDetailsTbl.getColumnModel().getColumnCount() > 0) {
+            supplierWiseOrderDetailsTbl.getColumnModel().getColumn(1).setPreferredWidth(2);
+            supplierWiseOrderDetailsTbl.getColumnModel().getColumn(2).setPreferredWidth(20);
+            supplierWiseOrderDetailsTbl.getColumnModel().getColumn(3).setPreferredWidth(20);
+
         }
 
         generatePdfBtn.setText("Generate PDF");
@@ -362,9 +372,9 @@ public class OrderConfirmation extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_tblMasterPlanEditingViewPropertyChange
 
-    private void tblMasterPlanEditingView1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_tblMasterPlanEditingView1PropertyChange
+    private void supplierWiseOrderDetailsTblPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_supplierWiseOrderDetailsTblPropertyChange
         // TODO add your handling code here:
-    }//GEN-LAST:event_tblMasterPlanEditingView1PropertyChange
+    }//GEN-LAST:event_supplierWiseOrderDetailsTblPropertyChange
 
     private void generatePdfBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generatePdfBtnActionPerformed
         //generating pdfs
@@ -474,8 +484,8 @@ public class OrderConfirmation extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
+    public javax.swing.JTable supplierWiseOrderDetailsTbl;
     public javax.swing.JTable tblMasterPlanEditingView;
-    public javax.swing.JTable tblMasterPlanEditingView1;
     public javax.swing.JScrollPane tblMasterPlanScrollPane;
     public javax.swing.JScrollPane tblMasterPlanScrollPane1;
     // End of variables declaration//GEN-END:variables

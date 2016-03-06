@@ -372,6 +372,28 @@ public class Blend {
         return dbConn.getResultArray(query);
     }
     
+    public String getBlendNameByBlendID(String blendID) {
+        String query = "SELECT blendName FROM blend WHERE blendID = '" + blendID + "' ";
+        ResultArray res = dbConn.getResultArray(query);
+        res.next();
+        return res.getString(0);
+    }
+    
+    public int getBaseByBlendID(String blendID){
+        String query = "SELECT baseID FROM blend WHERE blendID = '" + blendID + "' ";
+        ResultArray res = dbConn.getResultArray(query);
+        res.next();
+        return Integer.parseInt(res.getString(0));
+    }
+    
+    public String getIngByBaseName(int base){
+        String query = "SELECT ingName FROM ingredient WHERE ingID = '" + base + "' ";
+        ResultArray res = dbConn.getResultArray(query);
+        res.next();
+        return res.getString(0);
+    }
+    
+    
     public String getBlendIDByBlendName(String blendName) {
         String query = "SELECT blendID FROM blend WHERE blendName = '" + blendName + "' ";
         ResultArray res = dbConn.getResultArray(query);
