@@ -1606,7 +1606,7 @@ public class AdminPannel extends javax.swing.JFrame {
 
             Blend blendDelivery = new Blend();
 
-            if (blendDelivery.checkAndLoadBlendDeliverDetails(selectedIngName)) {
+            if (blendDelivery.checkAndLoadBlendDeliverDetails(selectedIngName.replace("'", "\\'"))) {
 
                 searchStockBlendComboBox.setSelectedIndex(-1);
 
@@ -1640,7 +1640,7 @@ public class AdminPannel extends javax.swing.JFrame {
 
             Ingredient ingredeintForStock = new Ingredient();
 
-            if (ingredeintForStock.checkAndLoadIngredientStockDetails(selectedIngName)) {
+            if (ingredeintForStock.checkAndLoadIngredientStockDetails(selectedIngName.replace("'", "\\'"))) {
                 searchStockIngComboBox.setSelectedIndex(-1);
 
                 UpdateIngStock updateStock = new UpdateIngStock();
@@ -1671,8 +1671,8 @@ public class AdminPannel extends javax.swing.JFrame {
             Blend blendForStock = new Blend();
 
             String selectedBlendName = (String) searchStockBlendComboBox.getSelectedItem();
-
-            if (blendForStock.checkAndLoadBlendStockDetails(selectedBlendName)) {
+            
+            if (blendForStock.checkAndLoadBlendStockDetails(selectedBlendName.replace("'","\\'"))) {
                 searchStockBlendComboBox.setSelectedIndex(-1);
 
                 UpdateBlendStock updateBlendStock = new UpdateBlendStock();

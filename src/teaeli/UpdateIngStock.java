@@ -279,7 +279,7 @@ public class UpdateIngStock extends javax.swing.JFrame {
 
                 //create ing object and call for update
                 Ingredient ingredient = new Ingredient();
-                ingredient.setIngName(this.updateStockItemNameLbl.getText());
+                ingredient.setIngName(this.updateStockItemNameLbl.getText().replace("'", "\\'"));
                 ingredient.setStockUpdateReason(this.reasonTxt.getText());
 
                 String oldStock = this.stockQtyLbl.getText().replace(" g", "");
