@@ -8,6 +8,9 @@ package teaeli;
 import classes.Blend;
 import classes.DBConnection;
 import classes.Ingredient;
+import classes.Validation;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -41,6 +44,28 @@ public class AddNewBlend extends javax.swing.JFrame {
         
         ingredient1 = new Ingredient();
         blend = new Blend();
+        
+        //Validation on percentage, when key released
+        ingPerTxt.addKeyListener(new KeyAdapter() {
+            public void keyReleased(KeyEvent e) {
+                String per = ingPerTxt.getText();
+                if (per.length() > 0) {
+                    if (!(new Validation().isFloat(per))) {
+                        JOptionPane.showMessageDialog(ingPerTxt, "Ingredient percentage must be a valid number!", "Error", JOptionPane.WARNING_MESSAGE);
+                        ingPerTxt.setText(per.substring(0, per.length() - 1));
+                    } else if (Float.parseFloat(per) < 0) {
+                        JOptionPane.showMessageDialog(ingPerTxt, "Ingredient percentage cannot be less than 0!", "Error", JOptionPane.WARNING_MESSAGE);
+                        ingPerTxt.setText(per.substring(0, per.length() - 1));
+                    }
+                }
+            }
+
+            public void keyTyped(KeyEvent e) {
+            }
+
+            public void keyPressed(KeyEvent e) {
+            }
+        });
     }
 
     /**
@@ -75,7 +100,6 @@ public class AddNewBlend extends javax.swing.JFrame {
         jScrollPane4 = new javax.swing.JScrollPane();
         addNewBlendIngTbl = new javax.swing.JTable();
         baseCombo = new javax.swing.JComboBox();
-        baseAddBtn = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         blendCategoryCombo = new javax.swing.JComboBox();
 
@@ -115,6 +139,12 @@ public class AddNewBlend extends javax.swing.JFrame {
         flavourPerTxt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 flavourPerTxtActionPerformed(evt);
+            }
+        });
+
+        ingPerTxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ingPerTxtActionPerformed(evt);
             }
         });
 
@@ -164,7 +194,7 @@ public class AddNewBlend extends javax.swing.JFrame {
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel5.setText("Base ");
+        jLabel5.setText("Base Composition ");
 
         addNewBlendFlavourTbl.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -206,17 +236,10 @@ public class AddNewBlend extends javax.swing.JFrame {
 
         baseCombo.setEditable(true);
 
-        baseAddBtn.setText("Add");
-        baseAddBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                baseAddBtnActionPerformed(evt);
-            }
-        });
-
         jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel8.setText("Category");
 
-        blendCategoryCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Artisian Special V26", "Artisian Special V27", "Artisian Special V28", "Artisian Special V29", "Artisian Special V30", "Artisian Special V31", "Artisian Special V32", "Artisian Special V33", "Artisian Special V34", "Artisian Special V35", "Artisian Special V36", "Artisian Special V37", "Artisian Special V38", "Artisian Special V39", "Artisian Special V40", "Artisian Special V41", "Artisian Special V42", "Artisian Special V43", "Artisian Special V44", "Artisian Special V45", "Artisian Special V46", "Artisian Special V47", "Artisian Special V48", "Artisian Special V49", "Artisian Special V50", "Black", "Green Tea", "Organic Black", "Infusions", "Iced Teas" }));
+        blendCategoryCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Artisian Special V2", "Artisian Special V26", "Black", "Green Tea", "Organic Black", "Organic Green", "Organic Infusion", "Infusions", "Iced Teas" }));
         blendCategoryCombo.setToolTipText("");
         blendCategoryCombo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -238,7 +261,12 @@ public class AddNewBlend extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addGap(18, 18, 18)
+                                .addComponent(blendCategoryCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel2)
@@ -249,21 +277,10 @@ public class AddNewBlend extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(blendNameTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 418, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 402, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(baseAddBtn, javax.swing.GroupLayout.Alignment.TRAILING)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(baseCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(70, 70, 70))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel8)
-                                .addGap(18, 18, 18)
-                                .addComponent(blendCategoryCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
+                                    .addComponent(baseCombo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -275,15 +292,20 @@ public class AddNewBlend extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(ingPerAddBtn)
                                 .addGap(101, 101, 101)
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(flavourCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(flavourPerTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel7)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(flavourPerAddBtn)))))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel4)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(flavourCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(flavourPerTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jLabel7)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                                        .addComponent(flavourPerAddBtn))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel5)
+                                        .addGap(0, 0, Short.MAX_VALUE)))))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -296,8 +318,7 @@ public class AddNewBlend extends javax.swing.JFrame {
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(blendCodeTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(baseCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(baseAddBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(baseCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(32, 32, 32)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -362,11 +383,16 @@ public class AddNewBlend extends javax.swing.JFrame {
     }//GEN-LAST:event_blendCodeTxtActionPerformed
     
     private void ingPerAddBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingPerAddBtnActionPerformed
-        if (ingCombo.getSelectedItem().equals("")){
+        if (ingCombo.getSelectedIndex() == -1){
             //System.out.println("ing combo");
             JOptionPane.showMessageDialog(ingCombo, "Please select a ingredient to add.", "Error", JOptionPane.WARNING_MESSAGE);
-            ingCombo.requestFocus();      
+            ingCombo.requestFocus();
+            ingCombo.setSelectedIndex(-1);     
     }//GEN-LAST:event_ingPerAddBtnActionPerformed
+        else if (ingPerTxt.getText().equals("")) {
+            JOptionPane.showMessageDialog(ingPerTxt, "Please enter ingredient percentage to add.", "Error", JOptionPane.WARNING_MESSAGE);
+            ingPerTxt.requestFocus();
+        }
         else {
             String ingName = (String) ingCombo.getSelectedItem();
             float ingPer = Float.parseFloat(ingPerTxt.getText());
@@ -403,10 +429,15 @@ public class AddNewBlend extends javax.swing.JFrame {
     }//GEN-LAST:event_flavourComboActionPerformed
 
     private void flavourPerAddBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_flavourPerAddBtnActionPerformed
-        if (flavourCombo.getSelectedItem().equals("")){
+        if (flavourCombo.getSelectedIndex() == -1){
             JOptionPane.showMessageDialog(flavourCombo, "Please select a flavour to add.", "Error", JOptionPane.WARNING_MESSAGE);
             flavourCombo.requestFocus();
+            flavourCombo.setSelectedIndex(-1);
     }//GEN-LAST:event_flavourPerAddBtnActionPerformed
+        else if (flavourPerTxt.getText().equals("")) {
+            JOptionPane.showMessageDialog(flavourPerTxt, "Please enter ingredient percentage to add.", "Error", JOptionPane.WARNING_MESSAGE);
+            flavourPerTxt.requestFocus();
+        }
         else {
             String flavourName = (String) flavourCombo.getSelectedItem();
             float ingPer = Float.parseFloat(flavourPerTxt.getText());
@@ -439,13 +470,6 @@ public class AddNewBlend extends javax.swing.JFrame {
     
     
     
-    private void baseAddBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_baseAddBtnActionPerformed
-        if (baseCombo.getSelectedItem().equals("")){
-            JOptionPane.showMessageDialog(baseCombo, "Please select a base to add.", "Error", JOptionPane.WARNING_MESSAGE);
-            baseCombo.requestFocus();
-    }                            
-    }//GEN-LAST:event_baseAddBtnActionPerformed
-
     private void blendCategoryComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blendCategoryComboActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_blendCategoryComboActionPerformed
@@ -538,6 +562,10 @@ public class AddNewBlend extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_addNewBlendBtnActionPerformed
+
+    private void ingPerTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingPerTxtActionPerformed
+        ingPerAddBtn.requestFocus();
+    }//GEN-LAST:event_ingPerTxtActionPerformed
    
     public void FillIngCombo(){
         Connection connection = null;
@@ -588,7 +616,6 @@ public class AddNewBlend extends javax.swing.JFrame {
     private javax.swing.JButton addNewBlendBtn;
     private javax.swing.JTable addNewBlendFlavourTbl;
     private javax.swing.JTable addNewBlendIngTbl;
-    private javax.swing.JButton baseAddBtn;
     private javax.swing.JComboBox baseCombo;
     private javax.swing.JComboBox blendCategoryCombo;
     private javax.swing.JTextField blendCodeTxt;

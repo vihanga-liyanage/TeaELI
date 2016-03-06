@@ -1439,22 +1439,6 @@ public class AdminPannel extends javax.swing.JFrame {
         if (searchBlendComboBox.getSelectedIndex() == -1) {
             JOptionPane.showMessageDialog(null, "Please Select a Blend");
         } else {
-            
-            /*;
-            
-            
-            Blend blend = new Blend();
-            blendName = searchBlendComboBox.getSelectedItem().toString();
-            blendID= blend.getBlendIDByBlendName(blendName);
-            //blendCodeTxt.set
-            
-            updateProduct.blendNameTxt.setText(blendID);
-            /*BlendDetails ID = new BlendDetails();
-            ID.identifyBlendDetails(blendID);
-            updateProduct.setVisible(true);
-            ID.sendBlendID(blendID);*/
-            //searchBlendComboBox.setSelectedIndex(-1);*/
-            
             try{
             blendName = searchBlendComboBox.getSelectedItem().toString();
             blendID= blend.getBlendIDByBlendName(blendName);
@@ -1469,40 +1453,16 @@ public class AdminPannel extends javax.swing.JFrame {
             ingredient.populateBlendIngTable((DefaultTableModel) blendDetails.ingTable.getModel(), blendID);
             ingredient.populateBlendFlavourTable((DefaultTableModel) blendDetails.flavourTable.getModel(), blendID);
             
-            
-            
-            
-            
-            
-            /*for(int i = 0; i < orderListTable.getRowCount(); i++){
-                if(id.equals(orderListTable.getValueAt(i, 0).toString())){
-                    if(null != orderListTable.getValueAt(i, 1).toString())switch (orderListTable.getValueAt(i, 1).toString()) {
-                        case "Pending":
-                            orderDetails.orderCompletedBtn.setVisible(false);
-                            break;
-                        case "Received":
-                            orderDetails.orderReceivedBtn.setVisible(false);
-                            orderDetails.updateOrderBtn.setVisible(false);
-                            orderDetails.orderDetailsTable.setEnabled(false);
-                            break;
-                        case "Completed":
-                            orderDetails.orderCompletedBtn.setVisible(false);
-                            orderDetails.orderReceivedBtn.setVisible(false);
-                            orderDetails.updateOrderBtn.setVisible(false);
-                            orderDetails.orderDetailsTable.setEnabled(false);
-                            break;
-                    }
-                }
-            }*/
             blendDetails.ingCombo.setSelectedIndex(-1);
             blendDetails.ingCombo.requestFocus();
             blendDetails.flavoursCombo.setSelectedIndex(-1);
             blendDetails.flavoursCombo.requestFocus();
             blendDetails.setVisible(true);
+            JOptionPane.showMessageDialog(this, "Please Change Blend Name with New Blend Code to Update");
             blendDetails.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             orderSearchCombo.setSelectedIndex(-1);
         }catch(NullPointerException e){
-            JOptionPane.showMessageDialog(this, "You haven't select any order ID !", "Empty Selection", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "You haven't select any blend !", "Empty Selection", JOptionPane.ERROR_MESSAGE);
         }
         }
 
