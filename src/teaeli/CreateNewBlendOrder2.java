@@ -19,22 +19,18 @@ import java.math.RoundingMode;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
-import static teaeli.LoginFrame.adminPannel;
 
 /**
  *
@@ -144,6 +140,10 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
         
         //Removing the category colum from master table
         masterPlanTbl.removeColumn(masterPlanTbl.getColumn(masterPlanTbl.getColumnName(8)));
+        
+        //enabling sorting
+        blendListTbl.setAutoCreateRowSorter(true);
+        masterPlanTbl.setAutoCreateRowSorter(true);
     }
 
     private void populateMasterPlanTbl() {
@@ -667,6 +667,7 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
         }
         int dialogResult = JOptionPane.showConfirmDialog(this, "Are you sure you want to place this order?\nYou cannot undo after the confirmation.", "Confirm order placing", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
         if (dialogResult == JOptionPane.YES_OPTION) {
+
             //placing the order in order table
             if (!order.placeOrder(orderIDLabel.getText())) {
                 JOptionPane.showMessageDialog(rootPane, "There were some issues with the database. Please contact developers.");
@@ -678,16 +679,22 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
             //placing orderIngredients and updating ingredient table
             readMasterPlanTbl();
 
-            
-
             OrderConfirmation oc = new OrderConfirmation(this);
+
             //Generating master plan PDF
-            pdf.generateMasterPlanPDF(null);
+            DefaultTableModel model = (DefaultTableModel) masterPlanTbl.getModel();
+            JTable temp = new JTable(model);
+            temp.setAutoCreateRowSorter(true);
+            temp.getRowSorter().toggleSortOrder(8);
+            DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+            Date today = new Date();
+            String[] data = {orderIDLabel.getText(), formatter.format(today)};
+            pdf.generateMasterPlanPDF(temp, data);
             oc.setVisible(true);
-            /*
-             oc.pannel = this.pannel;
-             createNewBlendOrder1.dispose();
-             this.dispose();*/
+
+            oc.pannel = this.pannel;
+            createNewBlendOrder1.dispose();
+            //this.dispose();
         }
 
     }//GEN-LAST:event_confirmBtnActionPerformed

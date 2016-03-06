@@ -11,6 +11,7 @@ import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import java.awt.Desktop;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -32,73 +33,13 @@ import javax.swing.JOptionPane;
 public class test {
 
     public static String font = "Calibri";
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         
-        try {
-            Document doc = new Document(PageSize.A4, 20, 20, 20, 20);
-            PdfWriter.getInstance(doc, new FileOutputStream("test.pdf"));
-            doc.open();
-            
-            float[] coloumWidths = {5, 3, 3, 2.2f, 5};
-            PdfPTable masterTable = new PdfPTable(coloumWidths);
-            masterTable.setWidthPercentage(100);
-        
-            //Adding logo
-            PdfPCell logoCell = new PdfPCell(Image.getInstance("D:\\Developer\\My Projects\\TeaELI\\TeaELI\\src\\teaeli\\logo-new (Custom).png"));
-            logoCell.setColspan(2);
-            masterTable.addCell(logoCell);
-            
-            //Adding master plan header data as another table
-            coloumWidths = new float[]{5.2f, 5};
-            PdfPTable headerTable = new PdfPTable(coloumWidths);
-            PdfPCell titleCell = new PdfPCell(new Paragraph("RAW MATERIAL ORDERING MASTER PLAN", FontFactory.getFont(font, 11, Font.BOLD)));
-            titleCell.setPadding(15);
-            titleCell.setColspan(10);
-            titleCell.setHorizontalAlignment(Element.ALIGN_CENTER);
-            headerTable.addCell(titleCell);
-            headerTable.addCell(getHeaderNameCell("MASTER PLAN #"));
-            headerTable.addCell(getHeaderDataCell("RM_MSTR-025"));
-            headerTable.addCell(getHeaderNameCell("PRODUCTION PLAN(S) #"));
-            headerTable.addCell(getHeaderDataCell("TCAD_008"));
-            headerTable.addCell(getHeaderNameCell("DATE"));
-            headerTable.addCell(getHeaderDataCell("03.08.2015"));
-            headerTable.addCell(getHeaderNameCell("Client"));
-            headerTable.addCell(getHeaderDataCell(""));
-            headerTable.addCell(getHeaderNameCell("Invoice Ref"));
-            headerTable.addCell(getHeaderDataCell("SAMPLES"));
-            
-            PdfPCell headerDataCell = new PdfPCell(headerTable);
-            headerDataCell.setColspan(3);
-            masterTable.addCell(headerDataCell);
-                 
-            //Adding master table headers
-            masterTable.addCell(getTableHeaderCell("Item Description"));
-            masterTable.addCell(getTableHeaderCell("Qty needed (g)"));
-            masterTable.addCell(getTableHeaderCell("Qty in stock (g)"));
-            masterTable.addCell(getTableHeaderCell("Balance (g)"));
-            masterTable.addCell(getTableHeaderCell("Supplier Name"));
-            
-            //Adding category
-            masterTable.addCell(getIngCategoryCell("HERBS"));
-            
-            for(int i=0; i<100; i++){
-                masterTable.addCell(getTableDataCell("data " + i));
-            }
-            doc.add(masterTable);
-            
-            
-            doc.close();
+
+
             //Opening the new file
-            if ((new File("test.pdf")).exists()) {
-                Process p = Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler test.pdf");
-                p.waitFor();
-            }
-        
-        } catch (FileNotFoundException | DocumentException ex) {
-            JOptionPane.showMessageDialog(null, "Error : " + ex);
-        } catch (IOException | InterruptedException ex) {
-            JOptionPane.showMessageDialog(null, "Error : " + ex);
-        }
+            Desktop.getDesktop().open(new File("C:\\"));
+
         
         
     }
