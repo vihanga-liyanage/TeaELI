@@ -682,6 +682,9 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
             OrderConfirmation oc = new OrderConfirmation(this);
 
             //Generating master plan PDF
+
+           // pdf.generateMasterPlanPDF(null);
+
             DefaultTableModel model = (DefaultTableModel) masterPlanTbl.getModel();
             JTable temp = new JTable(model);
             temp.setAutoCreateRowSorter(true);
@@ -690,6 +693,7 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
             Date today = new Date();
             String[] data = {orderIDLabel.getText(), formatter.format(today)};
             pdf.generateMasterPlanPDF(temp, data);
+
             oc.setVisible(true);
 
             oc.pannel = this.pannel;

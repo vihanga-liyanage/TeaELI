@@ -19,7 +19,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.text.DateFormat;
-import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
@@ -74,20 +73,6 @@ public class AdminPannel extends javax.swing.JFrame {
         //Keep the window fullscreen
         this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
         
-        //method to view the selected row details of a jtable
-        final ListSelectionModel mod = productTable.getSelectionModel();
-        mod.addListSelectionListener(new ListSelectionListener() {
-
-            @Override
-            public void valueChanged(ListSelectionEvent lse) {
-                if (!mod.isSelectionEmpty()) {
-                    int row = mod.getMinSelectionIndex();
-                    JOptionPane.showMessageDialog(null, productTable.getValueAt(row, 0));
-                }
-            }
-
-        });
-
         //view the blend details when enter key pressed  in blends tab
         /*searchBlendComboBox.addPopupMenuListener(new PopupMenuListener() {
 
@@ -157,8 +142,6 @@ public class AdminPannel extends javax.swing.JFrame {
 
         /* combox auto suggests in inventory management */
         AutoSuggest searchStockIngComboBoxAutoSuggest = new AutoSuggest();
-
-        //searchStockIngComboBoxAutoSuggest.setAutoSuggestTwo(searchStockIngComboBox, ingredient.loadNameForSearchStockIngComboBox2());
         searchStockIngComboBoxAutoSuggest.setAutoSuggest(searchStockIngComboBox, ingredient.loadNameForSearchStockIngComboBox());
 
         searchStockIngComboBox.setSelectedIndex(-1);
@@ -222,6 +205,20 @@ public class AdminPannel extends javax.swing.JFrame {
                 if (!selectionalModForOrderMainTable.isSelectionEmpty()) {
                     int row = selectionalModForOrderMainTable.getMinSelectionIndex();
                     orderSearchCombo.setSelectedItem(orderListTable.getValueAt(row, 0));
+                }
+            }
+
+        });
+        
+        //method to view the selected row details of a jtable
+        final ListSelectionModel mod = productTable.getSelectionModel();
+        mod.addListSelectionListener(new ListSelectionListener() {
+
+            @Override
+            public void valueChanged(ListSelectionEvent lse) {
+                if (!mod.isSelectionEmpty()) {
+                    int row = mod.getMinSelectionIndex();
+                    searchBlendComboBox.setSelectedItem(productTable.getValueAt(row, 1));
                 }
             }
 
