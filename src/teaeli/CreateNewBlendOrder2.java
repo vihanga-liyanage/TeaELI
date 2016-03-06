@@ -130,10 +130,13 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
         this.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 int confirmed = JOptionPane.showConfirmDialog(null,
-                        "Are you sure you want to close the window?\nAll data you entered will be lost.", "Confirm window close",
-                        JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+                        "Are you sure you want to close the window?\nAll data you entered will be lost.", 
+                        "Confirm window close",
+                        JOptionPane.YES_NO_OPTION, 
+                        JOptionPane.WARNING_MESSAGE
+                );
                 if (confirmed == JOptionPane.YES_OPTION) {
-                    dispose();
+                    close();
                 }
             }
         });
@@ -146,6 +149,10 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
         masterPlanTbl.setAutoCreateRowSorter(true);
     }
 
+    private void close(){
+        this.dispose();
+    }
+    
     private void populateMasterPlanTbl() {
         for (int i = 0; i < blendListTbl.getRowCount(); i++) {
             String blendName = blendListTbl.getValueAt(i, 0).toString();
@@ -333,9 +340,9 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
             String excessQty = String.valueOf(parseInt(model.getValueAt(i, 5).toString()));
 
             String blendID = blend.getBlendIDByBlendName(blendName);
-
+            
             //placing order blend
-            String[] data = {orderIDLabel.getText(), blendID, balanceQty, excessQty};
+            String[] data = {orderIDLabel.getText(), blendID, String.valueOf(reqQty), String.valueOf(visibleStock), String.valueOf(invisibleStock), balanceQty, excessQty};
             if (!order.placeOrderBlends(data)) {
                 JOptionPane.showMessageDialog(rootPane, "There were some issues with the database. Please contact developers.");
                 System.exit(0);
@@ -376,7 +383,7 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
             String ingID = ingredient.getIngIDByIngName(ingName);
 
             //placing order ingredients
-            String[] data = {orderIDLabel.getText(), ingID, balanceQty, excessQty};
+            String[] data = {orderIDLabel.getText(), ingID, String.valueOf(reqQty), String.valueOf(visibleStock), String.valueOf(invisibleStock), balanceQty, excessQty};
             if (!order.placeOrderIngredients(data)) {
                 JOptionPane.showMessageDialog(rootPane, "There were some issues with the database. Please contact developers.");
                 System.exit(0);
@@ -433,7 +440,7 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
 
         jLabel1.setText("jLabel1");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Create New Blend Order");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, " Create New Blend Order - Phase 2 ", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI Semibold", 0, 16))); // NOI18N
@@ -690,11 +697,13 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
             Date today = new Date();
             String[] data = {orderIDLabel.getText(), formatter.format(today)};
             pdf.generateMasterPlanPDF(temp, data);
+
             oc.setVisible(true);
 
             oc.pannel = this.pannel;
             createNewBlendOrder1.dispose();
             //this.dispose();
+            
         }
 
     }//GEN-LAST:event_confirmBtnActionPerformed

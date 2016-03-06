@@ -19,7 +19,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.text.DateFormat;
-import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
@@ -32,8 +31,6 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.event.PopupMenuEvent;
-import javax.swing.event.PopupMenuListener;
 import javax.swing.table.DefaultTableModel;
 import static teaeli.TeaELI.loginFrame;
 
@@ -88,25 +85,6 @@ public class AdminPannel extends javax.swing.JFrame {
 
         });
 
-        //view the blend details when enter key pressed  in blends tab
-        /*searchBlendComboBox.addPopupMenuListener(new PopupMenuListener() {
-
-            @Override
-            public void popupMenuCanceled(PopupMenuEvent e) {
-            }
-
-            @Override
-            public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
-                BlendDetails updateProduct = new BlendDetails();
-                updateProduct.setVisible(true);
-                updateProduct.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                searchBlendComboBox.setSelectedIndex(-1);
-            }
-
-            @Override
-            public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
-            }
-        });*/
 
         //set all users details to the users table in the users tab
         populateUserTable();
@@ -119,13 +97,7 @@ public class AdminPannel extends javax.swing.JFrame {
         searchIngredientComboBoxAutoSuggest.setAutoSuggest(searchIngredientComboBox, ingredient.loadNameForSearchStockIngComboBox());
 
         //start of view all ingredients
-        try {
-            ingredient.viewAllIngredients();
-
-        } catch (SQLException ex) {
-            //Logger.getLogger(AdminPannel.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println("SQL error in view all ingredients method" + ex);
-        }
+        ingredient.viewAllIngredients();
         //end of view all ingredients
 
         /* populate inventryIngredientTable in inventory management -- dont remove this*/
@@ -1347,9 +1319,9 @@ public class AdminPannel extends javax.swing.JFrame {
                             .addComponent(jLabel9)
                             .addComponent(logoutBtn)
                             .addComponent(profileBtn))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(mainTabbedPane)
-                .addContainerGap())
+                .addGap(18, 18, 18))
         );
 
         pack();
@@ -1497,7 +1469,10 @@ public class AdminPannel extends javax.swing.JFrame {
                     }
                 }
             }*/
-            
+            blendDetails.ingCombo.setSelectedIndex(-1);
+            blendDetails.ingCombo.requestFocus();
+            blendDetails.flavoursCombo.setSelectedIndex(-1);
+            blendDetails.flavoursCombo.requestFocus();
             blendDetails.setVisible(true);
             blendDetails.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             orderSearchCombo.setSelectedIndex(-1);
