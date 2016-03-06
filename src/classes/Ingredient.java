@@ -231,6 +231,36 @@ public class Ingredient {
             tableModel.addRow(newRow);
         }
     }
+    
+    //Populate Blend detail's ingredients table according to blend
+    public void populateBlendIngTable(DefaultTableModel tableModel, String blendID){
+        ResultArray resultSet;
+        String query = "SELECT I.ingName, R.ingPercent FROM ingredient I, recipie R WHERE I.ingID = R.ingID AND R.blendID = '" + blendID + "' AND R.type = 0";
+        resultSet = dbConn.getResultArray(query);
+        tableModel.setRowCount(0);
+        while (resultSet.next()) {
+            Vector newRow = new Vector();
+            for (int i = 0; i <= 2; i++) {
+                newRow.addElement(resultSet.getString(i));
+            }
+            tableModel.addRow(newRow);
+        }
+    }
+    
+    //Populate Blend detail's flavours table according to blend
+    public void populateBlendFlavourTable(DefaultTableModel tableModel, String blendID){
+        ResultArray resultSet;
+        String query = "SELECT I.ingName, R.ingPercent FROM ingredient I, recipie R WHERE I.ingID = R.ingID AND R.blendID = '" + blendID + "' AND R.type = 1";
+        resultSet = dbConn.getResultArray(query);
+        tableModel.setRowCount(0);
+        while (resultSet.next()) {
+            Vector newRow = new Vector();
+            for (int i = 0; i <= 2; i++) {
+                newRow.addElement(resultSet.getString(i));
+            }
+            tableModel.addRow(newRow);
+        }
+    }
 
     /* start of initializing ing combo in AddNewBlend */
     public void initIngCombo(JComboBox ingCombo) {
@@ -357,6 +387,17 @@ public class Ingredient {
             DefaultTableModel model = (DefaultTableModel) adminPannel.settingsIngredientTable.getModel();
             model.addRow(new Object[]{res.getString(0), res.getString(2), res.getString(3)});
         }
+    }
+    
+    public String getUnitPriceByIngName(String ingName){
+        String unitPrice = "";
+        ResultArray res = null;
+        String query = "SELECT unitPrice FROM ingredient where ingredient.ingName = '" + ingName + "' ";
+        res = dbConn.getResultArray(query);
+        if(res.next()){
+            unitPrice = res.getString(0);
+        }
+        return unitPrice;
     }
 
     //start of view all details of a ingredient
@@ -532,10 +573,11 @@ public class Ingredient {
     }
 
     //getting ingredient data by ingID
-    public ResultArray getIngDataByID(String ingID) {
-        String query = "SELECT i.ingID, i.ingName, i.ingCategoryID, i.visibleStock, i.alocatedStock, i.invisibleStock, s.supName  \n"
-                + "FROM ingredient i INNER JOIN supplier s ON i.supID=s.supID \n"
-                + "WHERE ingID='" + ingID + "'";
+    public ResultArray getIngDataByID(String ingID){
+        String query = "SELECT i.ingID, i.ingName, ic.categoryName, i.visibleStock, i.alocatedStock, i.invisibleStock, s.supName  \n" +
+                        "FROM ingredient i INNER JOIN supplier s ON i.supID=s.supID INNER JOIN ingredientcategory ic ON i.ingCategoryID=ic.ingCategoryID\n" +
+                        "WHERE ingID='" + ingID + "'";
+
         return dbConn.getResultArray(query);
     }
 

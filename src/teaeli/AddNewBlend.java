@@ -367,17 +367,6 @@ public class AddNewBlend extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(ingCombo, "Please select a ingredient to add.", "Error", JOptionPane.WARNING_MESSAGE);
             ingCombo.requestFocus();      
     }//GEN-LAST:event_ingPerAddBtnActionPerformed
-       
-        
-       
-            
-        
-        
-        
-        /*addNewBlendIngTbl.setValueAt(ingCombo.getSelectedItem(), 0, 0);
-        System.out.println(addNewBlendIngTbl.getRowCount()); */       
-        
-        
         else {
             String ingName = (String) ingCombo.getSelectedItem();
             float ingPer = Float.parseFloat(ingPerTxt.getText());
@@ -485,7 +474,7 @@ public class AddNewBlend extends javax.swing.JFrame {
                 /*System.out.println(a);*/
             }
             for(int i=0; i <flavCount;i++){
-                float initPer = Float.parseFloat(addNewBlendIngTbl.getValueAt(i, 1).toString()); ;
+                float initPer = Float.parseFloat(addNewBlendFlavourTbl.getValueAt(i, 1).toString()); ;
                 flavPerCount = flavPerCount + initPer;
             }
 

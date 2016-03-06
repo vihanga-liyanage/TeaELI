@@ -12,12 +12,18 @@ import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author Vihanga Liyanage
  */
 public class OrderDetails extends javax.swing.JFrame  {
     Order order = new Order();
+    private AdminPannel adminPannel;
+
+    public void setAdminPannel(AdminPannel adminPannel) {
+        this.adminPannel = adminPannel;
+    }
     
     public OrderDetails() {
         initComponents();
@@ -88,9 +94,16 @@ public class OrderDetails extends javax.swing.JFrame  {
                 "Ingredient", "Required Qty (g)", "Excess Qty (g)", "Additional Qty (g)", "Remarks", "Supplier"
             }
         ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Double.class, java.lang.String.class, java.lang.Object.class
+            };
             boolean[] canEdit = new boolean [] {
                 false, false, false, true, true, false
             };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
@@ -298,13 +311,39 @@ public class OrderDetails extends javax.swing.JFrame  {
     }//GEN-LAST:event_cancelBtnActionPerformed
 
     private void updateOrderBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateOrderBtnActionPerformed
-    
+        orderDetailsTable.getCellEditor().stopCellEditing();
+        for(int i = 0; i < orderDetailsTable.getRowCount(); i++){
+            double additional = 0;
+            String str,remark = "";
+            
+            try{
+                str = orderDetailsTable.getValueAt(i, 3).toString();
+                remark = orderDetailsTable.getValueAt(i, 4).toString();
+            }catch(NullPointerException e){
+                str = "0";
+                remark = "";
+            }
+            
+            try{
+                additional = Double.parseDouble(str);  
+            }catch(NumberFormatException ex){
+                additional = 0;
+            }
+            
+            String orderID = orderIDLabel.getText();           
+            String ing = orderDetailsTable.getValueAt(i, 0).toString();
+            
+            int result = order.updateOrderRowWise(orderID, additional, remark, ing);
+        }
+        JOptionPane.showMessageDialog(this, "Values saved successfully !", "Update Success", 1);
+        order.viewOrder((DefaultTableModel) blendTable.getModel(), (DefaultTableModel) orderDetailsTable.getModel(), orderIDLabel.getText());
     }//GEN-LAST:event_updateOrderBtnActionPerformed
 
     private void orderReceivedBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderReceivedBtnActionPerformed
         int result = order.updateOrderStatus(1, orderIDLabel.getText());
         if(result == 1){
             JOptionPane.showMessageDialog(this, "Order status changed successfully !", "Changes Succeeded", 1);
+            adminPannel.populateOrderListTable();
             orderCompletedBtn.setVisible(true);
             orderReceivedBtn.setVisible(false);
         }else{
@@ -316,6 +355,7 @@ public class OrderDetails extends javax.swing.JFrame  {
         int result = order.updateOrderStatus(2, orderIDLabel.getText());
         if(result == 1){
             JOptionPane.showMessageDialog(this, "Order status changed successfully !", "Changes Succeeded", 1);
+            adminPannel.populateOrderListTable();
             orderCompletedBtn.setVisible(false);
             orderReceivedBtn.setVisible(false);
             updateOrderBtn.setVisible(false);
