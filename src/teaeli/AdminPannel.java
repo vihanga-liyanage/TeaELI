@@ -1497,7 +1497,10 @@ public class AdminPannel extends javax.swing.JFrame {
                     }
                 }
             }*/
-            
+            blendDetails.ingCombo.setSelectedIndex(-1);
+            blendDetails.ingCombo.requestFocus();
+            blendDetails.flavoursCombo.setSelectedIndex(-1);
+            blendDetails.flavoursCombo.requestFocus();
             blendDetails.setVisible(true);
             blendDetails.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             orderSearchCombo.setSelectedIndex(-1);

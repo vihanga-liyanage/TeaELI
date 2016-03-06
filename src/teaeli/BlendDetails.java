@@ -544,6 +544,7 @@ public class BlendDetails extends javax.swing.JFrame {
             }else if(flavPerCount <= 0 || flavPerCount>=100){
                 JOptionPane.showMessageDialog(this, "Invalid percentage");
             }else{
+                //System.out.println(blendID);
                 int ret = blend.addNewBlend(blendID, blendName, base, blendCategory);
                 
                 ArrayList <Integer> ingID = new ArrayList<>();
@@ -557,7 +558,7 @@ public class BlendDetails extends javax.swing.JFrame {
                 for(int i=0;i<flavCount;i++){
                     Blend a = new Blend();
                     //ingID.add(Integer.parseInt(addNewBlendIngTbl.getValueAt(i, 0).toString()));
-                    flavourID.add(a.getIngIDRecByIngName(ingTable.getValueAt(i, 0).toString()));
+                    flavourID.add(a.getIngIDRecByIngName(flavourTable.getValueAt(i, 0).toString()));
                 }
                 
                 
@@ -646,10 +647,10 @@ public class BlendDetails extends javax.swing.JFrame {
     private javax.swing.JButton cancelBtn;
     private javax.swing.JLabel category;
     public javax.swing.JTable flavourTable;
-    private javax.swing.JComboBox flavoursCombo;
+    public javax.swing.JComboBox flavoursCombo;
     private javax.swing.JButton flavoursPerAddBtn;
     private javax.swing.JTextField flavoursPerTxt;
-    private javax.swing.JComboBox ingCombo;
+    public javax.swing.JComboBox ingCombo;
     private javax.swing.JButton ingPerAddBtn;
     private javax.swing.JTextField ingPerTxt;
     public javax.swing.JTable ingTable;
