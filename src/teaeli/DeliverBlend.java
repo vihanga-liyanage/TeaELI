@@ -446,7 +446,7 @@ public class DeliverBlend extends javax.swing.JFrame {
                 } else {
                     Blend blendDeliver = new Blend();
 
-                    blendDeliver.setBlendName(blendNameLbl.getText());
+                    blendDeliver.setBlendName(blendNameLbl.getText().replace("'", "\\'"));
 
                     //set old stock qty and updated qty for blend deliver history
                     blendDeliver.setOldStockQty(allocatedStockQty);

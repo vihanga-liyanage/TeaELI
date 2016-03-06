@@ -298,7 +298,7 @@ public class Ingredient {
 
     /* start of checkAndLoadIngredientStockDetails method */
     public boolean checkAndLoadIngredientStockDetails(String selectedIngName) {
-        boolean validIngName = false;     
+        boolean validIngName = false;
         ResultArray resultArray;
         try {
             //query to load ingredient details
@@ -310,15 +310,16 @@ public class Ingredient {
                 this.setIngName(resultArray.getString(0));
                 this.setVisibleStock(Float.parseFloat(resultArray.getString(1)));
                 this.setIngCategoryName(resultArray.getString(2));
-                
+
                 validIngName = true;
             }
         } catch (NumberFormatException e) {
-            System.err.println("ing 302 err : " + e);
+            System.err.println("Number Format Exception : " + e);
         }
         return validIngName;
     }
-
+    /* end of checkAndLoadIngredientStockDetails method */
+     
     /* start of getIngIDFromIngName method */
     public void getIngIDFromIngName() {
         ResultArray resultArray;
@@ -332,10 +333,11 @@ public class Ingredient {
             System.err.println("Exception : " + e);
         }
     }
-
+    /* end of getIngIDFromIngName method */
+    
     /* start of updateStockQty method */
     public boolean updateStockQty() {
-        
+
         boolean updated = false;
 
         //set current date
@@ -348,24 +350,28 @@ public class Ingredient {
         User updatedUser = new User();
         updatedUser.getIDByUsername();
 
-        //get ingID of the ingredient
-        this.getIngIDFromIngName();
+        try {
+            //get ingID of the ingredient
+            this.getIngIDFromIngName();
 
-        //query to update ingredient stock
-        String query = "UPDATE ingredient SET visibleStock = '" + this.getVisibleStock() + "' WHERE ingID = '" + this.getIngID() + "'";
+            //query to update ingredient stock
+            String query = "UPDATE ingredient SET visibleStock = '" + this.getVisibleStock() + "' WHERE ingID = '" + this.getIngID() + "'";
 
-        int i = dbConn.updateResult(query);
-
-        if (i == 1) {
-
-            //query to inesrt into stock history
-            query = "INSERT INTO ingredientstockhistory VALUES ('0','" + this.getIngID() + "','" + date + "','" + this.getOldStockQty() + "','" + this.getUpdatedStockQTy() + "','" + this.getStockUpdateReason() + "','" + updatedUser.getUserID() + "')";
-
-            i = dbConn.updateResult(query);
+            int i = dbConn.updateResult(query);
 
             if (i == 1) {
-                updated = true;
+
+                //query to inesrt into stock history
+                query = "INSERT INTO ingredientstockhistory VALUES ('0','" + this.getIngID() + "','" + date + "','" + this.getOldStockQty() + "','" + this.getUpdatedStockQTy() + "','" + this.getStockUpdateReason() + "','" + updatedUser.getUserID() + "')";
+
+                i = dbConn.updateResult(query);
+
+                if (i == 1) {
+                    updated = true;
+                }
             }
+        } catch (Exception e) {
+            System.err.println("Exception : " + e);
         }
         return updated;
     }
@@ -523,49 +529,6 @@ public class Ingredient {
         return rslt;
     }
 
-    //start of update ingredient method
-    public int deleteIngredient(int ingredientID) throws SQLException {
-        Connection connection = dbConn.setConnection();
-        ResultSet resultSet = null;
-        int ingUsed = 0;
-        Statement statement;
-
-        //set name of the ingredient
-        String query = "SELECT ingID from recipie WHERE recipie.ingID ='" + ingredientID + "' ";
-        try {
-            resultSet = dbConn.getResult(query, connection);
-            if (resultSet.next()) {
-                ingUsed = 1;
-            }
-
-            if (ingUsed == 0) {
-                String queryDelete = "DELETE FROM ingredient WHERE ingredient.ingID = '" + ingredientID + "' ";
-                statement = connection.createStatement();
-                int insertOK = statement.executeUpdate(queryDelete);
-            }
-        } catch (Exception e) {
-            System.err.println("ing 521 err : " + e);
-        } finally {
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (Exception e) {
-                    System.err.println("Resultset close error : " + e);
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (Exception e) {
-                    System.err.println("Connection close error : " + e);
-                }
-            }
-        }
-        System.out.println("ingUsed " + ingUsed);
-        return ingUsed;
-    }
-    //end of update ingredient method
-
     public int addNewIngredient(String Name, String type, String supplier, float price) {
         Connection connection = null;
         int rslt1 = 0, rslt2 = 0;
@@ -614,23 +577,20 @@ public class Ingredient {
         String query = "SELECT i.ingID, i.ingName, ic.categoryName, i.visibleStock, i.alocatedStock, i.invisibleStock, s.supName  \n" +
                         "FROM ingredient i INNER JOIN supplier s ON i.supID=s.supID INNER JOIN ingredientcategory ic ON i.ingCategoryID=ic.ingCategoryID\n" +
                         "WHERE ingID='" + ingID + "'";
+
         return dbConn.getResultArray(query);
     }
-    
+
     public String getIngIDByIngName(String base) {
         String query = "SELECT ingID FROM ingredient WHERE ingName = '" + base + "' ";
         ResultArray res = dbConn.getResultArray(query);
         res.next();
         return res.getString(0);
     }
-    
+
     //updating blend stocks after a new order
-    public boolean updateIngredientStock(String[] data){
+    public boolean updateIngredientStock(String[] data) {
         String query = "UPDATE ingredient SET visibleStock='" + data[0] + "', invisibleStock='" + data[1] + "' WHERE ingID='" + data[2] + "'";
         return (dbConn.updateResult(query) == 1);
     }
 }
-
-
-     
-
