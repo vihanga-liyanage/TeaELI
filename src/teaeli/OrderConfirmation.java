@@ -452,12 +452,7 @@ public class OrderConfirmation extends javax.swing.JFrame {
 
            if(pdfOK == 1){
                JOptionPane.showMessageDialog(null, "Purchase orders saved.", "Purchase orders ", 1);
-                      
-           }else{
-           JOptionPane.showMessageDialog(null, "Purchase orders didn't saved", "Error Occured", 0);
-           
-           }
-            /*
+               /*
              //Re-generating the admin panel since the data is changed
              if ("teaeli.AdminPannel".equals(pannel.getClass().getName())) {
              AdminPannel adminPannel = new AdminPannel();
@@ -472,6 +467,12 @@ public class OrderConfirmation extends javax.swing.JFrame {
              }
              this.dispose();
              */
+                      
+           }else{
+           JOptionPane.showMessageDialog(null, "Purchase orders didn't saved", "Error Occured", 0);
+           
+           }
+            
         } catch (IOException ex) {
             Logger.getLogger(OrderConfirmation.class.getName()).log(Level.SEVERE, null, ex);
         }
