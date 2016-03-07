@@ -31,8 +31,6 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.event.PopupMenuEvent;
-import javax.swing.event.PopupMenuListener;
 import javax.swing.table.DefaultTableModel;
 import static teaeli.TeaELI.loginFrame;
 
@@ -73,25 +71,19 @@ public class AdminPannel extends javax.swing.JFrame {
         //Keep the window fullscreen
         this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
         
-        //view the blend details when enter key pressed  in blends tab
-        /*searchBlendComboBox.addPopupMenuListener(new PopupMenuListener() {
+        //method to view the selected row details of a jtable
+        final ListSelectionModel mod = productTable.getSelectionModel();
+        mod.addListSelectionListener(new ListSelectionListener() {
 
             @Override
-            public void popupMenuCanceled(PopupMenuEvent e) {
+            public void valueChanged(ListSelectionEvent lse) {
+                if (!mod.isSelectionEmpty()) {
+                    int row = mod.getMinSelectionIndex();
+                    JOptionPane.showMessageDialog(null, productTable.getValueAt(row, 0));
+                }
             }
 
-            @Override
-            public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
-                BlendDetails updateProduct = new BlendDetails();
-                updateProduct.setVisible(true);
-                updateProduct.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                searchBlendComboBox.setSelectedIndex(-1);
-            }
-
-            @Override
-            public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
-            }
-        });*/
+        });
 
         //set all users details to the users table in the users tab
         populateUserTable();
@@ -104,13 +96,7 @@ public class AdminPannel extends javax.swing.JFrame {
         searchIngredientComboBoxAutoSuggest.setAutoSuggest(searchIngredientComboBox, ingredient.loadNameForSearchStockIngComboBox());
 
         //start of view all ingredients
-        try {
-            ingredient.viewAllIngredients();
-
-        } catch (SQLException ex) {
-            //Logger.getLogger(AdminPannel.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println("SQL error in view all ingredients method" + ex);
-        }
+        ingredient.viewAllIngredients();
         //end of view all ingredients
 
         /* populate inventryIngredientTable in inventory management -- dont remove this*/
@@ -211,13 +197,13 @@ public class AdminPannel extends javax.swing.JFrame {
         });
         
         //method to view the selected row details of a jtable
-        final ListSelectionModel mod = productTable.getSelectionModel();
-        mod.addListSelectionListener(new ListSelectionListener() {
+        final ListSelectionModel productModel = productTable.getSelectionModel();
+        productModel.addListSelectionListener(new ListSelectionListener() {
 
             @Override
             public void valueChanged(ListSelectionEvent lse) {
-                if (!mod.isSelectionEmpty()) {
-                    int row = mod.getMinSelectionIndex();
+                if (!productModel.isSelectionEmpty()) {
+                    int row = productModel.getMinSelectionIndex();
                     searchBlendComboBox.setSelectedItem(productTable.getValueAt(row, 1));
                 }
             }
@@ -1344,9 +1330,9 @@ public class AdminPannel extends javax.swing.JFrame {
                             .addComponent(jLabel9)
                             .addComponent(logoutBtn)
                             .addComponent(profileBtn))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(mainTabbedPane)
-                .addContainerGap())
+                .addGap(18, 18, 18))
         );
 
         pack();
@@ -1566,7 +1552,7 @@ public class AdminPannel extends javax.swing.JFrame {
 
             Blend blendDelivery = new Blend();
 
-            if (blendDelivery.checkAndLoadBlendDeliverDetails(selectedIngName)) {
+            if (blendDelivery.checkAndLoadBlendDeliverDetails(selectedIngName.replace("'", "\\'"))) {
 
                 searchStockBlendComboBox.setSelectedIndex(-1);
 
@@ -1600,7 +1586,7 @@ public class AdminPannel extends javax.swing.JFrame {
 
             Ingredient ingredeintForStock = new Ingredient();
 
-            if (ingredeintForStock.checkAndLoadIngredientStockDetails(selectedIngName)) {
+            if (ingredeintForStock.checkAndLoadIngredientStockDetails(selectedIngName.replace("'", "\\'"))) {
                 searchStockIngComboBox.setSelectedIndex(-1);
 
                 UpdateIngStock updateStock = new UpdateIngStock();
@@ -1631,8 +1617,8 @@ public class AdminPannel extends javax.swing.JFrame {
             Blend blendForStock = new Blend();
 
             String selectedBlendName = (String) searchStockBlendComboBox.getSelectedItem();
-
-            if (blendForStock.checkAndLoadBlendStockDetails(selectedBlendName)) {
+            
+            if (blendForStock.checkAndLoadBlendStockDetails(selectedBlendName.replace("'","\\'"))) {
                 searchStockBlendComboBox.setSelectedIndex(-1);
 
                 UpdateBlendStock updateBlendStock = new UpdateBlendStock();

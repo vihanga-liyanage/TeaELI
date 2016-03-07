@@ -194,20 +194,20 @@ public class Ingredient {
 
             return result;
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.err.println("ing 213 err : " + e);
         } finally {
             if (resultSet != null) {
                 try {
                     resultSet.close();
-                } catch (Exception e) {
+                } catch (SQLException e) {
                     System.err.println("Resultset close error : " + e);
                 }
             }
             if (conn != null) {
                 try {
                     conn.close();
-                } catch (Exception e) {
+                } catch (SQLException e) {
                     System.err.println("Connection close error : " + e);
                 }
             }
@@ -378,7 +378,7 @@ public class Ingredient {
     /* end of updateStockQty method */
 
     //start of view all ingredients method
-    public void viewAllIngredients() throws SQLException {
+    public void viewAllIngredients() {
         ResultArray res = null;
         String query = "SELECT ingName,unitPrice,supName FROM ingredient,supplier where ingredient.supID = supplier.supID";
         res = dbConn.getResultArray(query);

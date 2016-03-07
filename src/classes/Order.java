@@ -192,12 +192,12 @@ public class Order {
     }
     //placing orderBlends
     public boolean placeOrderBlends(String[] data) {
-        String query = "INSERT INTO orderblend VALUES('" + data[0] + "', '" + data[1] + "', '" + data[2] + "', '" + data[3] + "')";
+        String query = "INSERT INTO orderblend VALUES('" + data[0] + "', '" + data[1] + "', '" + data[2] + "', '" + data[3] + "', '" + data[4] + "', '" + data[5] + "', '" + data[6] + "')";
         return (dbConn.updateResult(query) == 1);
     }
     //placing orderIngredients
     public boolean placeOrderIngredients(String[] data) {
-        String query = "INSERT INTO orderingredient VALUES('" + data[0] + "', '" + data[1] + "', '" + data[2] + "', '" + data[3] + "', '')";
+        String query = "INSERT INTO orderingredient VALUES('" + data[0] + "', '" + data[1] + "', '" + data[2] + "', '" + data[3] + "', '" + data[4] + "', '" + data[5] + "', '" + data[6] + "', '')";
         return (dbConn.updateResult(query) == 1);
     }
         

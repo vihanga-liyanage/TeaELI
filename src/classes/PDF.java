@@ -97,7 +97,7 @@ public class PDF {
             masterTable.setWidthPercentage(100);
         
             //Adding logo
-            PdfPCell logoCell = new PdfPCell(Image.getInstance("D:\\Developer\\My Projects\\TeaELI\\TeaELI\\src\\teaeli\\logo-new (Custom).png"));
+            PdfPCell logoCell = new PdfPCell(Image.getInstance("C:\\Teaeli\\Logos\\logo-new (Custom).png"));
             logoCell.setColspan(3);
             masterTable.addCell(logoCell);
             

@@ -13,8 +13,9 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 public class IngredientDetails extends javax.swing.JFrame {
 
-    Ingredient ingredient = new Ingredient();
-    Supplier supplier = new Supplier();
+    private Ingredient ingredient = new Ingredient();
+    private Supplier supplier = new Supplier();
+    private AdminPannel adminPannel;
 
     public IngredientDetails() {
         //Add windows look and feel
@@ -36,6 +37,14 @@ public class IngredientDetails extends javax.swing.JFrame {
 
     }
 
+    //method to refresh related tables and close this window
+    private void close(){
+        this.setVisible(false);
+        adminPannel.populateIngStockTable();
+        adminPannel.populateIngHistoryTable();
+        this.dispose();
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -262,32 +271,30 @@ public class IngredientDetails extends javax.swing.JFrame {
             String SupName = (String) this.supplierCombobox.getSelectedItem();
             int selecetdID = this.supplierCombobox.getSelectedIndex();
             
-                  try {
-                    supID = supplier.getSupplierIDByName(SupName);
-                } catch (SQLException ex) {
-                    System.out.println("SQL eror : " + ex);
+            try {
+                supID = supplier.getSupplierIDByName(SupName);
+            } catch (SQLException ex) {
+                System.out.println("SQL eror : " + ex);
+            }
+
+            //get unit price
+            String unitPriceString = this.unitPriceTxt.getText();
+            unitPrice = Float.parseFloat(unitPriceString);
+
+            // call update ingredient method
+            try {
+                int updateOK = ingredient.updateIngredient(ingID, ingName, ingCategoryID, supID, unitPrice);
+
+                if (updateOK == 1) {
+                    JOptionPane.showMessageDialog(null, "Ingredient updated successfully", "Successfully Updated", 1);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Ingredient update is not successfull!", "Unable to update", 0);
                 }
-
-                //get unit price
-                String unitPriceString = this.unitPriceTxt.getText();
-                unitPrice = Float.parseFloat(unitPriceString);
-                System.out.println("unitPrice" + unitPrice);
-
-                // call update ingredient method
-                try {
-                    int updateOK = ingredient.updateIngredient(ingID, ingName, ingCategoryID, supID, unitPrice);
-
-                    if (updateOK == 1) {
-                        JOptionPane.showMessageDialog(null, "Ingredient updated successfully", "Successfully Updated", 1);
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Ingredient update is not successfull!!!", "Unable to update", 0);
-                    }
-                } catch (SQLException ex) {
-                    //Logger.getLogger(IngredientDetails.class.getName()).log(Level.SEVERE, null, ex);
-                    System.out.println("sol error id:" + ex);
-                }
+            } catch (SQLException ex) {
+                //Logger.getLogger(IngredientDetails.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("sql error id:" + ex);
+            }
             
-              
         } else if (response == JOptionPane.CLOSED_OPTION) {
             System.out.println("JOptionPane closed");
         }
