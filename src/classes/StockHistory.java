@@ -95,8 +95,7 @@ public class StockHistory {
         ResultArray res = null;
 
         String query = "SELECT S.date,I.ingName,S.oldQty,S.updatedQty,S.reason,U.username "
-                + "FROM ingredient I, ingredientstockhistory S, user U "
-                + "WHERE S.updatedBy=U.userID AND S.ingID=I.ingID";
+                + "FROM ingredient I INNER JOIN ingredientstockhistory S ON S.ingID=I.ingID INNER JOIN user U ON S.updatedBy=U.userID;";
         
         res = dbConn.getResultArray(query);
         tableModel.setRowCount(0);
@@ -104,7 +103,7 @@ public class StockHistory {
         while (res.next()) {
             Vector newRow = new Vector();
             date = res.getString(0);
-            date = date.substring(0, date.indexOf('.'));
+            //date = date.substring(0, date.indexOf('.'));
             newRow.addElement(date);
             newRow.addElement(res.getString(1));
             newRow.addElement(res.getString(2));
@@ -132,7 +131,7 @@ public class StockHistory {
         while (res.next()) {
             Vector newRow = new Vector();
             date = res.getString(0);
-            date = date.substring(0, date.indexOf('.'));
+            //date = date.substring(0, date.indexOf('.'));
             newRow.addElement(date);
             newRow.addElement(res.getString(1));
             newRow.addElement(res.getString(2));
