@@ -13,8 +13,9 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 public class IngredientDetails extends javax.swing.JFrame {
 
-    Ingredient ingredient = new Ingredient();
-    Supplier supplier = new Supplier();
+    private Ingredient ingredient = new Ingredient();
+    private Supplier supplier = new Supplier();
+    private AdminPannel adminPannel;
 
     public IngredientDetails() {
         //Add windows look and feel
@@ -36,6 +37,14 @@ public class IngredientDetails extends javax.swing.JFrame {
 
     }
 
+    //method to refresh related tables and close this window
+    private void close(){
+        this.setVisible(false);
+        adminPannel.populateIngStockTable();
+        adminPannel.populateIngHistoryTable();
+        this.dispose();
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -56,7 +65,6 @@ public class IngredientDetails extends javax.swing.JFrame {
         unitPriceTxt = new javax.swing.JTextField();
         cancelBtn = new javax.swing.JButton();
         updateItemBtn = new javax.swing.JButton();
-        deleteItemBtn = new javax.swing.JButton();
         itemTypeCombo = new javax.swing.JComboBox();
         supplierCombobox = new javax.swing.JComboBox();
         jButton1 = new javax.swing.JButton();
@@ -112,13 +120,6 @@ public class IngredientDetails extends javax.swing.JFrame {
             }
         });
 
-        deleteItemBtn.setText("Delete");
-        deleteItemBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                deleteItemBtnActionPerformed(evt);
-            }
-        });
-
         itemTypeCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] {"Tea", "Flavour" , "Herbs", "Flowers", "Fruits", "Leaves", "Other"}));
         itemTypeCombo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -168,8 +169,6 @@ public class IngredientDetails extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(cancelBtn)
                                 .addGap(18, 18, 18)
-                                .addComponent(deleteItemBtn)
-                                .addGap(18, 18, 18)
                                 .addComponent(updateItemBtn))
                             .addComponent(unitPriceTxt))))
                 .addContainerGap(67, Short.MAX_VALUE))
@@ -198,7 +197,6 @@ public class IngredientDetails extends javax.swing.JFrame {
                 .addGap(31, 31, 31)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(updateItemBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(deleteItemBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cancelBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(27, 27, 27))
         );
@@ -273,55 +271,34 @@ public class IngredientDetails extends javax.swing.JFrame {
             String SupName = (String) this.supplierCombobox.getSelectedItem();
             int selecetdID = this.supplierCombobox.getSelectedIndex();
             
-                  try {
-                    supID = supplier.getSupplierIDByName(SupName);
-                } catch (SQLException ex) {
-                    System.out.println("SQL eror : " + ex);
+            try {
+                supID = supplier.getSupplierIDByName(SupName);
+            } catch (SQLException ex) {
+                System.out.println("SQL eror : " + ex);
+            }
+
+            //get unit price
+            String unitPriceString = this.unitPriceTxt.getText();
+            unitPrice = Float.parseFloat(unitPriceString);
+
+            // call update ingredient method
+            try {
+                int updateOK = ingredient.updateIngredient(ingID, ingName, ingCategoryID, supID, unitPrice);
+
+                if (updateOK == 1) {
+                    JOptionPane.showMessageDialog(null, "Ingredient updated successfully", "Successfully Updated", 1);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Ingredient update is not successfull!", "Unable to update", 0);
                 }
-
-                //get unit price
-                String unitPriceString = this.unitPriceTxt.getText();
-                unitPrice = Float.parseFloat(unitPriceString);
-                System.out.println("unitPrice" + unitPrice);
-
-                // call update ingredient method
-                try {
-                    int updateOK = ingredient.updateIngredient(ingID, ingName, ingCategoryID, supID, unitPrice);
-
-                    if (updateOK == 1) {
-                        JOptionPane.showMessageDialog(null, "Ingredient updated successfully", "Successfully Updated", 1);
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Ingredient update is not successfull!!!", "Unable to update", 0);
-                    }
-                } catch (SQLException ex) {
-                    //Logger.getLogger(IngredientDetails.class.getName()).log(Level.SEVERE, null, ex);
-                    System.out.println("sol error id:" + ex);
-                }
+            } catch (SQLException ex) {
+                //Logger.getLogger(IngredientDetails.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("sql error id:" + ex);
+            }
             
-              
         } else if (response == JOptionPane.CLOSED_OPTION) {
             System.out.println("JOptionPane closed");
         }
     }//GEN-LAST:event_updateItemBtnActionPerformed
-
-    private void deleteItemBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteItemBtnActionPerformed
-
-        int ingID = 0;
-        ingID = Integer.parseInt(this.getName());
-        try {
-            int usedIng = ingredient.deleteIngredient(ingID);
-
-            if (usedIng == 1) {
-                JOptionPane.showMessageDialog(null, "Ingredient is used in a blend ", "Unable to delete", 0);
-            } else {
-                JOptionPane.showMessageDialog(null, "Ingredient deleted successfully", "Deleted", 1);
-
-            }
-        } catch (SQLException ex) {
-            //Logger.getLogger(IngredientDetails.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println("sol error id:" + ex);
-        }
-    }//GEN-LAST:event_deleteItemBtnActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String suplierName = JOptionPane.showInputDialog(null, "Enter Supplier Name");
@@ -390,7 +367,6 @@ public class IngredientDetails extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelBtn;
-    private javax.swing.JButton deleteItemBtn;
     public static javax.swing.JTextField itemNameTxt;
     public static javax.swing.JComboBox itemTypeCombo;
     private javax.swing.JButton jButton1;

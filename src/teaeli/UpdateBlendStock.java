@@ -283,7 +283,7 @@ public class UpdateBlendStock extends javax.swing.JFrame {
             if (!reason.isEmpty() && (this.blendStockIncreaseBtn.isSelected() || this.blendStockDecreasedBtn.isSelected())) {
 
                 Blend blend = new Blend();
-                blend.setBlendName(this.updateStockItemNameLbl.getText());
+                blend.setBlendName(this.updateStockItemNameLbl.getText().replace("'", "\\'"));
                 blend.setStockUpdateReason(this.reasonToChangeTxt.getText());
 
                 String oldStock = this.stockQtyLbl.getText().replace(" g", "");

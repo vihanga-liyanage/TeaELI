@@ -249,7 +249,9 @@ public class PDF {
             masterTable.setWidthPercentage(100);
 
             //Adding logo
-            PdfPCell logoCell = new PdfPCell(Image.getInstance("C:\\Teaeli\\logo\\logo-new (Custom).png"));
+
+            PdfPCell logoCell = new PdfPCell(Image.getInstance("C:\\Teaeli\\Logos\\logo-new (Custom).png"));
+
             logoCell.setColspan(3);
             masterTable.addCell(logoCell);
 
@@ -343,7 +345,7 @@ public class PDF {
             try {
 
                 //Adding logo and topic
-                String fileName = "C:\\Teaeli\\logo\\POHeader.jpg";
+                String fileName = "C:\\Teaeli\\Logos\\POHeader.jpg";
 
                 PdfPTable POHeadertable = new PdfPTable(2);
                 POHeadertable.setWidthPercentage(100);
