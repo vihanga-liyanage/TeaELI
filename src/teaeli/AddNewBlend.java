@@ -45,7 +45,10 @@ public class AddNewBlend extends javax.swing.JFrame {
         ingredient1 = new Ingredient();
         blend = new Blend();
         
-        //Validation on percentage, when key released
+        ingCombo.setSelectedIndex(-1);
+        flavourCombo.setSelectedIndex(-1);
+        
+        //Validation on Ing percentage, when key released
         ingPerTxt.addKeyListener(new KeyAdapter() {
             public void keyReleased(KeyEvent e) {
                 String per = ingPerTxt.getText();
@@ -66,8 +69,49 @@ public class AddNewBlend extends javax.swing.JFrame {
             public void keyPressed(KeyEvent e) {
             }
         });
-    }
+        
+        //setting focus to ing per txt when item selected
+        ingCombo.getEditor().getEditorComponent().addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent evt) {
+                if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+                    ingPerTxt.requestFocus();
+                }
+            }
+        });
+        
+        flavourPerTxt.addKeyListener(new KeyAdapter() {
+            public void keyReleased(KeyEvent e) {
+                String per = flavourPerTxt.getText();
+                if (per.length() > 0) {
+                    if (!(new Validation().isFloat(per))) {
+                        JOptionPane.showMessageDialog(flavourPerTxt, "Flavour percentage must be a valid number!", "Error", JOptionPane.WARNING_MESSAGE);
+                        ingPerTxt.setText(per.substring(0, per.length() - 1));
+                    } else if (Float.parseFloat(per) < 0) {
+                        JOptionPane.showMessageDialog(flavourPerTxt, "Flavour percentage cannot be less than 0!", "Error", JOptionPane.WARNING_MESSAGE);
+                        flavourPerTxt.setText(per.substring(0, per.length() - 1));
+                    }
+                }
+            }
 
+            public void keyTyped(KeyEvent e) {
+            }
+
+            public void keyPressed(KeyEvent e) {
+            }
+        });
+        
+        //setting focus to flavour per txt when item selected
+        flavourCombo.getEditor().getEditorComponent().addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent evt) {
+                if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+                    flavourPerTxt.requestFocus();
+                }
+            }
+        });
+    }
+    //End of the Constructor
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
