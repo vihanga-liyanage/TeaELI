@@ -355,12 +355,6 @@ public class Ingredient {
 
         boolean updated = false;
 
-        //set current date
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date currentDate = Calendar.getInstance().getTime();
-        dateFormat.format(currentDate);
-        Timestamp date = new Timestamp(currentDate.getTime());
-
         //get user id 
         User updatedUser = new User();
         updatedUser.getIDByUsername();
@@ -377,7 +371,9 @@ public class Ingredient {
             if (i == 1) {
 
                 //query to inesrt into stock history
-                query = "INSERT INTO ingredientstockhistory VALUES ('0','" + this.getIngID() + "','" + date + "','" + this.getOldStockQty() + "','" + this.getUpdatedStockQTy() + "','" + this.getStockUpdateReason() + "','" + updatedUser.getUserID() + "')";
+                query = "INSERT INTO ingredientstockhistory"
+                        + "(`ingID`, `oldQty`, `updatedQty`, `reason`, `updatedBy`)"
+                        + " VALUES ('" + this.getIngID() + "', '" + this.getOldStockQty() + "','" + this.getUpdatedStockQTy() + "','" + this.getStockUpdateReason() + "','" + updatedUser.getUserID() + "')";
 
                 i = dbConn.updateResult(query);
 

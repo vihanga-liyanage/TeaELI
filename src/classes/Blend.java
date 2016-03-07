@@ -301,12 +301,6 @@ public class Blend {
 
         boolean updated = false;
 
-        //to get current date
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date currentDate = Calendar.getInstance().getTime();
-        dateFormat.format(currentDate);
-        Timestamp date = new Timestamp(currentDate.getTime());
-
         //get current user id
         User updatedUser = new User();
         updatedUser.getIDByUsername();
@@ -322,7 +316,9 @@ public class Blend {
         if (i == 1) {
 
             //query to insert into stock history table
-            query = "INSERT INTO blendstockhistory VALUES ('0','" + this.getBlendID() + "','" + date + "','" + this.getOldStockQty() + "','" + this.getUpdatedStockQTy() + "','" + this.getStockUpdateReason() + "','" + updatedUser.getUserID() + "')";
+            query = "INSERT INTO blendstockhistory "
+                    + "(`blendID`, `oldQty`, `updatedQty`, `reason`, `updatedBy`) "
+                    + "VALUES ('" + this.getBlendID() + "', '" + this.getOldStockQty() + "', '" + this.getUpdatedStockQTy() + "', '" + this.getStockUpdateReason() + "', '" + updatedUser.getUserID() + "')";
 
             i = dbConn.updateResult(query);
 
