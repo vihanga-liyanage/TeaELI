@@ -1860,6 +1860,7 @@ public class AdminPannel extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnBlendHistoryReportGenerationActionPerformed
 
+    /* start of loadBlendDetails method */
     private void loadBlendDetails(int row){
         
         Blend blendDetails = new Blend();
@@ -1886,13 +1887,13 @@ public class AdminPannel extends javax.swing.JFrame {
                 blendCatgLbl.setText(blendDetails.getBlendCategory());
                 
             }else{
-            
+                JOptionPane.showMessageDialog(this, "Unable to load flavour details !", "Load Fails", JOptionPane.ERROR_MESSAGE);
             }
         }else{
-        
-        } 
-        
+            JOptionPane.showMessageDialog(this, "Unable to load ingredient details !", "Load Fails", JOptionPane.ERROR_MESSAGE);
+        }        
     }
+    /* end of loadBlendDetails method */
     
     /**
      * @param args the command line arguments

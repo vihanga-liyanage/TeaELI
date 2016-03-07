@@ -124,10 +124,8 @@ public class Order {
                     status = "Completed";
                     break;
             }
-            String date = resultSet.getString(2);
-            date = date.substring(0, date.indexOf('.'));
             
-            tModel.addRow(new Object[]{resultSet.getString(0), status, date, resultSet.getString(3)});
+            tModel.addRow(new Object[]{resultSet.getString(0), status, resultSet.getString(2), resultSet.getString(3)});
         }
     }
 
@@ -168,7 +166,7 @@ public class Order {
             String exes = formatNum(resultSet1.getString(7));
             tModelBlend.addRow(new Object[]{resultSet1.getString(2), resultSet1.getString(8), req, visible, invisible, balance, exes});
             String date = resultSet1.getString(1);
-            date = date.substring(0, date.indexOf('.'));
+            //date = date.substring(0, date.indexOf('.'));
             temp.setDate(date);
         }
        
@@ -187,7 +185,6 @@ public class Order {
         }
         
         temp.setOrderID(orderID);
-        
         return temp;
     }
     
