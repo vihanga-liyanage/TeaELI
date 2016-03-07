@@ -174,8 +174,11 @@ public class Ingredient {
     public List<List<String>> getIngDataByIngName(String ingName) {
         Connection conn = null;
         ResultSet resultSet = null;
+        
+        this.setIngName(ingName.replace("'", "\\'"));
+        
         try {
-            String query = "SELECT * FROM ingredient WHERE ingName='" + ingName + "'";
+            String query = "SELECT * FROM ingredient WHERE ingName='" + this.getIngName() + "'";
             conn = dbConn.setConnection();
             resultSet = dbConn.getResult(query, conn);
 
@@ -306,6 +309,9 @@ public class Ingredient {
     public boolean checkAndLoadIngredientStockDetails(String selectedIngName) {
         boolean validIngName = false;
         ResultArray resultArray;
+        
+        this.setIngName(selectedIngName.replace("'", "\\'"));
+        
         try {
             //query to load ingredient details
             String query = "SELECT i.ingName, i.visibleStock, ing.categoryName FROM ingredient i JOIN ingredientcategory ing ON i.ingCategoryID = ing.ingCategoryID WHERE ingName = '" + selectedIngName + "'";
@@ -328,6 +334,9 @@ public class Ingredient {
      
     /* start of getIngIDFromIngName method */
     public void getIngIDFromIngName() {
+        
+        this.setIngName(this.getIngName().replace("'","\\'"));
+        
         ResultArray resultArray;
         try {
             String query = "SELECT ingID FROM ingredient WHERE ingName = '" + this.getIngName() + "'";
@@ -398,7 +407,10 @@ public class Ingredient {
     public String getUnitPriceByIngName(String ingName){
         String unitPrice = "";
         ResultArray res = null;
-        String query = "SELECT unitPrice FROM ingredient where ingredient.ingName = '" + ingName + "' ";
+        
+        this.setIngName(ingName.replace("'","\\'"));
+        
+        String query = "SELECT unitPrice FROM ingredient where ingredient.ingName = '" + this.getIngName() + "' ";
         res = dbConn.getResultArray(query);
         if(res.next()){
             unitPrice = res.getString(0);

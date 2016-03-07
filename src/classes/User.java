@@ -88,7 +88,7 @@ public class User {
 
     //method to remove user from the user table in the admin pannel(completely remove user from the system)
     public int removeUser(int id) {
-        String query = "DELETE FROM user WHERE userID = " + id;
+        String query = "DELETE FROM user WHERE userID = '" + id + "'";
         int rslt = dbConn.updateResult(query);
         return rslt;
     }
@@ -133,39 +133,21 @@ public class User {
     /* end of getIDByUsername method */
     
     public int checkLogin(String userName, String password) {
-        Connection connection = null;
-        PreparedStatement pst = null;
-        try {
-            connection = dbConn.setConnection();//get the connection
-            String query = "SELECT username,designation FROM user where password = sha1('" + password + "') and username = ('" + userName + "')";
-            ResultSet rs = dbConn.getResult(query, connection);
-
-            while (rs.next()) {
-                if (rs.getString(2).equals("Admin")) {
-                    return 1;
-                } else if (rs.getString(2).equals("Manager")) {
-                    return 2;
-                } else {
-                    return 3;
-                }
-            }
-            return 4;
-
-        } catch (SQLException e) {
-            System.out.println(e);//an error occured while executing
-            return 0;
-        } finally {
-            try {
-                if (pst != null) {
-                    pst.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-
+        
+        ResultArray resultArray;
+        
+        String query = "SELECT username,designation FROM user where password = sha1('" + password + "') and username = ('" + userName + "')";
+        resultArray = dbConn.getResultArray(query);
+        while (resultArray.next()) {
+            if (resultArray.getString(1).equals("Admin")) {
+                return 1;
+            } else if (resultArray.getString(1).equals("Manager")) {
+                return 2;
+            } else {
+                return 3;
             }
         }
+        return 4;
     }
 
 

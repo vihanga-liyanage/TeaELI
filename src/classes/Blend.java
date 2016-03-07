@@ -619,6 +619,7 @@ public class Blend {
     }
     /* end of loadBlendFlavourDetails method */
     
+    /* start of getBlendCatgFromBlendName method */
     public void getBlendCatgFromBlendName(){
         
         ResultArray resultArray;
@@ -631,4 +632,5 @@ public class Blend {
             this.setBlendCategory(resultArray.getString(0));
         }
     }
+    /* end of getBlendCatgFromBlendName method */
 }

@@ -61,7 +61,9 @@ public class Supplier {
         Statement statement;
         int insertOK =0;
         
-        String query = "INSERT INTO supplier(supName) values('" + Name + "')";
+        this.setSupplierName(Name.replace("'","\\'"));
+        
+        String query = "INSERT INTO supplier(supName) values('" + this.getSupplierName() + "')";
         try {
             statement = connection.createStatement();
             insertOK = statement.executeUpdate(query);
@@ -80,45 +82,27 @@ public class Supplier {
         return insertOK;
     } 
     
-    
-    
-    
-    
         //start of get suplier id by name
     public int getSupplierIDByName(String supplierName) throws SQLException {
-        int supplierID = 0;
-        Connection connection = dbConn.setConnection();
-        ResultSet resultSet = null;
         
+        int supplierID = 0;
+
+        ResultArray resultArray;
+        
+        this.setSupplierName(supplierName.replace("'","\\'"));
 
         //set name of the ingredient
-        String query = "SELECT supID from supplier WHERE supplier.supName= '" + supplierName + "' ";
+        String query = "SELECT supID from supplier WHERE supplier.supName= '" + this.getSupplierName() + "' ";
         try {
-            resultSet = dbConn.getResult(query, connection);
+            resultArray = dbConn.getResultArray(query);
 
-            if (resultSet.next()) {
-                supplierID = Integer.parseInt(resultSet.getString(1));
+            if (resultArray.next()) {
+                supplierID = Integer.parseInt(resultArray.getString(0));
             }
 
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             System.err.println("sup 104 err : " + e);
-        } finally {
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (Exception e) {
-                    System.err.println("Resultset close error : " + e);
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (Exception e) {
-                    System.err.println("Connection close error : " + e);
-                }
-            }
         }
-        System.out.println("supplierID  " + supplierID);
         return supplierID;
     }
     //end of get suplier id by name
