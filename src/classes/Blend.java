@@ -254,11 +254,11 @@ public class Blend {
         boolean validBlendName = false;
 
         ResultArray resultArray;
-
+        
         try {
-
+            
             String query = "SELECT blendName, visibleStock, blendCategory FROM blend WHERE blendName = '" + selectedBlendName + "'";
-
+            
             resultArray = dbConn.getResultArray(query);
 
             if (resultArray.next()) {

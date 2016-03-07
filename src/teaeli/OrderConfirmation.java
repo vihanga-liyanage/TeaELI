@@ -5,11 +5,22 @@
  */
 package teaeli;
 
+import classes.Ingredient;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
@@ -24,6 +35,10 @@ import teaeli.CreateNewBlendOrder2;
 public class OrderConfirmation extends javax.swing.JFrame {
 
     public Object pannel;
+    Ingredient ing = new Ingredient();
+    List<List> mainList;
+    List<List> mainList2;
+    Set<String> supplierList;
 
     /**
      * Creates new form OrderConfirmation
@@ -36,31 +51,35 @@ public class OrderConfirmation extends javax.swing.JFrame {
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
         //set supplier names in the table
-        Set<String> supplierList = getSupplierNames(cnb);
+        supplierList = getSupplierNames(cnb);
         DefaultTableModel model = (DefaultTableModel) tblMasterPlanEditingView.getModel();
         for (String supplierName : supplierList) {
             model.addRow(new Object[]{supplierName, 0.00, 0.00});
         }
         //group details supplierwise
-       final List<List> mainList =  groupDetailsSupplierwise(supplierList ,cnb);
-        
+        final List<List> mainList = groupDetailsSupplierwise(supplierList, cnb);
 
         //method for view supplierwise details when supplier name is seleced in the table
         final ListSelectionModel selectionalModForSupplierwiseTable = tblMasterPlanEditingView.getSelectionModel();
         selectionalModForSupplierwiseTable.addListSelectionListener(new ListSelectionListener() {
+
+            
+
+
             DefaultTableModel tpmodel = (DefaultTableModel) supplierWiseOrderDetailsTbl.getModel();
+
             @Override
             public void valueChanged(ListSelectionEvent lsevt) {
                 tpmodel.setRowCount(0);
                 if (!selectionalModForSupplierwiseTable.isSelectionEmpty()) {
                     int row = selectionalModForSupplierwiseTable.getMinSelectionIndex();
                     int rowid = tblMasterPlanEditingView.getSelectedRow();
-                    
-                    viewPOOrder(rowid,mainList,tpmodel);
+                    viewPOOrder(rowid, mainList, tpmodel);
                 }
             }
 
         });
+
 
         //enabling sorting
         tblMasterPlanEditingView.setAutoCreateRowSorter(true);
@@ -107,39 +126,76 @@ public class OrderConfirmation extends javax.swing.JFrame {
         return sortedSet;
     }
 
-    public List<List> groupDetailsSupplierwise(Set<String> supplierList ,CreateNewBlendOrder2 cnb ){
-          //create arrays for the suppliers 
-        List<List> mainList = new ArrayList<List>();
+    public List<List> groupDetailsSupplierwise(Set<String> supplierList, CreateNewBlendOrder2 cnb) {
+        //create arrays for the suppliers 
+        mainList = new ArrayList<List>();
         DefaultTableModel masterTableModel = (DefaultTableModel) cnb.masterPlanTbl.getModel();
         for (String supName : supplierList) {
             List<String> supwiseDetails = new ArrayList<String>();
             for (int i = 0; i < masterTableModel.getRowCount(); i++) {
                 String supNameFromMaster = masterTableModel.getValueAt(i, 7).toString();
-                if(supName.equals(supNameFromMaster)){
-                    supwiseDetails.add(masterTableModel.getValueAt(i,0).toString());
-                    supwiseDetails.add(masterTableModel.getValueAt(i,6).toString());
-                     
+                if (supName.equals(supNameFromMaster)) {
+                    supwiseDetails.add(masterTableModel.getValueAt(i, 0).toString());
+                    supwiseDetails.add(masterTableModel.getValueAt(i, 6).toString());
+
                 }
             }
             mainList.add(supwiseDetails);
         }
         return mainList;
     }
-    public void viewPOOrder(int rowid,List<List> mainList,DefaultTableModel tpmodel){
+
+    public void viewPOOrder(int rowid, List<List> mainList, DefaultTableModel tpmodel) {
         List lst = mainList.get(rowid);
-        
-        System.out.println("list size" +lst.size());
-                for(int i = 0; i< lst.size();i++){
-                    if(i%2 == 1){
-                        supplierWiseOrderDetailsTbl.setValueAt(lst.get(i), i/2, 1);
-                        
-                        //System.out.println("right "+ lst.get(i));
-                    }else{                        
-                         tpmodel.addRow(new Object[]{lst.get(i),0, 0,0});
-                    }
-                }
-       
+
+
+        for (int i = 0; i < lst.size(); i++) {
+            if (i % 2 == 0) {
+                float unitPrice = parseFloat(ing.getUnitPriceByIngName(lst.get(i).toString()));
+                float qty = parseFloat(lst.get(i + 1).toString());
+                float total = (qty / 1000) * unitPrice;
+                tpmodel.addRow(new Object[]{lst.get(i), lst.get(i + 1), unitPrice, total});
+
+            }
+        }
+
     }
+
+    public List<List> setUnitPriceAndTotal() {
+        mainList2 = new ArrayList<List>();
+
+        for (List lst : this.mainList) {
+            List<String> unitPriceAndTotalList = new ArrayList<String>();
+            for (int i = 0; i < lst.size(); i++) {
+
+                if (i % 2 == 0) {
+                    float unitPrice = parseFloat(ing.getUnitPriceByIngName(lst.get(i).toString()));
+                    float qty = parseFloat(lst.get(i + 1).toString());
+                    float total = (qty / 1000) * unitPrice;
+                    unitPriceAndTotalList.add(Float.toString(unitPrice));
+                    unitPriceAndTotalList.add(Float.toString(total));
+
+                }
+            }
+            mainList2.add(unitPriceAndTotalList);
+        }
+
+        return mainList2;
+    }
+
+    //overiding Float.parseFloat() to accept nums with commas
+    private float parseFloat(String num) {
+        try {
+            return Float.parseFloat(num);
+        } catch (NumberFormatException e) {
+            if (num.matches("[[0-9]{1,2}+,]*.[0-9]*")) {
+                num = num.replace(",", "");
+                return Float.parseFloat(num);
+            }
+        }
+        return 0;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -199,7 +255,7 @@ public class OrderConfirmation extends javax.swing.JFrame {
 
         supplierWiseOrderDetailsTbl.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null}
+
             },
             new String [] {
                 "Ingridient", "Quantity", "Price", "Total"
@@ -213,16 +269,22 @@ public class OrderConfirmation extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+
+        supplierWiseOrderDetailsTbl.setRowHeight(24);
+        
         supplierWiseOrderDetailsTbl.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 supplierWiseOrderDetailsTblPropertyChange(evt);
             }
         });
+
         tblMasterPlanScrollPane1.setViewportView(supplierWiseOrderDetailsTbl);
         if (supplierWiseOrderDetailsTbl.getColumnModel().getColumnCount() > 0) {
             supplierWiseOrderDetailsTbl.getColumnModel().getColumn(1).setPreferredWidth(2);
             supplierWiseOrderDetailsTbl.getColumnModel().getColumn(2).setPreferredWidth(20);
             supplierWiseOrderDetailsTbl.getColumnModel().getColumn(3).setPreferredWidth(20);
+
         }
 
         generatePdfBtn.setText("Generate PDF");
@@ -315,21 +377,70 @@ public class OrderConfirmation extends javax.swing.JFrame {
     }//GEN-LAST:event_supplierWiseOrderDetailsTblPropertyChange
 
     private void generatePdfBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generatePdfBtnActionPerformed
-        //Some code goes hear
+        //generating pdfs
+        setUnitPriceAndTotal();
+        int count = 0;
+        String[] supNameArray = this.supplierList.toArray(new String[this.supplierList.size()]);
+        for (List lst : this.mainList) {
+            int listCounter = 0;
+            Document doc = new Document();
+            try {
 
-        //Re-generating the admin panel since the data is changed
-        if ("teaeli.AdminPannel".equals(pannel.getClass().getName())) {
-            AdminPannel adminPannel = new AdminPannel();
-            adminPannel.setVisible(true);
-            AdminPannel old = (AdminPannel) pannel;
-            old.dispose();
-        } else if ("teaeli.ManagerPannel".equals(pannel.getClass().getName())) {
-            ManagerPannel managerPannel = new ManagerPannel();
-            managerPannel.setVisible(true);
-            ManagerPannel old = (ManagerPannel) pannel;
-            old.dispose();
+                String suppName = supNameArray[count];
+                String fileName = suppName.concat(".pdf");
+                PdfWriter.getInstance(doc, new FileOutputStream(fileName));
+            } catch (DocumentException ex) {
+                //Logger.getLogger(OrderConfirmation.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("DocumentException : " + ex);
+            } catch (FileNotFoundException ex) {
+                //Logger.getLogger(OrderConfirmation.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("FileNotFoundException : " + ex);
+            }
+            doc.open();
+            try {
+                doc.add(new Paragraph("test doc"));
+                PdfPTable table = new PdfPTable(4);
+                table.addCell("Ingredient Name");
+                table.addCell("Quantity");
+                table.addCell("Price");
+                table.addCell("total");
+
+                List lst2 = mainList2.get(count);
+                for (int i = 0; i < lst.size(); i++) {
+                    table.addCell(lst.get(i).toString());
+                    table.addCell(lst2.get(i).toString());
+                }
+                /*
+                for (int j = 0; j < lst.size(); j++) {
+                    
+                }*/
+                
+
+                doc.add(table);
+            } catch (DocumentException ex) {
+                //Logger.getLogger(OrderConfirmation.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("DocumentException : " + ex);
+            }
+            doc.close();
+            count++;
+
         }
-        this.dispose();
+
+        /*
+         //Re-generating the admin panel since the data is changed
+         if ("teaeli.AdminPannel".equals(pannel.getClass().getName())) {
+         AdminPannel adminPannel = new AdminPannel();
+         adminPannel.setVisible(true);
+         AdminPannel old = (AdminPannel) pannel;
+         old.dispose();
+         } else if ("teaeli.ManagerPannel".equals(pannel.getClass().getName())) {
+         ManagerPannel managerPannel = new ManagerPannel();
+         managerPannel.setVisible(true);
+         ManagerPannel old = (ManagerPannel) pannel;
+         old.dispose();
+         }
+         this.dispose();
+         */
     }//GEN-LAST:event_generatePdfBtnActionPerformed
 
     /**

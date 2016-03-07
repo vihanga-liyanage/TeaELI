@@ -143,7 +143,7 @@ public class CreateNewBlendOrder1 extends javax.swing.JFrame {
                     "Are you sure you want to close the window?\nAll data you entered will be lost.", "Confirm window close",
                     JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
                 if (confirmed == JOptionPane.YES_OPTION) {
-                    dispose();
+                    close();
                 }
             }
         });
@@ -153,6 +153,10 @@ public class CreateNewBlendOrder1 extends javax.swing.JFrame {
         
     }
     //End of constructor =======================================================
+    
+    private void close(){
+        this.dispose();
+    }
     
     //method to reset excess qty
     private void setExcessQty(int row){
@@ -265,7 +269,7 @@ public class CreateNewBlendOrder1 extends javax.swing.JFrame {
 
         jLabel1.setText("jLabel1");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Create New Blend Order");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, " Create New Blend Order - Phase 1 ", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI Semibold", 0, 16))); // NOI18N
@@ -539,7 +543,6 @@ public class CreateNewBlendOrder1 extends javax.swing.JFrame {
                 int dialogResult = JOptionPane.showConfirmDialog(this, "Are you sure you want to move into next phase?", "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
                 if (dialogResult == JOptionPane.YES_OPTION){
                     CreateNewBlendOrder2 creatNewBlendOrder2 = new CreateNewBlendOrder2(this);
-                    creatNewBlendOrder2.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
                     creatNewBlendOrder2.setVisible(true);
                     creatNewBlendOrder2.pannel = this.pannel;
                     this.setVisible(false);

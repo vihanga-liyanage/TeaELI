@@ -224,7 +224,7 @@ public class BlendDetails extends javax.swing.JFrame {
         category.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         category.setText("Category");
 
-        blendCategoryCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Artisian Special V26", "Artisian Special V27", "Artisian Special V28", "Artisian Special V29", "Artisian Special V30", "Artisian Special V31", "Artisian Special V32", "Artisian Special V33", "Artisian Special V34", "Artisian Special V35", "Artisian Special V36", "Artisian Special V37", "Artisian Special V38", "Artisian Special V39", "Artisian Special V40", "Artisian Special V41", "Artisian Special V42", "Artisian Special V43", "Artisian Special V44", "Artisian Special V45", "Artisian Special V46", "Artisian Special V47", "Artisian Special V48", "Artisian Special V49", "Artisian Special V50", "Black", "Green Tea", "Organic Black", "Infusions", "Iced Teas" }));
+        blendCategoryCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Artisian Special V2", "Artisian Special V26", "Black", "Green Tea", "Organic Black", "Organic Green", "Organic Infusion", "Infusions", "Iced Teas" }));
         blendCategoryCombo.setToolTipText("");
         blendCategoryCombo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -544,6 +544,7 @@ public class BlendDetails extends javax.swing.JFrame {
             }else if(flavPerCount <= 0 || flavPerCount>=100){
                 JOptionPane.showMessageDialog(this, "Invalid percentage");
             }else{
+                //System.out.println(blendID);
                 int ret = blend.addNewBlend(blendID, blendName, base, blendCategory);
                 
                 ArrayList <Integer> ingID = new ArrayList<>();
@@ -557,17 +558,9 @@ public class BlendDetails extends javax.swing.JFrame {
                 for(int i=0;i<flavCount;i++){
                     Blend a = new Blend();
                     //ingID.add(Integer.parseInt(addNewBlendIngTbl.getValueAt(i, 0).toString()));
-                    flavourID.add(a.getIngIDRecByIngName(ingTable.getValueAt(i, 0).toString()));
+                    flavourID.add(a.getIngIDRecByIngName(flavourTable.getValueAt(i, 0).toString()));
                 }
-                
-                
-                //System.out.println(ingID.get(0)+2);
-                
-                //String query1 = "INSERT INTO recipie (blendID, ingID, ingPercent, type) VALUES ('"+ blendID +"','"+ a +"','"+ b +"',0)";
-                //String query1 = "TNSERT INTO recipie (blendID, ingID, ingPercent, type) VALUES ('"+ blendID +"',26,2.3,0)";
-                
-                //System.out.println("x is"+ x);
-                //String q1 ="";
+             
                 int x = 0;
                 int y = 0;
                 for(int i =0; i<ingCount ; i++){
@@ -646,10 +639,10 @@ public class BlendDetails extends javax.swing.JFrame {
     private javax.swing.JButton cancelBtn;
     private javax.swing.JLabel category;
     public javax.swing.JTable flavourTable;
-    private javax.swing.JComboBox flavoursCombo;
+    public javax.swing.JComboBox flavoursCombo;
     private javax.swing.JButton flavoursPerAddBtn;
     private javax.swing.JTextField flavoursPerTxt;
-    private javax.swing.JComboBox ingCombo;
+    public javax.swing.JComboBox ingCombo;
     private javax.swing.JButton ingPerAddBtn;
     private javax.swing.JTextField ingPerTxt;
     public javax.swing.JTable ingTable;

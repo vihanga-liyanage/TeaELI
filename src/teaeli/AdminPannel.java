@@ -19,7 +19,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.text.DateFormat;
-import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
@@ -32,8 +31,6 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.event.PopupMenuEvent;
-import javax.swing.event.PopupMenuListener;
 import javax.swing.table.DefaultTableModel;
 import static teaeli.TeaELI.loginFrame;
 
@@ -88,26 +85,6 @@ public class AdminPannel extends javax.swing.JFrame {
 
         });
 
-        //view the blend details when enter key pressed  in blends tab
-        /*searchBlendComboBox.addPopupMenuListener(new PopupMenuListener() {
-
-            @Override
-            public void popupMenuCanceled(PopupMenuEvent e) {
-            }
-
-            @Override
-            public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
-                BlendDetails updateProduct = new BlendDetails();
-                updateProduct.setVisible(true);
-                updateProduct.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                searchBlendComboBox.setSelectedIndex(-1);
-            }
-
-            @Override
-            public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
-            }
-        });*/
-
         //set all users details to the users table in the users tab
         populateUserTable();
 
@@ -119,13 +96,7 @@ public class AdminPannel extends javax.swing.JFrame {
         searchIngredientComboBoxAutoSuggest.setAutoSuggest(searchIngredientComboBox, ingredient.loadNameForSearchStockIngComboBox());
 
         //start of view all ingredients
-        try {
-            ingredient.viewAllIngredients();
-
-        } catch (SQLException ex) {
-            //Logger.getLogger(AdminPannel.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println("SQL error in view all ingredients method" + ex);
-        }
+        ingredient.viewAllIngredients();
         //end of view all ingredients
 
         /* populate inventryIngredientTable in inventory management -- dont remove this*/
@@ -157,8 +128,6 @@ public class AdminPannel extends javax.swing.JFrame {
 
         /* combox auto suggests in inventory management */
         AutoSuggest searchStockIngComboBoxAutoSuggest = new AutoSuggest();
-
-        //searchStockIngComboBoxAutoSuggest.setAutoSuggestTwo(searchStockIngComboBox, ingredient.loadNameForSearchStockIngComboBox2());
         searchStockIngComboBoxAutoSuggest.setAutoSuggest(searchStockIngComboBox, ingredient.loadNameForSearchStockIngComboBox());
 
         searchStockIngComboBox.setSelectedIndex(-1);
@@ -222,6 +191,20 @@ public class AdminPannel extends javax.swing.JFrame {
                 if (!selectionalModForOrderMainTable.isSelectionEmpty()) {
                     int row = selectionalModForOrderMainTable.getMinSelectionIndex();
                     orderSearchCombo.setSelectedItem(orderListTable.getValueAt(row, 0));
+                }
+            }
+
+        });
+        
+        //method to view the selected row details of a jtable
+        final ListSelectionModel productModel = productTable.getSelectionModel();
+        productModel.addListSelectionListener(new ListSelectionListener() {
+
+            @Override
+            public void valueChanged(ListSelectionEvent lse) {
+                if (!productModel.isSelectionEmpty()) {
+                    int row = productModel.getMinSelectionIndex();
+                    searchBlendComboBox.setSelectedItem(productTable.getValueAt(row, 1));
                 }
             }
 
@@ -1347,9 +1330,9 @@ public class AdminPannel extends javax.swing.JFrame {
                             .addComponent(jLabel9)
                             .addComponent(logoutBtn)
                             .addComponent(profileBtn))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(mainTabbedPane)
-                .addContainerGap())
+                .addGap(18, 18, 18))
         );
 
         pack();
@@ -1442,22 +1425,6 @@ public class AdminPannel extends javax.swing.JFrame {
         if (searchBlendComboBox.getSelectedIndex() == -1) {
             JOptionPane.showMessageDialog(null, "Please Select a Blend");
         } else {
-            
-            /*;
-            
-            
-            Blend blend = new Blend();
-            blendName = searchBlendComboBox.getSelectedItem().toString();
-            blendID= blend.getBlendIDByBlendName(blendName);
-            //blendCodeTxt.set
-            
-            updateProduct.blendNameTxt.setText(blendID);
-            /*BlendDetails ID = new BlendDetails();
-            ID.identifyBlendDetails(blendID);
-            updateProduct.setVisible(true);
-            ID.sendBlendID(blendID);*/
-            //searchBlendComboBox.setSelectedIndex(-1);*/
-            
             try{
             blendName = searchBlendComboBox.getSelectedItem().toString();
             blendID= blend.getBlendIDByBlendName(blendName);
@@ -1472,37 +1439,16 @@ public class AdminPannel extends javax.swing.JFrame {
             ingredient.populateBlendIngTable((DefaultTableModel) blendDetails.ingTable.getModel(), blendID);
             ingredient.populateBlendFlavourTable((DefaultTableModel) blendDetails.flavourTable.getModel(), blendID);
             
-            
-            
-            
-            
-            
-            /*for(int i = 0; i < orderListTable.getRowCount(); i++){
-                if(id.equals(orderListTable.getValueAt(i, 0).toString())){
-                    if(null != orderListTable.getValueAt(i, 1).toString())switch (orderListTable.getValueAt(i, 1).toString()) {
-                        case "Pending":
-                            orderDetails.orderCompletedBtn.setVisible(false);
-                            break;
-                        case "Received":
-                            orderDetails.orderReceivedBtn.setVisible(false);
-                            orderDetails.updateOrderBtn.setVisible(false);
-                            orderDetails.orderDetailsTable.setEnabled(false);
-                            break;
-                        case "Completed":
-                            orderDetails.orderCompletedBtn.setVisible(false);
-                            orderDetails.orderReceivedBtn.setVisible(false);
-                            orderDetails.updateOrderBtn.setVisible(false);
-                            orderDetails.orderDetailsTable.setEnabled(false);
-                            break;
-                    }
-                }
-            }*/
-            
+            blendDetails.ingCombo.setSelectedIndex(-1);
+            blendDetails.ingCombo.requestFocus();
+            blendDetails.flavoursCombo.setSelectedIndex(-1);
+            blendDetails.flavoursCombo.requestFocus();
             blendDetails.setVisible(true);
+            JOptionPane.showMessageDialog(this, "Please Change Blend Name with New Blend Code to Update");
             blendDetails.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             orderSearchCombo.setSelectedIndex(-1);
         }catch(NullPointerException e){
-            JOptionPane.showMessageDialog(this, "You haven't select any order ID !", "Empty Selection", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "You haven't select any blend !", "Empty Selection", JOptionPane.ERROR_MESSAGE);
         }
         }
 
@@ -1606,7 +1552,7 @@ public class AdminPannel extends javax.swing.JFrame {
 
             Blend blendDelivery = new Blend();
 
-            if (blendDelivery.checkAndLoadBlendDeliverDetails(selectedIngName)) {
+            if (blendDelivery.checkAndLoadBlendDeliverDetails(selectedIngName.replace("'", "\\'"))) {
 
                 searchStockBlendComboBox.setSelectedIndex(-1);
 
@@ -1640,7 +1586,7 @@ public class AdminPannel extends javax.swing.JFrame {
 
             Ingredient ingredeintForStock = new Ingredient();
 
-            if (ingredeintForStock.checkAndLoadIngredientStockDetails(selectedIngName)) {
+            if (ingredeintForStock.checkAndLoadIngredientStockDetails(selectedIngName.replace("'", "\\'"))) {
                 searchStockIngComboBox.setSelectedIndex(-1);
 
                 UpdateIngStock updateStock = new UpdateIngStock();
@@ -1671,8 +1617,8 @@ public class AdminPannel extends javax.swing.JFrame {
             Blend blendForStock = new Blend();
 
             String selectedBlendName = (String) searchStockBlendComboBox.getSelectedItem();
-
-            if (blendForStock.checkAndLoadBlendStockDetails(selectedBlendName)) {
+            
+            if (blendForStock.checkAndLoadBlendStockDetails(selectedBlendName.replace("'","\\'"))) {
                 searchStockBlendComboBox.setSelectedIndex(-1);
 
                 UpdateBlendStock updateBlendStock = new UpdateBlendStock();
