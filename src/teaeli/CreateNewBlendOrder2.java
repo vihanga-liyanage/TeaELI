@@ -692,12 +692,6 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
             readMasterPlanTbl();
 
             DefaultTableModel model = (DefaultTableModel) masterPlanTbl.getModel();
-            //Removing entries of 0 balance
-            for (int i=0; i<model.getRowCount(); i++) {
-                if (parseFloat(model.getValueAt(i, 6).toString()) <= 0) {
-                    model.removeRow(i);
-                }
-            }
 
             //Generating master plan PDF
             JTable temp = new JTable(model);
@@ -708,6 +702,13 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
             String[] data = {orderIDLabel.getText(), formatter.format(today)};
             pdf.generateMasterPlanPDF(temp, data);
 
+            //Removing entries of 0 balance
+            for (int i=0; i<model.getRowCount(); i++) {
+                if (parseFloat(model.getValueAt(i, 6).toString()) <= 0) {
+                    model.removeRow(i);
+                }
+            }
+            
             //Move into order confirmation
             String orderId = orderIDLabel.getText();
             OrderConfirmation oc = new OrderConfirmation(this, orderId);

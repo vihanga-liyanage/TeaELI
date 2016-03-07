@@ -440,44 +440,43 @@ public class OrderConfirmation extends javax.swing.JFrame {
             System.out.println("inside if");
             JOptionPane.showMessageDialog(null, "Discount cannot be greater than 100!", "Error Value for discount", 0);
         }else{
-             getTaxes();
+            getTaxes();
             pdf = new PDF();
-            try {
-                String path = pdf.generateSupplierwisePO(supplierList, mainList, mainList2, orderID, discountList, taxList, totalList);
+            String path = pdf.generateSupplierwisePO(supplierList, mainList, mainList2, orderID, discountList, taxList, totalList);
 
-                if(path != null){
-                    int response = JOptionPane.showConfirmDialog(
-                            null, 
-                            "Purchase orders saved successfully.", 
-                            "Purchase orders", 
-                            JOptionPane.YES_NO_OPTION
-                    );
-                    if (response == JOptionPane.YES_OPTION) {
+            if(path != null){
+                int response = JOptionPane.showConfirmDialog(
+                        null, 
+                        "Purchase orders saved successfully. Do you want to open the containing folder?", 
+                        "Purchase orders", 
+                        JOptionPane.YES_NO_OPTION
+                );
+                if (response == JOptionPane.YES_OPTION) {
+                    try {
                         //Opening the new directory
                         Desktop.getDesktop().open(new File(path));
+                    } catch (IOException ex) {
+                        System.out.println("IOException : " + ex.getMessage());
                     }
-                    this.createNewBlendOrder2.dispose();
-                    this.dispose();
-                }else{
-                    JOptionPane.showMessageDialog(null, "Purchase orders didn't saved", "Error Occured", 0);
                 }
-                /*
-                 //Re-generating the admin panel since the data is changed
-                 if ("teaeli.AdminPannel".equals(pannel.getClass().getName())) {
-                 AdminPannel adminPannel = new AdminPannel();
-                 adminPannel.setVisible(true);
-                 AdminPannel old = (AdminPannel) pannel;
-                 old.dispose();
-                 } else if ("teaeli.ManagerPannel".equals(pannel.getClass().getName())) {
-                 ManagerPannel managerPannel = new ManagerPannel();
-                 managerPannel.setVisible(true);
-                 ManagerPannel old = (ManagerPannel) pannel;
-                 old.dispose();
-                 }
-                 this.dispose();
-                 */
-            } catch (IOException ex) {
-                Logger.getLogger(OrderConfirmation.class.getName()).log(Level.SEVERE, null, ex);
+                
+                //finishing order
+                this.createNewBlendOrder2.dispose();
+                //Re-generating the admin panel since the data is changed
+                if ("teaeli.AdminPannel".equals(pannel.getClass().getName())) {
+                    AdminPannel adminPannel = new AdminPannel();
+                    adminPannel.setVisible(true);
+                    AdminPannel old = (AdminPannel) pannel;
+                    old.dispose();
+                } else if ("teaeli.ManagerPannel".equals(pannel.getClass().getName())) {
+                    ManagerPannel managerPannel = new ManagerPannel();
+                    managerPannel.setVisible(true);
+                    ManagerPannel old = (ManagerPannel) pannel;
+                    old.dispose();
+                }
+                this.dispose();
+            }else{
+                JOptionPane.showMessageDialog(null, "Purchase orders didn't saved", "Error Occured", 0);
             }
         }
     }//GEN-LAST:event_generatePdfBtnActionPerformed
