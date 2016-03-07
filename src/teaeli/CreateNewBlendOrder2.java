@@ -678,8 +678,8 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
 
             //placing orderIngredients and updating ingredient table
             readMasterPlanTbl();
-
-            OrderConfirmation oc = new OrderConfirmation(this);
+            String orderId = orderIDLabel.getText();
+            OrderConfirmation oc = new OrderConfirmation(this,orderId);
 
             //Generating master plan PDF
 
