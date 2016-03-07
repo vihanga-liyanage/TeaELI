@@ -718,7 +718,7 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
             oc.setVisible(true);
             oc.pannel = this.pannel;
             createNewBlendOrder1.dispose();
-            //this.dispose();
+            this.dispose();
             
         }
 
