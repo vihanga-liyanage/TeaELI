@@ -219,10 +219,15 @@ public class Ingredient {
 
     /* start of populateIngredientTable method */
     public void populateIngredientTable(DefaultTableModel tableModel) {
+        
         ResultArray resultSet;
+        
         String query = "SELECT ing.categoryName , i.ingName,i.visibleStock,i.invisibleStock FROM ingredient i JOIN ingredientcategory ing ON i.ingCategoryID = ing.ingCategoryID ORDER BY ing.categoryName,i.ingName ";
+        
         resultSet = dbConn.getResultArray(query);
+        
         tableModel.setRowCount(0);
+        
         while (resultSet.next()) {
             Vector newRow = new Vector();
             for (int i = 0; i <= 4; i++) {
@@ -231,6 +236,7 @@ public class Ingredient {
             tableModel.addRow(newRow);
         }
     }
+    /* */
     
     //Populate Blend detail's ingredients table according to blend
     public void populateBlendIngTable(DefaultTableModel tableModel, String blendID){
