@@ -146,8 +146,11 @@ public class StockHistory {
             connection = dbConn.setConnection();
             resultSet = dbConn.getResult(query, connection);
 
+            if(!resultSet.next()){
+                JOptionPane.showMessageDialog(null, "No Stock History during this Date range");
+                return;     
+            }
             tableModel.setRowCount(0);
-
             while (resultSet.next()) {
                 Vector newRow = new Vector();
                 for (int i = 1; i <= 6; i++) {
@@ -186,7 +189,12 @@ public class StockHistory {
 
             connection = dbConn.setConnection();
             resultSet = dbConn.getResult(query, connection);
-
+            
+            if(!resultSet.next()){
+                JOptionPane.showMessageDialog(null, "No Stock History during this Date range");
+                return;     
+            }
+            
             tableModel.setRowCount(0);
 
             while (resultSet.next()) {
@@ -236,13 +244,11 @@ public class StockHistory {
             //New PDF File will be created as ACCReport2016_01_01 //today's date
             PdfWriter.getInstance(document, new FileOutputStream("C:\\Teaeli\\Ingredient Stock History\\" + reportdate + "" + ".pdf"));
             document.open();
-            Image image2 = Image.getInstance("C:\\Teaeli\\Logos\\logo-new (Custom).png");
+            Image image2 = Image.getInstance("C:\\Teaeli\\Logos\\POHeader.jpg");
             document.add(image2);
-            Paragraph paragraph1 = new Paragraph("leafspice (pvt)Ltd.\nAddress: 1/52, Galle Road,Colombo 03.\nT.P:0112552225\n\n");
-            document.add(paragraph1);
             Paragraph paragraph2 = new Paragraph("Date : " + today + "", FontFactory.getFont(FontFactory.HELVETICA, 12));
             document.add(paragraph2);
-            paragraph1 = new Paragraph("                                Ingredient Stock History\n\n", FontFactory.getFont(FontFactory.HELVETICA, 16));
+            Paragraph paragraph1 = new Paragraph("                                Ingredient Stock History\n\n", FontFactory.getFont(FontFactory.HELVETICA, 16));
             document.add(paragraph1);
             //adding a table
             PdfPTable t = new PdfPTable(6);
@@ -327,13 +333,11 @@ public class StockHistory {
             //New PDF File will be created as ACCReport2016_01_01 //today's date
             PdfWriter.getInstance(document, new FileOutputStream("C:\\Teaeli\\Blend Stock History\\" + reportdate + "" + ".pdf"));
             document.open();
-            Image image2 = Image.getInstance("C:\\Teaeli\\Logos\\logo-new (Custom).png");
+            Image image2 = Image.getInstance("C:\\Teaeli\\Logos\\POHeader.jpg");
             document.add(image2);
-            Paragraph paragraph1 = new Paragraph("leafspice (pvt)Ltd.\nAddress: 1/52, Galle Road,Colombo 03.\nT.P:0112552225\n\n");
-            document.add(paragraph1);
             Paragraph paragraph2 = new Paragraph("Date : " + today + "", FontFactory.getFont(FontFactory.HELVETICA, 12));
             document.add(paragraph2);
-            paragraph1 = new Paragraph("                        Blend Stock History\n\n", FontFactory.getFont(FontFactory.HELVETICA, 16));
+            Paragraph paragraph1 = new Paragraph("                        Blend Stock History\n\n", FontFactory.getFont(FontFactory.HELVETICA, 16));
             document.add(paragraph1);
             //adding a table
             PdfPTable t = new PdfPTable(6);
