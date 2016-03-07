@@ -169,12 +169,12 @@ public class Order {
             temp.setDate(date);
         }
        
-        String query2 = "select i.ingName, s.supName, oi.requiredQty, oi.excessQty, oi.remarks from orderingredient oi inner join ingredient i on oi.ingID = i.ingID inner join supplier s on i.supID = s.supID where oi.orderID = '"+orderID+"';";
+        String query2 = "select i.ingName, s.supName, oi.requiredQty, oi.excessQty, oi.remarks, c.categoryName from orderingredient oi inner join ingredient i on oi.ingID = i.ingID inner join supplier s on i.supID = s.supID inner join ingredientcategory c on i.ingCategoryID = c.ingCategoryID where oi.orderID = '"+orderID+"';";
         resultSet2 = dbConn.getResultArray(query2);
         while (resultSet2.next()){
             String req = resultSet2.getString(2);
             String exes = resultSet2.getString(3);
-            tModelIng.addRow(new Object[]{resultSet2.getString(0), req, exes, 0, resultSet2.getString(4), resultSet2.getString(1)});
+            tModelIng.addRow(new Object[]{resultSet2.getString(0), req, exes, 0, resultSet2.getString(4), resultSet2.getString(1), resultSet2.getString(5)});
         }
         
         temp.setOrderID(orderID);

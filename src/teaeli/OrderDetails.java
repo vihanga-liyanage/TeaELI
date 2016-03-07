@@ -7,11 +7,16 @@
 package teaeli;
 
 import classes.Order;
+import classes.PDF;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 /**
  *
@@ -20,6 +25,7 @@ import javax.swing.table.DefaultTableModel;
 public class OrderDetails extends javax.swing.JFrame  {
     Order order = new Order();
     private AdminPannel adminPannel;
+    private PDF pdf;
 
     public void setAdminPannel(AdminPannel adminPannel) {
         this.adminPannel = adminPannel;
@@ -47,6 +53,14 @@ public class OrderDetails extends javax.swing.JFrame  {
                 }
             }
         });
+        pdf = new PDF();
+        
+        //enabling sorting for tables
+        blendTable.setAutoCreateRowSorter(true);
+        orderDetailsTable.setAutoCreateRowSorter(true);
+        
+        //Hiding the ingredient category column from the orderDetailsTable
+        orderDetailsTable.removeColumn(orderDetailsTable.getColumn(orderDetailsTable.getColumnName(6)));
     }
 
     /**
@@ -88,17 +102,17 @@ public class OrderDetails extends javax.swing.JFrame  {
         orderDetailsTable.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         orderDetailsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null}
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Ingredient", "Required Qty (g)", "Excess Qty (g)", "Additional Qty (g)", "Remarks", "Supplier"
+                "Ingredient", "Required Qty (g)", "Excess Qty (g)", "Additional Qty (g)", "Remarks", "Supplier", "Category"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Double.class, java.lang.String.class, java.lang.Object.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Double.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, true, true, false
+                false, false, false, true, true, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -335,8 +349,18 @@ public class OrderDetails extends javax.swing.JFrame  {
             
             int result = order.updateOrderRowWise(orderID, additional, remark, ing);
         }
-        JOptionPane.showMessageDialog(this, "Values saved successfully !", "Update Success", 1);
+        JOptionPane.showMessageDialog(this, "Values saved successfully !\nThe new RM Master plan PDF will be replaced with the old one", "Update Success", 1);
         order.viewOrder((DefaultTableModel) blendTable.getModel(), (DefaultTableModel) orderDetailsTable.getModel(), orderIDLabel.getText());
+        
+        //Generating master plan PDF
+        /*DefaultTableModel model = (DefaultTableModel) orderDetailsTable.getModel();
+        JTable temp = new JTable(model);
+        temp.setAutoCreateRowSorter(true);
+        temp.getRowSorter().toggleSortOrder(6);
+        DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+        Date today = new Date();
+        String[] data = {orderIDLabel.getText(), formatter.format(today)};
+        pdf.generateMasterPlanPDF(temp, data);*/
     }//GEN-LAST:event_updateOrderBtnActionPerformed
 
     private void orderReceivedBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderReceivedBtnActionPerformed
