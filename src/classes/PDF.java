@@ -308,8 +308,6 @@ public class PDF {
 
             doc.close();
 
-            
-
         } catch (FileNotFoundException | DocumentException ex) {
             JOptionPane.showMessageDialog(null, "Error : " + ex);
         } catch (IOException ex) {
@@ -317,14 +315,13 @@ public class PDF {
         }
     }
 
-    public int generateSupplierwisePO(Set<String> supplierList, List<List> mainList, List<List> mainList2, String orderId, List discountList, List taxList, List totalList) throws IOException {
+    public String generateSupplierwisePO(Set<String> supplierList, List<List> mainList, List<List> mainList2, String orderID, List discountList, List taxList, List totalList) throws IOException {
         int pdfOK = 1;
         int count = 0;
         String[] supNameArray = supplierList.toArray(new String[supplierList.size()]);
+        String tempPath = path + "RM-Orders\\" + orderID + "\\";
         for (List lst : mainList) {
             Document doc = new Document();
-            String orderID = orderId;
-            String tempPath = path + "RM-Orders\\" + orderID + "\\";
             String suppName = "";
             try {
 
@@ -457,8 +454,6 @@ public class PDF {
                 copyRight.addCell(companyNameAndDate("\u00a9" + "  2016 Our Name All RIGHTS RESERVED"));
                 doc.add(copyRight);
 
-             //Opening the new directory
-            Desktop.getDesktop().open(new File(tempPath));
             } catch (DocumentException ex) {
                 //Logger.getLogger(OrderConfirmation.class.getName()).log(Level.SEVERE, null, ex);
                 System.out.println("DocumentException : " + ex);
@@ -467,7 +462,11 @@ public class PDF {
             doc.close();
             count++;
         }
-        return pdfOK;
+        if (pdfOK == 1) {
+            return tempPath;
+        } else {
+            return null;
+        }
 
     }
 }
