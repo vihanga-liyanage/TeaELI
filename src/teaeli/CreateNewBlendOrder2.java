@@ -364,7 +364,8 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
             } else {
                 visibleStock -= reqQty;
             }
-
+            invisibleStock += parseInt(excessQty);
+            
             //updating blend stock
             data = new String[]{String.valueOf(visibleStock), String.valueOf(invisibleStock), blendID};
             if (!blend.updateBlendStock(data)) {
@@ -406,7 +407,8 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
             } else {
                 visibleStock -= reqQty;
             }
-
+            invisibleStock += parseFloat(excessQty);
+            
             //updating ingredient stock
             data = new String[]{String.valueOf(visibleStock), String.valueOf(invisibleStock), ingID};
             if (!ingredient.updateIngredientStock(data)) {
