@@ -7,17 +7,9 @@ package teaeli;
 
 import classes.Ingredient;
 import classes.PDF;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfWriter;
 import java.awt.Desktop;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -31,7 +23,6 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
-import teaeli.CreateNewBlendOrder2;
 
 /**
  *
@@ -50,13 +41,18 @@ public class OrderConfirmation extends javax.swing.JFrame {
     PDF pdf;
     String orderID = "";
 
+    private CreateNewBlendOrder2 createNewBlendOrder2;
     /**
      * Creates new form OrderConfirmation
+     * @param cnb
+     * @param orderID
      */
     public OrderConfirmation(CreateNewBlendOrder2 cnb, String orderID) { // pass CreateNewBlendOrder2 object to get the master list in the interface
         initComponents();
         this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
-
+        
+        createNewBlendOrder2 = cnb;
+                
         setResizable(false);
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
@@ -442,43 +438,47 @@ public class OrderConfirmation extends javax.swing.JFrame {
         String errorDiscount = discountList.get(lastIndex).toString();
         if (errorDiscount == "1") {
             System.out.println("inside if");
-            JOptionPane.showMessageDialog(null, "Discount cannot be greater than 100 !!!", "Error Value for discount", 0);
+            JOptionPane.showMessageDialog(null, "Discount cannot be greater than 100!", "Error Value for discount", 0);
         }else{
-             getTaxes();
+            getTaxes();
+            pdf = new PDF();
+            String path = pdf.generateSupplierwisePO(supplierList, mainList, mainList2, orderID, discountList, taxList, totalList);
 
-        pdf = new PDF();
-        try {
-           int pdfOK = pdf.generateSupplierwisePO(supplierList, mainList, mainList2, orderID, discountList, taxList, totalList);
-
-           if(pdfOK == 1){
-               JOptionPane.showMessageDialog(null, "Purchase orders saved.", "Purchase orders ", 1);
-                      
-           }else{
-           JOptionPane.showMessageDialog(null, "Purchase orders didn't saved", "Error Occured", 0);
-           
-           }
-            /*
-             //Re-generating the admin panel since the data is changed
-             if ("teaeli.AdminPannel".equals(pannel.getClass().getName())) {
-             AdminPannel adminPannel = new AdminPannel();
-             adminPannel.setVisible(true);
-             AdminPannel old = (AdminPannel) pannel;
-             old.dispose();
-             } else if ("teaeli.ManagerPannel".equals(pannel.getClass().getName())) {
-             ManagerPannel managerPannel = new ManagerPannel();
-             managerPannel.setVisible(true);
-             ManagerPannel old = (ManagerPannel) pannel;
-             old.dispose();
-             }
-             this.dispose();
-             */
-        } catch (IOException ex) {
-            Logger.getLogger(OrderConfirmation.class.getName()).log(Level.SEVERE, null, ex);
+            if(path != null){
+                int response = JOptionPane.showConfirmDialog(
+                        null, 
+                        "Purchase orders saved successfully. Do you want to open the containing folder?", 
+                        "Purchase orders", 
+                        JOptionPane.YES_NO_OPTION
+                );
+                if (response == JOptionPane.YES_OPTION) {
+                    try {
+                        //Opening the new directory
+                        Desktop.getDesktop().open(new File(path));
+                    } catch (IOException ex) {
+                        System.out.println("IOException : " + ex.getMessage());
+                    }
+                }
+                
+                //finishing order
+                this.createNewBlendOrder2.dispose();
+                //Re-generating the admin panel since the data is changed
+                if ("teaeli.AdminPannel".equals(pannel.getClass().getName())) {
+                    AdminPannel adminPannel = new AdminPannel();
+                    adminPannel.setVisible(true);
+                    AdminPannel old = (AdminPannel) pannel;
+                    old.dispose();
+                } else if ("teaeli.ManagerPannel".equals(pannel.getClass().getName())) {
+                    ManagerPannel managerPannel = new ManagerPannel();
+                    managerPannel.setVisible(true);
+                    ManagerPannel old = (ManagerPannel) pannel;
+                    old.dispose();
+                }
+                this.dispose();
+            }else{
+                JOptionPane.showMessageDialog(null, "Purchase orders didn't saved", "Error Occured", 0);
+            }
         }
-        
-        }
-        
-       
     }//GEN-LAST:event_generatePdfBtnActionPerformed
 
     /**

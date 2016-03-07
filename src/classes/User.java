@@ -75,7 +75,7 @@ public class User {
     public void viewUser(DefaultTableModel tModel) {
         ResultArray resultSet;
 
-        String query = "SELECT userID, username, firstname, lastname FROM user";
+        String query = "SELECT userID, username, firstname, lastname FROM user;";
 
         resultSet = dbConn.getResultArray(query);
         tModel.setRowCount(0);
@@ -88,7 +88,7 @@ public class User {
 
     //method to remove user from the user table in the admin pannel(completely remove user from the system)
     public int removeUser(int id) {
-        String query = "DELETE FROM user WHERE userID = " + id;
+        String query = "DELETE FROM user WHERE userID = '" + id + "'";
         int rslt = dbConn.updateResult(query);
         return rslt;
     }
@@ -137,7 +137,7 @@ public class User {
         PreparedStatement pst = null;
         try {
             connection = dbConn.setConnection();//get the connection
-            String query = "SELECT username,designation FROM user where password = sha1('" + password + "') and username = ('" + userName + "')";
+            String query = "SELECT username,designation FROM user where password = '" + password + "' and username = ('" + userName + "')";
             ResultSet rs = dbConn.getResult(query, connection);
 
             while (rs.next()) {

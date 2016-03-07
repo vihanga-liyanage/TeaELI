@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
 import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
@@ -20,6 +21,7 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
 import teaeli.AdminPannel;
@@ -95,22 +97,16 @@ public class StockHistory {
         ResultArray res = null;
 
         String query = "SELECT S.date,I.ingName,S.oldQty,S.updatedQty,S.reason,U.username "
-                + "FROM ingredient I, ingredientstockhistory S, user U "
-                + "WHERE S.updatedBy=U.userID AND S.ingID=I.ingID";
+                + "FROM ingredient I INNER JOIN ingredientstockhistory S ON S.ingID=I.ingID INNER JOIN user U ON S.updatedBy=U.userID;";
         
         res = dbConn.getResultArray(query);
         tableModel.setRowCount(0);
 
         while (res.next()) {
             Vector newRow = new Vector();
-            date = res.getString(0);
-            date = date.substring(0, date.indexOf('.'));
-            newRow.addElement(date);
-            newRow.addElement(res.getString(1));
-            newRow.addElement(res.getString(2));
-            newRow.addElement(res.getString(3));
-            newRow.addElement(res.getString(4));
-            newRow.addElement(res.getString(5));
+            for (int i = 0; i <= 5; i++) {
+                newRow.addElement(res.getString(i));
+            }
 
             tableModel.addRow(newRow);
         }
@@ -131,15 +127,9 @@ public class StockHistory {
 
         while (res.next()) {
             Vector newRow = new Vector();
-            date = res.getString(0);
-            date = date.substring(0, date.indexOf('.'));
-            newRow.addElement(date);
-            newRow.addElement(res.getString(1));
-            newRow.addElement(res.getString(2));
-            newRow.addElement(res.getString(3));
-            newRow.addElement(res.getString(4));
-            newRow.addElement(res.getString(5));
-
+            for (int i = 0; i <= 5; i++) {
+                newRow.addElement(res.getString(i));
+            }
             tableModel.addRow(newRow);
         }
     }
@@ -156,8 +146,11 @@ public class StockHistory {
             connection = dbConn.setConnection();
             resultSet = dbConn.getResult(query, connection);
 
+            if(!resultSet.next()){
+                JOptionPane.showMessageDialog(null, "No Stock History during this Date range");
+                return;     
+            }
             tableModel.setRowCount(0);
-
             while (resultSet.next()) {
                 Vector newRow = new Vector();
                 for (int i = 1; i <= 6; i++) {
@@ -196,7 +189,12 @@ public class StockHistory {
 
             connection = dbConn.setConnection();
             resultSet = dbConn.getResult(query, connection);
-
+            
+            if(!resultSet.next()){
+                JOptionPane.showMessageDialog(null, "No Stock History during this Date range");
+                return;     
+            }
+            
             tableModel.setRowCount(0);
 
             while (resultSet.next()) {
@@ -246,13 +244,11 @@ public class StockHistory {
             //New PDF File will be created as ACCReport2016_01_01 //today's date
             PdfWriter.getInstance(document, new FileOutputStream("C:\\Teaeli\\Ingredient Stock History\\" + reportdate + "" + ".pdf"));
             document.open();
-            Image image2 = Image.getInstance("C:\\Teaeli\\Logos\\logo-new (Custom).png");
+            Image image2 = Image.getInstance("C:\\Teaeli\\Logos\\POHeader.jpg");
             document.add(image2);
-            Paragraph paragraph1 = new Paragraph("leafspice (pvt)Ltd.\nAddress: 1/52, Galle Road,Colombo 03.\nT.P:0112552225\n\n");
-            document.add(paragraph1);
             Paragraph paragraph2 = new Paragraph("Date : " + today + "", FontFactory.getFont(FontFactory.HELVETICA, 12));
             document.add(paragraph2);
-            paragraph1 = new Paragraph("                                Ingredient Stock History\n\n", FontFactory.getFont(FontFactory.HELVETICA, 16));
+            Paragraph paragraph1 = new Paragraph("                                Ingredient Stock History\n\n", FontFactory.getFont(FontFactory.HELVETICA, 16));
             document.add(paragraph1);
             //adding a table
             PdfPTable t = new PdfPTable(6);
@@ -312,7 +308,7 @@ public class StockHistory {
                 p.waitFor();
             }
 
-        } catch (Exception ex) {
+        } catch (DocumentException | IOException | InterruptedException ex) {
             System.out.println(ex);
             JOptionPane.showMessageDialog(admin, "File already exists!!!");
         }
@@ -337,13 +333,11 @@ public class StockHistory {
             //New PDF File will be created as ACCReport2016_01_01 //today's date
             PdfWriter.getInstance(document, new FileOutputStream("C:\\Teaeli\\Blend Stock History\\" + reportdate + "" + ".pdf"));
             document.open();
-            Image image2 = Image.getInstance("C:\\Teaeli\\Logos\\logo-new (Custom).png");
+            Image image2 = Image.getInstance("C:\\Teaeli\\Logos\\POHeader.jpg");
             document.add(image2);
-            Paragraph paragraph1 = new Paragraph("leafspice (pvt)Ltd.\nAddress: 1/52, Galle Road,Colombo 03.\nT.P:0112552225\n\n");
-            document.add(paragraph1);
             Paragraph paragraph2 = new Paragraph("Date : " + today + "", FontFactory.getFont(FontFactory.HELVETICA, 12));
             document.add(paragraph2);
-            paragraph1 = new Paragraph("                        Blend Stock History\n\n", FontFactory.getFont(FontFactory.HELVETICA, 16));
+            Paragraph paragraph1 = new Paragraph("                        Blend Stock History\n\n", FontFactory.getFont(FontFactory.HELVETICA, 16));
             document.add(paragraph1);
             //adding a table
             PdfPTable t = new PdfPTable(6);
@@ -402,7 +396,7 @@ public class StockHistory {
                 p.waitFor();
             }
 
-        } catch (Exception ex) {
+        } catch (DocumentException | IOException | InterruptedException ex) {
             System.out.println(ex);
             JOptionPane.showMessageDialog(admin, "File already exists!!!");
         }

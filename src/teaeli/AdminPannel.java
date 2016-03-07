@@ -986,7 +986,6 @@ public class AdminPannel extends javax.swing.JFrame {
                                 .addGroup(settingsBlendPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel14)
                                     .addComponent(blendCatgLbl))))
-                        .addGap(18, 18, 18)
                         .addGroup(settingsBlendPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(blendBaseLbl)
                             .addComponent(jLabel16))
@@ -1033,15 +1032,15 @@ public class AdminPannel extends javax.swing.JFrame {
             ingStockHistoryTbl.getColumnModel().getColumn(5).setPreferredWidth(200);
         }
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel2.setText("Search History By Date Range");
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel4.setText("Starts from");
 
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel8.setText("To");
 
@@ -1082,17 +1081,17 @@ public class AdminPannel extends javax.swing.JFrame {
                     .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 1230, Short.MAX_VALUE)
                     .addGroup(settingsIngHistoryPanelLayout.createSequentialGroup()
                         .addComponent(jLabel2)
-                        .addGap(144, 144, 144)
+                        .addGap(18, 18, 18)
                         .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(StartDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(34, 34, 34)
+                        .addGap(18, 18, 18)
                         .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(EndDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(btnIngredientGo)
-                        .addGap(30, 30, 30)
+                        .addGap(18, 18, 18)
                         .addComponent(btnCancelIngHistory)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, settingsIngHistoryPanelLayout.createSequentialGroup()
@@ -1154,15 +1153,15 @@ public class AdminPannel extends javax.swing.JFrame {
             blendStockHistoryTbl.getColumnModel().getColumn(5).setPreferredWidth(200);
         }
 
-        jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel10.setText("Search History By Date Range");
 
-        jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel11.setText("Starts from");
 
-        jLabel12.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel12.setText("To");
 
@@ -1197,17 +1196,17 @@ public class AdminPannel extends javax.swing.JFrame {
                     .addComponent(jScrollPane9, javax.swing.GroupLayout.DEFAULT_SIZE, 1230, Short.MAX_VALUE)
                     .addGroup(settingsBlendHistoryPanelLayout.createSequentialGroup()
                         .addComponent(jLabel10)
-                        .addGap(144, 144, 144)
+                        .addGap(18, 18, 18)
                         .addComponent(jLabel11)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(BlendStartDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(34, 34, 34)
+                        .addGap(18, 18, 18)
                         .addComponent(jLabel12)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(blendEndDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(btnBlendGo)
-                        .addGap(30, 30, 30)
+                        .addGap(18, 18, 18)
                         .addComponent(BtnCancelBlendHistory)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, settingsBlendHistoryPanelLayout.createSequentialGroup()
@@ -1791,9 +1790,9 @@ public class AdminPannel extends javax.swing.JFrame {
     private void btnIngredientGoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngredientGoActionPerformed
         SimpleDateFormat javadate = new SimpleDateFormat("yyyy-MM-dd");
         if (StartDate.getDate() == null || EndDate.getDate() == null) {
-            JOptionPane.showMessageDialog(this, "Please choose date range");
+            JOptionPane.showMessageDialog(this, "Date Feilds Cannot be empty","Date choosing error",0);
         } else if (StartDate.getDate().after(EndDate.getDate())) {
-            JOptionPane.showMessageDialog(this, "Please choose valid date range");
+            JOptionPane.showMessageDialog(this, "Please Enter Valid Date Range","Date choosing error",0);
         } else {
             Date start = StartDate.getDate();
             Date end = EndDate.getDate();
@@ -1808,12 +1807,12 @@ public class AdminPannel extends javax.swing.JFrame {
     private void btnBlendGoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBlendGoActionPerformed
         SimpleDateFormat javadate = new SimpleDateFormat("yyyy-MM-dd");
         if (BlendStartDate.getDate() == null || blendEndDate.getDate() == null) {
-            JOptionPane.showMessageDialog(this, "Please choose date range");
+            JOptionPane.showMessageDialog(this, "Date Feilds Cannot be empty","Date choosing error",0);
         } else if (BlendStartDate.getDate().after(blendEndDate.getDate())) {
-            JOptionPane.showMessageDialog(this, "Please choose valid date range");
+            JOptionPane.showMessageDialog(this, "Please Enter Valid Date Range","Date choosing error",0);
         } else {
-            Date start = StartDate.getDate();
-            Date end = EndDate.getDate();
+            Date start = BlendStartDate.getDate();
+            Date end = blendEndDate.getDate();
             String startdate = javadate.format(start);
             String enddate = javadate.format(end);
             StockHistory stockhistory = new StockHistory();
@@ -1861,6 +1860,7 @@ public class AdminPannel extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnBlendHistoryReportGenerationActionPerformed
 
+    /* start of loadBlendDetails method */
     private void loadBlendDetails(int row){
         
         Blend blendDetails = new Blend();
@@ -1887,13 +1887,13 @@ public class AdminPannel extends javax.swing.JFrame {
                 blendCatgLbl.setText(blendDetails.getBlendCategory());
                 
             }else{
-            
+                JOptionPane.showMessageDialog(this, "Unable to load flavour details !", "Load Fails", JOptionPane.ERROR_MESSAGE);
             }
         }else{
-        
-        } 
-        
+            JOptionPane.showMessageDialog(this, "Unable to load ingredient details !", "Load Fails", JOptionPane.ERROR_MESSAGE);
+        }        
     }
+    /* end of loadBlendDetails method */
     
     /**
      * @param args the command line arguments

@@ -157,6 +157,7 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
     private void populateMasterPlanTbl() {
         for (int i = 0; i < blendListTbl.getRowCount(); i++) {
             String blendName = blendListTbl.getValueAt(i, 0).toString();
+            blendName = blendName.replace("'", "\\'");
             int blendQty = parseInt(blendListTbl.getValueAt(i, 1).toString());
             if (blendQty > 0) {
                 ResultArray res = blend.getRecipie(blendName);
@@ -184,6 +185,7 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
     //method to reset excess qty
     private void setExcessQty(int row) {
         String ingName = masterPlanTbl.getValueAt(row, 0).toString();
+        ingName = ingName.replace("'", "\\'");
         float requiredQty = parseFloat(masterPlanTbl.getValueAt(row, 4).toString());
         if (new Validation().isFloat(masterPlanTbl.getValueAt(row, 6).toString())) {
             float finalQty = parseFloat(masterPlanTbl.getValueAt(row, 6).toString());
@@ -334,6 +336,7 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
         DefaultTableModel model = createNewBlendOrder1.getBlendListTbl();
         for (int i = 0; i < model.getRowCount(); i++) {
             String blendName = model.getValueAt(i, 0).toString();
+            blendName = blendName.replace("'", "\\'");
             int reqQty = (parseInt(model.getValueAt(i, 1).toString()));
             int visibleStock = parseInt(model.getValueAt(i, 2).toString());
             int invisibleStock = parseInt(model.getValueAt(i, 3).toString());
@@ -361,7 +364,8 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
             } else {
                 visibleStock -= reqQty;
             }
-
+            invisibleStock += parseInt(excessQty);
+            
             //updating blend stock
             data = new String[]{String.valueOf(visibleStock), String.valueOf(invisibleStock), blendID};
             if (!blend.updateBlendStock(data)) {
@@ -375,6 +379,7 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) masterPlanTbl.getModel();
         for (int i = 0; i < model.getRowCount(); i++) {
             String ingName = model.getValueAt(i, 0).toString();
+            ingName = ingName.replace("'", "\\'");
             float reqQty = (parseFloat(model.getValueAt(i, 1).toString()));
             float visibleStock = parseFloat(model.getValueAt(i, 2).toString());
             float invisibleStock = parseFloat(model.getValueAt(i, 3).toString());
@@ -402,7 +407,8 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
             } else {
                 visibleStock -= reqQty;
             }
-
+            invisibleStock += parseFloat(excessQty);
+            
             //updating ingredient stock
             data = new String[]{String.valueOf(visibleStock), String.valueOf(invisibleStock), ingID};
             if (!ingredient.updateIngredientStock(data)) {
@@ -687,21 +693,9 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
             //placing orderIngredients and updating ingredient table
             readMasterPlanTbl();
 
-            String orderId = orderIDLabel.getText();
-            OrderConfirmation oc = new OrderConfirmation(this,orderId);
-
-
             DefaultTableModel model = (DefaultTableModel) masterPlanTbl.getModel();
-            //Removing entries of 0 balance
-            for (int i=0; i<model.getRowCount(); i++) {
-                if (parseFloat(model.getValueAt(i, 6).toString()) <= 0) {
-                    model.removeRow(i);
-                }
-            }
-
 
             //Generating master plan PDF
-            
             JTable temp = new JTable(model);
             temp.setAutoCreateRowSorter(true);
             temp.getRowSorter().toggleSortOrder(8);
@@ -710,14 +704,21 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
             String[] data = {orderIDLabel.getText(), formatter.format(today)};
             pdf.generateMasterPlanPDF(temp, data);
 
+            //Removing entries of 0 balance
+            for (int i=0; i<model.getRowCount(); i++) {
+                if (parseFloat(model.getValueAt(i, 6).toString()) <= 0) {
+                    model.removeRow(i);
+                }
+            }
             
+            //Move into order confirmation
+            String orderId = orderIDLabel.getText();
+            OrderConfirmation oc = new OrderConfirmation(this, orderId);
             oc.setVisible(true);
             oc.pannel = this.pannel;
             createNewBlendOrder1.dispose();
-            //this.dispose();
-            
+            this.setVisible(false);
         }
-
     }//GEN-LAST:event_confirmBtnActionPerformed
 
     private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed

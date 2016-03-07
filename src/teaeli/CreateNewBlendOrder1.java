@@ -161,6 +161,7 @@ public class CreateNewBlendOrder1 extends javax.swing.JFrame {
     //method to reset excess qty
     private void setExcessQty(int row){
         String blendName = blendListTbl.getValueAt(row, 0).toString();
+        blendName = blendName.replace("'", "\\'");
         int requiredQty = parseInt(blendListTbl.getValueAt(row, 4).toString());
         if (new Validation().isInt(blendListTbl.getValueAt(row, 6).toString())) {
             int finalQty = parseInt(blendListTbl.getValueAt(row, 6).toString());
@@ -568,6 +569,7 @@ public class CreateNewBlendOrder1 extends javax.swing.JFrame {
             blendsQtyTxt.requestFocus();
         } else {
             String blendName = (String) blendsCombo.getSelectedItem();
+            blendName = blendName.replace("'", "\\'");
             int blendQty = parseInt(blendsQtyTxt.getText());
             if (blendWeightCombo.getSelectedItem().equals("kg")) {
                 blendQty *= 1000;
