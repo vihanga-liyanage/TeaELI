@@ -70,20 +70,6 @@ public class AdminPannel extends javax.swing.JFrame {
 
         //Keep the window fullscreen
         this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
-        
-        //method to view the selected row details of a jtable
-        final ListSelectionModel mod = productTable.getSelectionModel();
-        mod.addListSelectionListener(new ListSelectionListener() {
-
-            @Override
-            public void valueChanged(ListSelectionEvent lse) {
-                if (!mod.isSelectionEmpty()) {
-                    int row = mod.getMinSelectionIndex();
-                    JOptionPane.showMessageDialog(null, productTable.getValueAt(row, 0));
-                }
-            }
-
-        });
 
         //set all users details to the users table in the users tab
         populateUserTable();
@@ -91,15 +77,15 @@ public class AdminPannel extends javax.swing.JFrame {
         /*Start of ingredient class method calls*/
         //populate serch ingredient combobox in settings->ingredient
         AutoSuggest searchIngredientComboBoxAutoSuggest = new AutoSuggest();
-
-        //searchIngredientComboBoxAutoSuggest.setAutoSuggest(searchIngredientComboBox, ingredient.loadNameForSearchStockIngComboBox2());
         searchIngredientComboBoxAutoSuggest.setAutoSuggest(searchIngredientComboBox, ingredient.loadNameForSearchStockIngComboBox());
 
+        searchIngredientComboBox.setSelectedIndex(-1);
+        
         //start of view all ingredients
         ingredient.viewAllIngredients();
         //end of view all ingredients
 
-        /* populate inventryIngredientTable in inventory management -- dont remove this*/
+        /* populate inventryIngredientTable in inventory management*/
         populateIngStockTable();
 
         /*populate inventryBlendTable in the inventory management*/
@@ -112,16 +98,13 @@ public class AdminPannel extends javax.swing.JFrame {
         populateBlendHistoryTable();
 
         /* populate product table in the blend tab*/
-        blend.populateProductTable((DefaultTableModel) productTable.getModel());
+        populateProductTable();
 
         /*populate main order table in the order details tab*/
         populateOrderListTable();
 
         /*load the orderComboBox in the order details tab*/
         AutoSuggest searchOrderComboBoxAutoSuggest = new AutoSuggest();
-
-        //ArrayList<String> result = order.populateOrderListTable((DefaultTableModel) orderListTable.getModel());
-        //searchOrderComboBoxAutoSuggest.setAutoSuggestTwo(orderSearchCombo, result);
         searchOrderComboBoxAutoSuggest.setAutoSuggest(orderSearchCombo, order.loadOrderComboBox());
 
         orderSearchCombo.setSelectedIndex(-1);
@@ -139,6 +122,7 @@ public class AdminPannel extends javax.swing.JFrame {
 
         /*Auto suggest method loads for the combo box in blends tab*/
         blend.initBlendCombo(searchBlendComboBox);
+        searchBlendComboBox.setSelectedIndex(-1);
 
         //method for combox value setting when table row select in inventryIngredient
         final ListSelectionModel selectionalModForStockIngTable = inventryIngredientTable.getSelectionModel();
@@ -195,8 +179,8 @@ public class AdminPannel extends javax.swing.JFrame {
             }
 
         });
-        
-        //method to view the selected row details of a jtable
+
+        //method for combox value setting when table row select in settings blend tab
         final ListSelectionModel productModel = productTable.getSelectionModel();
         productModel.addListSelectionListener(new ListSelectionListener() {
 
@@ -205,6 +189,7 @@ public class AdminPannel extends javax.swing.JFrame {
                 if (!productModel.isSelectionEmpty()) {
                     int row = productModel.getMinSelectionIndex();
                     searchBlendComboBox.setSelectedItem(productTable.getValueAt(row, 1));
+                    loadBlendDetails(row);
                 }
             }
 
@@ -239,7 +224,16 @@ public class AdminPannel extends javax.swing.JFrame {
                 }
             }
         });
-        
+
+        searchBlendComboBox.getEditor().getEditorComponent().addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent evt) {
+                if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+                    searchProductCombo();
+                }
+            }
+        });
+
         //enabling sorting for tables
         orderListTable.setAutoCreateRowSorter(true);
         inventryIngredientTable.setAutoCreateRowSorter(true);
@@ -273,6 +267,10 @@ public class AdminPannel extends javax.swing.JFrame {
 
     public void populateBlendHistoryTable() {
         blendHistoryStock.populateStockBlendHistoryTable((DefaultTableModel) blendStockHistoryTbl.getModel());
+    }
+    
+    public final void populateProductTable() {
+        blend.populateProductTable((DefaultTableModel) productTable.getModel());
     }
 
     public void populateUserTable() {
@@ -366,6 +364,12 @@ public class AdminPannel extends javax.swing.JFrame {
         blendDetailsTbl = new javax.swing.JTable();
         inventoryBlendLbl1 = new javax.swing.JLabel();
         searchBlendComboBox = new javax.swing.JComboBox();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        blendNameLbl = new javax.swing.JLabel();
+        blendCatgLbl = new javax.swing.JLabel();
+        blendBaseLbl = new javax.swing.JLabel();
         settingsIngHistoryPanel = new javax.swing.JPanel();
         jScrollPane8 = new javax.swing.JScrollPane();
         ingStockHistoryTbl = new javax.swing.JTable();
@@ -874,11 +878,11 @@ public class AdminPannel extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Ingredient ", "Percentage (%)", "Flavour", "Percentage (%)"
+                "Ingredient ", "Percentage (%)"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -891,9 +895,6 @@ public class AdminPannel extends javax.swing.JFrame {
             blendDetailsTbl.getColumnModel().getColumn(0).setResizable(false);
             blendDetailsTbl.getColumnModel().getColumn(0).setPreferredWidth(200);
             blendDetailsTbl.getColumnModel().getColumn(1).setResizable(false);
-            blendDetailsTbl.getColumnModel().getColumn(2).setResizable(false);
-            blendDetailsTbl.getColumnModel().getColumn(2).setPreferredWidth(200);
-            blendDetailsTbl.getColumnModel().getColumn(3).setResizable(false);
         }
 
         inventoryBlendLbl1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 16)); // NOI18N
@@ -905,6 +906,24 @@ public class AdminPannel extends javax.swing.JFrame {
                 searchBlendComboBoxActionPerformed(evt);
             }
         });
+
+        jLabel13.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel13.setText("Blend Name");
+
+        jLabel14.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel14.setText("Blend Category");
+
+        jLabel16.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel16.setText("Base Composition");
+
+        blendNameLbl.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        blendNameLbl.setText("abcd");
+
+        blendCatgLbl.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        blendCatgLbl.setText("abcd");
+
+        blendBaseLbl.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        blendBaseLbl.setText("abcd");
 
         javax.swing.GroupLayout settingsBlendPanelLayout = new javax.swing.GroupLayout(settingsBlendPanel);
         settingsBlendPanel.setLayout(settingsBlendPanelLayout);
@@ -918,7 +937,17 @@ public class AdminPannel extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(settingsBlendPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(inventoryBlendLbl1)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 674, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 674, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(settingsBlendPanelLayout.createSequentialGroup()
+                                .addGroup(settingsBlendPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel16)
+                                    .addComponent(jLabel13)
+                                    .addComponent(jLabel14))
+                                .addGap(89, 89, 89)
+                                .addGroup(settingsBlendPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(blendCatgLbl)
+                                    .addComponent(blendBaseLbl)
+                                    .addComponent(blendNameLbl)))))
                     .addGroup(settingsBlendPanelLayout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -941,15 +970,31 @@ public class AdminPannel extends javax.swing.JFrame {
                 .addGroup(settingsBlendPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(searchProductBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(searchBlendComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(settingsBlendPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(settingsBlendPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(settingsBlendPanelLayout.createSequentialGroup()
-                        .addGap(24, 24, 24)
+                        .addGap(13, 13, 13)
                         .addComponent(inventoryBlendLbl1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(settingsBlendPanelLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(settingsBlendPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(settingsBlendPanelLayout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(blendNameLbl)
+                                .addGap(31, 31, 31))
+                            .addGroup(settingsBlendPanelLayout.createSequentialGroup()
+                                .addComponent(jLabel13)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(settingsBlendPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel14)
+                                    .addComponent(blendCatgLbl))))
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                        .addGroup(settingsBlendPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(blendBaseLbl)
+                            .addComponent(jLabel16))
+                        .addGap(13, 13, 13)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, settingsBlendPanelLayout.createSequentialGroup()
+                        .addGap(18, 18, Short.MAX_VALUE)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(102, 102, 102))
         );
 
@@ -977,6 +1022,7 @@ public class AdminPannel extends javax.swing.JFrame {
         jScrollPane8.setViewportView(ingStockHistoryTbl);
         if (ingStockHistoryTbl.getColumnModel().getColumnCount() > 0) {
             ingStockHistoryTbl.getColumnModel().getColumn(0).setResizable(false);
+            ingStockHistoryTbl.getColumnModel().getColumn(0).setPreferredWidth(135);
             ingStockHistoryTbl.getColumnModel().getColumn(1).setResizable(false);
             ingStockHistoryTbl.getColumnModel().getColumn(1).setPreferredWidth(200);
             ingStockHistoryTbl.getColumnModel().getColumn(2).setResizable(false);
@@ -987,17 +1033,17 @@ public class AdminPannel extends javax.swing.JFrame {
             ingStockHistoryTbl.getColumnModel().getColumn(5).setPreferredWidth(200);
         }
 
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel2.setText("Search History By Date Range");
-        jLabel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("Start from");
-        jLabel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel4.setText("Starts from");
 
-        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel8.setText("To");
-        jLabel8.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         EndDate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1035,18 +1081,18 @@ public class AdminPannel extends javax.swing.JFrame {
                 .addGroup(settingsIngHistoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 1230, Short.MAX_VALUE)
                     .addGroup(settingsIngHistoryPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addComponent(jLabel2)
+                        .addGap(144, 144, 144)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(StartDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGap(34, 34, 34)
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(EndDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnIngredientGo)
-                        .addGap(18, 18, 18)
+                        .addGap(30, 30, 30)
                         .addComponent(btnCancelIngHistory)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, settingsIngHistoryPanelLayout.createSequentialGroup()
@@ -1057,7 +1103,7 @@ public class AdminPannel extends javax.swing.JFrame {
         settingsIngHistoryPanelLayout.setVerticalGroup(
             settingsIngHistoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(settingsIngHistoryPanelLayout.createSequentialGroup()
-                .addGap(14, 14, 14)
+                .addContainerGap()
                 .addGroup(settingsIngHistoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1086,16 +1132,18 @@ public class AdminPannel extends javax.swing.JFrame {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, true, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
+        blendStockHistoryTbl.setRowHeight(24);
         jScrollPane9.setViewportView(blendStockHistoryTbl);
         if (blendStockHistoryTbl.getColumnModel().getColumnCount() > 0) {
             blendStockHistoryTbl.getColumnModel().getColumn(0).setResizable(false);
+            blendStockHistoryTbl.getColumnModel().getColumn(0).setPreferredWidth(135);
             blendStockHistoryTbl.getColumnModel().getColumn(1).setResizable(false);
             blendStockHistoryTbl.getColumnModel().getColumn(1).setPreferredWidth(200);
             blendStockHistoryTbl.getColumnModel().getColumn(2).setResizable(false);
@@ -1106,17 +1154,17 @@ public class AdminPannel extends javax.swing.JFrame {
             blendStockHistoryTbl.getColumnModel().getColumn(5).setPreferredWidth(200);
         }
 
-        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel10.setText("Search History By Date Range");
-        jLabel10.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel11.setText("Start from");
-        jLabel11.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel11.setText("Starts from");
 
-        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel12.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel12.setText("To");
-        jLabel12.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         btnBlendGo.setText("Go");
         btnBlendGo.addActionListener(new java.awt.event.ActionListener() {
@@ -1148,18 +1196,18 @@ public class AdminPannel extends javax.swing.JFrame {
                 .addGroup(settingsBlendHistoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane9, javax.swing.GroupLayout.DEFAULT_SIZE, 1230, Short.MAX_VALUE)
                     .addGroup(settingsBlendHistoryPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addComponent(jLabel10)
+                        .addGap(144, 144, 144)
+                        .addComponent(jLabel11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(BlendStartDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGap(34, 34, 34)
+                        .addComponent(jLabel12)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(blendEndDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnBlendGo)
-                        .addGap(18, 18, 18)
+                        .addGap(30, 30, 30)
                         .addComponent(BtnCancelBlendHistory)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, settingsBlendHistoryPanelLayout.createSequentialGroup()
@@ -1179,7 +1227,7 @@ public class AdminPannel extends javax.swing.JFrame {
                     .addComponent(blendEndDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBlendGo)
                     .addComponent(BtnCancelBlendHistory))
-                .addGap(12, 12, 12)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnBlendHistoryReportGeneration, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1676,8 +1724,49 @@ public class AdminPannel extends javax.swing.JFrame {
             searchIngredientComboBox.setSelectedIndex(-1);
         }
     }
-    /* start of searchIngredientCombo method */
+    /* end of searchIngredientCombo method */
 
+    /* sttart of searchProductCombo method */
+    private void searchProductCombo() {
+        BlendDetails blendDetails = new BlendDetails();
+        String blendID = "";
+        String blendName = "";
+        int baseID = 0;
+        String base = "";
+        int ret = 0;
+
+        if (searchBlendComboBox.getSelectedIndex() == -1) {
+            JOptionPane.showMessageDialog(null, "Please Select a Blend");
+        } else {
+            try {
+                blendName = searchBlendComboBox.getSelectedItem().toString();
+                blendID = blend.getBlendIDByBlendName(blendName);
+                blendDetails.blendNameTxt.setText(blendName);
+
+                Blend blend = new Blend();
+                baseID = blend.getBaseByBlendID(blendID);
+                base = blend.getIngByBaseName(baseID);
+
+                blendDetails.baseCombo.setSelectedItem(base);
+
+                ingredient.populateBlendIngTable((DefaultTableModel) blendDetails.ingTable.getModel(), blendID);
+                ingredient.populateBlendFlavourTable((DefaultTableModel) blendDetails.flavourTable.getModel(), blendID);
+
+                blendDetails.ingCombo.setSelectedIndex(-1);
+                blendDetails.ingCombo.requestFocus();
+                blendDetails.flavoursCombo.setSelectedIndex(-1);
+                blendDetails.flavoursCombo.requestFocus();
+                blendDetails.setVisible(true);
+                JOptionPane.showMessageDialog(this, "Please Change Blend Name with New Blend Code to Update");
+                blendDetails.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                orderSearchCombo.setSelectedIndex(-1);
+            } catch (NullPointerException e) {
+                JOptionPane.showMessageDialog(this, "You haven't select any blend !", "Empty Selection", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+    /* end of searchProductCombo method */
+    
     private void orderSearchComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderSearchComboActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_orderSearchComboActionPerformed
@@ -1772,6 +1861,40 @@ public class AdminPannel extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnBlendHistoryReportGenerationActionPerformed
 
+    private void loadBlendDetails(int row){
+        
+        Blend blendDetails = new Blend();
+        
+        blendDetails.setBlendID((String) productTable.getValueAt(row,0));
+        blendDetails.setBlendName((String) productTable.getValueAt(row, 1));
+        blendDetails.setBaseName((String) productTable.getValueAt(row, 2));
+        
+        blendDetails.setBlendName(blendDetails.getBlendName().replace("'", "\\'"));
+        blendDetails.setBaseName(blendDetails.getBaseName().replace("'", "\\'"));
+        
+        blendNameLbl.setText(blendDetails.getBlendName());
+        blendBaseLbl.setText(blendDetails.getBaseName());
+        
+        boolean load = blendDetails.loadBlendIngredientDetails((DefaultTableModel) blendDetailsTbl.getModel());
+        
+        if (load){
+            
+            load = blendDetails.loadBlendFlavourDetails((DefaultTableModel) blendDetailsTbl.getModel());
+            
+            if (load){
+            
+                blendDetails.getBlendCatgFromBlendName();
+                blendCatgLbl.setText(blendDetails.getBlendCategory());
+                
+            }else{
+            
+            }
+        }else{
+        
+        } 
+        
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -1816,9 +1939,12 @@ public class AdminPannel extends javax.swing.JFrame {
     private javax.swing.JButton addNewBlendsBtn;
     private javax.swing.JButton addProductBtn;
     private javax.swing.JButton addUserBtn;
+    private javax.swing.JLabel blendBaseLbl;
+    private javax.swing.JLabel blendCatgLbl;
     private javax.swing.JButton blendDeliveryBtn;
     private javax.swing.JTable blendDetailsTbl;
     private org.jdesktop.swingx.JXDatePicker blendEndDate;
+    private javax.swing.JLabel blendNameLbl;
     public javax.swing.JTable blendStockHistoryTbl;
     private javax.swing.JButton btnBlendGo;
     private javax.swing.JButton btnBlendHistoryReportGeneration;
@@ -1840,7 +1966,10 @@ public class AdminPannel extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

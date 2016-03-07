@@ -91,86 +91,56 @@ public class StockHistory {
 
     /* start of populateStockIngredientHistoryTable method */
     public void populateStockIngredientHistoryTable(DefaultTableModel tableModel) {
+        String date;
+        ResultArray res = null;
 
-        Connection connection = null;
-        ResultSet resultSet = null;
+        String query = "SELECT S.date,I.ingName,S.oldQty,S.updatedQty,S.reason,U.username "
+                + "FROM ingredient I, ingredientstockhistory S, user U "
+                + "WHERE S.updatedBy=U.userID AND S.ingID=I.ingID";
+        
+        res = dbConn.getResultArray(query);
+        tableModel.setRowCount(0);
 
-        try {
-            String query = "SELECT S.date,I.ingName,S.oldQty,S.updatedQty,S.reason,U.username FROM ingredient I, ingredientstockhistory S, user U WHERE S.updatedBy=U.userID AND S.ingID=I.ingID";
+        while (res.next()) {
+            Vector newRow = new Vector();
+            date = res.getString(0);
+            date = date.substring(0, date.indexOf('.'));
+            newRow.addElement(date);
+            newRow.addElement(res.getString(1));
+            newRow.addElement(res.getString(2));
+            newRow.addElement(res.getString(3));
+            newRow.addElement(res.getString(4));
+            newRow.addElement(res.getString(5));
 
-            connection = dbConn.setConnection();
-            resultSet = dbConn.getResult(query, connection);
-
-            tableModel.setRowCount(0);
-
-            while (resultSet.next()) {
-                Vector newRow = new Vector();
-                for (int i = 1; i <= 6; i++) {
-                    newRow.addElement(resultSet.getObject(i));
-                }
-                tableModel.addRow(newRow);
-            }
-
-        } catch (Exception e) {
-            System.err.println("stckhis 96 err : " + e);
-        } finally {
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (Exception e) {
-                    System.err.println("Resultset close error : " + e);
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (Exception e) {
-                    System.err.println("Connection close error : " + e);
-                }
-            }
+            tableModel.addRow(newRow);
         }
     }
     /* end of populateStockIngredientHistoryTable method */
 
     /* start of populateStockBlendHistoryTable method */
     public void populateStockBlendHistoryTable(DefaultTableModel tableModel) {
+        String date;
+        ResultArray res = null;
 
-        Connection connection = null;
-        ResultSet resultSet = null;
+        String query = "SELECT S.date,B.blendName,S.oldQty,S.updatedQty,S.reason,U.username "
+                + "FROM blend B, blendstockhistory S, user U "
+                + "WHERE S.updatedBy=U.userID AND S.blendID=B.blendID";
+        
+        res = dbConn.getResultArray(query);
+        tableModel.setRowCount(0);
 
-        try {
-            String query = "SELECT S.date,B.blendName,S.oldQty,S.updatedQty,S.reason,U.username FROM blend B, blendstockhistory S, user U WHERE S.updatedBy=U.userID AND S.blendID=B.blendID";
+        while (res.next()) {
+            Vector newRow = new Vector();
+            date = res.getString(0);
+            date = date.substring(0, date.indexOf('.'));
+            newRow.addElement(date);
+            newRow.addElement(res.getString(1));
+            newRow.addElement(res.getString(2));
+            newRow.addElement(res.getString(3));
+            newRow.addElement(res.getString(4));
+            newRow.addElement(res.getString(5));
 
-            connection = dbConn.setConnection();
-            resultSet = dbConn.getResult(query, connection);
-
-            tableModel.setRowCount(0);
-
-            while (resultSet.next()) {
-                Vector newRow = new Vector();
-                for (int i = 1; i <= 6; i++) {
-                    newRow.addElement(resultSet.getObject(i));
-                }
-                tableModel.addRow(newRow);
-            }
-
-        } catch (Exception e) {
-            System.err.println("stckhis 139 err : " + e);
-        } finally {
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (Exception e) {
-                    System.err.println("Resultset close error : " + e);
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (Exception e) {
-                    System.err.println("Connection close error : " + e);
-                }
-            }
+            tableModel.addRow(newRow);
         }
     }
     /* end of populateStockBlendHistoryTable method */

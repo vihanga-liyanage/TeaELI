@@ -357,7 +357,7 @@ public class OrderDetails extends javax.swing.JFrame  {
             try{
                 additional = Double.parseDouble(str);
                 if(additional < 0){
-                    JOptionPane.showMessageDialog(this, "<html>Please enter only positive numbers for the additional qty column at row number <b>" +(i+1)+ "!</b>.</html>", "Invalid Input", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "<html>Please enter only positive numbers for the additional qty column at row number <b>" +(i+1)+ "</b>!</html>", "Invalid Input", JOptionPane.WARNING_MESSAGE);
                     return;
                 }
             }catch(NumberFormatException ex){
