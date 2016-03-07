@@ -246,7 +246,7 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
             }
 
             newRow.addElement(formatNum(balance));
-            newRow.addElement(0);
+            newRow.addElement("0.0");
             newRow.addElement(formatNum(balance));
             newRow.addElement(row.get(6));
 
@@ -686,10 +686,16 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
             //placing orderIngredients and updating ingredient table
             readMasterPlanTbl();
 
-            OrderConfirmation oc = new OrderConfirmation(this);
+            DefaultTableModel model = (DefaultTableModel) masterPlanTbl.getModel();
+            //Removing entries of 0 balance
+            for (int i=0; i<model.getRowCount(); i++) {
+                if (parseFloat(model.getValueAt(i, 6).toString()) <= 0) {
+                    model.removeRow(i);
+                }
+            }
 
             //Generating master plan PDF
-            DefaultTableModel model = (DefaultTableModel) masterPlanTbl.getModel();
+            
             JTable temp = new JTable(model);
             temp.setAutoCreateRowSorter(true);
             temp.getRowSorter().toggleSortOrder(8);
@@ -698,8 +704,8 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
             String[] data = {orderIDLabel.getText(), formatter.format(today)};
             pdf.generateMasterPlanPDF(temp, data);
 
+            OrderConfirmation oc = new OrderConfirmation(this);
             oc.setVisible(true);
-
             oc.pannel = this.pannel;
             createNewBlendOrder1.dispose();
             //this.dispose();

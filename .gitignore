@@ -18,3 +18,5 @@ hs_err_pid*
 
 /src/classes/DBConnection.java
 
+#db files
+*.sqlite

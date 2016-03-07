@@ -219,10 +219,15 @@ public class Ingredient {
 
     /* start of populateIngredientTable method */
     public void populateIngredientTable(DefaultTableModel tableModel) {
+        
         ResultArray resultSet;
+        
         String query = "SELECT ing.categoryName , i.ingName,i.visibleStock,i.invisibleStock FROM ingredient i JOIN ingredientcategory ing ON i.ingCategoryID = ing.ingCategoryID ORDER BY ing.categoryName,i.ingName ";
+        
         resultSet = dbConn.getResultArray(query);
+        
         tableModel.setRowCount(0);
+        
         while (resultSet.next()) {
             Vector newRow = new Vector();
             for (int i = 0; i <= 4; i++) {
@@ -231,6 +236,7 @@ public class Ingredient {
             tableModel.addRow(newRow);
         }
     }
+    /* */
     
     //Populate Blend detail's ingredients table according to blend
     public void populateBlendIngTable(DefaultTableModel tableModel, String blendID){
@@ -340,12 +346,6 @@ public class Ingredient {
 
         boolean updated = false;
 
-        //set current date
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date currentDate = Calendar.getInstance().getTime();
-        dateFormat.format(currentDate);
-        Timestamp date = new Timestamp(currentDate.getTime());
-
         //get user id 
         User updatedUser = new User();
         updatedUser.getIDByUsername();
@@ -362,7 +362,9 @@ public class Ingredient {
             if (i == 1) {
 
                 //query to inesrt into stock history
-                query = "INSERT INTO ingredientstockhistory VALUES ('0','" + this.getIngID() + "','" + date + "','" + this.getOldStockQty() + "','" + this.getUpdatedStockQTy() + "','" + this.getStockUpdateReason() + "','" + updatedUser.getUserID() + "')";
+                query = "INSERT INTO ingredientstockhistory"
+                        + "(`ingID`, `oldQty`, `updatedQty`, `reason`, `updatedBy`)"
+                        + " VALUES ('" + this.getIngID() + "', '" + this.getOldStockQty() + "','" + this.getUpdatedStockQTy() + "','" + this.getStockUpdateReason() + "','" + updatedUser.getUserID() + "')";
 
                 i = dbConn.updateResult(query);
 
