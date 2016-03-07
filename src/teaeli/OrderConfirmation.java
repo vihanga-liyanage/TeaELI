@@ -6,13 +6,17 @@
 package teaeli;
 
 import classes.Ingredient;
+import classes.PDF;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import java.awt.Desktop;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -22,6 +26,7 @@ import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -39,17 +44,24 @@ public class OrderConfirmation extends javax.swing.JFrame {
     List<List> mainList;
     List<List> mainList2;
     Set<String> supplierList;
+    List totalList;
+    List taxList;
+    List discountList;
+    PDF pdf;
+    String orderID = "";
 
     /**
      * Creates new form OrderConfirmation
      */
-    public OrderConfirmation(CreateNewBlendOrder2 cnb) { // pass CreateNewBlendOrder2 object to get the master list in the interface
+    public OrderConfirmation(CreateNewBlendOrder2 cnb, String orderID) { // pass CreateNewBlendOrder2 object to get the master list in the interface
         initComponents();
         this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
 
         setResizable(false);
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
+        //set orderID
+        this.orderID = orderID;
         //set supplier names in the table
         supplierList = getSupplierNames(cnb);
         DefaultTableModel model = (DefaultTableModel) tblMasterPlanEditingView.getModel();
@@ -62,9 +74,6 @@ public class OrderConfirmation extends javax.swing.JFrame {
         //method for view supplierwise details when supplier name is seleced in the table
         final ListSelectionModel selectionalModForSupplierwiseTable = tblMasterPlanEditingView.getSelectionModel();
         selectionalModForSupplierwiseTable.addListSelectionListener(new ListSelectionListener() {
-
-            
-
 
             DefaultTableModel tpmodel = (DefaultTableModel) supplierWiseOrderDetailsTbl.getModel();
 
@@ -79,7 +88,6 @@ public class OrderConfirmation extends javax.swing.JFrame {
             }
 
         });
-
 
         //enabling sorting
         tblMasterPlanEditingView.setAutoCreateRowSorter(true);
@@ -148,13 +156,14 @@ public class OrderConfirmation extends javax.swing.JFrame {
     public void viewPOOrder(int rowid, List<List> mainList, DefaultTableModel tpmodel) {
         List lst = mainList.get(rowid);
 
-
         for (int i = 0; i < lst.size(); i++) {
             if (i % 2 == 0) {
                 float unitPrice = parseFloat(ing.getUnitPriceByIngName(lst.get(i).toString()));
                 float qty = parseFloat(lst.get(i + 1).toString());
                 float total = (qty / 1000) * unitPrice;
-                tpmodel.addRow(new Object[]{lst.get(i), lst.get(i + 1), unitPrice, total});
+                String unitPriceString = formatNum(Float.toString(unitPrice));
+                String totalString = formatNum(Float.toString(total));
+                tpmodel.addRow(new Object[]{lst.get(i), lst.get(i + 1), unitPriceString, totalString});
 
             }
         }
@@ -163,24 +172,50 @@ public class OrderConfirmation extends javax.swing.JFrame {
 
     public List<List> setUnitPriceAndTotal() {
         mainList2 = new ArrayList<List>();
+        totalList = new ArrayList();
 
         for (List lst : this.mainList) {
+            float fullTotal = 0;
             List<String> unitPriceAndTotalList = new ArrayList<String>();
             for (int i = 0; i < lst.size(); i++) {
-
                 if (i % 2 == 0) {
                     float unitPrice = parseFloat(ing.getUnitPriceByIngName(lst.get(i).toString()));
                     float qty = parseFloat(lst.get(i + 1).toString());
                     float total = (qty / 1000) * unitPrice;
-                    unitPriceAndTotalList.add(Float.toString(unitPrice));
-                    unitPriceAndTotalList.add(Float.toString(total));
-
+                    unitPriceAndTotalList.add(formatNum(Float.toString(unitPrice)));
+                    unitPriceAndTotalList.add(formatNum(Float.toString(total)));
+                    fullTotal += total;
                 }
             }
+            totalList.add(fullTotal);
             mainList2.add(unitPriceAndTotalList);
         }
 
         return mainList2;
+    }
+
+    public List getDiscounts() {
+        discountList = new ArrayList();
+        String errorDiscount = "0";
+        for (int i = 0; i < tblMasterPlanEditingView.getRowCount(); i++) {
+            float discount = Float.parseFloat(tblMasterPlanEditingView.getValueAt(i, 1).toString());
+            if (discount < 0 || discount >= 100) {
+                errorDiscount = "1";
+            }
+            if (errorDiscount == "0") {
+                discountList.add(tblMasterPlanEditingView.getValueAt(i, 1));
+            }
+        }
+        discountList.add(errorDiscount);
+        return discountList;
+    }
+
+    public List getTaxes() {
+        taxList = new ArrayList();
+        for (int i = 0; i < tblMasterPlanEditingView.getRowCount(); i++) {
+            taxList.add(tblMasterPlanEditingView.getValueAt(i, 2));
+        }
+        return taxList;
     }
 
     //overiding Float.parseFloat() to accept nums with commas
@@ -194,6 +229,26 @@ public class OrderConfirmation extends javax.swing.JFrame {
             }
         }
         return 0;
+    }
+
+    private String formatNum(String num) {
+        String decimal = num, point = null;
+        if (num.contains(".")) {
+            String[] temp = num.split("\\.");
+            decimal = temp[0];
+            point = temp[1];
+        }
+        int i = decimal.length();
+        while (i > 3) {
+            String part1 = decimal.substring(0, i - 3);
+            String part2 = decimal.substring(i - 3);
+            decimal = part1 + "," + part2;
+            i -= 3;
+        }
+        if (point != null) {
+            decimal += "." + point;
+        }
+        return decimal;
     }
 
     /**
@@ -379,68 +434,51 @@ public class OrderConfirmation extends javax.swing.JFrame {
     private void generatePdfBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generatePdfBtnActionPerformed
         //generating pdfs
         setUnitPriceAndTotal();
-        int count = 0;
-        String[] supNameArray = this.supplierList.toArray(new String[this.supplierList.size()]);
-        for (List lst : this.mainList) {
-            int listCounter = 0;
-            Document doc = new Document();
-            try {
-
-                String suppName = supNameArray[count];
-                String fileName = suppName.concat(".pdf");
-                PdfWriter.getInstance(doc, new FileOutputStream(fileName));
-            } catch (DocumentException ex) {
-                //Logger.getLogger(OrderConfirmation.class.getName()).log(Level.SEVERE, null, ex);
-                System.out.println("DocumentException : " + ex);
-            } catch (FileNotFoundException ex) {
-                //Logger.getLogger(OrderConfirmation.class.getName()).log(Level.SEVERE, null, ex);
-                System.out.println("FileNotFoundException : " + ex);
-            }
-            doc.open();
-            try {
-                doc.add(new Paragraph("test doc"));
-                PdfPTable table = new PdfPTable(4);
-                table.addCell("Ingredient Name");
-                table.addCell("Quantity");
-                table.addCell("Price");
-                table.addCell("total");
-
-                List lst2 = mainList2.get(count);
-                for (int i = 0; i < lst.size(); i++) {
-                    table.addCell(lst.get(i).toString());
-                    table.addCell(lst2.get(i).toString());
-                }
-                /*
-                for (int j = 0; j < lst.size(); j++) {
-                    
-                }*/
-                
-
-                doc.add(table);
-            } catch (DocumentException ex) {
-                //Logger.getLogger(OrderConfirmation.class.getName()).log(Level.SEVERE, null, ex);
-                System.out.println("DocumentException : " + ex);
-            }
-            doc.close();
-            count++;
-
+        if (tblMasterPlanEditingView.getCellEditor() != null) {
+            tblMasterPlanEditingView.getCellEditor().stopCellEditing();
         }
+        getDiscounts();
+        int lastIndex = discountList.size() - 1;
+        String errorDiscount = discountList.get(lastIndex).toString();
+        if (errorDiscount == "1") {
+            System.out.println("inside if");
+            JOptionPane.showMessageDialog(null, "Discount cannot be greater than 100 !!!", "Error Value for discount", 0);
+        }else{
+             getTaxes();
 
-        /*
-         //Re-generating the admin panel since the data is changed
-         if ("teaeli.AdminPannel".equals(pannel.getClass().getName())) {
-         AdminPannel adminPannel = new AdminPannel();
-         adminPannel.setVisible(true);
-         AdminPannel old = (AdminPannel) pannel;
-         old.dispose();
-         } else if ("teaeli.ManagerPannel".equals(pannel.getClass().getName())) {
-         ManagerPannel managerPannel = new ManagerPannel();
-         managerPannel.setVisible(true);
-         ManagerPannel old = (ManagerPannel) pannel;
-         old.dispose();
-         }
-         this.dispose();
-         */
+        pdf = new PDF();
+        try {
+           int pdfOK = pdf.generateSupplierwisePO(supplierList, mainList, mainList2, orderID, discountList, taxList, totalList);
+
+           if(pdfOK == 1){
+               JOptionPane.showMessageDialog(null, "Purchase orders saved.", "Purchase orders ", 1);
+                      
+           }else{
+           JOptionPane.showMessageDialog(null, "Purchase orders didn't saved", "Error Occured", 0);
+           
+           }
+            /*
+             //Re-generating the admin panel since the data is changed
+             if ("teaeli.AdminPannel".equals(pannel.getClass().getName())) {
+             AdminPannel adminPannel = new AdminPannel();
+             adminPannel.setVisible(true);
+             AdminPannel old = (AdminPannel) pannel;
+             old.dispose();
+             } else if ("teaeli.ManagerPannel".equals(pannel.getClass().getName())) {
+             ManagerPannel managerPannel = new ManagerPannel();
+             managerPannel.setVisible(true);
+             ManagerPannel old = (ManagerPannel) pannel;
+             old.dispose();
+             }
+             this.dispose();
+             */
+        } catch (IOException ex) {
+            Logger.getLogger(OrderConfirmation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        }
+        
+       
     }//GEN-LAST:event_generatePdfBtnActionPerformed
 
     /**

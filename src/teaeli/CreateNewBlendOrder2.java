@@ -128,6 +128,7 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
 
         //Prompt confirmation on window close
         this.addWindowListener(new WindowAdapter() {
+            @Override
             public void windowClosing(WindowEvent e) {
                 int confirmed = JOptionPane.showConfirmDialog(null,
                         "Are you sure you want to close the window?\nAll data you entered will be lost.", 
@@ -156,6 +157,7 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
     private void populateMasterPlanTbl() {
         for (int i = 0; i < blendListTbl.getRowCount(); i++) {
             String blendName = blendListTbl.getValueAt(i, 0).toString();
+            blendName = blendName.replace("'", "\\'");
             int blendQty = parseInt(blendListTbl.getValueAt(i, 1).toString());
             if (blendQty > 0) {
                 ResultArray res = blend.getRecipie(blendName);
@@ -183,6 +185,7 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
     //method to reset excess qty
     private void setExcessQty(int row) {
         String ingName = masterPlanTbl.getValueAt(row, 0).toString();
+        ingName = ingName.replace("'", "\\'");
         float requiredQty = parseFloat(masterPlanTbl.getValueAt(row, 4).toString());
         if (new Validation().isFloat(masterPlanTbl.getValueAt(row, 6).toString())) {
             float finalQty = parseFloat(masterPlanTbl.getValueAt(row, 6).toString());
@@ -333,6 +336,7 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
         DefaultTableModel model = createNewBlendOrder1.getBlendListTbl();
         for (int i = 0; i < model.getRowCount(); i++) {
             String blendName = model.getValueAt(i, 0).toString();
+            blendName = blendName.replace("'", "\\'");
             int reqQty = (parseInt(model.getValueAt(i, 1).toString()));
             int visibleStock = parseInt(model.getValueAt(i, 2).toString());
             int invisibleStock = parseInt(model.getValueAt(i, 3).toString());
@@ -374,6 +378,7 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) masterPlanTbl.getModel();
         for (int i = 0; i < model.getRowCount(); i++) {
             String ingName = model.getValueAt(i, 0).toString();
+            ingName = ingName.replace("'", "\\'");
             float reqQty = (parseFloat(model.getValueAt(i, 1).toString()));
             float visibleStock = parseFloat(model.getValueAt(i, 2).toString());
             float invisibleStock = parseFloat(model.getValueAt(i, 3).toString());
@@ -686,6 +691,10 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
             //placing orderIngredients and updating ingredient table
             readMasterPlanTbl();
 
+            String orderId = orderIDLabel.getText();
+            OrderConfirmation oc = new OrderConfirmation(this,orderId);
+
+
             DefaultTableModel model = (DefaultTableModel) masterPlanTbl.getModel();
             //Removing entries of 0 balance
             for (int i=0; i<model.getRowCount(); i++) {
@@ -693,6 +702,7 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
                     model.removeRow(i);
                 }
             }
+
 
             //Generating master plan PDF
             
@@ -704,7 +714,7 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
             String[] data = {orderIDLabel.getText(), formatter.format(today)};
             pdf.generateMasterPlanPDF(temp, data);
 
-            OrderConfirmation oc = new OrderConfirmation(this);
+            
             oc.setVisible(true);
             oc.pannel = this.pannel;
             createNewBlendOrder1.dispose();

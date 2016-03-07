@@ -88,7 +88,7 @@ public class User {
 
     //method to remove user from the user table in the admin pannel(completely remove user from the system)
     public int removeUser(int id) {
-        String query = "DELETE FROM user WHERE userID = " + id;
+        String query = "DELETE FROM user WHERE userID = '" + id + "'";
         int rslt = dbConn.updateResult(query);
         return rslt;
     }

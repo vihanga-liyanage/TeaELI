@@ -7,11 +7,20 @@
 package teaeli;
 
 import classes.Order;
+import classes.PDF;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.DefaultTableModel;
 /**
  *
@@ -20,22 +29,31 @@ import javax.swing.table.DefaultTableModel;
 public class OrderDetails extends javax.swing.JFrame  {
     Order order = new Order();
     private AdminPannel adminPannel;
+    private PDF pdf;
 
     public void setAdminPannel(AdminPannel adminPannel) {
         this.adminPannel = adminPannel;
     }
     
     public OrderDetails() {
-        initComponents();
+        //Add windows look and feel
+        try {
+            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+            Logger.getLogger(AdminPannel.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
-        Dimension screenSize,frameSize;
+        initComponents();
+        this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
+        
+        /*Dimension screenSize,frameSize;
         int x,y;
         screenSize=Toolkit.getDefaultToolkit().getScreenSize();
         frameSize=getSize();
         x=(screenSize.width-frameSize.width)/4;
         y=(screenSize.height-frameSize.height)/4;
         setLocation(x, y);
-        setResizable(false);
+        setResizable(false);*/
         
         //Adding listner to prompt confirmation on window close
         this.addWindowListener(new WindowAdapter() {
@@ -47,6 +65,14 @@ public class OrderDetails extends javax.swing.JFrame  {
                 }
             }
         });
+        pdf = new PDF();
+        
+        //enabling sorting for tables
+        blendTable.setAutoCreateRowSorter(true);
+        orderDetailsTable.setAutoCreateRowSorter(true);
+        
+        //Hiding the ingredient category column from the orderDetailsTable
+        orderDetailsTable.removeColumn(orderDetailsTable.getColumn(orderDetailsTable.getColumnName(8)));
     }
 
     /**
@@ -88,17 +114,17 @@ public class OrderDetails extends javax.swing.JFrame  {
         orderDetailsTable.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         orderDetailsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Ingredient", "Required Qty (g)", "Excess Qty (g)", "Additional Qty (g)", "Remarks", "Supplier"
+                "Ingredient", "Required Qty (g)", "Visible Stock (g)", "Invisible Stock (g)", "Balance", "Excess Qty (g)", "Final Order", "Supplier", "Category", "Additional Qty (g)", "Remarks"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Double.class, java.lang.String.class, java.lang.Object.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Double.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, true, true, false
+                false, false, false, false, false, false, false, false, false, true, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -114,7 +140,7 @@ public class OrderDetails extends javax.swing.JFrame  {
         if (orderDetailsTable.getColumnModel().getColumnCount() > 0) {
             orderDetailsTable.getColumnModel().getColumn(0).setResizable(false);
             orderDetailsTable.getColumnModel().getColumn(0).setPreferredWidth(200);
-            orderDetailsTable.getColumnModel().getColumn(5).setPreferredWidth(200);
+            orderDetailsTable.getColumnModel().getColumn(7).setPreferredWidth(200);
         }
 
         blendLabel.setFont(new java.awt.Font("Segoe UI Semibold", 0, 16)); // NOI18N
@@ -123,14 +149,14 @@ public class OrderDetails extends javax.swing.JFrame  {
         blendTable.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         blendTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null}
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Blend Code", "Blend Name", "Required Qty (g)", "Excess Qty (g)"
+                "Blend Code", "Blend Name", "Required Qty (g)", "Visible Stock (g)", "Invisible Stock (g)", "Balance", "Excess Qty (g)"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -237,13 +263,6 @@ public class OrderDetails extends javax.swing.JFrame  {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 846, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 846, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(blendLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(rawMaterialLbl, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -256,7 +275,14 @@ public class OrderDetails extends javax.swing.JFrame  {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(orderReceivedBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(updateOrderBtn)))
+                        .addComponent(updateOrderBtn))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1048, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 1048, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(blendLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(rawMaterialLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -265,14 +291,14 @@ public class OrderDetails extends javax.swing.JFrame  {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(blendLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(rawMaterialLbl)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(updateOrderBtn)
@@ -311,21 +337,29 @@ public class OrderDetails extends javax.swing.JFrame  {
     }//GEN-LAST:event_cancelBtnActionPerformed
 
     private void updateOrderBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateOrderBtnActionPerformed
-        orderDetailsTable.getCellEditor().stopCellEditing();
+        try{
+          orderDetailsTable.getCellEditor().stopCellEditing();  
+        }catch(NullPointerException ex){
+            
+        }
         for(int i = 0; i < orderDetailsTable.getRowCount(); i++){
             double additional = 0;
             String str,remark = "";
             
             try{
-                str = orderDetailsTable.getValueAt(i, 3).toString();
-                remark = orderDetailsTable.getValueAt(i, 4).toString();
+                str = orderDetailsTable.getValueAt(i, 8).toString();
+                remark = orderDetailsTable.getValueAt(i, 9).toString();
             }catch(NullPointerException e){
                 str = "0";
                 remark = "";
             }
             
             try{
-                additional = Double.parseDouble(str);  
+                additional = Double.parseDouble(str);
+                if(additional < 0){
+                    JOptionPane.showMessageDialog(this, "<html>Please enter only positive numbers for the additional qty column at row number <b>" +(i+1)+ "</b>!</html>", "Invalid Input", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
             }catch(NumberFormatException ex){
                 additional = 0;
             }
@@ -335,8 +369,18 @@ public class OrderDetails extends javax.swing.JFrame  {
             
             int result = order.updateOrderRowWise(orderID, additional, remark, ing);
         }
-        JOptionPane.showMessageDialog(this, "Values saved successfully !", "Update Success", 1);
+        JOptionPane.showMessageDialog(this, "Values saved successfully !\nThe new RM Master plan PDF will be replaced with the old one", "Update Success", 1);
         order.viewOrder((DefaultTableModel) blendTable.getModel(), (DefaultTableModel) orderDetailsTable.getModel(), orderIDLabel.getText());
+        
+        //Generating updated master plan PDF
+        DefaultTableModel model = (DefaultTableModel) orderDetailsTable.getModel();
+        JTable temp = new JTable(model);
+        temp.setAutoCreateRowSorter(true);
+        temp.getRowSorter().toggleSortOrder(8);
+        DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+        Date today = new Date();
+        String[] data = {orderIDLabel.getText(), formatter.format(today)};
+        pdf.generateMasterPlanPDF(temp, data);
     }//GEN-LAST:event_updateOrderBtnActionPerformed
 
     private void orderReceivedBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderReceivedBtnActionPerformed

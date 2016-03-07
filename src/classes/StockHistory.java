@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
 import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
@@ -20,6 +21,7 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
 import teaeli.AdminPannel;
@@ -102,14 +104,9 @@ public class StockHistory {
 
         while (res.next()) {
             Vector newRow = new Vector();
-            date = res.getString(0);
-            //date = date.substring(0, date.indexOf('.'));
-            newRow.addElement(date);
-            newRow.addElement(res.getString(1));
-            newRow.addElement(res.getString(2));
-            newRow.addElement(res.getString(3));
-            newRow.addElement(res.getString(4));
-            newRow.addElement(res.getString(5));
+            for (int i = 0; i <= 5; i++) {
+                newRow.addElement(res.getString(i));
+            }
 
             tableModel.addRow(newRow);
         }
@@ -130,15 +127,9 @@ public class StockHistory {
 
         while (res.next()) {
             Vector newRow = new Vector();
-            date = res.getString(0);
-            //date = date.substring(0, date.indexOf('.'));
-            newRow.addElement(date);
-            newRow.addElement(res.getString(1));
-            newRow.addElement(res.getString(2));
-            newRow.addElement(res.getString(3));
-            newRow.addElement(res.getString(4));
-            newRow.addElement(res.getString(5));
-
+            for (int i = 0; i <= 5; i++) {
+                newRow.addElement(res.getString(i));
+            }
             tableModel.addRow(newRow);
         }
     }
@@ -311,7 +302,7 @@ public class StockHistory {
                 p.waitFor();
             }
 
-        } catch (Exception ex) {
+        } catch (DocumentException | IOException | InterruptedException ex) {
             System.out.println(ex);
             JOptionPane.showMessageDialog(admin, "File already exists!!!");
         }
@@ -401,7 +392,7 @@ public class StockHistory {
                 p.waitFor();
             }
 
-        } catch (Exception ex) {
+        } catch (DocumentException | IOException | InterruptedException ex) {
             System.out.println(ex);
             JOptionPane.showMessageDialog(admin, "File already exists!!!");
         }
