@@ -48,6 +48,7 @@ public class Supplier {
 
     }
 
+
     
     
    public int addNewSupplier(String Name) throws SQLException {
@@ -59,6 +60,7 @@ public class Supplier {
     } 
     
         //start of get suplier id by name
+
 
     public int getSupplierIDByName(String supplierName) throws SQLException {
 

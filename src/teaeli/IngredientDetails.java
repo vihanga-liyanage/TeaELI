@@ -13,13 +13,9 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 public class IngredientDetails extends javax.swing.JFrame {
 
+    public Object pannel;
     private Ingredient ingredient = new Ingredient();
     private Supplier supplier = new Supplier();
-    private AdminPannel adminPannel;
-    
-    public void setAdminPannel(AdminPannel adminPannel) {
-        this.adminPannel = adminPannel;
-    }
 
     public IngredientDetails() {
         //Add windows look and feel
@@ -42,12 +38,11 @@ public class IngredientDetails extends javax.swing.JFrame {
     }
 
     //method to refresh related tables and close this window
-    private void close(){
+    private void close() {
         this.setVisible(false);
-        adminPannel.populateSettingsIngredientTable();       
         this.dispose();
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -273,7 +268,7 @@ public class IngredientDetails extends javax.swing.JFrame {
             //get supplier id by name
             String SupName = (String) this.supplierCombobox.getSelectedItem();
             int selecetdID = this.supplierCombobox.getSelectedIndex();
-            
+
             try {
                 supID = supplier.getSupplierIDByName(SupName);
             } catch (SQLException ex) {
@@ -290,7 +285,19 @@ public class IngredientDetails extends javax.swing.JFrame {
 
                 if (updateOK == 1) {
                     JOptionPane.showMessageDialog(null, "Ingredient updated successfully", "Successfully Updated", 1);
+                    //Re-generating the admin panel since the data is changed
                     
+                    if ("teaeli.AdminPannel".equals(pannel.getClass().getName())) {
+                        AdminPannel adminPannel = new AdminPannel();
+                        adminPannel.setVisible(true);
+                        AdminPannel old = (AdminPannel) pannel;
+                        old.dispose();
+                    } else if ("teaeli.ManagerPannel".equals(pannel.getClass().getName())) {
+                        ManagerPannel managerPannel = new ManagerPannel();
+                        managerPannel.setVisible(true);
+                        ManagerPannel old = (ManagerPannel) pannel;
+                        old.dispose();
+                    }
                     close();
                 } else {
                     JOptionPane.showMessageDialog(null, "Ingredient update is not successfull! Please retry. ", "Unable to update", 0);
@@ -299,7 +306,7 @@ public class IngredientDetails extends javax.swing.JFrame {
                 //Logger.getLogger(IngredientDetails.class.getName()).log(Level.SEVERE, null, ex);
                 System.out.println("sql error id:" + ex);
             }
-            
+
         } else if (response == JOptionPane.CLOSED_OPTION) {
             System.out.println("JOptionPane closed");
         }

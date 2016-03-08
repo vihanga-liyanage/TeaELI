@@ -82,7 +82,7 @@ public class AdminPannel extends javax.swing.JFrame {
         searchIngredientComboBox.setSelectedIndex(-1);
         
         //start of view all ingredients
-       populateSettingsIngredientTable();
+        populateSettingsIngredientTable();
         //end of view all ingredients
 
         /* populate inventryIngredientTable in inventory management*/
@@ -284,6 +284,7 @@ public class AdminPannel extends javax.swing.JFrame {
     public void populateSettingsIngredientTable() {
         DefaultTableModel model = (DefaultTableModel) settingsIngredientTable.getModel();
         ingredient.viewAllIngredients(model);
+        
         
     }
 
@@ -1678,13 +1679,14 @@ public class AdminPannel extends javax.swing.JFrame {
                 Logger.getLogger(AdminPannel.class.getName()).log(Level.SEVERE, null, ex);
             }
 
+            
             itemDetails.itemNameTxt.setText(resultArray[0]);
             itemDetails.setName(resultArray[1]); //set ingid as name
             itemDetails.itemTypeCombo.setSelectedItem(resultArray[2]);
             itemDetails.supplierCombobox.setSelectedItem(resultArray[3]);
             itemDetails.unitPriceTxt.setText(resultArray[4]);
 
-            itemDetails.setAdminPannel(this);
+            itemDetails.pannel = this;
             itemDetails.setVisible(true);
             itemDetails.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             searchIngredientComboBox.setSelectedIndex(-1);
