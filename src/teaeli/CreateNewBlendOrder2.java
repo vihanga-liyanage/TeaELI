@@ -364,7 +364,8 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
             } else {
                 visibleStock -= reqQty;
             }
-
+            invisibleStock += parseInt(excessQty);
+            
             //updating blend stock
             data = new String[]{String.valueOf(visibleStock), String.valueOf(invisibleStock), blendID};
             if (!blend.updateBlendStock(data)) {
@@ -406,7 +407,8 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
             } else {
                 visibleStock -= reqQty;
             }
-
+            invisibleStock += parseFloat(excessQty);
+            
             //updating ingredient stock
             data = new String[]{String.valueOf(visibleStock), String.valueOf(invisibleStock), ingID};
             if (!ingredient.updateIngredientStock(data)) {
@@ -691,21 +693,9 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
             //placing orderIngredients and updating ingredient table
             readMasterPlanTbl();
 
-            String orderId = orderIDLabel.getText();
-            OrderConfirmation oc = new OrderConfirmation(this,orderId);
-
-
             DefaultTableModel model = (DefaultTableModel) masterPlanTbl.getModel();
-            //Removing entries of 0 balance
-            for (int i=0; i<model.getRowCount(); i++) {
-                if (parseFloat(model.getValueAt(i, 6).toString()) <= 0) {
-                    model.removeRow(i);
-                }
-            }
-
 
             //Generating master plan PDF
-            
             JTable temp = new JTable(model);
             temp.setAutoCreateRowSorter(true);
             temp.getRowSorter().toggleSortOrder(8);
@@ -714,14 +704,21 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
             String[] data = {orderIDLabel.getText(), formatter.format(today)};
             pdf.generateMasterPlanPDF(temp, data);
 
+            //Removing entries of 0 balance
+            for (int i=0; i<model.getRowCount(); i++) {
+                if (parseFloat(model.getValueAt(i, 6).toString()) <= 0) {
+                    model.removeRow(i);
+                }
+            }
             
+            //Move into order confirmation
+            String orderId = orderIDLabel.getText();
+            OrderConfirmation oc = new OrderConfirmation(this, orderId);
             oc.setVisible(true);
             oc.pannel = this.pannel;
             createNewBlendOrder1.dispose();
-            this.dispose();
-            
+            this.setVisible(false);
         }
-
     }//GEN-LAST:event_confirmBtnActionPerformed
 
     private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
