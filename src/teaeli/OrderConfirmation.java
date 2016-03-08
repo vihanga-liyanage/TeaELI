@@ -124,9 +124,6 @@ public class OrderConfirmation extends javax.swing.JFrame {
             set.add(supName);
         }
         TreeSet sortedSet = new TreeSet<String>(set);
-        System.out.println(set);
-        System.out.println(sortedSet);
-
         return sortedSet;
     }
 
@@ -438,6 +435,7 @@ public class OrderConfirmation extends javax.swing.JFrame {
         String errorDiscount = discountList.get(lastIndex).toString();
         if (errorDiscount == "1") {
             System.out.println("inside if");
+
             JOptionPane.showMessageDialog(null, "Discount cannot be greater than 100!", "Error Value for discount", 0);
         }else{
             getTaxes();
@@ -479,6 +477,7 @@ public class OrderConfirmation extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Purchase orders didn't saved", "Error Occured", 0);
             }
         }
+
     }//GEN-LAST:event_generatePdfBtnActionPerformed
 
     /**

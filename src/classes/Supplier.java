@@ -33,26 +33,22 @@ public class Supplier {
         this.SupplierName = SupplierName;
     }
 
-    
     //start of load suppliers for combobox
-    public ResultSet loadSuppliersForCombobox() throws SQLException {
-         Connection connection = null;
-        ResultSet resultSet = null;
+    public ResultArray loadSuppliersForCombobox() throws SQLException {
+        ResultArray resultArray = new ResultArray();
 
         try {
-            connection = dbConn.setConnection();
-
             String query = "SELECT supName FROM supplier";
 
-            resultSet = dbConn.getResult(query, connection);
-
+            resultArray = dbConn.getResultArray(query);
         } catch (Exception e) {
-            System.err.println("");
+            System.err.println("SQL error : " + e);
         }
-        return resultSet;
-       
+        return resultArray;
+
     }
     //end of load suppliers for combobox
+<<<<<<< HEAD
     
     
    public int addNewSupplier(String Name) throws SQLException {
@@ -64,13 +60,44 @@ public class Supplier {
     } 
     
         //start of get suplier id by name
+=======
+
+    public int addNewSupplier(String Name) throws SQLException {
+        DBConnection dbConn = new DBConnection();
+        Connection connection = dbConn.setConnection();
+        Statement statement;
+        int insertOK = 0;
+
+        this.setSupplierName(Name.replace("'", "\\'"));
+
+        String query = "INSERT INTO supplier(supName) values('" + this.getSupplierName() + "')";
+        try {
+            statement = connection.createStatement();
+            insertOK = statement.executeUpdate(query);
+
+        } catch (Exception e) {
+            System.err.println("sup 70 err : " + e);
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (Exception e) {
+                    System.err.println("Connection close error : " + e);
+                }
+            }
+        }
+        return insertOK;
+    }
+
+    //start of get suplier id by name
+>>>>>>> fdc635bf41fa9bb7b518f9d78eb6477147202c0b
     public int getSupplierIDByName(String supplierName) throws SQLException {
-        
+
         int supplierID = 0;
 
         ResultArray resultArray;
-        
-        this.setSupplierName(supplierName.replace("'","\\'"));
+
+        this.setSupplierName(supplierName.replace("'", "\\'"));
 
         //set name of the ingredient
         String query = "SELECT supID from supplier WHERE supplier.supName= '" + this.getSupplierName() + "' ";
@@ -87,6 +114,5 @@ public class Supplier {
         return supplierID;
     }
     //end of get suplier id by name
-    
 
 }
