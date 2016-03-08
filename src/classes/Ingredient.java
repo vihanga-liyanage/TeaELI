@@ -362,6 +362,12 @@ public class Ingredient {
         try {
             //get ingID of the ingredient
             this.getIngIDFromIngName();
+            
+            //to get current date
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date currentDate = Calendar.getInstance().getTime();
+            dateFormat.format(currentDate);
+            Timestamp date = new Timestamp(currentDate.getTime());
 
             //query to update ingredient stock
             String query = "UPDATE ingredient SET visibleStock = '" + this.getVisibleStock() + "' WHERE ingID = '" + this.getIngID() + "'";
@@ -372,8 +378,8 @@ public class Ingredient {
 
                 //query to inesrt into stock history
                 query = "INSERT INTO ingredientstockhistory"
-                        + "(`ingID`, `oldQty`, `updatedQty`, `reason`, `updatedBy`)"
-                        + " VALUES ('" + this.getIngID() + "', '" + this.getOldStockQty() + "','" + this.getUpdatedStockQTy() + "','" + this.getStockUpdateReason() + "','" + updatedUser.getUserID() + "')";
+                        + "(`ingID`, `date`, `oldQty`, `updatedQty`, `reason`, `updatedBy`)"
+                        + " VALUES ('" + this.getIngID() + "', '" + date + "', '" + this.getOldStockQty() + "','" + this.getUpdatedStockQTy() + "','" + this.getStockUpdateReason() + "','" + updatedUser.getUserID() + "')";
 
                 i = dbConn.updateResult(query);
 
