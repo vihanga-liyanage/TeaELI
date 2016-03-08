@@ -301,12 +301,19 @@ public class Blend {
 
         boolean updated = false;
 
+        try{
         //get current user id
         User updatedUser = new User();
         updatedUser.getIDByUsername();
 
         //get blendID
         this.getBlendIDFromBlendName();
+
+        //to get current date
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date currentDate = Calendar.getInstance().getTime();
+        dateFormat.format(currentDate);
+        Timestamp date = new Timestamp(currentDate.getTime());
 
         //query to update blend stock
         String query = "UPDATE blend SET visibleStock = '" + this.getVisibleStock() + "' WHERE blendID = '" + this.getBlendID() + "'";
@@ -317,14 +324,17 @@ public class Blend {
 
             //query to insert into stock history table
             query = "INSERT INTO blendstockhistory "
-                    + "(`blendID`, `oldQty`, `updatedQty`, `reason`, `updatedBy`) "
-                    + "VALUES ('" + this.getBlendID() + "', '" + this.getOldStockQty() + "', '" + this.getUpdatedStockQTy() + "', '" + this.getStockUpdateReason() + "', '" + updatedUser.getUserID() + "')";
+                    + "(`blendID`, `date` , `oldQty`, `updatedQty`, `reason`, `updatedBy`) "
+                    + "VALUES ('" + this.getBlendID() + "', '" + date + "', '" + this.getOldStockQty() + "', '" + this.getUpdatedStockQTy() + "', '" + this.getStockUpdateReason() + "', '" + updatedUser.getUserID() + "')";
 
             i = dbConn.updateResult(query);
 
             if (i == 1) {
                 updated = true;
             }
+        }
+        }catch(Exception e){
+            System.err.println("Exception : " + e);
         }
         return updated;
     }
@@ -415,9 +425,9 @@ public class Blend {
         String query = "SELECT b.blendID, b.blendName, i.ingName FROM ingredient i JOIN blend b ON i.ingID = b.baseID ORDER BY b.blendName";
 
         resultArray = dbConn.getResultArray(query);
-        
+
         tModel.setRowCount(0);
-        
+
         while (resultArray.next()) {
             tModel.addRow(new Object[]{resultArray.getString(0), resultArray.getString(1), resultArray.getString(2)});
         }
@@ -494,7 +504,8 @@ public class Blend {
                 String reason = "Blend Deliver (From allocated stock) : " + this.getStockUpdateReason();
 
                 //query to insert into stock history table about delivered amount
-                query = "INSERT INTO blendstockhistory VALUES ('0','" + this.getBlendID() + "','" + date + "','"
+                query = "INSERT INTO blendstockhistory (`blendID`, `date`, `oldQty`, `updatedQty`, `reason`, `updatedBy`) "
+                        + "VALUES ('" + this.getBlendID() + "','" + date + "','"
                         + this.getOldStockQty() + "','" + this.getUpdatedStockQTy() + "','" + reason
                         + "','" + updatedUser.getUserID() + "')";
 
@@ -507,7 +518,9 @@ public class Blend {
                     reason = "Deliver Sample Amount (From free stock) : " + this.getStockUpdateReason();
 
                     //query to insert into stock history table about sample deliver amount
-                    query = "INSERT INTO blendstockhistory VALUES ('0','" + this.getBlendID() + "','" + date + "','"
+                    query = "INSERT INTO blendstockhistory "
+                            + "(`blendID`, `date`, `oldQty`, `updatedQty`, `reason`, `updatedBy`) "
+                            + "VALUES ('" + this.getBlendID() + "','" + date + "','"
                             + oldStock + "','" + updatedStock + "','" + reason + "','" + updatedUser.getUserID() + "')";
 
                     i = dbConn.updateResult(query);
@@ -520,8 +533,12 @@ public class Blend {
                         reason = "Undelivered Amount (To free stock) : " + this.getStockUpdateReason();
 
                         //query to insert into stock history table about ubdelivered amount
-                        query = "INSERT INTO blendstockhistory VALUES ('0','" + this.getBlendID() + "','" + date + "','"
+                        query = "INSERT INTO blendstockhistory "
+                                + "(`blendID`, `date`, `oldQty`, `updatedQty`, `reason`, `updatedBy`) "
+                                + "VALUES ('" + this.getBlendID() + "','" + date + "','"
                                 + oldStock + "','" + updatedStock + "','" + reason + "','" + updatedUser.getUserID() + "')";
+
+                        System.out.println("Unallocate query : " + query);
 
                         i = dbConn.updateResult(query);
 
@@ -597,12 +614,12 @@ public class Blend {
 
         Vector mainRow = new Vector();
         defaultTableModel.addRow(mainRow);
-        
+
         mainRow = new Vector();
         mainRow.addElement("Flavour");
         mainRow.addElement("Percentage (%)");
         defaultTableModel.addRow(mainRow);
-        
+
         while (resultArray.next()) {
             Vector newRow = new Vector();
             for (int i = 0; i <= 4; i++) {
@@ -614,17 +631,17 @@ public class Blend {
         return load;
     }
     /* end of loadBlendFlavourDetails method */
-    
+
     /* start of getBlendCatgFromBlendName method */
-    public void getBlendCatgFromBlendName(){
-        
+    public void getBlendCatgFromBlendName() {
+
         ResultArray resultArray;
-        
+
         String query = "SELECT blendCategory FROM blend WHERE blendName = '" + this.getBlendName() + "'";
-        
+
         resultArray = dbConn.getResultArray(query);
-        
-        if(resultArray.next()){
+
+        if (resultArray.next()) {
             this.setBlendCategory(resultArray.getString(0));
         }
     }
