@@ -257,7 +257,7 @@ public class AddIngredient extends javax.swing.JFrame {
                     AutoSuggest searchIngredientComboBoxAutoSuggest = new AutoSuggest();
                     searchIngredientComboBoxAutoSuggest.setAutoSuggest(adminpanel.searchIngredientComboBox, ingr.loadNameForSearchStockIngComboBox());
                     
-                    ingr.viewAllIngredients();
+                    
 
                 } else {
                     JOptionPane.showMessageDialog(this, "Error occurd while updating.. changes will not be saved");

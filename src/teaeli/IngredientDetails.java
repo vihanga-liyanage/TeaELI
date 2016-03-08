@@ -16,6 +16,10 @@ public class IngredientDetails extends javax.swing.JFrame {
     private Ingredient ingredient = new Ingredient();
     private Supplier supplier = new Supplier();
     private AdminPannel adminPannel;
+    
+    public void setAdminPannel(AdminPannel adminPannel) {
+        this.adminPannel = adminPannel;
+    }
 
     public IngredientDetails() {
         //Add windows look and feel
@@ -40,8 +44,7 @@ public class IngredientDetails extends javax.swing.JFrame {
     //method to refresh related tables and close this window
     private void close(){
         this.setVisible(false);
-        adminPannel.populateIngStockTable();
-        adminPannel.populateIngHistoryTable();
+        adminPannel.populateSettingsIngredientTable();       
         this.dispose();
     }
     
@@ -287,8 +290,10 @@ public class IngredientDetails extends javax.swing.JFrame {
 
                 if (updateOK == 1) {
                     JOptionPane.showMessageDialog(null, "Ingredient updated successfully", "Successfully Updated", 1);
+                    
+                    close();
                 } else {
-                    JOptionPane.showMessageDialog(null, "Ingredient update is not successfull!", "Unable to update", 0);
+                    JOptionPane.showMessageDialog(null, "Ingredient update is not successfull! Please retry. ", "Unable to update", 0);
                 }
             } catch (SQLException ex) {
                 //Logger.getLogger(IngredientDetails.class.getName()).log(Level.SEVERE, null, ex);
