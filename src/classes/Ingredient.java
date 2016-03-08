@@ -174,9 +174,9 @@ public class Ingredient {
     public List<List<String>> getIngDataByIngName(String ingName) {
         Connection conn = null;
         ResultSet resultSet = null;
-        
+
         this.setIngName(ingName.replace("'", "\\'"));
-        
+
         try {
             String query = "SELECT * FROM ingredient WHERE ingName='" + this.getIngName() + "'";
             conn = dbConn.setConnection();
@@ -222,15 +222,15 @@ public class Ingredient {
 
     /* start of populateIngredientTable method */
     public void populateIngredientTable(DefaultTableModel tableModel) {
-        
+
         ResultArray resultSet;
-        
+
         String query = "SELECT ing.categoryName , i.ingName,i.visibleStock,i.invisibleStock FROM ingredient i JOIN ingredientcategory ing ON i.ingCategoryID = ing.ingCategoryID ORDER BY ing.categoryName,i.ingName ";
-        
+
         resultSet = dbConn.getResultArray(query);
-        
+
         tableModel.setRowCount(0);
-        
+
         while (resultSet.next()) {
             Vector newRow = new Vector();
             for (int i = 0; i <= 4; i++) {
@@ -240,9 +240,9 @@ public class Ingredient {
         }
     }
     /* */
-    
+
     //Populate Blend detail's ingredients table according to blend
-    public void populateBlendIngTable(DefaultTableModel tableModel, String blendID){
+    public void populateBlendIngTable(DefaultTableModel tableModel, String blendID) {
         ResultArray resultSet;
         String query = "SELECT I.ingName, R.ingPercent FROM ingredient I, recipie R WHERE I.ingID = R.ingID AND R.blendID = '" + blendID + "' AND R.type = 0";
         resultSet = dbConn.getResultArray(query);
@@ -255,9 +255,9 @@ public class Ingredient {
             tableModel.addRow(newRow);
         }
     }
-    
+
     //Populate Blend detail's flavours table according to blend
-    public void populateBlendFlavourTable(DefaultTableModel tableModel, String blendID){
+    public void populateBlendFlavourTable(DefaultTableModel tableModel, String blendID) {
         ResultArray resultSet;
         String query = "SELECT I.ingName, R.ingPercent FROM ingredient I, recipie R WHERE I.ingID = R.ingID AND R.blendID = '" + blendID + "' AND R.type = 1";
         resultSet = dbConn.getResultArray(query);
@@ -309,9 +309,9 @@ public class Ingredient {
     public boolean checkAndLoadIngredientStockDetails(String selectedIngName) {
         boolean validIngName = false;
         ResultArray resultArray;
-        
+
         this.setIngName(selectedIngName.replace("'", "\\'"));
-        
+
         try {
             //query to load ingredient details
             String query = "SELECT i.ingName, i.visibleStock, ing.categoryName FROM ingredient i JOIN ingredientcategory ing ON i.ingCategoryID = ing.ingCategoryID WHERE ingName = '" + selectedIngName + "'";
@@ -331,12 +331,12 @@ public class Ingredient {
         return validIngName;
     }
     /* end of checkAndLoadIngredientStockDetails method */
-     
+
     /* start of getIngIDFromIngName method */
     public void getIngIDFromIngName() {
-        
-        this.setIngName(this.getIngName().replace("'","\\'"));
-        
+
+        this.setIngName(this.getIngName().replace("'", "\\'"));
+
         ResultArray resultArray;
         try {
             String query = "SELECT ingID FROM ingredient WHERE ingName = '" + this.getIngName() + "'";
@@ -349,7 +349,7 @@ public class Ingredient {
         }
     }
     /* end of getIngIDFromIngName method */
-    
+
     /* start of updateStockQty method */
     public boolean updateStockQty() {
 
@@ -405,16 +405,16 @@ public class Ingredient {
             model.addRow(new Object[]{res.getString(0), res.getString(2), res.getString(3)});
         }
     }
-    
-    public String getUnitPriceByIngName(String ingName){
+
+    public String getUnitPriceByIngName(String ingName) {
         String unitPrice = "";
         ResultArray res = null;
-        
-        this.setIngName(ingName.replace("'","\\'"));
-        
+
+        this.setIngName(ingName.replace("'", "\\'"));
+
         String query = "SELECT unitPrice FROM ingredient where ingredient.ingName = '" + this.getIngName() + "' ";
         res = dbConn.getResultArray(query);
-        if(res.next()){
+        if (res.next()) {
             unitPrice = res.getString(0);
         }
         return unitPrice;
@@ -461,17 +461,15 @@ public class Ingredient {
 
     //start of update ingredient method
     public int updateIngredient(int ingredientID, String ingredientName, int ingCategory, int supID, float unitPrice) throws SQLException {
-     
-        ResultSet resultSet = null;
-        
+
         int insertOK = 0;
         //set name of the ingredient
         String query = "Update ingredient SET ingName = '" + ingredientName + "', ingCategoryID = '" + ingCategory + "',supID= '" + supID + "',unitPrice = '" + unitPrice + "' WHERE ingID = '" + ingredientID + "'";
         try {
             insertOK = dbConn.updateResult(query);
         } catch (Exception e) {
-            System.err.println("ing 423 err : " + e);
-        } 
+            System.err.println("SQL error : " + e);
+        }
         return insertOK;
     }
 
@@ -513,22 +511,16 @@ public class Ingredient {
     }
 
     public int addNewSupplier(String Name) {
-        Connection connection = null;
-        connection = dbConn.setConnection();
+        int insertOK = 0;
 
         String query = "INSERT INTO supplier values(0,'" + Name + "')";
 
-        int rslt = dbConn.updateResult(query, connection);
-
-        if (connection != null) {
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                System.err.println("Connection close error : " + e);
-            }
+        try {
+            insertOK = dbConn.updateResult(query);
+        } catch (Exception e) {
+            System.err.println("SQL error :  " + e);
         }
-
-        return rslt;
+        return insertOK;
     }
 
     public int addNewIngredient(String Name, String type, String supplier, float price) {
@@ -575,10 +567,10 @@ public class Ingredient {
     }
 
     //getting ingredient data by ingID
-    public ResultArray getIngDataByID(String ingID){
-        String query = "SELECT i.ingID, i.ingName, ic.categoryName, i.visibleStock, i.alocatedStock, i.invisibleStock, s.supName  \n" +
-                        "FROM ingredient i INNER JOIN supplier s ON i.supID=s.supID INNER JOIN ingredientcategory ic ON i.ingCategoryID=ic.ingCategoryID\n" +
-                        "WHERE ingID='" + ingID + "'";
+    public ResultArray getIngDataByID(String ingID) {
+        String query = "SELECT i.ingID, i.ingName, ic.categoryName, i.visibleStock, i.alocatedStock, i.invisibleStock, s.supName  \n"
+                + "FROM ingredient i INNER JOIN supplier s ON i.supID=s.supID INNER JOIN ingredientcategory ic ON i.ingCategoryID=ic.ingCategoryID\n"
+                + "WHERE ingID='" + ingID + "'";
 
         return dbConn.getResultArray(query);
     }
