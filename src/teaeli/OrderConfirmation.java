@@ -128,9 +128,6 @@ public class OrderConfirmation extends javax.swing.JFrame {
             set.add(supName);
         }
         TreeSet sortedSet = new TreeSet<String>(set);
-        System.out.println(set);
-        System.out.println(sortedSet);
-
         return sortedSet;
     }
 
@@ -443,43 +440,42 @@ public class OrderConfirmation extends javax.swing.JFrame {
         if (errorDiscount == "1") {
             System.out.println("inside if");
             JOptionPane.showMessageDialog(null, "Discount cannot be greater than 100 !!!", "Error Value for discount", 0);
-        }else{
-             getTaxes();
+        } else {
+            getTaxes();
 
-        pdf = new PDF();
-        try {
-           int pdfOK = pdf.generateSupplierwisePO(supplierList, mainList, mainList2, orderID, discountList, taxList, totalList);
+            pdf = new PDF();
+            try {
+                int pdfOK = pdf.generateSupplierwisePO(supplierList, mainList, mainList2, orderID, discountList, taxList, totalList);
 
-           if(pdfOK == 1){
-               JOptionPane.showMessageDialog(null, "Purchase orders saved.", "Purchase orders ", 1);
-               
-             //Re-generating the admin panel since the data is changed
-             if ("teaeli.AdminPannel".equals(pannel.getClass().getName())) {
-             AdminPannel adminPannel = new AdminPannel();
-             adminPannel.setVisible(true);
-             AdminPannel old = (AdminPannel) pannel;
-             old.dispose();
-             } else if ("teaeli.ManagerPannel".equals(pannel.getClass().getName())) {
-             ManagerPannel managerPannel = new ManagerPannel();
-             managerPannel.setVisible(true);
-             ManagerPannel old = (ManagerPannel) pannel;
-             old.dispose();
-             }
-             this.dispose();
-             
-                      
-           }else{
-           JOptionPane.showMessageDialog(null, "Purchase orders didn't saved", "Error Occured", 0);
-           
-           }
-            
-        } catch (IOException ex) {
-            Logger.getLogger(OrderConfirmation.class.getName()).log(Level.SEVERE, null, ex);
+                if (pdfOK == 1) {
+                    JOptionPane.showMessageDialog(null, "Purchase orders saved.", "Purchase orders ", 1);
+
+                    //Re-generating the admin panel since the data is changed
+                    if ("teaeli.AdminPannel".equals(pannel.getClass().getName())) {
+                        AdminPannel adminPannel = new AdminPannel();
+                        adminPannel.setVisible(true);
+                        AdminPannel old = (AdminPannel) pannel;
+                        old.dispose();
+                    } else if ("teaeli.ManagerPannel".equals(pannel.getClass().getName())) {
+                        ManagerPannel managerPannel = new ManagerPannel();
+                        managerPannel.setVisible(true);
+                        ManagerPannel old = (ManagerPannel) pannel;
+                        old.dispose();
+                    }
+                    this.dispose();
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "Purchase orders didn't saved", "Error Occured", 0);
+
+                }
+
+            } catch (IOException ex) {
+                Logger.getLogger(OrderConfirmation.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
         }
-        
-        }
-        
-       
+
+
     }//GEN-LAST:event_generatePdfBtnActionPerformed
 
     /**

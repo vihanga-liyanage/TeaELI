@@ -455,35 +455,17 @@ public class Ingredient {
 
     //start of update ingredient method
     public int updateIngredient(int ingredientID, String ingredientName, int ingCategory, int supID, float unitPrice) throws SQLException {
-
-        Connection connection = dbConn.setConnection();
+     
         ResultSet resultSet = null;
-        Statement statement;
+        
         int insertOK = 0;
         //set name of the ingredient
         String query = "Update ingredient SET ingName = '" + ingredientName + "', ingCategoryID = '" + ingCategory + "',supID= '" + supID + "',unitPrice = '" + unitPrice + "' WHERE ingID = '" + ingredientID + "'";
         try {
-            statement = connection.createStatement();
-            insertOK = statement.executeUpdate(query);
+            insertOK = dbConn.updateResult(query);
         } catch (Exception e) {
             System.err.println("ing 423 err : " + e);
-        } finally {
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (Exception e) {
-                    System.err.println("Resultset close error : " + e);
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (Exception e) {
-                    System.err.println("Connection close error : " + e);
-                }
-            }
-
-        }
+        } 
         return insertOK;
     }
 
