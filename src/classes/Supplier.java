@@ -48,7 +48,7 @@ public class Supplier {
 
     }
     //end of load suppliers for combobox
-<<<<<<< HEAD
+
     
     
    public int addNewSupplier(String Name) throws SQLException {
@@ -60,37 +60,9 @@ public class Supplier {
     } 
     
         //start of get suplier id by name
-=======
-
-    public int addNewSupplier(String Name) throws SQLException {
-        DBConnection dbConn = new DBConnection();
-        Connection connection = dbConn.setConnection();
-        Statement statement;
-        int insertOK = 0;
-
-        this.setSupplierName(Name.replace("'", "\\'"));
-
-        String query = "INSERT INTO supplier(supName) values('" + this.getSupplierName() + "')";
-        try {
-            statement = connection.createStatement();
-            insertOK = statement.executeUpdate(query);
-
-        } catch (Exception e) {
-            System.err.println("sup 70 err : " + e);
-        } finally {
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (Exception e) {
-                    System.err.println("Connection close error : " + e);
-                }
-            }
-        }
-        return insertOK;
-    }
 
     //start of get suplier id by name
->>>>>>> fdc635bf41fa9bb7b518f9d78eb6477147202c0b
+
     public int getSupplierIDByName(String supplierName) throws SQLException {
 
         int supplierID = 0;
