@@ -389,14 +389,14 @@ public class Ingredient {
     /* end of updateStockQty method */
 
     //start of view all ingredients method
-    public void viewAllIngredients() {
+    public void viewAllIngredients(DefaultTableModel table) {
         ResultArray res = null;
         String query = "SELECT ingName,unitPrice,supName FROM ingredient,supplier where ingredient.supID = supplier.supID";
         res = dbConn.getResultArray(query);
 
         while (res.next()) {
-            DefaultTableModel model = (DefaultTableModel) adminPannel.settingsIngredientTable.getModel();
-            model.addRow(new Object[]{res.getString(0), res.getString(2), res.getString(3)});
+            //DefaultTableModel model = (DefaultTableModel) adminPannel.settingsIngredientTable.getModel();
+            table.addRow(new Object[]{res.getString(0), res.getString(2), res.getString(1)});
         }
     }
 
