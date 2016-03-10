@@ -47,7 +47,7 @@ public class Supplier {
         return resultArray;
 
     }
-    //end of load suppliers for combobox
+
 
     public int addNewSupplier(String Name) throws SQLException {
         int insertOk = 0;
@@ -57,8 +57,10 @@ public class Supplier {
         return insertOk;
     }
 
-        //start of get suplier id by name
+
+       
     //start of get suplier id by name
+
     public int getSupplierIDByName(String supplierName) throws SQLException {
 
         int supplierID = 0;

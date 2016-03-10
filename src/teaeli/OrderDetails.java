@@ -8,8 +8,7 @@ package teaeli;
 
 import classes.Order;
 import classes.PDF;
-import java.awt.Dimension;
-import java.awt.Toolkit;
+import java.awt.Font;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.text.DateFormat;
@@ -44,6 +43,11 @@ public class OrderDetails extends javax.swing.JFrame  {
         }
         
         initComponents();
+        
+        //Changing table headers to bold
+        blendTable.getTableHeader().setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
+        orderDetailsTable.getTableHeader().setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
+        
         this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
         
         /*Dimension screenSize,frameSize;

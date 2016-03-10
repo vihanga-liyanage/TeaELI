@@ -4,8 +4,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
+import teaeli.EditProfile;
 import static teaeli.TeaELI.loginFrame;
+
 
 public class User {
 
@@ -161,5 +164,30 @@ public class User {
         int rst = dbConn.updateResult(query);
         return rst;
 
-    }   
+    }
+    
+    public void getUserDetails(){
+        
+        EditProfile editProfile = new EditProfile();
+        editProfile.setVisible(true);
+        editProfile.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        String userName = loginFrame.user;
+
+            String query = "SELECT username,firstname,lastname FROM user where username = ('" + userName + "')";
+            ResultArray rs = dbConn.getResultArray(query);
+
+            while (rs.next()) {
+                setUserName(rs.getString(0));
+                setFirstName(rs.getString(1));
+                setLastName(rs.getString(2));
+            }
+
+        
+
+        editProfile.setVisible(true);
+        editProfile.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        editProfile.lblUserName.setText(getUserName());
+        editProfile.txtFirstName.setText(getFirstName());
+        editProfile.txtLastName.setText(getLastName());
+    }
 }
