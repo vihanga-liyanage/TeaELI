@@ -49,20 +49,16 @@ public class Supplier {
     }
     //end of load suppliers for combobox
 
-    
-    
-   public int addNewSupplier(String Name) throws SQLException {
+    public int addNewSupplier(String Name) throws SQLException {
         int insertOk = 0;
-        this.setSupplierName(Name.replace("'","\\'"));
+        this.setSupplierName(Name.replace("'", "\\'"));
         String query = "INSERT INTO supplier(supName) values('" + this.getSupplierName() + "')";
         insertOk = dbConn.updateResult(query);
         return insertOk;
-    } 
-    
+    }
+
         //start of get suplier id by name
-
     //start of get suplier id by name
-
     public int getSupplierIDByName(String supplierName) throws SQLException {
 
         int supplierID = 0;
