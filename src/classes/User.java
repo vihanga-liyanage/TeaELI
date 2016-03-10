@@ -4,8 +4,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
+import teaeli.EditProfile;
 import static teaeli.TeaELI.loginFrame;
+
 
 public class User {
 
@@ -133,39 +136,19 @@ public class User {
     /* end of getIDByUsername method */
     
     public int checkLogin(String userName, String password) {
-        Connection connection = null;
-        PreparedStatement pst = null;
-        try {
-            connection = dbConn.setConnection();//get the connection
             String query = "SELECT username,designation FROM user where password = '" + password + "' and username = ('" + userName + "')";
-            ResultSet rs = dbConn.getResult(query, connection);
-
-            while (rs.next()) {
-                if (rs.getString(2).equals("Admin")) {
+            ResultArray rs = dbConn.getResultArray(query);
+            while(rs.next()){
+            
+                if (rs.getString(1).equals("Admin")) {
                     return 1;
-                } else if (rs.getString(2).equals("Manager")) {
+                } else if (rs.getString(1).equals("Manager")) {
                     return 2;
                 } else {
                     return 3;
-                }
+                }   
             }
             return 4;
-
-        } catch (SQLException e) {
-            System.out.println(e);//an error occured while executing
-            return 0;
-        } finally {
-            try {
-                if (pst != null) {
-                    pst.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-
-            }
-        }
     }
 
 
@@ -181,5 +164,30 @@ public class User {
         int rst = dbConn.updateResult(query);
         return rst;
 
-    }   
+    }
+    
+    public void getUserDetails(){
+        
+        EditProfile editProfile = new EditProfile();
+        editProfile.setVisible(true);
+        editProfile.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        String userName = loginFrame.user;
+
+            String query = "SELECT username,firstname,lastname FROM user where username = ('" + userName + "')";
+            ResultArray rs = dbConn.getResultArray(query);
+
+            while (rs.next()) {
+                setUserName(rs.getString(0));
+                setFirstName(rs.getString(1));
+                setLastName(rs.getString(2));
+            }
+
+        
+
+        editProfile.setVisible(true);
+        editProfile.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        editProfile.lblUserName.setText(getUserName());
+        editProfile.txtFirstName.setText(getFirstName());
+        editProfile.txtLastName.setText(getLastName());
+    }
 }

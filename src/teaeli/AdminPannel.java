@@ -82,7 +82,7 @@ public class AdminPannel extends javax.swing.JFrame {
         searchIngredientComboBox.setSelectedIndex(-1);
         
         //start of view all ingredients
-       populateSettingsIngredientTable();
+        populateSettingsIngredientTable();
         //end of view all ingredients
 
         /* populate inventryIngredientTable in inventory management*/
@@ -284,6 +284,7 @@ public class AdminPannel extends javax.swing.JFrame {
     public void populateSettingsIngredientTable() {
         DefaultTableModel model = (DefaultTableModel) settingsIngredientTable.getModel();
         ingredient.viewAllIngredients(model);
+        
         
     }
 
@@ -994,7 +995,7 @@ public class AdminPannel extends javax.swing.JFrame {
                             .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(blendCatgLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addGroup(settingsBlendPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(settingsBlendPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(blendBaseLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(14, 14, 14)
@@ -1414,48 +1415,7 @@ public class AdminPannel extends javax.swing.JFrame {
     }//GEN-LAST:event_addNewBlendsBtnActionPerformed
 
     private void profileBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profileBtnActionPerformed
-
-        EditProfile editProfile = new EditProfile();
-        editProfile.setVisible(true);
-        editProfile.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
-        //String UserName = new LoginFrame().user;
-        String userName = loginFrame.user;
-
-        try {
-            con = dbcon.setConnection();//get the connection
-            String query = "SELECT username,firstname,lastname FROM user where username = ('" + userName + "')";
-            ResultSet rs = dbcon.getResult(query, con);
-
-            while (rs.next()) {
-                user.setUserName(rs.getString(1));
-                user.setFirstName(rs.getString(2));
-                user.setLastName(rs.getString(3));
-            }
-
-        } catch (SQLException e) {
-            System.out.println(e);//an error occured while executing
-
-        } finally {
-            try {
-                if (pst != null) {
-                    pst.close();
-                }
-                if (con != null) {
-                    con.close();
-                }
-            } catch (SQLException e) {
-
-            }
-        }
-
-        editProfile.setVisible(true);
-        editProfile.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        editProfile.lblUserName.setText(user.getUserName());
-        editProfile.txtFirstName.setText(user.getFirstName());
-        editProfile.txtLastName.setText(user.getLastName());
-
-
+         user.getUserDetails();
     }//GEN-LAST:event_profileBtnActionPerformed
 
     private void addUserBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addUserBtnActionPerformed
@@ -1719,13 +1679,14 @@ public class AdminPannel extends javax.swing.JFrame {
                 Logger.getLogger(AdminPannel.class.getName()).log(Level.SEVERE, null, ex);
             }
 
+            
             itemDetails.itemNameTxt.setText(resultArray[0]);
             itemDetails.setName(resultArray[1]); //set ingid as name
             itemDetails.itemTypeCombo.setSelectedItem(resultArray[2]);
             itemDetails.supplierCombobox.setSelectedItem(resultArray[3]);
             itemDetails.unitPriceTxt.setText(resultArray[4]);
 
-            itemDetails.setAdminPannel(this);
+            itemDetails.pannel = this;
             itemDetails.setVisible(true);
             itemDetails.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             searchIngredientComboBox.setSelectedIndex(-1);

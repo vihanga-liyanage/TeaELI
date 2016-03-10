@@ -24,10 +24,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author Janith
- */
+
 public class OrderConfirmation extends javax.swing.JFrame {
 
     public Object pannel;
