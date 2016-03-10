@@ -32,7 +32,6 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
-import static teaeli.TeaELI.loginFrame;
 
 public class AdminPannel extends javax.swing.JFrame {
 
@@ -64,8 +63,20 @@ public class AdminPannel extends javax.swing.JFrame {
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
             Logger.getLogger(AdminPannel.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
         initComponents();
 
+        //Changing table headers to bold
+        orderListTable.getTableHeader().setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
+        inventryIngredientTable.getTableHeader().setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
+        inventryBlendTable.getTableHeader().setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
+        settingsIngredientTable.getTableHeader().setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
+        productTable.getTableHeader().setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
+        blendDetailsTbl.getTableHeader().setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
+        ingStockHistoryTbl.getTableHeader().setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
+        blendStockHistoryTbl.getTableHeader().setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
+        userTable.getTableHeader().setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
+        
         startClock();
 
         //Keep the window fullscreen

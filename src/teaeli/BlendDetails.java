@@ -8,9 +8,7 @@ package teaeli;
 import classes.Blend;
 import classes.DBConnection;
 import classes.Ingredient;
-
-import java.sql.Connection;
-import java.sql.ResultSet;
+import java.awt.Font;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -36,7 +34,13 @@ public class BlendDetails extends javax.swing.JFrame {
      DBConnection dbConn = new DBConnection();
      
     public BlendDetails() {
+        
         initComponents();
+        
+        //Changing table headers to bold
+        ingTable.getTableHeader().setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
+        flavourTable.getTableHeader().setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
+        
         setResizable(false);
         
         Ingredient ingredient = new Ingredient();
