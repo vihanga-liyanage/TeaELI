@@ -298,5 +298,44 @@ public class Order {
         }
         return 0;
     }
-
+    
+    public String getNextPendingOrderID(String orderID){
+        
+        String nextOrderID = "0";
+        ResultArray resultArray;
+        
+        try{
+            String query = "SELECT orderID FROM `order` WHERE orderStatus = '0' AND orderID != '" + orderID + "' ";
+            
+            System.out.println(query);
+            
+            resultArray = dbConn.getResultArray(query);
+            
+            if (resultArray.next()){
+                nextOrderID = resultArray.getString(0);
+            }
+            
+        }catch(Exception e){
+            System.err.println("Exception : " + e);
+        }
+        
+        return nextOrderID;
+    }
+    
+    public boolean updateIngredientStock(ArrayList<Ingredient> ingList, String orderID){
+        
+        boolean updated = false;
+        String nextOrderID = this.getNextPendingOrderID(orderID);
+        
+        if (nextOrderID.equals("0")){
+            
+            for (Ingredient ing : ingList){
+                updated = ing.updateIngredientStock();
+            }
+        }else{
+            updated = true;
+        }
+        return updated;
+    }
+    
 }
