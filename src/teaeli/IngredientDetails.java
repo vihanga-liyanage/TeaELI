@@ -7,7 +7,9 @@ import java.awt.Toolkit;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.control.Tab;
 import javax.swing.JOptionPane;
+import javax.swing.SingleSelectionModel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -38,11 +40,11 @@ public class IngredientDetails extends javax.swing.JFrame {
     }
 
     //method to refresh related tables and close this window
-    private void close() {
-        this.setVisible(false);
-        this.dispose();
-    }
-
+    /*
+     private void close() {
+     this.setVisible(false);
+     this.dispose();
+     }*/
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -247,7 +249,7 @@ public class IngredientDetails extends javax.swing.JFrame {
         } else if (response == JOptionPane.YES_OPTION) {
             String ingName;
             int supID = 0, ingCategoryID = 0, ingID = 0;
-            float unitPrice;
+            float unitPrice = 0;
 
             //get ingID
             ingID = Integer.parseInt(this.getName());
@@ -276,36 +278,49 @@ public class IngredientDetails extends javax.swing.JFrame {
             }
 
             //get unit price
-            String unitPriceString = this.unitPriceTxt.getText();
-            unitPrice = Float.parseFloat(unitPriceString);
-
+             String unitPriceString = this.unitPriceTxt.getText();
+             int unitPriceOK = 0;
+            try {
+                unitPrice = Float.parseFloat(unitPriceString);
+                unitPriceOK = 1;
+            } catch (NumberFormatException e) {
+                 JOptionPane.showMessageDialog(null, "Please enter valid amount for unit price", "Incompatible unit price", 0);
+                 unitPriceTxt.requestFocusInWindow();
+            }
+           
+            if(unitPriceOK==1){
             // call update ingredient method
             try {
                 int updateOK = ingredient.updateIngredient(ingID, ingName, ingCategoryID, supID, unitPrice);
 
                 if (updateOK == 1) {
-                    JOptionPane.showMessageDialog(null, "Ingredient updated successfully", "Successfully Updated", 1);
                     //Re-generating the admin panel since the data is changed
-                    
+
                     if ("teaeli.AdminPannel".equals(pannel.getClass().getName())) {
                         AdminPannel adminPannel = new AdminPannel();
+                        adminPannel.mainTabbedPane.setSelectedIndex(2);
                         adminPannel.setVisible(true);
                         AdminPannel old = (AdminPannel) pannel;
                         old.dispose();
+                        this.dispose();
                     } else if ("teaeli.ManagerPannel".equals(pannel.getClass().getName())) {
                         ManagerPannel managerPannel = new ManagerPannel();
                         managerPannel.setVisible(true);
                         ManagerPannel old = (ManagerPannel) pannel;
                         old.dispose();
                     }
-                    close();
+
                 } else {
                     JOptionPane.showMessageDialog(null, "Ingredient update is not successfull! Please retry. ", "Unable to update", 0);
                 }
+                
+                
             } catch (SQLException ex) {
                 //Logger.getLogger(IngredientDetails.class.getName()).log(Level.SEVERE, null, ex);
                 System.out.println("sql error id:" + ex);
             }
+            }
+            
 
         } else if (response == JOptionPane.CLOSED_OPTION) {
             System.out.println("JOptionPane closed");

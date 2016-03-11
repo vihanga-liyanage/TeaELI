@@ -1969,7 +1969,7 @@ public class AdminPannel extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JLabel logoLabel;
     private javax.swing.JButton logoutBtn;
-    private javax.swing.JTabbedPane mainTabbedPane;
+    public static javax.swing.JTabbedPane mainTabbedPane;
     private javax.swing.JPanel orderHandlingPanel;
     private javax.swing.JTable orderListTable;
     private javax.swing.JComboBox orderSearchCombo;
