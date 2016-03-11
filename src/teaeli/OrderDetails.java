@@ -407,14 +407,18 @@ public class OrderDetails extends javax.swing.JFrame  {
             ingredientsOrdered.add(ing);
         }
         
-        order.updateIngredientStock(ingredientsOrdered, orderIDLabel.getText());
+        boolean updated = order.updateIngredientStock(ingredientsOrdered, orderIDLabel.getText());
         
         int result = order.updateOrderStatus(1, orderIDLabel.getText());
-        if(result == 1){
+        
+        if(result == 1 && updated){
             JOptionPane.showMessageDialog(this, "Order status changed successfully !", "Changes Succeeded", 1);
             adminPannel.populateOrderListTable();
             orderCompletedBtn.setVisible(true);
             orderReceivedBtn.setVisible(false);
+            
+            //set table editing false after order recieved
+            orderDetailsTable.setEnabled(false);
         }else{
             JOptionPane.showMessageDialog(this, "Changes did not affected !", "Changes Failed", 0);
         }
