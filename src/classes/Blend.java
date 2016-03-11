@@ -538,8 +538,6 @@ public class Blend {
                                 + "VALUES ('" + this.getBlendID() + "','" + date + "','"
                                 + oldStock + "','" + updatedStock + "','" + reason + "','" + updatedUser.getUserID() + "')";
 
-                        System.out.println("Unallocate query : " + query);
-
                         i = dbConn.updateResult(query);
 
                         if (i == 1) {

@@ -1,11 +1,9 @@
 package classes;
 
-import java.sql.Array;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import javax.swing.table.DefaultTableModel;
-import static teaeli.LoginFrame.adminPannel;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.Statement;
@@ -17,8 +15,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JComboBox;
 
 public class Ingredient {
@@ -120,14 +116,6 @@ public class Ingredient {
 
     public void setOrderReqQty(float orderReqQty) {
         this.orderReqQty = orderReqQty;
-    }
-
-    public float getOrderExessQty() {
-        return orderExcessQty;
-    }
-
-    public void setOrderExessQty(float orderExessQty) {
-        this.orderExcessQty = orderExessQty;
     }
 
     public float getOrderExcessQty() {
@@ -548,4 +536,18 @@ public class Ingredient {
         String query = "UPDATE ingredient SET visibleStock='" + data[0] + "', invisibleStock='" + data[1] + "' WHERE ingID='" + data[2] + "'";
         return (dbConn.updateResult(query) == 1);
     }
+    
+    /* start of updateIngredientStock method -- for orderRecieved */
+    public boolean updateIngredientStock(){
+        
+        String ingName = this.getIngName().replace("'", "\\'");
+        
+        String query = "UPDATE ingredient SET alocatedStock = alocatedStock + '" + this.getOrderReqQty() + "'"
+                + " , visibleStock = visibleStock + '" + this.getOrderExcessQty() + "' "
+                + " , invisibleStock = invisibleStock - '" + this.getOrderExcessQty() + "' "
+                + " WHERE ingName = '" + ingName + "' ";
+        
+        return (dbConn.updateResult(query) == 1);
+    }
+    /* end of updateIngredientStock method */
 }
