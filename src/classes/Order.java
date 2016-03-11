@@ -75,6 +75,26 @@ public class Order {
         return orderID;
     }
     
+    //Getting order statuses
+    public String[] getOrderCounts() {
+        String query = "SELECT COUNT(orderID) FROM `order` WHERE orderStatus='0'";
+        ResultArray res = dbConn.getResultArray(query);
+        String pendingCount = "";
+        while (res.next()) {
+            pendingCount = res.getString(0);
+        }
+        
+        query = "SELECT COUNT(orderID) FROM `order` WHERE orderStatus='1'";
+        res = dbConn.getResultArray(query);
+        String receivedCount = "";
+        while (res.next()) {
+            receivedCount = res.getString(0);
+        }
+        
+        String[] counts = {pendingCount, receivedCount};
+        return counts;
+    }
+    
     //Loading the orderComboBox in the order handling tab
     public ResultArray loadOrderComboBox(){
         ResultArray resultSet;
