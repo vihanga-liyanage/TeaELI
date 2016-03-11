@@ -6,102 +6,37 @@
 package classes;
 
 import javax.swing.table.DefaultTableModel;
-import java.util.*;
 
 public class Order {
 
     //attributes
-    private int placedBy, orderStatus;
-    private String username, blendName, date, orderID, blendID;
-    private ArrayList<Ingredient> ingredientList = new ArrayList();
-    private ArrayList<Blend> blendList = new ArrayList();
+    private String date, orderID;
 
     DBConnection dbConn = new DBConnection();
 
     //constructor
     public Order() {
         this.orderID = "";
-        this.placedBy = 0;
-        this.orderStatus = 0;
-        this.blendID = "";
-        this.username = null;
-        this.blendName = null;
         this.date = null;
     }
 
     //getters and setters
-    public String getOrderID() {
-        return orderID;
-    }
-
     public void setOrderID(String orderID) {
         this.orderID = orderID;
-    }
-
-    public int getPlacedBy() {
-        return placedBy;
-    }
-
-    public void setPlacedBy(int placedBy) {
-        this.placedBy = placedBy;
-    }
-
-    public int getOrderStatus() {
-        return orderStatus;
-    }
-
-    public void setOrderStatus(int orderStatus) {
-        this.orderStatus = orderStatus;
-    }
-
-    public String getblendID() {
-        return blendID;
-    }
-
-    public void setblendID(String blendID) {
-        this.blendID = blendID;
-    }
-
-    public String getBlendName() {
-        return blendName;
-    }
-
-    public void setIngName(String blendName) {
-        this.blendName = blendName;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getDate() {
-        return date;
     }
 
     public void setDate(String date) {
         this.date = date;
     }
 
-    public ArrayList<Ingredient> getIngredientList() {
-        return ingredientList;
+    public String getDate() {
+        return date;
     }
 
-    public void setIngredientList(ArrayList<Ingredient> ingredientList) {
-        this.ingredientList = ingredientList;
+    public String getOrderID() {
+        return orderID;
     }
-
-    public ArrayList<Blend> getBlendList() {
-        return blendList;
-    }
-
-    public void setBlendList(ArrayList<Blend> blendList) {
-        this.blendList = blendList;
-    }
-
+    
     //Populate orderListTable in the order handling tab (NOT FINISHED........!!!!!!!!!)
     public void populateOrderListTable(DefaultTableModel tModel) {
         ResultArray resultSet;
