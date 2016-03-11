@@ -395,14 +395,14 @@ public class Ingredient {
     /* end of updateStockQty method */
 
     //start of view all ingredients method
-    public void viewAllIngredients() {
+    public void viewAllIngredients(DefaultTableModel table) {
         ResultArray res = null;
         String query = "SELECT ingName,unitPrice,supName FROM ingredient,supplier where ingredient.supID = supplier.supID";
         res = dbConn.getResultArray(query);
 
         while (res.next()) {
-            DefaultTableModel model = (DefaultTableModel) adminPannel.settingsIngredientTable.getModel();
-            model.addRow(new Object[]{res.getString(0), res.getString(2), res.getString(3)});
+            //DefaultTableModel model = (DefaultTableModel) adminPannel.settingsIngredientTable.getModel();
+            table.addRow(new Object[]{res.getString(0), res.getString(2), res.getString(1)});
         }
     }
 
@@ -465,11 +465,8 @@ public class Ingredient {
         int insertOK = 0;
         //set name of the ingredient
         String query = "Update ingredient SET ingName = '" + ingredientName + "', ingCategoryID = '" + ingCategory + "',supID= '" + supID + "',unitPrice = '" + unitPrice + "' WHERE ingID = '" + ingredientID + "'";
-        try {
-            insertOK = dbConn.updateResult(query);
-        } catch (Exception e) {
-            System.err.println("SQL error : " + e);
-        }
+
+        insertOK = dbConn.updateResult(query);
         return insertOK;
     }
 
@@ -510,59 +507,23 @@ public class Ingredient {
         return null;
     }
 
-    public int addNewSupplier(String Name) {
-        int insertOK = 0;
 
-        String query = "INSERT INTO supplier values(0,'" + Name + "')";
-
-        try {
-            insertOK = dbConn.updateResult(query);
-        } catch (Exception e) {
-            System.err.println("SQL error :  " + e);
-        }
-        return insertOK;
-    }
 
     public int addNewIngredient(String Name, String type, String supplier, float price) {
-        Connection connection = null;
-        int rslt1 = 0, rslt2 = 0;
-        connection = dbConn.setConnection();
+        String rslt1= "",rslt2 ="";
         String query1 = "SELECT ingCategoryID FROM ingredientcategory WHERE categoryName = '" + type + "' ";
-        ResultSet rs1 = dbConn.getResult(query1, connection);
-
-        try {
-            while (rs1.next()) {
-                rslt1 = Integer.parseInt(rs1.getString(1));
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(Ingredient.class.getName()).log(Level.SEVERE, null, ex);
-
-        }
+        ResultArray rs1 = dbConn.getResultArray(query1);
+        rs1.next();
+        rslt1 = rs1.getString(0);
+        
 
         String query2 = "SELECT supID FROM supplier WHERE supName = '" + supplier + "' ";
-        ResultSet rs2 = dbConn.getResult(query2, connection);
-
-        try {
-            while (rs2.next()) {
-                rslt2 = Integer.parseInt(rs2.getString(1));
-            }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(Ingredient.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        ResultArray rs2 = dbConn.getResultArray(query2);
+        rs2.next();
+        rslt2 = rs2.getString(0);
 
         String query3 = "INSERT INTO ingredient values(0,'" + Name + "','" + rslt1 + "',0,0,0,'" + rslt2 + "','" + price + "') ";
-
-        int rslt3 = dbConn.updateResult(query3, connection);
-
-        if (connection != null) {
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                System.err.println("Connection close error : " + e);
-            }
-        }
-
+        int rslt3 = dbConn.updateResult(query3);
         return rslt3;
     }
 

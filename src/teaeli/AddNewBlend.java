@@ -9,6 +9,7 @@ import classes.Blend;
 import classes.DBConnection;
 import classes.Ingredient;
 import classes.Validation;
+import java.awt.Font;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
@@ -30,7 +31,13 @@ public class AddNewBlend extends javax.swing.JFrame {
     
     DBConnection dbConn = new DBConnection();
     public AddNewBlend() {
+
         initComponents();
+        
+        //Changing table headers to bold
+        addNewBlendFlavourTbl.getTableHeader().setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
+        addNewBlendIngTbl.getTableHeader().setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
+        
         setResizable(false);
         
         Ingredient ingredient = new Ingredient();

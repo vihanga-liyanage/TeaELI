@@ -8,6 +8,7 @@ package teaeli;
 import classes.Ingredient;
 import classes.PDF;
 import java.awt.Desktop;
+import java.awt.Font;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,8 +16,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
@@ -24,10 +23,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author Janith
- */
+
 public class OrderConfirmation extends javax.swing.JFrame {
 
     public Object pannel;
@@ -48,7 +44,13 @@ public class OrderConfirmation extends javax.swing.JFrame {
      * @param orderID
      */
     public OrderConfirmation(CreateNewBlendOrder2 cnb, String orderID) { // pass CreateNewBlendOrder2 object to get the master list in the interface
+        
         initComponents();
+        
+        //Changing table headers to bold
+        tblMasterPlanEditingView.getTableHeader().setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
+        supplierWiseOrderDetailsTbl.getTableHeader().setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
+        
         this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
         
         createNewBlendOrder2 = cnb;
