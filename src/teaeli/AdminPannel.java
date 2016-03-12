@@ -1466,6 +1466,12 @@ public class AdminPannel extends javax.swing.JFrame {
             blendName = searchBlendComboBox.getSelectedItem().toString();
             blendID= blend.getBlendIDByBlendName(blendName);
             blendDetails.blendNameTxt.setText(blendName);
+            blendDetails.blendCodeTxt.setText(blendID);
+            blendDetails.blendCodeTxt.setEditable(false);
+            blendDetails.blendNameTxt.setEditable(false);
+            blendDetails.ingPerAddBtn.setEnabled(false);
+            blendDetails.flavoursPerAddBtn.setEnabled(false);
+            
             
             Blend blend = new Blend();
             baseID = blend.getBaseByBlendID(blendID);
@@ -1481,7 +1487,7 @@ public class AdminPannel extends javax.swing.JFrame {
             blendDetails.flavoursCombo.setSelectedIndex(-1);
             blendDetails.flavoursCombo.requestFocus();
             blendDetails.setVisible(true);
-            JOptionPane.showMessageDialog(this, "Please Change Blend Name with New Blend Code to Update");
+            //JOptionPane.showMessageDialog(this, "Please Change Blend Name with New Blend Code to Update");
             blendDetails.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             orderSearchCombo.setSelectedIndex(-1);
         }catch(NullPointerException e){
