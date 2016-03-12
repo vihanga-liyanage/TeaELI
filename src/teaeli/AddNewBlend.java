@@ -655,14 +655,12 @@ public class AddNewBlend extends javax.swing.JFrame {
                             }
 
                             if(x==1 && y==1){
-                                   JOptionPane.showMessageDialog(null, "New Blend Succesfully Added");
+                                   JOptionPane.showMessageDialog(this, "New Blend Added Successfuly !", "Add Success", JOptionPane.INFORMATION_MESSAGE);
+                                   //close();
+                                   
                                    this.dispose();
-
-
-                                   //this.setVisible(true);
-
                                }else{
-                                   JOptionPane.showMessageDialog(null, "Error!, Data not Saved");
+                                   JOptionPane.showMessageDialog(this, "Unable to add !", "Add Fails", JOptionPane.ERROR_MESSAGE);
                                  }
 
                                 }
@@ -675,7 +673,8 @@ public class AddNewBlend extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_addNewBlendBtnActionPerformed
-
+    
+    
     private void ingPerTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingPerTxtActionPerformed
         ingPerAddBtn.requestFocus();
     }//GEN-LAST:event_ingPerTxtActionPerformed
