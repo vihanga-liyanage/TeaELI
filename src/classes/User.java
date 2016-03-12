@@ -160,7 +160,7 @@ public class User {
 
     
     public  int updatePassword(String firstname, String lastname,String username,String newpassword,String currentpassword){
-        String query = "UPDATE user SET firstname =' "+firstname+"', lastname = '"+lastname+"',password = sha1('"+newpassword+"') WHERE username = '"+username+"' and password = sha1('"+currentpassword+"')";
+        String query = "UPDATE user SET firstname =' "+firstname+"', lastname = '"+lastname+"',password = '"+newpassword+"' WHERE username = '"+username+"' and password = '"+currentpassword+"'";
         int rst = dbConn.updateResult(query);
         return rst;
 
