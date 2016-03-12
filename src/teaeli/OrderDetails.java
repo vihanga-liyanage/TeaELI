@@ -6,6 +6,7 @@
 
 package teaeli;
 
+import classes.Ingredient;
 import classes.Order;
 import classes.PDF;
 import java.awt.Font;
@@ -13,6 +14,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,6 +23,7 @@ import javax.swing.JTable;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 /**
  *
  * @author Vihanga Liyanage
@@ -388,12 +391,34 @@ public class OrderDetails extends javax.swing.JFrame  {
     }//GEN-LAST:event_updateOrderBtnActionPerformed
 
     private void orderReceivedBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderReceivedBtnActionPerformed
+        
+        ArrayList<Ingredient> ingredientsOrdered = new ArrayList();
+        
+        TableModel orderTableModel = orderDetailsTable.getModel();
+        
+        for (int r = 0; r < orderDetailsTable.getRowCount(); r++){
+            
+            Ingredient ing = new Ingredient();
+            
+            ing.setIngName((String) orderTableModel.getValueAt(r, 0));
+            ing.setOrderReqQty(Float.parseFloat( (String) orderTableModel.getValueAt(r, 1)));
+            ing.setOrderExcessQty(Float.parseFloat((String) orderTableModel.getValueAt(r, 5)));
+            
+            ingredientsOrdered.add(ing);
+        }
+        
+        boolean updated = order.updateIngredientStock(ingredientsOrdered, orderIDLabel.getText());
+        
         int result = order.updateOrderStatus(1, orderIDLabel.getText());
-        if(result == 1){
+        
+        if(result == 1 && updated){
             JOptionPane.showMessageDialog(this, "Order status changed successfully !", "Changes Succeeded", 1);
             adminPannel.populateOrderListTable();
             orderCompletedBtn.setVisible(true);
             orderReceivedBtn.setVisible(false);
+            
+            //set table editing false after order recieved
+            orderDetailsTable.setEnabled(false);
         }else{
             JOptionPane.showMessageDialog(this, "Changes did not affected !", "Changes Failed", 0);
         }
