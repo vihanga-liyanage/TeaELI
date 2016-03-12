@@ -82,7 +82,7 @@ public class BlendDetails extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         ingPerAddBtn = new javax.swing.JButton();
         flavoursPerAddBtn = new javax.swing.JButton();
-        updateBtn = new javax.swing.JButton();
+        blendAddnewBtn = new javax.swing.JButton();
         blendCodeTxt = new javax.swing.JTextField();
         ingCombo = new javax.swing.JComboBox();
         flavoursCombo = new javax.swing.JComboBox();
@@ -94,10 +94,10 @@ public class BlendDetails extends javax.swing.JFrame {
         baseCombo = new javax.swing.JComboBox();
         category = new javax.swing.JLabel();
         blendCategoryCombo = new javax.swing.JComboBox();
-        jButton1 = new javax.swing.JButton();
+        blendUpdateBtn = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        updateRadioBtn = new javax.swing.JRadioButton();
+        addnewRadioBtn = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -156,10 +156,10 @@ public class BlendDetails extends javax.swing.JFrame {
             }
         });
 
-        updateBtn.setText("Add new");
-        updateBtn.addActionListener(new java.awt.event.ActionListener() {
+        blendAddnewBtn.setText("Add new");
+        blendAddnewBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                updateBtnActionPerformed(evt);
+                blendAddnewBtnActionPerformed(evt);
             }
         });
 
@@ -266,17 +266,27 @@ public class BlendDetails extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Update");
+        blendUpdateBtn.setText("Update");
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 0, 0));
         jLabel8.setText("Select Your Choice");
 
-        jRadioButton1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jRadioButton1.setText("Update");
+        updateRadioBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        updateRadioBtn.setText("Update");
+        updateRadioBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateRadioBtnActionPerformed(evt);
+            }
+        });
 
-        jRadioButton2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jRadioButton2.setText("Add New");
+        addnewRadioBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        addnewRadioBtn.setText("Add New");
+        addnewRadioBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addnewRadioBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -289,9 +299,9 @@ public class BlendDetails extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(cancelBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)
+                        .addComponent(blendUpdateBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(updateBtn))
+                        .addComponent(blendAddnewBtn))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -302,7 +312,7 @@ public class BlendDetails extends javax.swing.JFrame {
                                             .addGroup(jPanel1Layout.createSequentialGroup()
                                                 .addComponent(jLabel8)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(jRadioButton1))
+                                                .addComponent(updateRadioBtn))
                                             .addGroup(jPanel1Layout.createSequentialGroup()
                                                 .addComponent(jLabel3)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -315,7 +325,7 @@ public class BlendDetails extends javax.swing.JFrame {
                                                 .addComponent(jLabel6)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(ingPerAddBtn))
-                                            .addComponent(jRadioButton2))))
+                                            .addComponent(addnewRadioBtn))))
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGap(42, 42, 42)
@@ -358,8 +368,8 @@ public class BlendDetails extends javax.swing.JFrame {
                 .addGap(21, 21, 21)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(jRadioButton1)
-                    .addComponent(jRadioButton2))
+                    .addComponent(updateRadioBtn)
+                    .addComponent(addnewRadioBtn))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -390,9 +400,9 @@ public class BlendDetails extends javax.swing.JFrame {
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(updateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(blendAddnewBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cancelBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(blendUpdateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(40, 40, 40))
         );
 
@@ -579,7 +589,7 @@ public class BlendDetails extends javax.swing.JFrame {
     }//GEN-LAST:event_flavoursPerAddBtnActionPerformed
     String blendID, blendName, blendCategory, base;
     
-    private void updateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBtnActionPerformed
+    private void blendAddnewBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blendAddnewBtnActionPerformed
         blendID = blendCodeTxt.getText();
         blendName = blendNameTxt.getText();
         blendCategory = blendCategoryCombo.getSelectedItem().toString();
@@ -654,7 +664,38 @@ public class BlendDetails extends javax.swing.JFrame {
             }
         
         }
-    }//GEN-LAST:event_updateBtnActionPerformed
+    }//GEN-LAST:event_blendAddnewBtnActionPerformed
+
+    private void updateRadioBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateRadioBtnActionPerformed
+        
+        if(updateRadioBtn.isSelected()){
+            blendUpdateBtn.setEnabled(true);
+            ingPerAddBtn.setEnabled(false);
+            flavoursPerAddBtn.setEnabled(false);
+            addnewRadioBtn.setEnabled(false);
+        }else{
+            blendUpdateBtn.setEnabled(false);
+            addnewRadioBtn.setEnabled(true);
+        }    
+    }//GEN-LAST:event_updateRadioBtnActionPerformed
+
+    private void addnewRadioBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addnewRadioBtnActionPerformed
+        if(addnewRadioBtn.isSelected()){
+            blendAddnewBtn.setEnabled(true);
+            ingPerAddBtn.setEnabled(true);
+            flavoursPerAddBtn.setEnabled(true);
+            blendCodeTxt.setEditable(true);
+            blendNameTxt.setEditable(true);
+            updateRadioBtn.setEnabled(false);
+        }else{
+            blendAddnewBtn.setEnabled(false);
+            ingPerAddBtn.setEnabled(false);
+            flavoursPerAddBtn.setEnabled(false);
+            blendCodeTxt.setEditable(false);
+            blendNameTxt.setEditable(false);
+            updateRadioBtn.setEnabled(true);
+        }
+    }//GEN-LAST:event_addnewRadioBtnActionPerformed
         
     
     
@@ -698,10 +739,13 @@ public class BlendDetails extends javax.swing.JFrame {
 	
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JRadioButton addnewRadioBtn;
     public javax.swing.JComboBox baseCombo;
+    public javax.swing.JButton blendAddnewBtn;
     public javax.swing.JComboBox blendCategoryCombo;
     public javax.swing.JTextField blendCodeTxt;
     public javax.swing.JTextField blendNameTxt;
+    public javax.swing.JButton blendUpdateBtn;
     private javax.swing.JButton cancelBtn;
     private javax.swing.JLabel category;
     public javax.swing.JTable flavourTable;
@@ -712,7 +756,6 @@ public class BlendDetails extends javax.swing.JFrame {
     public javax.swing.JButton ingPerAddBtn;
     public javax.swing.JTextField ingPerTxt;
     public javax.swing.JTable ingTable;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -722,11 +765,9 @@ public class BlendDetails extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JButton updateBtn;
+    private javax.swing.JRadioButton updateRadioBtn;
     // End of variables declaration//GEN-END:variables
 
     void identifyBlend(String blendID) {

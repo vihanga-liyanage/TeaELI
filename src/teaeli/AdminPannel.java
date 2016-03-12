@@ -1471,6 +1471,8 @@ public class AdminPannel extends javax.swing.JFrame {
             blendDetails.blendNameTxt.setEditable(false);
             blendDetails.ingPerAddBtn.setEnabled(false);
             blendDetails.flavoursPerAddBtn.setEnabled(false);
+            blendDetails.blendUpdateBtn.setEnabled(false);
+            blendDetails.blendAddnewBtn.setEnabled(false);
             
             
             Blend blend = new Blend();
