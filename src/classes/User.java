@@ -111,7 +111,9 @@ public class User {
     }
 
     public int addNewUser(User user) {
+
         String query = "INSERT INTO user (username,firstname,lastname,password,designation)values(  '" + user.getUserName() + "','" + user.getFirstName() + "','" + user.getLastName() + "', '" + user.getPassword() + "', '" + user.getDesignation() + "')";
+
         int rslt = dbConn.updateResult(query);
         return rslt;
     }

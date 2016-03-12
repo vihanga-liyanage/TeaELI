@@ -12,6 +12,7 @@ import classes.PDF;
 import java.awt.Font;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -344,6 +345,14 @@ public class OrderDetails extends javax.swing.JFrame  {
     }//GEN-LAST:event_cancelBtnActionPerformed
 
     private void updateOrderBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateOrderBtnActionPerformed
+        String tempPath = "C:\\Teaeli\\RM-Orders\\" + orderIDLabel.getText() + "\\RM_Order_Master_Plan-" + orderIDLabel.getText() + ".pdf";
+        File file = new File(tempPath);
+        File sameFileName = new File(tempPath);
+        if (!file.renameTo(sameFileName)) {
+            JOptionPane.showMessageDialog(this, "The file you are going to update is already opened!!!\nPlease close the file before update the order", "File already open", 0);
+            return;
+        }
+        
         try{
           orderDetailsTable.getCellEditor().stopCellEditing();  
         }catch(NullPointerException ex){
@@ -378,6 +387,7 @@ public class OrderDetails extends javax.swing.JFrame  {
         }
         JOptionPane.showMessageDialog(this, "Values saved successfully !\nThe new RM Master plan PDF will be replaced with the old one", "Update Success", 1);
         order.viewOrder((DefaultTableModel) blendTable.getModel(), (DefaultTableModel) orderDetailsTable.getModel(), orderIDLabel.getText());
+        adminPannel.populateIngStockTable();
         
         //Generating updated master plan PDF
         DefaultTableModel model = (DefaultTableModel) orderDetailsTable.getModel();

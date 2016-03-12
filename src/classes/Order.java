@@ -181,11 +181,13 @@ public class Order {
     public int updateOrderRowWise(String oID, double additional, String remark, String ing) {
         ResultArray resultSet0, resultSet1;
 
-        String query0 = "SELECT ingID FROM ingredient WHERE ingName = '" + ing + "'";
+        String query0 = "SELECT ingID,invisibleStock FROM ingredient WHERE ingName = '" + ing + "'";
         resultSet0 = dbConn.getResultArray(query0);
         int ingID = 0;
+        double invisible = 0;
         while (resultSet0.next()) {
             ingID = Integer.parseInt(resultSet0.getString(0));
+            invisible = Double.parseDouble(resultSet0.getString(1));
             break;
         }
 
@@ -198,10 +200,14 @@ public class Order {
         }
 
         double newExess = exess + additional;
+        double newInvisible = invisible + additional;
 
         String query2 = "UPDATE orderingredient SET excessQty = '" + newExess + "', remarks = '" + remark + "' WHERE orderID = '" + oID + "' AND ingID = '" + ingID + "'";
-        int result = dbConn.updateResult(query2);
-        return result;
+        int result1 = dbConn.updateResult(query2);
+        
+        String query3 = "UPDATE ingredient SET invisibleStock = '"+newInvisible+"' WHERE ingName = '" + ing + "'";
+        int result2 = dbConn.updateResult(query3);
+        return result2;
     }
 
     //formatting numbers to add commas
