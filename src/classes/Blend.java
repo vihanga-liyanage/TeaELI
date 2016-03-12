@@ -405,6 +405,28 @@ public class Blend {
         res.next();
         return res.getString(0);
     }
+    
+    public int checkExistingBlendID(String blendID){
+        String query = "SELECT blendID FROM blend WHERE blendID = '" + blendID + "' ";
+        ResultArray res = dbConn.getResultArray(query);
+        
+        if(res.next()==true){
+            return 1;
+        }else{
+            return 0;
+        }
+    }
+    
+    public int checkExistingBlendName(String blendName){
+        String query = "SELECT blendID FROM blend WHERE blendName = '" + blendName + "' ";
+        ResultArray res = dbConn.getResultArray(query);
+        
+        if(res.next()==true){
+            return 1;
+        }else{
+            return 0;
+        }
+    }
 
     public int getIngIDRecByIngName(String ingName) {
         String query = "SELECT ingID FROM ingredient WHERE ingName = '" + ingName + "' ";
