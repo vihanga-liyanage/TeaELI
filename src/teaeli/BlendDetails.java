@@ -289,6 +289,11 @@ public class BlendDetails extends javax.swing.JFrame {
         });
 
         blendUpdateBtn.setText("Update");
+        blendUpdateBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                blendUpdateBtnActionPerformed(evt);
+            }
+        });
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 0, 0));
@@ -448,68 +453,6 @@ public class BlendDetails extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    //Identify belnd name by ID and populte ingredient and flavour table to update blend details
-    
-   /* public String sendBlendID(String blendID){
-        String res = blendID;
-        return res;
-    }
-    public void identifyBlendDetails(String blendID){
-        String blendName = "";
-        blendName = blend.getBlendNameByBlendID(blendID);
-        blendCodeTxt.setText("Thisara");
-        
-        
-       
-        System.out.println(blendName);
-        
-        
-        
-        
-    }*/
-    /*public void populateIngredients(DefaultTableModel tableModel) {
-
-        Connection connection = null;
-        ResultSet resultSet = null;
-        
-        String blendID = "";
-
-        try {
-            String query = "SELECT I.ingName,R.ingPercent FROM ingredient I, recipie R WHERE R.blendID = '"+ blendID + "' AND R.type=1";
-
-            connection = dbConn.setConnection();
-            resultSet = dbConn.getResult(query, connection);
-
-            tableModel.setRowCount(0);
-
-            while (resultSet.next()) {
-                Vector newRow = new Vector();
-                for (int i = 1; i <= 6; i++) {
-                    newRow.addElement(resultSet.getObject(i));
-                }
-                tableModel.addRow(newRow);
-            }
-
-        } catch (Exception e) {
-            System.err.println("stckhis 96 err : " + e);
-        } finally {
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (Exception e) {
-                    System.err.println("Resultset close error : " + e);
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (Exception e) {
-                    System.err.println("Connection close error : " + e);
-                }
-            }
-        }
-    }*/
-    
     
     
     private void blendNameTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blendNameTxtActionPerformed
@@ -559,14 +502,20 @@ public class BlendDetails extends javax.swing.JFrame {
                 }
             }
             if (isNew) {
-                List<List<String>> res = ingredient1.getIngDataByIngName(ingName);
-                //System.out.println(res);
-                Vector newRow = new Vector();
-                newRow.addElement(res.get(0).get(1));
-                newRow.addElement(ingPer);
-              
-                DefaultTableModel model = (DefaultTableModel) ingTable.getModel();
-                model.addRow(newRow);
+                if(ingPer>100){
+                    JOptionPane.showMessageDialog(ingPerTxt, "Please enter valid percentage to add.", "Error", JOptionPane.WARNING_MESSAGE);
+                    ingPerTxt.setText("");
+                    ingPerTxt.requestFocus();
+                }else{
+                    List<List<String>> res = ingredient1.getIngDataByIngName(ingName);
+                    //System.out.println(res);
+                    Vector newRow = new Vector();
+                    newRow.addElement(res.get(0).get(1));
+                    newRow.addElement(ingPer);
+
+                    DefaultTableModel model = (DefaultTableModel) ingTable.getModel();
+                    model.addRow(newRow);
+                }
             }
             
             ingPerTxt.setText("");
@@ -594,14 +543,20 @@ public class BlendDetails extends javax.swing.JFrame {
                 }
             }
             if (isNew) {
-                List<List<String>> res = ingredient1.getIngDataByIngName(flavourName);
-                //System.out.println(res);
-                Vector newRow = new Vector();
-                newRow.addElement(res.get(0).get(1));
-                newRow.addElement(ingPer);
-              
-                DefaultTableModel model = (DefaultTableModel) flavourTable.getModel();
-                model.addRow(newRow);
+                if(ingPer>100){
+                    JOptionPane.showMessageDialog(ingPerTxt, "Please enter valid percentage to add.", "Error", JOptionPane.WARNING_MESSAGE);
+                    ingPerTxt.setText("");
+                    ingPerTxt.requestFocus();
+                }else{
+                    List<List<String>> res = ingredient1.getIngDataByIngName(flavourName);
+                    //System.out.println(res);
+                    Vector newRow = new Vector();
+                    newRow.addElement(res.get(0).get(1));
+                    newRow.addElement(ingPer);
+
+                    DefaultTableModel model = (DefaultTableModel) flavourTable.getModel();
+                    model.addRow(newRow);
+                }
             }
             
             flavoursPerTxt.setText("");
@@ -609,7 +564,8 @@ public class BlendDetails extends javax.swing.JFrame {
             flavoursCombo.requestFocus();
         }
     }//GEN-LAST:event_flavoursPerAddBtnActionPerformed
-    String blendID, blendName, blendCategory, base;
+    
+    String blendID, blendName, blendCategory, base;//Decalration for add new blend data
     
     private void blendAddnewBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blendAddnewBtnActionPerformed
         blendID = blendCodeTxt.getText();
@@ -665,7 +621,7 @@ public class BlendDetails extends javax.swing.JFrame {
                                     int x = 0;
                                     for(int i =0; i<ingCount ; i++){
                                         int a = ingID.get(i);
-                                         double b = Double.parseDouble(ingTable.getValueAt(i, 1).toString());
+                                        double b = Double.parseDouble(ingTable.getValueAt(i, 1).toString());
                                         String query1 = "INSERT INTO recipie (blendID, ingID, ingPercent, type) VALUES ('"+ blendID +"','"+ a +"','"+ b +"',0)";
                                         x = dbConn.updateResult(query1);
                                     }
@@ -779,6 +735,17 @@ public class BlendDetails extends javax.swing.JFrame {
             updateRadioBtn.setEnabled(true);
         }
     }//GEN-LAST:event_addnewRadioBtnActionPerformed
+
+    private void blendUpdateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blendUpdateBtnActionPerformed
+        blendID = blendCodeTxt.getText();
+        blendCategory = blendCategoryCombo.getSelectedItem().toString();
+        
+        float ingPerCount = 0;
+        float flavPerCount = 0;
+        int ingCount = ingTable.getRowCount();
+        int flavCount = flavourTable.getRowCount();
+        int recCount = ingCount+flavCount;
+    }//GEN-LAST:event_blendUpdateBtnActionPerformed
         
     
     

@@ -287,6 +287,29 @@ public class Order {
         return nextOrderID;
     }
     /* end of getNextPendingOrderID method */
+    
+    /* start of getNextPendingRecievedOrderID method */
+    public String getNextPendingRecievedOrderID(String orderID) {
+
+        String nextOrderID = "0";
+        ResultArray resultArray;
+
+        try {
+            String query = "SELECT orderID FROM `order` WHERE orderStatus = '1' AND orderID != '" + orderID + "' ";
+
+            resultArray = dbConn.getResultArray(query);
+
+            if (resultArray.next()) {
+                nextOrderID = resultArray.getString(0);
+            }
+
+        } catch (Exception e) {
+            System.err.println("Exception : " + e);
+        }
+
+        return nextOrderID;
+    }
+    /* end of getNextPendingRecievedOrderID method */
 
     /* Start of getIngredientDetailsOfNextOrder method */
     public ArrayList<Ingredient> getIngredientDetailsOfNextOrder(String orderID) {
@@ -319,6 +342,38 @@ public class Order {
         return nextIngList;
     }
     /* End of getIngredientDetailsOfNextOrder method */
+    
+    /* Start of getBlendDetailsOfNextOrder method */
+    public ArrayList<Blend> getBlendDetailsOfNextOrder(String orderID) {
+
+        ResultArray resultArray;
+        ArrayList<Blend> nextBlendList = new ArrayList();
+
+        try {
+
+            String query = "SELECT b.blendName, b.invisibleStock, b.alocatedStock, b.visibleStock, ob.excessQty "
+                    + "FROM blend b, orderblend ob WHERE ob.orderID = '" + orderID + "' AND (ob.blendID = b.blendID)";
+
+            resultArray = dbConn.getResultArray(query);
+
+            while (resultArray.next()) {
+                Blend blend = new Blend();
+
+                blend.setBlendName(resultArray.getString(0));
+                blend.setInvisibleStock(Integer.parseInt(resultArray.getString(1)));
+                blend.setAlocatedStock(Integer.parseInt(resultArray.getString(2)));
+                blend.setVisibleStock(Integer.parseInt(resultArray.getString(3)));
+                blend.setOrderExcessQty(Integer.parseInt(resultArray.getString(4)));
+
+                nextBlendList.add(blend);
+            }
+
+        } catch (Exception e) {
+            System.err.println("Exception : " + e);
+        }
+        return nextBlendList;
+    }
+    /* End of getBlendDetailsOfNextOrder method */
 
     /* start of updateIngredientStock method */
     public boolean updateIngredientStock(ArrayList<Ingredient> ingList, String orderID) {
@@ -376,4 +431,61 @@ public class Order {
         return updated;
     }
     /* end of updateIngredientStock method */
+    
+    /* start of updateBlendStock method */
+    public boolean updateBlendStock(ArrayList<Blend> blendList, String orderID) {
+
+        boolean updated = false;
+
+        try {
+            String nextOrderID = this.getNextPendingRecievedOrderID(orderID);
+            
+            if (nextOrderID.equals("0")) {
+
+                for (Blend blend : blendList) {
+                    updated = blend.updateBlendStockWithoutPending();
+                }
+
+            } else {
+
+                ArrayList<Blend> nextOrderList = this.getBlendDetailsOfNextOrder(nextOrderID);
+                ArrayList<String> orderBlendNames = new ArrayList();
+
+                for (Blend nextBlend : nextOrderList) {
+                    orderBlendNames.add(nextBlend.getBlendName());
+                }
+
+                for (Blend blend : blendList) {
+
+                    //get ingredient index in nextOrderList array if same element repeats
+                    int index = orderBlendNames.indexOf(blend.getBlendName());
+
+                    if (index == -1) {
+
+                        updated = blend.updateBlendStockWithoutPending();
+
+                    } else {
+
+                        int visible = nextOrderList.get(index).getVisibleStock();
+                        int invisible = nextOrderList.get(index).getInvisibleStock();
+                        int alocate = nextOrderList.get(index).getAlocatedStock();
+                        int excess = nextOrderList.get(index).getOrderExcessQty();
+                        int required = blend.getOrderReqQty();
+
+                        int changeQty = invisible - excess;
+
+                        blend.setInvisibleStock(invisible - changeQty);
+                        blend.setVisibleStock(visible + changeQty);
+                        blend.setAlocatedStock(alocate + required);
+
+                        updated = blend.updateBlendStockWithPending();
+                    }
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Exception : " + e);
+        }
+        return updated;
+    }
+    /* end of updateBlendStock method */
 }

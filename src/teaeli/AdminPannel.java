@@ -285,7 +285,7 @@ public class AdminPannel extends javax.swing.JFrame {
         blendHistoryStock.populateStockBlendHistoryTable((DefaultTableModel) blendStockHistoryTbl.getModel());
     }
     
-    public final void populateProductTable() {
+    public void populateProductTable() {
         blend.populateProductTable((DefaultTableModel) productTable.getModel());
     }
 
@@ -2005,7 +2005,7 @@ public class AdminPannel extends javax.swing.JFrame {
     private javax.swing.JPanel orderHandlingPanel;
     private javax.swing.JTable orderListTable;
     private javax.swing.JComboBox orderSearchCombo;
-    private javax.swing.JTable productTable;
+    public javax.swing.JTable productTable;
     private javax.swing.JButton profileBtn;
     private javax.swing.JComboBox searchBlendComboBox;
     private javax.swing.JButton searchIngredientBtn;
