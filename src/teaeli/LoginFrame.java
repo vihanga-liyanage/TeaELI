@@ -165,7 +165,6 @@ public class LoginFrame extends javax.swing.JFrame {
         userName = txtUsername.getText();
         password = txtPassword.getText();
         String encripted = PswrdEncrypt.main2(password);
-        
          
         if (us.checkLogin(userName, encripted)==1){
 

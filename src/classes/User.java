@@ -1,9 +1,5 @@
 package classes;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 import teaeli.EditProfile;
@@ -139,6 +135,7 @@ public class User {
     
     public int checkLogin(String userName, String password) {
             String query = "SELECT username,designation FROM user where password = '" + password + "' and username = ('" + userName + "')";
+            
             ResultArray rs = dbConn.getResultArray(query);
             while(rs.next()){
             
