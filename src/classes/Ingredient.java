@@ -510,7 +510,7 @@ public class Ingredient {
         rs2.next();
         rslt2 = rs2.getString(0);
 
-        String query3 = "INSERT INTO ingredient values(0,'" + Name + "','" + rslt1 + "',0,0,0,'" + rslt2 + "','" + price + "') ";
+        String query3 = "INSERT INTO ingredient(ingName,ingCategoryID,visibleStock,alocatedStock,invisibleStock,supID,unitPrice) values('" + Name + "','" + rslt1 + "',0,0,0,'" + rslt2 + "','" + price + "') ";
         int rslt3 = dbConn.updateResult(query3);
         return rslt3;
     }

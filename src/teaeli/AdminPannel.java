@@ -32,9 +32,12 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
+import classes.PDF;
+import javax.swing.JTable;
 
 public class AdminPannel extends javax.swing.JFrame {
 
+    PDF pdf = new PDF();
     User user = new User();
     Ingredient ingredient = new Ingredient();
     Blend blend = new Blend();
@@ -44,7 +47,9 @@ public class AdminPannel extends javax.swing.JFrame {
     Order order = new Order();
     int blendGo = 0, ingredientGo = 0;
     private Object ingTable;
-
+    java.util.Date date = new java.util.Date();
+    SimpleDateFormat sdf3 = new SimpleDateFormat("yyyy-MM-dd");
+    String today = sdf3.format(date);
     /**
      * Creates new form AdminPannel
      */
@@ -546,7 +551,7 @@ public class AdminPannel extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 387, Short.MAX_VALUE)
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 405, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -636,7 +641,7 @@ public class AdminPannel extends javax.swing.JFrame {
                     .addComponent(searchStockIngBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(searchStockIngComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE))
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 412, Short.MAX_VALUE))
         );
 
         inventoryManagementSplitPane.setLeftComponent(inventoryManagementIngredientPanel);
@@ -728,7 +733,7 @@ public class AdminPannel extends javax.swing.JFrame {
                     .addComponent(searchStockBlendComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(blendDeliveryBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 412, Short.MAX_VALUE))
         );
 
         inventoryManagementSplitPane.setRightComponent(inventoryManagementBlendPanel);
@@ -1332,7 +1337,7 @@ public class AdminPannel extends javax.swing.JFrame {
             settingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(settingsPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(settingsTabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, 487, Short.MAX_VALUE)
+                .addComponent(settingsTabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, 505, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1395,8 +1400,7 @@ public class AdminPannel extends javax.swing.JFrame {
                             .addComponent(logoutBtn)
                             .addComponent(profileBtn))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(mainTabbedPane)
-                .addGap(18, 18, 18))
+                .addComponent(mainTabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 562, Short.MAX_VALUE))
         );
 
         pack();
@@ -1829,11 +1833,13 @@ public class AdminPannel extends javax.swing.JFrame {
     }//GEN-LAST:event_EndDateActionPerformed
 
     private void btnIngredientHistoryReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngredientHistoryReportActionPerformed
-
+        
         if (StartDate.getDate()!=null && EndDate.getDate() != null &&blendGo == 0) {
             JOptionPane.showMessageDialog(this, "Please Press Go button to filter By date or Press Cancel ");
         } else {
-            ingredientHistoryStock.IngStockHistoryPdfGeneration();
+            DefaultTableModel model = (DefaultTableModel) ingStockHistoryTbl.getModel();
+            JTable temp = new JTable(model);
+            pdf.IngStockHistoryPdfGeneration(temp,today);
             blendGo =0;
         }
     }//GEN-LAST:event_btnIngredientHistoryReportActionPerformed
@@ -1857,7 +1863,10 @@ public class AdminPannel extends javax.swing.JFrame {
         if (BlendStartDate.getDate() != null && blendEndDate.getDate() != null && blendGo == 0) {
             JOptionPane.showMessageDialog(this, "Please Press Go button to filter By date or Press Cancel");
         } else {
-            blendHistoryStock.BlendStockHistoryPdfGeneration();
+            
+            DefaultTableModel model = (DefaultTableModel) blendStockHistoryTbl.getModel();
+            JTable temp = new JTable(model);
+            pdf.BlendStockHistoryPdfGeneration(temp,today);
             blendGo =0;
         }
     }//GEN-LAST:event_btnBlendHistoryReportGenerationActionPerformed

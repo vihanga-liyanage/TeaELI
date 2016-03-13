@@ -475,4 +475,141 @@ public class PDF {
         }
 
     }
+    
+    public void IngStockHistoryPdfGeneration(JTable table,String date) {
+        try {
+            Document doc = new Document(PageSize.A4.rotate(), 20, 20, 20, 20);
+
+            //Creating the directory for the order
+            String tempPath = path + "Ingredient Stock History\\" ;
+            new File(tempPath).mkdirs();
+
+            PdfWriter.getInstance(doc, new FileOutputStream(tempPath + "Ingredient_Stock_History " +date + ".pdf"));
+            doc.open();
+
+            float[] coloumWidths = {2,5, 2, 2, 5, 2};
+            PdfPTable masterTable = new PdfPTable(coloumWidths);
+            masterTable.setWidthPercentage(100);
+
+            //Adding logo
+
+            PdfPCell logoCell = new PdfPCell(Image.getInstance("C:\\Teaeli\\Logos\\logo-new (Custom).png"));
+
+            logoCell.setColspan(3);
+            masterTable.addCell(logoCell);
+
+            //Adding master plan header data as another table
+            coloumWidths = new float[]{5.2f, 5};
+            PdfPTable headerTable = new PdfPTable(coloumWidths);
+            PdfPCell titleCell = new PdfPCell(new Paragraph("Ingredient Stock History ", FontFactory.getFont(font, 11, Font.BOLD)));
+            titleCell.setPadding(15);
+            titleCell.setColspan(10);
+            titleCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            headerTable.addCell(titleCell);
+            headerTable.addCell(getHeaderNameCell("Date taken"));
+            headerTable.addCell(getHeaderDataCell(date));
+            
+
+            PdfPCell headerDataCell = new PdfPCell(headerTable);
+            headerDataCell.setColspan(5);
+            masterTable.addCell(headerDataCell);
+
+            //Adding master table headers
+            masterTable.addCell(getTableHeaderCell("Date"));
+            masterTable.addCell(getTableHeaderCell("Ingredient Name"));
+            masterTable.addCell(getTableHeaderCell("Old Qty"));
+            masterTable.addCell(getTableHeaderCell("Updated Qty"));
+            masterTable.addCell(getTableHeaderCell("Reason"));
+            masterTable.addCell(getTableHeaderCell("Updated By"));
+            //Adding data from master table
+            
+            
+
+            for (int i = 0; i < table.getRowCount(); i++) {
+                
+                masterTable.addCell(getTableDataCell(table.getValueAt(i, 0).toString()));
+                masterTable.addCell(getTableDataCell(table.getValueAt(i, 1).toString()));
+                masterTable.addCell(getTableDataCell(table.getValueAt(i, 2).toString()));
+                masterTable.addCell(getTableDataCell(table.getValueAt(i, 3).toString()));
+                masterTable.addCell(getTableDataCell(table.getValueAt(i, 4).toString()));
+                masterTable.addCell(getTableDataCell(table.getValueAt(i, 5).toString()));
+            }
+            doc.add(masterTable);
+
+            doc.close();
+
+        } catch (FileNotFoundException | DocumentException ex) {
+            JOptionPane.showMessageDialog(null, "Error : " + ex);
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error : " + ex);
+        }
+    }
+    
+    public void BlendStockHistoryPdfGeneration(JTable table,String date) {
+        try {
+            Document doc = new Document(PageSize.A4.rotate(), 20, 20, 20, 20);
+
+            //Creating the directory for the order
+            String tempPath = path + "Blend Stock History\\" ;
+            new File(tempPath).mkdirs();
+
+            PdfWriter.getInstance(doc, new FileOutputStream(tempPath + "Blend_Stock_History " +date + ".pdf"));
+            doc.open();
+
+            float[] coloumWidths = {2,5, 2, 2, 5, 2};
+            PdfPTable masterTable = new PdfPTable(coloumWidths);
+            masterTable.setWidthPercentage(100);
+
+            //Adding logo
+
+            PdfPCell logoCell = new PdfPCell(Image.getInstance("C:\\Teaeli\\Logos\\logo-new (Custom).png"));
+
+            logoCell.setColspan(3);
+            masterTable.addCell(logoCell);
+
+            //Adding master plan header data as another table
+            coloumWidths = new float[]{5.2f, 5};
+            PdfPTable headerTable = new PdfPTable(coloumWidths);
+            PdfPCell titleCell = new PdfPCell(new Paragraph("Blend Stock History ", FontFactory.getFont(font, 11, Font.BOLD)));
+            titleCell.setPadding(15);
+            titleCell.setColspan(10);
+            titleCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            headerTable.addCell(titleCell);
+            headerTable.addCell(getHeaderNameCell("Date taken"));
+            headerTable.addCell(getHeaderDataCell(date));
+
+            PdfPCell headerDataCell = new PdfPCell(headerTable);
+            headerDataCell.setColspan(5);
+            masterTable.addCell(headerDataCell);
+
+            //Adding master table headers
+            masterTable.addCell(getTableHeaderCell("Date"));
+            masterTable.addCell(getTableHeaderCell("Blend Name"));
+            masterTable.addCell(getTableHeaderCell("Old Qty"));
+            masterTable.addCell(getTableHeaderCell("Updated Qty"));
+            masterTable.addCell(getTableHeaderCell("Reason"));
+            masterTable.addCell(getTableHeaderCell("Updated By"));
+            //Adding data from master table
+            
+            
+
+            for (int i = 0; i < table.getRowCount(); i++) {
+                
+                masterTable.addCell(getTableDataCell(table.getValueAt(i, 0).toString()));
+                masterTable.addCell(getTableDataCell(table.getValueAt(i, 1).toString()));
+                masterTable.addCell(getTableDataCell(table.getValueAt(i, 2).toString()));
+                masterTable.addCell(getTableDataCell(table.getValueAt(i, 3).toString()));
+                masterTable.addCell(getTableDataCell(table.getValueAt(i, 4).toString()));
+                masterTable.addCell(getTableDataCell(table.getValueAt(i, 5).toString()));
+            }
+            doc.add(masterTable);
+
+            doc.close();
+
+        } catch (FileNotFoundException | DocumentException ex) {
+            JOptionPane.showMessageDialog(null, "Error : " + ex);
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error : " + ex);
+        }
+    }
 }
