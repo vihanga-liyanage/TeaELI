@@ -27,11 +27,17 @@ import static teaeli.IngredientDetails.supplierCombobox;
 public class AddIngredient extends javax.swing.JFrame {
 
     DBConnection dbcon = new DBConnection();
-    AdminPannel adminpanel = new AdminPannel();
+    
 
     Ingredient ingr = new Ingredient();
 
     Supplier supplier = new Supplier();
+    
+    private AdminPannel adminPannel;
+
+    public void setAdminPannel(AdminPannel adminPannel) {
+        this.adminPannel = adminPannel;
+    }
 
     public AddIngredient() {
         //Add windows look and feel
@@ -249,14 +255,15 @@ public class AddIngredient extends javax.swing.JFrame {
             if (Float.parseFloat(txtPrice.getText()) < 0) {
                 JOptionPane.showMessageDialog(this, "Enter valid price");
             } else {
-
+                price = Float.parseFloat(txtPrice.getText());
                 int result = ingr.addNewIngredient(name, type, supname, price);
                 if (result == 1) {
                     JOptionPane.showMessageDialog(this, "Ingredient Succesfully Added");
                     this.setVisible(false);
                     AutoSuggest searchIngredientComboBoxAutoSuggest = new AutoSuggest();
-                    searchIngredientComboBoxAutoSuggest.setAutoSuggest(adminpanel.searchIngredientComboBox, ingr.loadNameForSearchStockIngComboBox());
-                    
+                    searchIngredientComboBoxAutoSuggest.setAutoSuggest(adminPannel.searchIngredientComboBox, ingr.loadNameForSearchStockIngComboBox());
+                    adminPannel.populateSettingsIngredientTable();
+                    this.dispose();
                     
 
                 } else {
