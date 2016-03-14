@@ -738,13 +738,51 @@ public class BlendDetails extends javax.swing.JFrame {
 
     private void blendUpdateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blendUpdateBtnActionPerformed
         blendID = blendCodeTxt.getText();
+        blendName = blendNameTxt.getText();
         blendCategory = blendCategoryCombo.getSelectedItem().toString();
+        base = baseCombo.getSelectedItem().toString();
         
         float ingPerCount = 0;
         float flavPerCount = 0;
         int ingCount = ingTable.getRowCount();
         int flavCount = flavourTable.getRowCount();
         int recCount = ingCount+flavCount;
+        
+        if(flavCount==0){
+            for(int i=0; i < ingCount; i++){
+                float initPer = Float.parseFloat(ingTable.getValueAt(i, 1).toString()); ;
+                ingPerCount = ingPerCount + initPer;
+            }
+
+            if(ingPerCount <= 0 || ingPerCount>=100){
+                JOptionPane.showMessageDialog(this, "Invalid percentage");
+
+            }else{
+                int ret = blend.updateBlend(blendID, blendName, base, blendCategory);
+
+                ArrayList <Integer> ingID = new ArrayList<>();
+                for(int i=0;i<ingCount;i++){
+                Blend a = new Blend();
+                ingID.add(a.getIngIDRecByIngName(ingTable.getValueAt(i, 0).toString()));
+            }
+
+            int x = 0;
+            for(int i =0; i<ingCount ; i++){
+                int a = ingID.get(i);
+                double b = Double.parseDouble(ingTable.getValueAt(i, 1).toString());
+                String query1 = "UPDATE recipie SET ingID = '" + a + "',ingPercent = '" + b + "' WHERE blendID = '" + blendID + "'  ";
+                x = dbConn.updateResult(query1);
+            }
+
+            if(x==1){
+                JOptionPane.showMessageDialog(null, "Blend Succesfully Updated");
+                this.dispose();
+            }else{
+                JOptionPane.showMessageDialog(null, "Error!, Data not Saved");
+            }
+        }
+
+    }
     }//GEN-LAST:event_blendUpdateBtnActionPerformed
         
     

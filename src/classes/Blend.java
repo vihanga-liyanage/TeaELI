@@ -464,6 +464,14 @@ public class Blend {
         int ret = dbConn.updateResult(query);
         return ret;
     }
+    
+    //Update Blend when Change the base/category or both
+    public int updateBlend(String blendID, String blendName, String base, String blendCategory) {
+        String baseCom = ingredient.getIngIDByIngName(base);
+        String query = "UPDATE blend SET baseID = '" + baseCom + "', blendCategory = '" + blendCategory + "' WHERE blendID = '" + blendID + "' " ;
+        int ret = dbConn.updateResult(query);
+        return ret;
+    }
 
     /* start of checkAndLoadBlendDeliverDetails method */
     public boolean checkAndLoadBlendDeliverDetails(String selectedBlendName) {
