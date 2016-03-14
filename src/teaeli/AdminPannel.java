@@ -1408,6 +1408,7 @@ public class AdminPannel extends javax.swing.JFrame {
 
     private void addItemBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addItemBtnActionPerformed
         AddIngredient addItem = new AddIngredient();
+        addItem.setAdminPannel(this);
         addItem.setVisible(true);
         addItem.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_addItemBtnActionPerformed

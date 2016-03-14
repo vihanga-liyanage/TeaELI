@@ -2,7 +2,6 @@ package classes;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -674,4 +673,31 @@ public class Blend {
         }
     }
     /* end of getBlendCatgFromBlendName method */
+    
+    /* start of updateBlendStock method -- for orderRecieved when no pending */
+    public boolean updateBlendStockWithoutPending(){
+        
+        String blendName = this.getBlendName().replace("'", "\\'");
+        
+        String query = "UPDATE blend SET alocatedStock = alocatedStock + '" + this.getOrderReqQty() + "'"
+                + " , visibleStock = visibleStock + '" + this.getOrderExcessQty() + "' "
+                + " , invisibleStock = invisibleStock - '" + this.getOrderExcessQty() + "' "
+                + " WHERE blendName = '" + blendName + "' ";
+        
+        return (dbConn.updateResult(query) == 1);
+    }
+    /* end of updateBlendStock method */
+    
+    /* start of updateBlendStock method -- for orderRecieved */
+    public boolean updateBlendStockWithPending(){
+        
+        String blendName = this.getBlendName().replace("'", "\\'");
+        
+        String query = "UPDATE blend SET alocatedStock = '" + this.getAlocatedStock() + "'"
+                + " , visibleStock = '" + this.getVisibleStock() + "', invisibleStock = '" + this.getInvisibleStock() + "' "
+                + " WHERE blendName = '" + blendName + "' ";
+        
+        return (dbConn.updateResult(query) == 1);
+    }
+    /* end of updateBlendStock method */
 }
