@@ -263,6 +263,9 @@ public class AddIngredient extends javax.swing.JFrame {
                     AutoSuggest searchIngredientComboBoxAutoSuggest = new AutoSuggest();
                     searchIngredientComboBoxAutoSuggest.setAutoSuggest(adminPannel.searchIngredientComboBox, ingr.loadNameForSearchStockIngComboBox());
                     adminPannel.populateSettingsIngredientTable();
+                    AutoSuggest searchStockIngComboBoxAutoSuggest = new AutoSuggest();
+                    searchStockIngComboBoxAutoSuggest.setAutoSuggest(adminPannel.searchStockIngComboBox, ingr.loadNameForSearchStockIngComboBox());
+                    adminPannel.populateIngStockTable();
                     this.dispose();
                     
 

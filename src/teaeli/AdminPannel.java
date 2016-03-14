@@ -1400,7 +1400,7 @@ public class AdminPannel extends javax.swing.JFrame {
                             .addComponent(logoutBtn)
                             .addComponent(profileBtn))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(mainTabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 562, Short.MAX_VALUE))
+                .addComponent(mainTabbedPane))
         );
 
         pack();
@@ -2005,7 +2005,7 @@ public class AdminPannel extends javax.swing.JFrame {
     private javax.swing.JPanel orderHandlingPanel;
     private javax.swing.JTable orderListTable;
     private javax.swing.JComboBox orderSearchCombo;
-    public javax.swing.JTable productTable;
+    private javax.swing.JTable productTable;
     private javax.swing.JButton profileBtn;
     private javax.swing.JComboBox searchBlendComboBox;
     private javax.swing.JButton searchIngredientBtn;
@@ -2015,7 +2015,7 @@ public class AdminPannel extends javax.swing.JFrame {
     private javax.swing.JComboBox searchStockBlendComboBox;
     private javax.swing.JButton searchStockBlendsBtn;
     private javax.swing.JButton searchStockIngBtn;
-    private javax.swing.JComboBox searchStockIngComboBox;
+    public javax.swing.JComboBox searchStockIngComboBox;
     private javax.swing.JPanel settingsBlendHistoryPanel;
     private javax.swing.JPanel settingsBlendPanel;
     private javax.swing.JPanel settingsIngHistoryPanel;
