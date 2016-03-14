@@ -430,6 +430,8 @@ public class OrderDetails extends javax.swing.JFrame  {
             
             //set table editing false after order recieved
             orderDetailsTable.setEnabled(false);
+            
+            adminPannel.populateIngStockTable();
         }else{
             JOptionPane.showMessageDialog(this, "Changes did not affected !", "Changes Failed", 0);
         }
@@ -462,6 +464,9 @@ public class OrderDetails extends javax.swing.JFrame  {
             orderCompletedBtn.setVisible(false);
             orderReceivedBtn.setVisible(false);
             updateOrderBtn.setVisible(false);
+            
+            adminPannel.populateBlendStockTable();
+            
         }else{
             JOptionPane.showMessageDialog(this, "Changes did not affected !", "Changes Failed", 0);
         }
