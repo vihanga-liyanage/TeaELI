@@ -5,6 +5,7 @@
  */
 package teaeli;
 
+import classes.PswrdEncrypt;
 import classes.User;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -233,7 +234,7 @@ public class AddNewUser extends javax.swing.JFrame {
                 user1.setLastName(lastnameTxt.getText());
                 user1.setDesignation(addUserDesignationCombo.getSelectedItem().toString());
                 user1.setUserName(usernameTxt.getText());
-                user1.setPassword(passwordTxt.getText());
+                user1.setPassword(PswrdEncrypt.main2(passwordTxt.getText()));
 
                 int result = user1.addNewUser(user1);
                 if (result == 1) {                    

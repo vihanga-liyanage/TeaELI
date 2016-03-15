@@ -1,9 +1,5 @@
 package classes;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 import teaeli.EditProfile;
@@ -111,7 +107,9 @@ public class User {
     }
 
     public int addNewUser(User user) {
-        String query = "INSERT INTO user values(0, '" + user.getUserName() + "', '" + user.getFirstName() + "', '" + user.getLastName() + "', sha1('" + user.getPassword() + "'), '" + user.getDesignation() + "')";
+
+        String query = "INSERT INTO user (username,firstname,lastname,password,designation)values(  '" + user.getUserName() + "','" + user.getFirstName() + "','" + user.getLastName() + "', '" + user.getPassword() + "', '" + user.getDesignation() + "')";
+
         int rslt = dbConn.updateResult(query);
         return rslt;
     }
@@ -137,6 +135,7 @@ public class User {
     
     public int checkLogin(String userName, String password) {
             String query = "SELECT username,designation FROM user where password = '" + password + "' and username = ('" + userName + "')";
+            
             ResultArray rs = dbConn.getResultArray(query);
             while(rs.next()){
             
@@ -160,7 +159,7 @@ public class User {
 
     
     public  int updatePassword(String firstname, String lastname,String username,String newpassword,String currentpassword){
-        String query = "UPDATE user SET firstname =' "+firstname+"', lastname = '"+lastname+"',password = sha1('"+newpassword+"') WHERE username = '"+username+"' and password = sha1('"+currentpassword+"')";
+        String query = "UPDATE user SET firstname =' "+firstname+"', lastname = '"+lastname+"',password = '"+newpassword+"' WHERE username = '"+username+"' and password = '"+currentpassword+"'";
         int rst = dbConn.updateResult(query);
         return rst;
 

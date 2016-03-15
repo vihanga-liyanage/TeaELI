@@ -7,6 +7,7 @@ package teaeli;
 
 import classes.User;
 import classes.DBConnection;
+import classes.PswrdEncrypt;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.sql.Connection;
@@ -241,11 +242,12 @@ public class EditProfile extends javax.swing.JFrame {
         currentpassword = txtCurrentPassword.getText();
         newpassword = txtNewPassword.getText();
         confirmpassword = txtConfirmPassword.getText();
-        int result1 = us.updateUserName(firstname, lastname,username);
-        int result2 = us.updatePassword(firstname, lastname, username, newpassword, currentpassword);
+        String encriptCurentPswrd = PswrdEncrypt.main2(currentpassword);
+        String encriptNewPassword = PswrdEncrypt.main2(newpassword);
+        
         
         if(pswrdFlag==0){
-        
+            int result1 = us.updateUserName(firstname, lastname,username);
             if (result1 == 1){
                 JOptionPane.showMessageDialog(this, "Succsfully updated");
                 this.setVisible(false);
@@ -255,8 +257,8 @@ public class EditProfile extends javax.swing.JFrame {
             }
             
         }
-        else if(pswrdFlag==1 && currentpassword.isEmpty() && newpassword.isEmpty() && confirmpassword.isEmpty()){
-            
+        else if(pswrdFlag==1 && encriptCurentPswrd.isEmpty() && newpassword.isEmpty() && confirmpassword.isEmpty()){
+            int result1 = us.updateUserName(firstname, lastname,username);
             if (result1 == 1){
                 JOptionPane.showMessageDialog(this, "Succsfully updated");
                 this.setVisible(false);
@@ -269,7 +271,7 @@ public class EditProfile extends javax.swing.JFrame {
             
         
         else if(pswrdFlag==1 && !currentpassword.isEmpty() && !newpassword.isEmpty() && !confirmpassword.isEmpty() && newpassword.equals(confirmpassword)){
-           
+           int result2 = us.updatePassword(firstname, lastname, username, encriptNewPassword, encriptCurentPswrd);
             if(result2==1){
                 JOptionPane.showMessageDialog(this, "Password succsfully updated");
                 this.setVisible(false);

@@ -6,12 +6,14 @@
 
 package teaeli;
 
+import classes.Blend;
 import classes.Ingredient;
 import classes.Order;
 import classes.PDF;
 import java.awt.Font;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -344,6 +346,14 @@ public class OrderDetails extends javax.swing.JFrame  {
     }//GEN-LAST:event_cancelBtnActionPerformed
 
     private void updateOrderBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateOrderBtnActionPerformed
+        String tempPath = "C:\\Teaeli\\RM-Orders\\" + orderIDLabel.getText() + "\\RM_Order_Master_Plan-" + orderIDLabel.getText() + ".pdf";
+        File file = new File(tempPath);
+        File sameFileName = new File(tempPath);
+        if (!file.renameTo(sameFileName)) {
+            JOptionPane.showMessageDialog(this, "The file you are going to update is already opened!!!\nPlease close the file before update the order", "File already open", 0);
+            return;
+        }
+        
         try{
             orderDetailsTable.getCellEditor().stopCellEditing();  
         }catch(NullPointerException ex){
@@ -378,6 +388,7 @@ public class OrderDetails extends javax.swing.JFrame  {
         }
         JOptionPane.showMessageDialog(this, "Values saved successfully !\nThe new RM Master plan PDF will be replaced with the old one", "Update Success", 1);
         order.viewOrder((DefaultTableModel) blendTable.getModel(), (DefaultTableModel) orderDetailsTable.getModel(), orderIDLabel.getText());
+        adminPannel.populateIngStockTable();
         
         //Generating updated master plan PDF
         DefaultTableModel model = (DefaultTableModel) orderDetailsTable.getModel();
@@ -401,38 +412,92 @@ public class OrderDetails extends javax.swing.JFrame  {
             Ingredient ing = new Ingredient();
             
             ing.setIngName((String) orderTableModel.getValueAt(r, 0));
-            ing.setOrderReqQty(Float.parseFloat( (String) orderTableModel.getValueAt(r, 1)));
-            ing.setOrderExcessQty(Float.parseFloat((String) orderTableModel.getValueAt(r, 5)));
+            ing.setOrderReqQty(this.parseFloat( (String) orderTableModel.getValueAt(r, 1)));
+            ing.setOrderExcessQty(this.parseFloat((String) orderTableModel.getValueAt(r, 5)));
             
             ingredientsOrdered.add(ing);
         }
         
-        order.updateIngredientStock(ingredientsOrdered, orderIDLabel.getText());
+        boolean updated = order.updateIngredientStock(ingredientsOrdered, orderIDLabel.getText());
         
         int result = order.updateOrderStatus(1, orderIDLabel.getText());
-        if(result == 1){
+        
+        if(result == 1 && updated){
             JOptionPane.showMessageDialog(this, "Order status changed successfully !", "Changes Succeeded", 1);
             adminPannel.populateOrderListTable();
             orderCompletedBtn.setVisible(true);
             orderReceivedBtn.setVisible(false);
+            
+            //set table editing false after order recieved
+            orderDetailsTable.setEnabled(false);
+            
+            adminPannel.populateIngStockTable();
         }else{
             JOptionPane.showMessageDialog(this, "Changes did not affected !", "Changes Failed", 0);
         }
     }//GEN-LAST:event_orderReceivedBtnActionPerformed
 
     private void orderCompletedBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderCompletedBtnActionPerformed
+        
+        ArrayList<Blend> blendsOrdered = new ArrayList();
+        
+        TableModel orderTableModel = blendTable.getModel();
+        
+        for (int r = 0; r < blendTable.getRowCount(); r++){
+            
+            Blend blend = new Blend();
+            
+            blend.setBlendName((String) orderTableModel.getValueAt(r, 1));
+            blend.setOrderReqQty(this.parseInt((String) orderTableModel.getValueAt(r, 2)));
+            blend.setOrderExcessQty(this.parseInt((String) orderTableModel.getValueAt(r, 6)));
+            
+            blendsOrdered.add(blend);
+        }
+        
+        boolean updated = order.updateBlendStock(blendsOrdered, orderIDLabel.getText());
+        
         int result = order.updateOrderStatus(2, orderIDLabel.getText());
-        if(result == 1){
+        
+        if(result == 1 && updated){
             JOptionPane.showMessageDialog(this, "Order status changed successfully !", "Changes Succeeded", 1);
             adminPannel.populateOrderListTable();
             orderCompletedBtn.setVisible(false);
             orderReceivedBtn.setVisible(false);
             updateOrderBtn.setVisible(false);
+            
+            adminPannel.populateBlendStockTable();
+            
         }else{
             JOptionPane.showMessageDialog(this, "Changes did not affected !", "Changes Failed", 0);
         }
     }//GEN-LAST:event_orderCompletedBtnActionPerformed
 
+    //overiding Integer.parseInt() to accept nums with commas
+    private int parseInt(String num) {
+        try {
+            return Integer.parseInt(num);
+        } catch (NumberFormatException e) {
+            if (num.matches("[[0-9]{1,2}+,]*")) {
+                num = num.replace(",", "");
+                return Integer.parseInt(num);
+            }
+        }
+        return 0;
+    }
+
+    //overiding Float.parseFloat() to accept nums with commas
+    private float parseFloat(String num) {
+        try {
+            return Float.parseFloat(num);
+        } catch (NumberFormatException e) {
+            if (num.matches("[[0-9]{1,2}+,]*.[0-9]*")) {
+                num = num.replace(",", "");
+                return Float.parseFloat(num);
+            }
+        }
+        return 0;
+    }
+    
     /**
      * @param args the command line arguments
      */

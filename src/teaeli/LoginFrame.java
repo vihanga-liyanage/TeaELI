@@ -7,6 +7,7 @@
 package teaeli;
 
 import classes.DBConnection;
+import classes.PswrdEncrypt;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -163,15 +164,16 @@ public class LoginFrame extends javax.swing.JFrame {
          
         userName = txtUsername.getText();
         password = txtPassword.getText();
+        String encripted = PswrdEncrypt.main2(password);
          
-        if (us.checkLogin(userName, password)==1){
+        if (us.checkLogin(userName, encripted)==1){
 
             AdminPannel adminPannel = new AdminPannel();//the provided username & password matched
             adminPannel.setVisible(true);
             user =userName;
             setVisible(false);
 
-        }else if (us.checkLogin(userName, password)==2){
+        }else if (us.checkLogin(userName, encripted)==2){
 
             ManagerPannel managerPannel = new ManagerPannel();//the provided username & password matched
             managerPannel.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);//Keep the window fullscreen
@@ -179,7 +181,7 @@ public class LoginFrame extends javax.swing.JFrame {
             user =userName;
             setVisible(false);
 
-        }else if (us.checkLogin(userName, password)== 4 | us.checkLogin(userName, password)==3){
+        }else if (us.checkLogin(userName, encripted)== 4 | us.checkLogin(userName, encripted)==3){
 
             if (passwrdCount !=3){
             JOptionPane.showMessageDialog(this, "Invalid username or password");//the provided password does not exist in the db
