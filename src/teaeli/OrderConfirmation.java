@@ -91,20 +91,7 @@ public class OrderConfirmation extends javax.swing.JFrame {
         tblMasterPlanEditingView.setAutoCreateRowSorter(true);
         supplierWiseOrderDetailsTbl.setAutoCreateRowSorter(true);
 
-        /*
-         String [][] supplierwiseDetails = new String [numOfInsideArrays][3];
-         for(int i = 0; i<numOfInsideArrays ; i++ ){
-         for(int j =0 ; j<3 ; j++){
-                            
-         }
-         }*/
-        /*
-         //creaate a object of a master table         
-         DefaultTableModel model = (DefaultTableModel) cnb.masterPlanTbl.getModel();
-         for (int i = 0; i < model.getRowCount(); i++) {
-         System.out.println(model.getValueAt(i, 7).toString());
-            
-         }*/
+       
     }
 
     private OrderConfirmation() {
