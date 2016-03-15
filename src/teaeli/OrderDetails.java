@@ -345,7 +345,7 @@ public class OrderDetails extends javax.swing.JFrame  {
 
     private void updateOrderBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateOrderBtnActionPerformed
         try{
-          orderDetailsTable.getCellEditor().stopCellEditing();  
+            orderDetailsTable.getCellEditor().stopCellEditing();  
         }catch(NullPointerException ex){
             
         }
