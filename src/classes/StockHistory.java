@@ -98,7 +98,7 @@ public class StockHistory {
 
         String query = "SELECT S.date,I.ingName,S.oldQty,S.updatedQty,S.reason,U.username "
                 + "FROM ingredient I INNER JOIN ingredientstockhistory S ON S.ingID=I.ingID INNER JOIN user U ON S.updatedBy=U.userID;";
-        
+
         res = dbConn.getResultArray(query);
         tableModel.setRowCount(0);
 
@@ -121,7 +121,7 @@ public class StockHistory {
         String query = "SELECT S.date,B.blendName,S.oldQty,S.updatedQty,S.reason,U.username "
                 + "FROM blend B, blendstockhistory S, user U "
                 + "WHERE S.updatedBy=U.userID AND S.blendID=B.blendID";
-        
+
         res = dbConn.getResultArray(query);
         tableModel.setRowCount(0);
 
@@ -136,92 +136,98 @@ public class StockHistory {
     /* end of populateStockBlendHistoryTable method */
 
     public void populateStockIngredientHistoryTableByDate(DefaultTableModel tableModel, String startdate, String enddate) {
+        String date;
+        ResultArray res = null;
 
-        Connection connection = null;
-        ResultSet resultSet = null;
+        String query = "SELECT S.date,I.ingName,S.oldQty,S.updatedQty,S.reason,U.username FROM ingredient I, "
+                + "ingredientstockhistory S, user U WHERE S.updatedBy=U.userID AND S.ingID=I.ingID AND "
+                + "s.date BETWEEN '" + startdate + "' and '" + enddate + "'";
+        System.out.println(query);
+        res = dbConn.getResultArray(query);
+        if(res.size()==0){
+            JOptionPane.showMessageDialog(null, "No records during this date range");
+            return;
+        }
+        tableModel.setRowCount(0);
 
-        try {
-            String query = "SELECT S.date,I.ingName,S.oldQty,S.updatedQty,S.reason,U.username FROM ingredient I, ingredientstockhistory S, user U WHERE S.updatedBy=U.userID AND S.ingID=I.ingID AND s.date BETWEEN '" + startdate + "' AND '" + enddate + "'";
-
-            connection = dbConn.setConnection();
-            resultSet = dbConn.getResult(query, connection);
-
-            if(!resultSet.next()){
-                JOptionPane.showMessageDialog(null, "No Stock History during this Date range");
-                return;     
+        while (res.next()) {
+            Vector newRow = new Vector();
+            for (int i = 0; i <= 5; i++) {
+                newRow.addElement(res.getString(i));
             }
-            tableModel.setRowCount(0);
-            while (resultSet.next()) {
-                Vector newRow = new Vector();
-                for (int i = 1; i <= 6; i++) {
-                    newRow.addElement(resultSet.getObject(i));
-                }
-                tableModel.addRow(newRow);
-            }
-
-        } catch (Exception e) {
-            System.err.println("err : " + e);
-        } finally {
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (Exception e) {
-                    System.err.println("Resultset close error : " + e);
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (Exception e) {
-                    System.err.println("Connection close error : " + e);
-                }
-            }
+            tableModel.addRow(newRow);
         }
     }
 
+    public void populateStockIngredientHistoryTableForDate(DefaultTableModel tableModel, String startdate,String endDate) {
+        String date;
+        ResultArray res = null;
+
+        String query = "SELECT S.date,I.ingName,S.oldQty,S.updatedQty,S.reason,U.username FROM ingredient I, ingredientstockhistory S,"
+                + " user U WHERE S.updatedBy=U.userID AND S.ingID=I.ingID AND s.dateS.date Between '" + startdate + "' AND '"+endDate+"'";
+        System.out.println(query);
+        res = dbConn.getResultArray(query);
+        if(res.size()==0){
+            JOptionPane.showMessageDialog(null, "No records during this date range");
+            return;
+        }
+        tableModel.setRowCount(0);
+
+        while (res.next()) {
+            Vector newRow = new Vector();
+            for (int i = 0; i <= 5; i++) {
+                newRow.addElement(res.getString(i));
+            }
+            tableModel.addRow(newRow);
+        }
+    }
+    
     public void populateStockBlendHistoryTableByDate(DefaultTableModel tableModel, String startdate, String enddate) {
+        String date;
+        ResultArray res = null;
 
-        Connection connection = null;
-        ResultSet resultSet = null;
+        String query = "SELECT S.date,B.blendName,S.oldQty,S.updatedQty,S.reason,U.username FROM blend B, "
+                + "blendstockhistory S, user U WHERE S.updatedBy=U.userID AND "
+                + "S.blendID=B.blendID AND S.date Between '" + startdate + "' and  '" + enddate + "'";
+        System.out.println(query);
+        res = dbConn.getResultArray(query);
+        if(res.size()==0){
+            JOptionPane.showMessageDialog(null, "No records during this date range");
+            return;
+        }
+        tableModel.setRowCount(0);
 
-        try {
-            String query = "SELECT S.date,B.blendName,S.oldQty,S.updatedQty,S.reason,U.username FROM blend B, blendstockhistory S, user U WHERE S.updatedBy=U.userID AND S.blendID=B.blendID AND S.date BETWEEN '" + startdate + "' AND '" + enddate + "'";
+        while (res.next()) {
+            Vector newRow = new Vector();
+            for (int i = 0; i <= 5; i++) {
+                newRow.addElement(res.getString(i));
+            }
+            tableModel.addRow(newRow);
+        }
+    }
 
-            connection = dbConn.setConnection();
-            resultSet = dbConn.getResult(query, connection);
+    public void populateStockBlendHistoryTableForDate(DefaultTableModel tableModel, String startdate,String endDate) {
+        String date;
+        ResultArray res = null;
+
+        String query = "SELECT S.date,B.blendName,S.oldQty,S.updatedQty,S.reason,U.username FROM blend B, blendstockhistory S, "
+                + "user U WHERE S.updatedBy=U.userID AND S.blendID=B.blendID AND S.date Between '" + startdate + "' AND '"+endDate+"'";
+        System.out.println(query);
+        res = dbConn.getResultArray(query);
+        
+        if(res.size()==0){
+            JOptionPane.showMessageDialog(null, "No records during this date range");
+            return;
+        }
+        tableModel.setRowCount(0);
+        while (res.next()) {
+            Vector newRow = new Vector();
+            for (int i = 0; i <= 5; i++) {
+                newRow.addElement(res.getString(i));
+                
+            }
+            tableModel.addRow(newRow);
             
-            if(!resultSet.next()){
-                JOptionPane.showMessageDialog(null, "No Stock History during this Date range");
-                return;     
-            }
-            
-            tableModel.setRowCount(0);
-
-            while (resultSet.next()) {
-                Vector newRow = new Vector();
-                for (int i = 1; i <= 6; i++) {
-                    newRow.addElement(resultSet.getObject(i));
-                }
-                tableModel.addRow(newRow);
-            }
-
-        } catch (Exception e) {
-            System.err.println("stckhis 139 err : " + e);
-        } finally {
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (Exception e) {
-                    System.err.println("Resultset close error : " + e);
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (Exception e) {
-                    System.err.println("Connection close error : " + e);
-                }
-            }
         }
     }
 }

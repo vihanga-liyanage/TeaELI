@@ -33,6 +33,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import classes.PDF;
+import java.util.Calendar;
 import javax.swing.JTable;
 
 public class AdminPannel extends javax.swing.JFrame {
@@ -50,6 +51,7 @@ public class AdminPannel extends javax.swing.JFrame {
     java.util.Date date = new java.util.Date();
     SimpleDateFormat sdf3 = new SimpleDateFormat("yyyy-MM-dd");
     String today = sdf3.format(date);
+
     /**
      * Creates new form AdminPannel
      */
@@ -68,7 +70,7 @@ public class AdminPannel extends javax.swing.JFrame {
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
             Logger.getLogger(AdminPannel.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         initComponents();
 
         //Changing table headers to bold
@@ -81,7 +83,7 @@ public class AdminPannel extends javax.swing.JFrame {
         ingStockHistoryTbl.getTableHeader().setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
         blendStockHistoryTbl.getTableHeader().setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
         userTable.getTableHeader().setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
-        
+
         startClock();
 
         //Keep the window fullscreen
@@ -96,7 +98,7 @@ public class AdminPannel extends javax.swing.JFrame {
         searchIngredientComboBoxAutoSuggest.setAutoSuggest(searchIngredientComboBox, ingredient.loadNameForSearchStockIngComboBox());
 
         searchIngredientComboBox.setSelectedIndex(-1);
-        
+
         //start of view all ingredients
         populateSettingsIngredientTable();
         //end of view all ingredients
@@ -284,7 +286,7 @@ public class AdminPannel extends javax.swing.JFrame {
     public void populateBlendHistoryTable() {
         blendHistoryStock.populateStockBlendHistoryTable((DefaultTableModel) blendStockHistoryTbl.getModel());
     }
-    
+
     public void populateProductTable() {
         blend.populateProductTable((DefaultTableModel) productTable.getModel());
     }
@@ -292,16 +294,15 @@ public class AdminPannel extends javax.swing.JFrame {
     public void populateUserTable() {
         user.viewUser((DefaultTableModel) userTable.getModel());
     }
-    
-    public void populateOrderListTable(){
+
+    public void populateOrderListTable() {
         order.populateOrderListTable((DefaultTableModel) orderListTable.getModel());
     }
-    
+
     public void populateSettingsIngredientTable() {
         DefaultTableModel model = (DefaultTableModel) settingsIngredientTable.getModel();
         ingredient.viewAllIngredients(model);
-        
-        
+
     }
 
     //Setting default font
@@ -1055,8 +1056,8 @@ public class AdminPannel extends javax.swing.JFrame {
         }
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel2.setText("Search History By Date Range");
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel2.setText("Search History By Date Range:");
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -1102,8 +1103,8 @@ public class AdminPannel extends javax.swing.JFrame {
                 .addGroup(settingsIngHistoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 1230, Short.MAX_VALUE)
                     .addGroup(settingsIngHistoryPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(18, 18, 18)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel4)
                         .addGap(18, 18, 18)
                         .addComponent(StartDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1177,7 +1178,7 @@ public class AdminPannel extends javax.swing.JFrame {
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel10.setText("Search History By Date Range");
+        jLabel10.setText("Search History By Date Range:");
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -1217,8 +1218,8 @@ public class AdminPannel extends javax.swing.JFrame {
                 .addGroup(settingsBlendHistoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane9, javax.swing.GroupLayout.DEFAULT_SIZE, 1230, Short.MAX_VALUE)
                     .addGroup(settingsBlendHistoryPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel10)
-                        .addGap(18, 18, 18)
+                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel11)
                         .addGap(18, 18, 18)
                         .addComponent(BlendStartDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1426,26 +1427,26 @@ public class AdminPannel extends javax.swing.JFrame {
 
     private void addNewBlendsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addNewBlendsBtnActionPerformed
         /*
-        String[] counts = order.getOrderCounts();
-        if ((Integer.parseInt(counts[0]) > 0) && (Integer.parseInt(counts[1]) > 0)){
-            JOptionPane.showMessageDialog(this, "You have 1 pending order and 1 not completed order. You cannot place new orders.");
-        } else if (Integer.parseInt(counts[0]) > 1){
-            JOptionPane.showMessageDialog(this, "You have 2 pending orders. You cannot place new orders.");
-        } else if (Integer.parseInt(counts[1]) > 1){
-            JOptionPane.showMessageDialog(this, "You have 2 not completed orders. You cannot place new orders.");
-        } else {
-            CreateNewBlendOrder1 createNewBlendOrder = new CreateNewBlendOrder1();
-            createNewBlendOrder.setVisible(true);
-            createNewBlendOrder.pannel = this;
-        }
-        */
+         String[] counts = order.getOrderCounts();
+         if ((Integer.parseInt(counts[0]) > 0) && (Integer.parseInt(counts[1]) > 0)){
+         JOptionPane.showMessageDialog(this, "You have 1 pending order and 1 not completed order. You cannot place new orders.");
+         } else if (Integer.parseInt(counts[0]) > 1){
+         JOptionPane.showMessageDialog(this, "You have 2 pending orders. You cannot place new orders.");
+         } else if (Integer.parseInt(counts[1]) > 1){
+         JOptionPane.showMessageDialog(this, "You have 2 not completed orders. You cannot place new orders.");
+         } else {
+         CreateNewBlendOrder1 createNewBlendOrder = new CreateNewBlendOrder1();
+         createNewBlendOrder.setVisible(true);
+         createNewBlendOrder.pannel = this;
+         }
+         */
         CreateNewBlendOrder1 createNewBlendOrder = new CreateNewBlendOrder1();
         createNewBlendOrder.setVisible(true);
         createNewBlendOrder.pannel = this;
     }//GEN-LAST:event_addNewBlendsBtnActionPerformed
 
     private void profileBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profileBtnActionPerformed
-         user.getUserDetails();
+        user.getUserDetails();
     }//GEN-LAST:event_profileBtnActionPerformed
 
     private void addUserBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addUserBtnActionPerformed
@@ -1458,48 +1459,47 @@ public class AdminPannel extends javax.swing.JFrame {
 
     private void searchProductBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchProductBtnActionPerformed
         BlendDetails blendDetails = new BlendDetails();
-        String blendID ="";
+        String blendID = "";
         String blendName = "";
-        int baseID= 0;
+        int baseID = 0;
         String base = "";
-        int ret =0;
+        int ret = 0;
 
         if (searchBlendComboBox.getSelectedIndex() == -1) {
             JOptionPane.showMessageDialog(null, "Please Select a Blend");
         } else {
-            try{
-            blendName = searchBlendComboBox.getSelectedItem().toString();
-            blendID= blend.getBlendIDByBlendName(blendName);
-            blendDetails.blendNameTxt.setText(blendName);
-            blendDetails.blendCodeTxt.setText(blendID);
-            blendDetails.blendCodeTxt.setEditable(false);
-            blendDetails.blendNameTxt.setEditable(false);
-            blendDetails.ingPerAddBtn.setEnabled(false);
-            blendDetails.flavoursPerAddBtn.setEnabled(false);
-            blendDetails.blendUpdateBtn.setEnabled(false);
-            blendDetails.blendAddnewBtn.setEnabled(false);
-            
-            
-            Blend blend = new Blend();
-            baseID = blend.getBaseByBlendID(blendID);
-            base = blend.getIngByBaseName(baseID);
-            
-            blendDetails.baseCombo.setSelectedItem(base);
-            
-            ingredient.populateBlendIngTable((DefaultTableModel) blendDetails.ingTable.getModel(), blendID);
-            ingredient.populateBlendFlavourTable((DefaultTableModel) blendDetails.flavourTable.getModel(), blendID);
-            
-            blendDetails.ingCombo.setSelectedIndex(-1);
-            blendDetails.ingCombo.requestFocus();
-            blendDetails.flavoursCombo.setSelectedIndex(-1);
-            blendDetails.flavoursCombo.requestFocus();
-            blendDetails.setVisible(true);
-            //JOptionPane.showMessageDialog(this, "Please Change Blend Name with New Blend Code to Update");
-            blendDetails.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            orderSearchCombo.setSelectedIndex(-1);
-        }catch(NullPointerException e){
-            JOptionPane.showMessageDialog(this, "You haven't select any blend !", "Empty Selection", JOptionPane.ERROR_MESSAGE);
-        }
+            try {
+                blendName = searchBlendComboBox.getSelectedItem().toString();
+                blendID = blend.getBlendIDByBlendName(blendName);
+                blendDetails.blendNameTxt.setText(blendName);
+                blendDetails.blendCodeTxt.setText(blendID);
+                blendDetails.blendCodeTxt.setEditable(false);
+                blendDetails.blendNameTxt.setEditable(false);
+                blendDetails.ingPerAddBtn.setEnabled(false);
+                blendDetails.flavoursPerAddBtn.setEnabled(false);
+                blendDetails.blendUpdateBtn.setEnabled(false);
+                blendDetails.blendAddnewBtn.setEnabled(false);
+
+                Blend blend = new Blend();
+                baseID = blend.getBaseByBlendID(blendID);
+                base = blend.getIngByBaseName(baseID);
+
+                blendDetails.baseCombo.setSelectedItem(base);
+
+                ingredient.populateBlendIngTable((DefaultTableModel) blendDetails.ingTable.getModel(), blendID);
+                ingredient.populateBlendFlavourTable((DefaultTableModel) blendDetails.flavourTable.getModel(), blendID);
+
+                blendDetails.ingCombo.setSelectedIndex(-1);
+                blendDetails.ingCombo.requestFocus();
+                blendDetails.flavoursCombo.setSelectedIndex(-1);
+                blendDetails.flavoursCombo.requestFocus();
+                blendDetails.setVisible(true);
+                //JOptionPane.showMessageDialog(this, "Please Change Blend Name with New Blend Code to Update");
+                blendDetails.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                orderSearchCombo.setSelectedIndex(-1);
+            } catch (NullPointerException e) {
+                JOptionPane.showMessageDialog(this, "You haven't select any blend !", "Empty Selection", JOptionPane.ERROR_MESSAGE);
+            }
         }
 
     }//GEN-LAST:event_searchProductBtnActionPerformed
@@ -1516,37 +1516,39 @@ public class AdminPannel extends javax.swing.JFrame {
         OrderDetails orderDetails = new OrderDetails();
         orderDetails.setAdminPannel(this);
         String id = "";
-        try{
+        try {
             id = orderSearchCombo.getSelectedItem().toString();
             Order tmp = order.viewOrder((DefaultTableModel) orderDetails.blendTable.getModel(), (DefaultTableModel) orderDetails.orderDetailsTable.getModel(), id);
             orderDetails.orderIDLabel.setText(tmp.getOrderID());
             orderDetails.dateLabel.setText(tmp.getDate());
-            
-            for(int i = 0; i < orderListTable.getRowCount(); i++){
-                if(id.equals(orderListTable.getValueAt(i, 0).toString())){
-                    if(null != orderListTable.getValueAt(i, 1).toString())switch (orderListTable.getValueAt(i, 1).toString()) {
-                        case "Pending":
-                            orderDetails.orderCompletedBtn.setVisible(false);
-                            break;
-                        case "Received":
-                            orderDetails.orderReceivedBtn.setVisible(false);
-                            orderDetails.updateOrderBtn.setVisible(false);
-                            orderDetails.orderDetailsTable.setEnabled(false);
-                            break;
-                        case "Completed":
-                            orderDetails.orderCompletedBtn.setVisible(false);
-                            orderDetails.orderReceivedBtn.setVisible(false);
-                            orderDetails.updateOrderBtn.setVisible(false);
-                            orderDetails.orderDetailsTable.setEnabled(false);
-                            break;
+
+            for (int i = 0; i < orderListTable.getRowCount(); i++) {
+                if (id.equals(orderListTable.getValueAt(i, 0).toString())) {
+                    if (null != orderListTable.getValueAt(i, 1).toString()) {
+                        switch (orderListTable.getValueAt(i, 1).toString()) {
+                            case "Pending":
+                                orderDetails.orderCompletedBtn.setVisible(false);
+                                break;
+                            case "Received":
+                                orderDetails.orderReceivedBtn.setVisible(false);
+                                orderDetails.updateOrderBtn.setVisible(false);
+                                orderDetails.orderDetailsTable.setEnabled(false);
+                                break;
+                            case "Completed":
+                                orderDetails.orderCompletedBtn.setVisible(false);
+                                orderDetails.orderReceivedBtn.setVisible(false);
+                                orderDetails.updateOrderBtn.setVisible(false);
+                                orderDetails.orderDetailsTable.setEnabled(false);
+                                break;
+                        }
                     }
                 }
             }
-            
+
             orderDetails.setVisible(true);
             orderDetails.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             orderSearchCombo.setSelectedIndex(-1);
-        }catch(NullPointerException e){
+        } catch (NullPointerException e) {
             JOptionPane.showMessageDialog(this, "You haven't select any order ID !", "Empty Selection", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_searchOrderBtnActionPerformed
@@ -1556,7 +1558,7 @@ public class AdminPannel extends javax.swing.JFrame {
     }//GEN-LAST:event_searchStockIngBtnActionPerformed
 
     private void searchStockBlendsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchStockBlendsBtnActionPerformed
-       searchStockBlendCombo();
+        searchStockBlendCombo();
     }//GEN-LAST:event_searchStockBlendsBtnActionPerformed
 
     private void deleteUserBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteUserBtnActionPerformed
@@ -1667,8 +1669,8 @@ public class AdminPannel extends javax.swing.JFrame {
             Blend blendForStock = new Blend();
 
             String selectedBlendName = (String) searchStockBlendComboBox.getSelectedItem();
-            
-            if (blendForStock.checkAndLoadBlendStockDetails(selectedBlendName.replace("'","\\'"))) {
+
+            if (blendForStock.checkAndLoadBlendStockDetails(selectedBlendName.replace("'", "\\'"))) {
                 searchStockBlendComboBox.setSelectedIndex(-1);
 
                 UpdateBlendStock updateBlendStock = new UpdateBlendStock();
@@ -1692,17 +1694,16 @@ public class AdminPannel extends javax.swing.JFrame {
         String[] resultArray = new String[5];
 
         String searchItem = (String) searchIngredientComboBox.getSelectedItem();
-        
 
         if (searchItem == null) {
-            
+
             JOptionPane.showMessageDialog(null, "You Haven't selected an Ingredient!!!", "Pleae select", 0);
 
         } else {
             try {
                 resultArray = ingredient.viewAllDetailsOfAIngredient((String) searchIngredientComboBox.getSelectedItem());
             } catch (SQLException ex) {
-               // Logger.getLogger(AdminPannel.class.getName()).log(Level.SEVERE, null, ex);
+                // Logger.getLogger(AdminPannel.class.getName()).log(Level.SEVERE, null, ex);
                 System.out.println("SQL error : " + ex);
             }
             IngredientDetails itemDetails = new IngredientDetails();
@@ -1717,7 +1718,6 @@ public class AdminPannel extends javax.swing.JFrame {
                 Logger.getLogger(AdminPannel.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-            
             itemDetails.itemNameTxt.setText(resultArray[0]);
             itemDetails.setName(resultArray[1]); //set ingid as name
             itemDetails.itemTypeCombo.setSelectedItem(resultArray[2]);
@@ -1772,7 +1772,7 @@ public class AdminPannel extends javax.swing.JFrame {
         }
     }
     /* end of searchProductCombo method */
-    
+
     private void orderSearchComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderSearchComboActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_orderSearchComboActionPerformed
@@ -1797,35 +1797,65 @@ public class AdminPannel extends javax.swing.JFrame {
     private void btnIngredientGoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngredientGoActionPerformed
         SimpleDateFormat javadate = new SimpleDateFormat("yyyy-MM-dd");
         if (StartDate.getDate() == null || EndDate.getDate() == null) {
-            JOptionPane.showMessageDialog(this, "Date Feilds Cannot be empty","Date choosing error",0);
+            JOptionPane.showMessageDialog(this, "Date Feilds Cannot be empty", "Date choosing error", 0);
         } else if (StartDate.getDate().after(EndDate.getDate())) {
-            JOptionPane.showMessageDialog(this, "Please Enter Valid Date Range","Date choosing error",0);
+            JOptionPane.showMessageDialog(this, "Please Enter Valid Date Range", "Date choosing error", 0);
         } else {
             Date start = StartDate.getDate();
             Date end = EndDate.getDate();
+            
+            // increase date by one, because between query doesent get inclusive data in sQlite
+            Calendar c = Calendar.getInstance();
+            c.setTime(end);
+            c.add(Calendar.DATE,1);
+            end = c.getTime();
+            
             String startdate = javadate.format(start);
             String enddate = javadate.format(end);
+            
+
+            if (start.equals(end)) {
+                StockHistory ingredientHistoryStock = new StockHistory();
+                ingredientHistoryStock.populateStockIngredientHistoryTableForDate((DefaultTableModel) ingStockHistoryTbl.getModel(), startdate,enddate);
+                ingredientGo = 1;
+            }else{
+
             StockHistory ingredientHistoryStock = new StockHistory();
             ingredientHistoryStock.populateStockIngredientHistoryTableByDate((DefaultTableModel) ingStockHistoryTbl.getModel(), startdate, enddate);
             ingredientGo = 1;
+            }
         }
     }//GEN-LAST:event_btnIngredientGoActionPerformed
 
     private void btnBlendGoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBlendGoActionPerformed
         SimpleDateFormat javadate = new SimpleDateFormat("yyyy-MM-dd");
         if (BlendStartDate.getDate() == null || blendEndDate.getDate() == null) {
-            JOptionPane.showMessageDialog(this, "Date Feilds Cannot be empty","Date choosing error",0);
+            JOptionPane.showMessageDialog(this, "Date Feilds Cannot be empty", "Date choosing error", 0);
         } else if (BlendStartDate.getDate().after(blendEndDate.getDate())) {
-            JOptionPane.showMessageDialog(this, "Please Enter Valid Date Range","Date choosing error",0);
+            JOptionPane.showMessageDialog(this, "Please Enter Valid Date Range", "Date choosing error", 0);
         } else {
             Date start = BlendStartDate.getDate();
             Date end = blendEndDate.getDate();
+            
+            // increase date by one, because between query doesent get inclusive data in sQlite
+            Calendar c = Calendar.getInstance();
+            c.setTime(end);
+            c.add(Calendar.DATE,1);
+            end = c.getTime();
+            
             String startdate = javadate.format(start);
             String enddate = javadate.format(end);
-            StockHistory stockhistory = new StockHistory();
-            stockhistory.populateStockBlendHistoryTableByDate((DefaultTableModel) blendStockHistoryTbl.getModel(), startdate, enddate);
-            blendGo = 1;
-            //populateStockBlendHistoryTableByDate((DefaultTableModel) blendStockHistoryTbl.getModel(),startdate,enddate);
+
+            if (start.equals(end)) {
+                System.out.println("ssss");
+                StockHistory stockhistory = new StockHistory();
+                stockhistory.populateStockBlendHistoryTableForDate((DefaultTableModel) blendStockHistoryTbl.getModel(), startdate,enddate);
+                blendGo = 1;
+            } else {
+                StockHistory stockhistory = new StockHistory();
+                stockhistory.populateStockBlendHistoryTableByDate((DefaultTableModel) blendStockHistoryTbl.getModel(), startdate, enddate);
+                blendGo = 1;
+            }
         }
     }//GEN-LAST:event_btnBlendGoActionPerformed
 
@@ -1834,14 +1864,14 @@ public class AdminPannel extends javax.swing.JFrame {
     }//GEN-LAST:event_EndDateActionPerformed
 
     private void btnIngredientHistoryReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngredientHistoryReportActionPerformed
-        
-        if (StartDate.getDate()!=null && EndDate.getDate() != null &&blendGo == 0) {
+
+        if (StartDate.getDate() != null && EndDate.getDate() != null && blendGo == 0) {
             JOptionPane.showMessageDialog(this, "Please Press Go button to filter By date or Press Cancel ");
         } else {
             DefaultTableModel model = (DefaultTableModel) ingStockHistoryTbl.getModel();
             JTable temp = new JTable(model);
-            pdf.IngStockHistoryPdfGeneration(temp,today);
-            blendGo =0;
+            pdf.IngStockHistoryPdfGeneration(temp, today);
+            blendGo = 0;
         }
     }//GEN-LAST:event_btnIngredientHistoryReportActionPerformed
 
@@ -1864,49 +1894,49 @@ public class AdminPannel extends javax.swing.JFrame {
         if (BlendStartDate.getDate() != null && blendEndDate.getDate() != null && blendGo == 0) {
             JOptionPane.showMessageDialog(this, "Please Press Go button to filter By date or Press Cancel");
         } else {
-            
+
             DefaultTableModel model = (DefaultTableModel) blendStockHistoryTbl.getModel();
             JTable temp = new JTable(model);
-            pdf.BlendStockHistoryPdfGeneration(temp,today);
-            blendGo =0;
+            pdf.BlendStockHistoryPdfGeneration(temp, today);
+            blendGo = 0;
         }
     }//GEN-LAST:event_btnBlendHistoryReportGenerationActionPerformed
 
     /* start of loadBlendDetails method */
-    private void loadBlendDetails(int row){
-        
+    private void loadBlendDetails(int row) {
+
         Blend blendDetails = new Blend();
-        
-        blendDetails.setBlendID((String) productTable.getValueAt(row,0));
+
+        blendDetails.setBlendID((String) productTable.getValueAt(row, 0));
         blendDetails.setBlendName((String) productTable.getValueAt(row, 1));
         blendDetails.setBaseName((String) productTable.getValueAt(row, 2));
-        
+
         blendDetails.setBlendName(blendDetails.getBlendName().replace("'", "\\'"));
         blendDetails.setBaseName(blendDetails.getBaseName().replace("'", "\\'"));
-        
+
         blendNameLbl.setText(blendDetails.getBlendName());
         blendBaseLbl.setText(blendDetails.getBaseName());
-        
+
         boolean load = blendDetails.loadBlendIngredientDetails((DefaultTableModel) blendDetailsTbl.getModel());
-        
-        if (load){
-            
+
+        if (load) {
+
             load = blendDetails.loadBlendFlavourDetails((DefaultTableModel) blendDetailsTbl.getModel());
-            
-            if (load){
-            
+
+            if (load) {
+
                 blendDetails.getBlendCatgFromBlendName();
                 blendCatgLbl.setText(blendDetails.getBlendCategory());
-                
-            }else{
+
+            } else {
                 JOptionPane.showMessageDialog(this, "Unable to load flavour details !", "Load Fails", JOptionPane.ERROR_MESSAGE);
             }
-        }else{
+        } else {
             JOptionPane.showMessageDialog(this, "Unable to load ingredient details !", "Load Fails", JOptionPane.ERROR_MESSAGE);
-        }        
+        }
     }
     /* end of loadBlendDetails method */
-    
+
     /**
      * @param args the command line arguments
      */
