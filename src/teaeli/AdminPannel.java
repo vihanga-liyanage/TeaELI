@@ -1478,6 +1478,8 @@ public class AdminPannel extends javax.swing.JFrame {
             blendDetails.flavoursPerAddBtn.setEnabled(false);
             blendDetails.blendUpdateBtn.setEnabled(false);
             blendDetails.blendAddnewBtn.setEnabled(false);
+            blendDetails.blendCategoryCombo.setEnabled(false);
+            blendDetails.baseCombo.setEnabled(false);
             
             
             Blend blend = new Blend();
