@@ -355,7 +355,7 @@ public class OrderDetails extends javax.swing.JFrame  {
         }
         
         try{
-          orderDetailsTable.getCellEditor().stopCellEditing();  
+            orderDetailsTable.getCellEditor().stopCellEditing();  
         }catch(NullPointerException ex){
             
         }

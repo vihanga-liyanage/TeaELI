@@ -643,8 +643,8 @@ public class Blend {
         defaultTableModel.addRow(mainRow);
 
         mainRow = new Vector();
-        mainRow.addElement("Flavour");
-        mainRow.addElement("Percentage (%)");
+        mainRow.addElement("<html> <b>   Flavour </b> <html>");
+        mainRow.addElement("<html> <b>   Percentage (%) </b> </html>");
         defaultTableModel.addRow(mainRow);
 
         while (resultArray.next()) {

@@ -8,8 +8,6 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
-
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -258,70 +256,78 @@ public class IngredientDetails extends javax.swing.JFrame {
             //get ingredient name
             ingName = this.itemNameTxt.getText();
 
-            //get ingredient categoryid
-            int comboSelectedIgCat = this.itemTypeCombo.getSelectedIndex();
-
-            if (comboSelectedIgCat == -1) {
-                JOptionPane.showMessageDialog(null, "Please select a ingredient type!!!");
+            if (ingName.equals("")) {
+                JOptionPane.showMessageDialog(null, "Ingredient Name cannot be empty", "Ingredient name empty", 0);
+                itemNameTxt.requestFocusInWindow();
             } else {
-                ingCategoryID = comboSelectedIgCat + 1;
+                //get ingredient categoryid
+                int comboSelectedIgCat = this.itemTypeCombo.getSelectedIndex();
 
-            }
-
-            //get supplier id by name
-            String SupName = (String) this.supplierCombobox.getSelectedItem();
-            int selecetdID = this.supplierCombobox.getSelectedIndex();
-
-            try {
-                supID = supplier.getSupplierIDByName(SupName);
-            } catch (SQLException ex) {
-                System.out.println("SQL eror : " + ex);
-            }
-
-            //get unit price
-             String unitPriceString = this.unitPriceTxt.getText();
-             int unitPriceOK = 0;
-            try {
-                unitPrice = Float.parseFloat(unitPriceString);
-                unitPriceOK = 1;
-            } catch (NumberFormatException e) {
-                 JOptionPane.showMessageDialog(null, "Please enter valid amount for unit price", "Incompatible unit price", 0);
-                 unitPriceTxt.requestFocusInWindow();
-            }
-           
-            if(unitPriceOK==1){
-            // call update ingredient method
-            try {
-                int updateOK = ingredient.updateIngredient(ingID, ingName, ingCategoryID, supID, unitPrice);
-
-                if (updateOK == 1) {
-                    //Re-generating the admin panel since the data is changed
-
-                    if ("teaeli.AdminPannel".equals(pannel.getClass().getName())) {
-                        AdminPannel adminPannel = new AdminPannel();
-                        adminPannel.mainTabbedPane.setSelectedIndex(2);
-                        adminPannel.setVisible(true);
-                        AdminPannel old = (AdminPannel) pannel;
-                        old.dispose();
-                        this.dispose();
-                    } else if ("teaeli.ManagerPannel".equals(pannel.getClass().getName())) {
-                        ManagerPannel managerPannel = new ManagerPannel();
-                        managerPannel.setVisible(true);
-                        ManagerPannel old = (ManagerPannel) pannel;
-                        old.dispose();
-                    }
-
+                if (comboSelectedIgCat == -1) {
+                    JOptionPane.showMessageDialog(null, "Please select a ingredient type!!!");
                 } else {
-                    JOptionPane.showMessageDialog(null, "Ingredient update is not successfull! Please retry. ", "Unable to update", 0);
+                    ingCategoryID = comboSelectedIgCat + 1;
+
                 }
-                
-                
-            } catch (SQLException ex) {
-                //Logger.getLogger(IngredientDetails.class.getName()).log(Level.SEVERE, null, ex);
-                System.out.println("sql error id:" + ex);
+
+                //get supplier id by name
+                String SupName = (String) this.supplierCombobox.getSelectedItem();
+               
+                try {
+                    supID = supplier.getSupplierIDByName(SupName);
+                } catch (SQLException ex) {
+                    System.out.println("SQL eror : " + ex);
+                }
+
+                //get unit price
+                String unitPriceString = this.unitPriceTxt.getText();
+                int unitPriceOK = 0;
+                try {
+                    unitPrice = Float.parseFloat(unitPriceString);
+                    unitPriceOK = 1;
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(null, "Please enter valid amount for unit price", "Incompatible unit price", 0);
+                    unitPriceTxt.requestFocusInWindow();
+                    unitPriceTxt.setText(SupName);
+                }
+
+                if (unitPriceOK == 1) {
+                    // call update ingredient method
+                    try {
+                        int updateOK = ingredient.updateIngredient(ingID, ingName, ingCategoryID, supID, unitPrice);
+
+                        if (updateOK == 1) {
+                            //Re-generating the admin panel since the data is changed
+
+                            if ("teaeli.AdminPannel".equals(pannel.getClass().getName())) {
+                                AdminPannel adminPannel = new AdminPannel();
+                                adminPannel.mainTabbedPane.setSelectedIndex(2);
+                                adminPannel.setVisible(true);
+                                AdminPannel old = (AdminPannel) pannel;
+                                old.dispose();
+                                this.dispose();
+                            } else if ("teaeli.ManagerPannel".equals(pannel.getClass().getName())) {
+                                ManagerPannel managerPannel = new ManagerPannel();
+                                managerPannel.setVisible(true);
+                                ManagerPannel old = (ManagerPannel) pannel;
+                                old.dispose();
+                            }
+
+                        } else if (updateOK == 2) {
+                            JOptionPane.showMessageDialog(null, "Ingredient Name must be unique !!!", "Duplicate Ingredient Name", 0);
+                            itemNameTxt.requestFocusInWindow();
+                            itemNameTxt.setText("");
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Ingredient update is not successfull! Please retry. ", "Unable to update", 0);
+                        }
+
+                    } catch (SQLException ex) {
+                        //Logger.getLogger(IngredientDetails.class.getName()).log(Level.SEVERE, null, ex);
+                        System.out.println("sql error id:" + ex);
+                    }
+                }
+
             }
-            }
-            
 
         } else if (response == JOptionPane.CLOSED_OPTION) {
             System.out.println("JOptionPane closed");

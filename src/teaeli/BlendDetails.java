@@ -178,7 +178,7 @@ public class BlendDetails extends javax.swing.JFrame {
             }
         });
 
-        blendAddnewBtn.setText("Add new");
+        blendAddnewBtn.setText("Add as new");
         blendAddnewBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 blendAddnewBtnActionPerformed(evt);
@@ -231,7 +231,16 @@ public class BlendDetails extends javax.swing.JFrame {
             new String [] {
                 "Ingredient", "Precentage (%)"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        ingTable.setRowHeight(20);
         jScrollPane3.setViewportView(ingTable);
 
         flavourTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -266,6 +275,7 @@ public class BlendDetails extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        flavourTable.setRowHeight(20);
         jScrollPane4.setViewportView(flavourTable);
 
         baseCombo.setEditable(true);
@@ -308,7 +318,7 @@ public class BlendDetails extends javax.swing.JFrame {
         });
 
         addnewRadioBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        addnewRadioBtn.setText("Add New");
+        addnewRadioBtn.setText("Add As New");
         addnewRadioBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addnewRadioBtnActionPerformed(evt);
@@ -335,27 +345,24 @@ public class BlendDetails extends javax.swing.JFrame {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addComponent(jLabel8)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(updateRadioBtn))
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addComponent(jLabel3)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(ingCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(jLabel3)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addComponent(ingPerTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(jLabel6)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(ingPerAddBtn))
-                                            .addComponent(addnewRadioBtn))))
+                                        .addComponent(ingCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(ingPerTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel6)
+                                        .addGap(10, 10, 10)
+                                        .addComponent(ingPerAddBtn))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel8)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(updateRadioBtn)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(addnewRadioBtn)))
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(42, 42, 42)
+                                        .addGap(60, 60, 60)
                                         .addComponent(jLabel4)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(flavoursCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -363,7 +370,7 @@ public class BlendDetails extends javax.swing.JFrame {
                                         .addComponent(flavoursPerTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(22, 22, 22)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(flavoursPerAddBtn))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -374,8 +381,8 @@ public class BlendDetails extends javax.swing.JFrame {
                                         .addComponent(jLabel2)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(blendCodeTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 268, Short.MAX_VALUE)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel5)
                                             .addComponent(jLabel1)))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -384,8 +391,8 @@ public class BlendDetails extends javax.swing.JFrame {
                                         .addComponent(blendCategoryCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(baseCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(blendNameTxt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(blendNameTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(baseCombo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -711,11 +718,16 @@ public class BlendDetails extends javax.swing.JFrame {
             blendUpdateBtn.setEnabled(true);
             ingPerAddBtn.setEnabled(false);
             flavoursPerAddBtn.setEnabled(false);
-            addnewRadioBtn.setEnabled(false);
-        }else{
+            blendAddnewBtn.setEnabled(false);
+            blendCodeTxt.setEditable(false);
+            blendNameTxt.setEditable(false);
+            addnewRadioBtn.setSelected(false);
+            blendCategoryCombo.setEnabled(true);
+            baseCombo.setEnabled(true);
+        }/*else{
             blendUpdateBtn.setEnabled(false);
-            addnewRadioBtn.setEnabled(true);
-        }    
+            addnewRadioBtn.setSelected(true);
+        }*/   
     }//GEN-LAST:event_updateRadioBtnActionPerformed
 
     private void addnewRadioBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addnewRadioBtnActionPerformed
@@ -725,15 +737,18 @@ public class BlendDetails extends javax.swing.JFrame {
             flavoursPerAddBtn.setEnabled(true);
             blendCodeTxt.setEditable(true);
             blendNameTxt.setEditable(true);
-            updateRadioBtn.setEnabled(false);
-        }else{
+            blendUpdateBtn.setEnabled(false);
+            updateRadioBtn.setSelected(false);
+            blendCategoryCombo.setEnabled(true);
+            baseCombo.setEnabled(true);
+        }/*else{
             blendAddnewBtn.setEnabled(false);
             ingPerAddBtn.setEnabled(false);
             flavoursPerAddBtn.setEnabled(false);
             blendCodeTxt.setEditable(false);
             blendNameTxt.setEditable(false);
-            updateRadioBtn.setEnabled(true);
-        }
+            updateRadioBtn.setSelected(true);
+        }*/
     }//GEN-LAST:event_addnewRadioBtnActionPerformed
 
     private void blendUpdateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blendUpdateBtnActionPerformed
