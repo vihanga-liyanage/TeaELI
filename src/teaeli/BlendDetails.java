@@ -635,7 +635,7 @@ public class BlendDetails extends javax.swing.JFrame {
                                 }
 
                             }else{
-                                //addedboth ing and flavour data tor ecipie
+                                //addedboth ing and flavour data to recipie
                                 for(int i=0; i < ingCount; i++){
                                     float initPer = Float.parseFloat(ingTable.getValueAt(i, 1).toString()); ;
                                     ingPerCount = ingPerCount + initPer;
@@ -778,11 +778,74 @@ public class BlendDetails extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Blend Succesfully Updated");
                 this.dispose();
             }else{
-                JOptionPane.showMessageDialog(null, "Error!, Data not Saved");
+                JOptionPane.showMessageDialog(null, "Error!, Update Not Completed");
             }
         }
 
-    }
+    }   else if(ingCount>0 && flavCount>0){
+            //addedboth ing and flavour data to recipie
+            for(int i=0; i < ingCount; i++){
+                float initPer = Float.parseFloat(ingTable.getValueAt(i, 1).toString()); ;
+                ingPerCount = ingPerCount + initPer;
+            }
+
+            for(int i=0; i <flavCount;i++){
+                float initPer = Float.parseFloat(flavourTable.getValueAt(i, 1).toString()); ;
+                flavPerCount = flavPerCount + initPer;
+            }
+
+            if(ingPerCount <= 0 || ingPerCount>=100){
+                JOptionPane.showMessageDialog(this, "Invalid percentage");
+
+            }else if(flavPerCount <= 0 || flavPerCount>=100){
+                JOptionPane.showMessageDialog(this, "Invalid percentage");
+            }else{
+                int ret = blend.updateBlend(blendID, blendName, base, blendCategory);
+
+                ArrayList <Integer> ingID = new ArrayList<>();
+                ArrayList <Integer> flavourID = new ArrayList<>();
+                for(int i=0;i<ingCount;i++){
+                    Blend a = new Blend();
+                                    
+                    ingID.add(a.getIngIDRecByIngName(ingTable.getValueAt(i, 0).toString()));
+                }
+
+                for(int i=0;i<flavCount;i++){
+                    Blend a = new Blend();
+                    //ingID.add(Integer.parseInt(addNewBlendIngTbl.getValueAt(i, 0).toString()));
+                    flavourID.add(a.getIngIDRecByIngName(flavourTable.getValueAt(i, 0).toString()));
+                }
+                int x = 0;
+                int y = 0;
+                for(int i =0; i<ingCount ; i++){
+                    int a = ingID.get(i);
+                    double b = Double.parseDouble(ingTable.getValueAt(i, 1).toString());
+                    String query1 = "UPDATE recipie SET ingID = '" + a + "',ingPercent = '" + b + "' WHERE blendID = '" + blendID + "' AND type=0 ";
+                    x = dbConn.updateResult(query1);
+
+                }
+
+                for(int j =0; j<flavCount ; j++){
+                    int c = flavourID.get(j);
+                    double d = Double.parseDouble(flavourTable.getValueAt(j, 1).toString());
+                    String query2 = "UPDATE recipie SET ingID = '" + c + "',ingPercent = '" + d + "' WHERE blendID = '" + blendID + "' AND type=1  ";
+                    y = dbConn.updateResult(query2);
+
+                }
+
+                if(x==1 && y==1){
+                    JOptionPane.showMessageDialog(null, "Blend Updated Succesfully");
+                    this.dispose();
+
+
+                                   //this.setVisible(true);
+
+                }else{
+                    JOptionPane.showMessageDialog(null, "Error!, Update Not Completed");
+                }
+
+            }
+        }
     }//GEN-LAST:event_blendUpdateBtnActionPerformed
         
     
