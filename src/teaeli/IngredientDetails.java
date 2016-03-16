@@ -23,7 +23,7 @@ public class IngredientDetails extends javax.swing.JFrame {
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
-            Logger.getLogger(AdminPannel.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Exception : " + ex.getMessage());
         }
         initComponents();
 
@@ -31,19 +31,13 @@ public class IngredientDetails extends javax.swing.JFrame {
         int x, y;
         screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         frameSize = getSize();
-        x = (screenSize.width - frameSize.width) / 10;
-        y = (screenSize.height - frameSize.height) / 10;
+        x = (screenSize.width - frameSize.width) / 4;
+        y = (screenSize.height - frameSize.height) / 4;
         setLocation(x, y);
         setResizable(false);
 
     }
 
-    //method to refresh related tables and close this window
-    /*
-     private void close() {
-     this.setVisible(false);
-     this.dispose();
-     }*/
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -244,7 +238,8 @@ public class IngredientDetails extends javax.swing.JFrame {
         int response = JOptionPane.showConfirmDialog(null, "Are you sure you need to update the ingredient? ", "Confirm Update",
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (response == JOptionPane.NO_OPTION) {
-            System.out.println("No button clicked");
+            this.setVisible(false);
+            this.dispose();
         } else if (response == JOptionPane.YES_OPTION) {
             String ingName;
             int supID = 0, ingCategoryID = 0, ingID = 0;
@@ -257,7 +252,7 @@ public class IngredientDetails extends javax.swing.JFrame {
             ingName = this.itemNameTxt.getText();
 
             if (ingName.equals("")) {
-                JOptionPane.showMessageDialog(null, "Ingredient Name cannot be empty", "Ingredient name empty", 0);
+                JOptionPane.showMessageDialog(null, "Please enter ingredient name.", "Invalid Ingredient Name", 0);
                 itemNameTxt.requestFocusInWindow();
             } else {
                 //get ingredient categoryid
@@ -272,7 +267,7 @@ public class IngredientDetails extends javax.swing.JFrame {
 
                 //get supplier id by name
                 String SupName = (String) this.supplierCombobox.getSelectedItem();
-               
+
                 try {
                     supID = supplier.getSupplierIDByName(SupName);
                 } catch (SQLException ex) {
@@ -281,14 +276,21 @@ public class IngredientDetails extends javax.swing.JFrame {
 
                 //get unit price
                 String unitPriceString = this.unitPriceTxt.getText();
+                
                 int unitPriceOK = 0;
                 try {
                     unitPrice = Float.parseFloat(unitPriceString);
-                    unitPriceOK = 1;
+                    if (unitPrice < 0) {
+                        JOptionPane.showMessageDialog(null, "Please enter valid amount for unit price.", "Invalide Unit Price", 0);
+                        unitPriceTxt.requestFocusInWindow();
+                        unitPriceTxt.setText("");
+                    } else {
+                        unitPriceOK = 1;
+                    }
                 } catch (NumberFormatException e) {
-                    JOptionPane.showMessageDialog(null, "Please enter valid amount for unit price", "Incompatible unit price", 0);
+                    JOptionPane.showMessageDialog(null, "Please enter valid amount for unit price.", "Invalide Unit Price", 0);
                     unitPriceTxt.requestFocusInWindow();
-                    unitPriceTxt.setText(SupName);
+                    unitPriceTxt.setText("");
                 }
 
                 if (unitPriceOK == 1) {
@@ -314,11 +316,11 @@ public class IngredientDetails extends javax.swing.JFrame {
                             }
 
                         } else if (updateOK == 2) {
-                            JOptionPane.showMessageDialog(null, "Ingredient Name must be unique !!!", "Duplicate Ingredient Name", 0);
+                            JOptionPane.showMessageDialog(null, "Ingredient Name must be unique.", "Duplicate Ingredient Name", 0);
                             itemNameTxt.requestFocusInWindow();
                             itemNameTxt.setText("");
                         } else {
-                            JOptionPane.showMessageDialog(null, "Ingredient update is not successfull! Please retry. ", "Unable to update", 0);
+                            JOptionPane.showMessageDialog(null, "Ingredient update is not successfull. Please retry. ", "Unable to update", 0);
                         }
 
                     } catch (SQLException ex) {
@@ -330,7 +332,8 @@ public class IngredientDetails extends javax.swing.JFrame {
             }
 
         } else if (response == JOptionPane.CLOSED_OPTION) {
-            System.out.println("JOptionPane closed");
+            this.setVisible(false);
+            this.dispose();
         }
     }//GEN-LAST:event_updateItemBtnActionPerformed
 

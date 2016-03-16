@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package teaeli;
 
 import classes.DBConnection;
@@ -28,41 +27,44 @@ import classes.User;
  *
  * @author CHAM PC
  */
-
 public class LoginFrame extends javax.swing.JFrame {
+
     User us = new User();
     public static AdminPannel adminPannel = new AdminPannel();
-    public String user;        
+
+    public String user;
+
     public LoginFrame() {
+
         //Add windows look and feel
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
             Logger.getLogger(AdminPannel.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         initComponents();
-        jPanel1.setBackground(new Color(0,0,0,125));
-        Dimension screenSize,frameSize;
-        int x,y;
-        screenSize=Toolkit.getDefaultToolkit().getScreenSize();
-        frameSize=getSize();
-        x=(screenSize.width-frameSize.width)/4;
-        y=(screenSize.height-frameSize.height)/4;
+        jPanel1.setBackground(new Color(0, 0, 0, 125));
+        Dimension screenSize, frameSize;
+        int x, y;
+        screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        frameSize = getSize();
+        x = (screenSize.width - frameSize.width) / 4;
+        y = (screenSize.height - frameSize.height) / 4;
         setLocation(x, y);
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
-    
+
     DBConnection dbcon = new DBConnection();
     Connection con = null;
     PreparedStatement pst = null;
     ResultSet rs = null;
     Statement st = null;
-    
-    String userName,password;
-    int passwrdCount =0;
-    
+
+    String userName, password;
+    int passwrdCount = 0;
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -161,35 +163,38 @@ public class LoginFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_txtUsernameActionPerformed
 
     private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
-         
+
         userName = txtUsername.getText();
         password = txtPassword.getText();
         String encripted = PswrdEncrypt.main2(password);
-         
-        if (us.checkLogin(userName, encripted)==1){
+
+        if (us.checkLogin(userName, encripted) == 1) {
 
             AdminPannel adminPannel = new AdminPannel();//the provided username & password matched
+            user = userName;
+                      
             adminPannel.setVisible(true);
-            user =userName;
             setVisible(false);
 
-        }else if (us.checkLogin(userName, encripted)==2){
+        } else if (us.checkLogin(userName, encripted) == 2) {
 
             ManagerPannel managerPannel = new ManagerPannel();//the provided username & password matched
             managerPannel.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);//Keep the window fullscreen
+            user = userName;
+            
             managerPannel.setVisible(true);
-            user =userName;
+
             setVisible(false);
 
-        }else if (us.checkLogin(userName, encripted)== 4 | us.checkLogin(userName, encripted)==3){
+        } else if (us.checkLogin(userName, encripted) == 4 | us.checkLogin(userName, encripted) == 3) {
 
-            if (passwrdCount !=3){
-            JOptionPane.showMessageDialog(this, "Invalid username or password");//the provided password does not exist in the db
-            txtUsername.setText("");
-            txtPassword.setText("");
-            txtUsername.requestFocusInWindow();
-            passwrdCount++;
-            }else if (passwrdCount==3){
+            if (passwrdCount != 3) {
+                JOptionPane.showMessageDialog(this, "Invalid username or password");//the provided password does not exist in the db
+                txtUsername.setText("");
+                txtPassword.setText("");
+                txtUsername.requestFocusInWindow();
+                passwrdCount++;
+            } else if (passwrdCount == 3) {
                 JOptionPane.showMessageDialog(this, "ERROR!!! System will close!");
                 setVisible(false);
             }
@@ -199,12 +204,11 @@ public class LoginFrame extends javax.swing.JFrame {
 
     private void txtPasswordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPasswordKeyPressed
         int code = evt.getKeyCode();
-        if (code== KeyEvent.VK_ENTER) {
+        if (code == KeyEvent.VK_ENTER) {
             btnSubmit.doClick();
         }
     }//GEN-LAST:event_txtPasswordKeyPressed
-    
-    
+
     /**
      * @param args the command line arguments
      */
