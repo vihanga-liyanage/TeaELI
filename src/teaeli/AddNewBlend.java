@@ -609,6 +609,7 @@ public class AddNewBlend extends javax.swing.JFrame {
                                 if (x == 1) {
                                     JOptionPane.showMessageDialog(this, "New Blend Added Successfuly.", "Successflly Added", 1);
                                     close();
+                                    this.dispose();
                                 } else {
                                     JOptionPane.showMessageDialog(this, "Unable to add the new ingredient.Please try again.", "Unable to add", 0);
                                 }
