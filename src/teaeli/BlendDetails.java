@@ -835,7 +835,7 @@ public class BlendDetails extends javax.swing.JFrame {
                 for(int i =0; i<ingCount ; i++){
                     int a = ingID.get(i);
                     double b = Double.parseDouble(ingTable.getValueAt(i, 1).toString());
-                    String query1 = "UPDATE recipie SET ingID = '" + a + "',ingPercent = '" + b + "' WHERE blendID = '" + blendID + "' AND type=0 ";
+                    String query1 = "UPDATE recipie SET ingID = '" + a + "',ingPercent = '" + b + "' WHERE blendID = '" + blendID + "' AND ingID = '"+ a + "' AND type=0 ";
                     x = dbConn.updateResult(query1);
 
                 }
@@ -843,7 +843,7 @@ public class BlendDetails extends javax.swing.JFrame {
                 for(int j =0; j<flavCount ; j++){
                     int c = flavourID.get(j);
                     double d = Double.parseDouble(flavourTable.getValueAt(j, 1).toString());
-                    String query2 = "UPDATE recipie SET ingID = '" + c + "',ingPercent = '" + d + "' WHERE blendID = '" + blendID + "' AND type=1  ";
+                    String query2 = "UPDATE recipie SET ingID = '" + c + "',ingPercent = '" + d + "' WHERE blendID = '" + blendID + "' AND ingID = '"+ c + "'AND type=1  ";
                     y = dbConn.updateResult(query2);
 
                 }
