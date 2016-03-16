@@ -216,11 +216,11 @@ public class AddNewUser extends javax.swing.JFrame {
 
     private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
         if (firstnameTxt.getText().isEmpty() || lastnameTxt.getText().isEmpty() || usernameTxt.getText().isEmpty() || passwordTxt.getText().isEmpty() || cnfrmPasswordTxt.getText().isEmpty() ){
-            JOptionPane.showMessageDialog(this, "No text field should be empty!!!");
+            JOptionPane.showMessageDialog(this, "Every field must be filled!!!","Empty Fields",0);
             return;
         }
         if(passwordTxt.getText().length()<8){
-            JOptionPane.showMessageDialog(this, "Password length should be atleast 8 characters!!!");
+            JOptionPane.showMessageDialog(this, "Password length should be at least 8 characters!!!","Invalid password Length",0);
             passwordTxt.setText("");
             cnfrmPasswordTxt.setText("");
             return;
@@ -238,15 +238,15 @@ public class AddNewUser extends javax.swing.JFrame {
 
                 int result = user1.addNewUser(user1);
                 if (result == 1) {                    
-                    JOptionPane.showMessageDialog(this, "New entry has been entered succesfully");
+                    JOptionPane.showMessageDialog(this, "New entry has been added succesfully","Successfully Added",1);
                     this.setVisible(false);
                     close();                 
                 } else {
                     //if insert is not successful
-                    JOptionPane.showMessageDialog(this, "Sorry! Error occured while inserting!\nPlease enter again.");
+                    JOptionPane.showMessageDialog(this, "Unable to add new user. Please enter again.","Unable to add",0);
                 }
             } else if (x == 0) {
-                JOptionPane.showMessageDialog(this, "UserName already exists!");
+                JOptionPane.showMessageDialog(this, "UserName already exists!!!","Duplicate Username",0);
                 usernameTxt.setText("");
             } else {
                 JOptionPane.showMessageDialog(this, "Error occured while checking the userName!");
@@ -254,7 +254,7 @@ public class AddNewUser extends javax.swing.JFrame {
             }
 
         } else {
-            JOptionPane.showMessageDialog(this, "Password mismatched!");
+            JOptionPane.showMessageDialog(this, "Passwords do not match!!!!","Error",0);
             passwordTxt.setText("");
             cnfrmPasswordTxt.setText("");
         }
