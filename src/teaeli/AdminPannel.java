@@ -33,6 +33,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import classes.PDF;
+import java.util.Calendar;
 import javax.swing.JTable;
 
 public class AdminPannel extends javax.swing.JFrame {
@@ -50,6 +51,7 @@ public class AdminPannel extends javax.swing.JFrame {
     java.util.Date date = new java.util.Date();
     SimpleDateFormat sdf3 = new SimpleDateFormat("yyyy-MM-dd");
     String today = sdf3.format(date);
+
     /**
      * Creates new form AdminPannel
      */
@@ -68,7 +70,7 @@ public class AdminPannel extends javax.swing.JFrame {
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
             Logger.getLogger(AdminPannel.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         initComponents();
 
         //Changing table headers to bold
@@ -77,13 +79,11 @@ public class AdminPannel extends javax.swing.JFrame {
         inventryBlendTable.getTableHeader().setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
         settingsIngredientTable.getTableHeader().setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
         productTable.getTableHeader().setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
-        blendDetailsTbl.getTableHeader().setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
+        blendDetailsTbl.getTableHeader().setFont(new Font("Segoe UI Bold", Font.PLAIN, 14));
         ingStockHistoryTbl.getTableHeader().setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
         blendStockHistoryTbl.getTableHeader().setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
         userTable.getTableHeader().setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
-        
-    
-        
+
         startClock();
 
         //Keep the window fullscreen
@@ -98,7 +98,7 @@ public class AdminPannel extends javax.swing.JFrame {
         searchIngredientComboBoxAutoSuggest.setAutoSuggest(searchIngredientComboBox, ingredient.loadNameForSearchStockIngComboBox());
 
         searchIngredientComboBox.setSelectedIndex(-1);
-        
+
         //start of view all ingredients
         populateSettingsIngredientTable();
         //end of view all ingredients
@@ -286,7 +286,7 @@ public class AdminPannel extends javax.swing.JFrame {
     public void populateBlendHistoryTable() {
         blendHistoryStock.populateStockBlendHistoryTable((DefaultTableModel) blendStockHistoryTbl.getModel());
     }
-    
+
     public void populateProductTable() {
         blend.populateProductTable((DefaultTableModel) productTable.getModel());
     }
@@ -294,16 +294,15 @@ public class AdminPannel extends javax.swing.JFrame {
     public void populateUserTable() {
         user.viewUser((DefaultTableModel) userTable.getModel());
     }
-    
-    public void populateOrderListTable(){
+
+    public void populateOrderListTable() {
         order.populateOrderListTable((DefaultTableModel) orderListTable.getModel());
     }
-    
+
     public void populateSettingsIngredientTable() {
         DefaultTableModel model = (DefaultTableModel) settingsIngredientTable.getModel();
         ingredient.viewAllIngredients(model);
-        
-        
+
     }
 
     //Setting default font
@@ -933,22 +932,19 @@ public class AdminPannel extends javax.swing.JFrame {
         });
 
         jLabel13.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel13.setText("Blend Name");
+        jLabel13.setText(" Blend Name         :");
 
         jLabel14.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel14.setText("Blend Category");
+        jLabel14.setText("Blend Category     :");
 
         jLabel16.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel16.setText("Base Composition");
+        jLabel16.setText("Base Composition :");
 
         blendNameLbl.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        blendNameLbl.setText("abcd");
 
         blendCatgLbl.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        blendCatgLbl.setText("abcd");
 
         blendBaseLbl.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        blendBaseLbl.setText("abcd");
 
         javax.swing.GroupLayout settingsBlendPanelLayout = new javax.swing.GroupLayout(settingsBlendPanel);
         settingsBlendPanel.setLayout(settingsBlendPanelLayout);
@@ -959,31 +955,30 @@ public class AdminPannel extends javax.swing.JFrame {
                 .addGroup(settingsBlendPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(settingsBlendPanelLayout.createSequentialGroup()
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 689, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
                         .addGroup(settingsBlendPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(inventoryBlendLbl1)
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 515, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(settingsBlendPanelLayout.createSequentialGroup()
-                                .addGroup(settingsBlendPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel14)
-                                    .addComponent(jLabel16))
-                                .addGap(53, 53, 53)
+                                .addGroup(settingsBlendPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
+                                    .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel14, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(33, 33, 33)
                                 .addGroup(settingsBlendPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(blendCatgLbl)
-                                    .addComponent(blendBaseLbl)))
-                            .addComponent(inventoryBlendLbl1)
+                                    .addComponent(blendNameLbl)
+                                    .addComponent(blendBaseLbl, javax.swing.GroupLayout.Alignment.TRAILING))))
+                        .addGap(0, 8, Short.MAX_VALUE))
+                    .addGroup(settingsBlendPanelLayout.createSequentialGroup()
+                        .addGroup(settingsBlendPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(settingsBlendPanelLayout.createSequentialGroup()
-                                .addComponent(jLabel13)
-                                .addGap(89, 89, 89)
-                                .addComponent(blendNameLbl))))
-                    .addGroup(settingsBlendPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel3)
+                                .addComponent(searchBlendComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(searchProductBtn))
+                            .addComponent(jLabel3))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(addProductBtn))
-                    .addGroup(settingsBlendPanelLayout.createSequentialGroup()
-                        .addComponent(searchBlendComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(searchProductBtn)
-                        .addGap(0, 879, Short.MAX_VALUE)))
+                        .addComponent(addProductBtn)))
                 .addContainerGap())
         );
         settingsBlendPanelLayout.setVerticalGroup(
@@ -998,25 +993,24 @@ public class AdminPannel extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(settingsBlendPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(searchProductBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(searchBlendComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(searchBlendComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(inventoryBlendLbl1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, Short.MAX_VALUE)
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(settingsBlendPanelLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(inventoryBlendLbl1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(78, 78, 78)
+                        .addGroup(settingsBlendPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(blendNameLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
                         .addGroup(settingsBlendPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(blendNameLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(11, 11, 11)
-                        .addGroup(settingsBlendPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(blendCatgLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(blendCatgLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel14))
                         .addGap(18, 18, 18)
                         .addGroup(settingsBlendPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(blendBaseLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(14, 14, 14)
+                            .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(blendBaseLbl, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(102, 102, 102))
         );
@@ -1057,14 +1051,16 @@ public class AdminPannel extends javax.swing.JFrame {
         }
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel2.setText("Search History By Date Range");
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel2.setText("Search History By Date Range:");
+
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel4.setText("Starts from");
 
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel8.setText("To");
 
@@ -1103,40 +1099,43 @@ public class AdminPannel extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(settingsIngHistoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 1230, Short.MAX_VALUE)
-                    .addGroup(settingsIngHistoryPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel4)
-                        .addGap(18, 18, 18)
-                        .addComponent(StartDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel8)
-                        .addGap(18, 18, 18)
-                        .addComponent(EndDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnIngredientGo)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnCancelIngHistory)
-                        .addGap(0, 0, Short.MAX_VALUE))
+
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, settingsIngHistoryPanelLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnIngredientHistoryReport, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnIngredientHistoryReport, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(settingsIngHistoryPanelLayout.createSequentialGroup()
+                        .addGroup(settingsIngHistoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(settingsIngHistoryPanelLayout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addGap(18, 18, 18)
+                                .addComponent(StartDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel8)
+                                .addGap(18, 18, 18)
+                                .addComponent(EndDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnIngredientGo)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnCancelIngHistory)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         settingsIngHistoryPanelLayout.setVerticalGroup(
             settingsIngHistoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(settingsIngHistoryPanelLayout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(settingsIngHistoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(StartDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(EndDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnIngredientGo)
                     .addComponent(btnCancelIngHistory))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(22, 22, 22)
+                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnIngredientHistoryReport, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -1179,13 +1178,13 @@ public class AdminPannel extends javax.swing.JFrame {
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel10.setText("Search History By Date Range");
+        jLabel10.setText("Search History By Date Range:");
 
-        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel11.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel11.setText("Starts from");
 
-        jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel12.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel12.setText("To");
 
@@ -1218,40 +1217,43 @@ public class AdminPannel extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(settingsBlendHistoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane9, javax.swing.GroupLayout.DEFAULT_SIZE, 1230, Short.MAX_VALUE)
-                    .addGroup(settingsBlendHistoryPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel10)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel11)
-                        .addGap(18, 18, 18)
-                        .addComponent(BlendStartDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel12)
-                        .addGap(18, 18, 18)
-                        .addComponent(blendEndDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnBlendGo)
-                        .addGap(18, 18, 18)
-                        .addComponent(BtnCancelBlendHistory)
-                        .addGap(0, 0, Short.MAX_VALUE))
+
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, settingsBlendHistoryPanelLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnBlendHistoryReportGeneration, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnBlendHistoryReportGeneration, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(settingsBlendHistoryPanelLayout.createSequentialGroup()
+                        .addGroup(settingsBlendHistoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel10)
+                            .addGroup(settingsBlendHistoryPanelLayout.createSequentialGroup()
+                                .addComponent(jLabel11)
+                                .addGap(18, 18, 18)
+                                .addComponent(BlendStartDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel12)
+                                .addGap(18, 18, 18)
+                                .addComponent(blendEndDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnBlendGo)
+                                .addGap(18, 18, 18)
+                                .addComponent(BtnCancelBlendHistory)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         settingsBlendHistoryPanelLayout.setVerticalGroup(
             settingsBlendHistoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(settingsBlendHistoryPanelLayout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(settingsBlendHistoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BlendStartDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(blendEndDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBlendGo)
                     .addComponent(BtnCancelBlendHistory))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(22, 22, 22)
+                .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnBlendHistoryReportGeneration, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -1428,26 +1430,26 @@ public class AdminPannel extends javax.swing.JFrame {
 
     private void addNewBlendsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addNewBlendsBtnActionPerformed
         /*
-        String[] counts = order.getOrderCounts();
-        if ((Integer.parseInt(counts[0]) > 0) && (Integer.parseInt(counts[1]) > 0)){
-            JOptionPane.showMessageDialog(this, "You have 1 pending order and 1 not completed order. You cannot place new orders.");
-        } else if (Integer.parseInt(counts[0]) > 1){
-            JOptionPane.showMessageDialog(this, "You have 2 pending orders. You cannot place new orders.");
-        } else if (Integer.parseInt(counts[1]) > 1){
-            JOptionPane.showMessageDialog(this, "You have 2 not completed orders. You cannot place new orders.");
-        } else {
-            CreateNewBlendOrder1 createNewBlendOrder = new CreateNewBlendOrder1();
-            createNewBlendOrder.setVisible(true);
-            createNewBlendOrder.pannel = this;
-        }
-        */
+         String[] counts = order.getOrderCounts();
+         if ((Integer.parseInt(counts[0]) > 0) && (Integer.parseInt(counts[1]) > 0)){
+         JOptionPane.showMessageDialog(this, "You have 1 pending order and 1 not completed order. You cannot place new orders.");
+         } else if (Integer.parseInt(counts[0]) > 1){
+         JOptionPane.showMessageDialog(this, "You have 2 pending orders. You cannot place new orders.");
+         } else if (Integer.parseInt(counts[1]) > 1){
+         JOptionPane.showMessageDialog(this, "You have 2 not completed orders. You cannot place new orders.");
+         } else {
+         CreateNewBlendOrder1 createNewBlendOrder = new CreateNewBlendOrder1();
+         createNewBlendOrder.setVisible(true);
+         createNewBlendOrder.pannel = this;
+         }
+         */
         CreateNewBlendOrder1 createNewBlendOrder = new CreateNewBlendOrder1();
         createNewBlendOrder.setVisible(true);
         createNewBlendOrder.pannel = this;
     }//GEN-LAST:event_addNewBlendsBtnActionPerformed
 
     private void profileBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profileBtnActionPerformed
-         user.getUserDetails();
+        user.getUserDetails();
     }//GEN-LAST:event_profileBtnActionPerformed
 
     private void addUserBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addUserBtnActionPerformed
@@ -1460,48 +1462,50 @@ public class AdminPannel extends javax.swing.JFrame {
 
     private void searchProductBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchProductBtnActionPerformed
         BlendDetails blendDetails = new BlendDetails();
-        String blendID ="";
+        String blendID = "";
         String blendName = "";
-        int baseID= 0;
+        int baseID = 0;
         String base = "";
-        int ret =0;
+        int ret = 0;
 
         if (searchBlendComboBox.getSelectedIndex() == -1) {
             JOptionPane.showMessageDialog(null, "Please Select a Blend");
         } else {
-            try{
-            blendName = searchBlendComboBox.getSelectedItem().toString();
-            blendID= blend.getBlendIDByBlendName(blendName);
-            blendDetails.blendNameTxt.setText(blendName);
-            blendDetails.blendCodeTxt.setText(blendID);
-            blendDetails.blendCodeTxt.setEditable(false);
-            blendDetails.blendNameTxt.setEditable(false);
-            blendDetails.ingPerAddBtn.setEnabled(false);
-            blendDetails.flavoursPerAddBtn.setEnabled(false);
-            blendDetails.blendUpdateBtn.setEnabled(false);
-            blendDetails.blendAddnewBtn.setEnabled(false);
-            
-            
-            Blend blend = new Blend();
-            baseID = blend.getBaseByBlendID(blendID);
-            base = blend.getIngByBaseName(baseID);
-            
-            blendDetails.baseCombo.setSelectedItem(base);
-            
-            ingredient.populateBlendIngTable((DefaultTableModel) blendDetails.ingTable.getModel(), blendID);
-            ingredient.populateBlendFlavourTable((DefaultTableModel) blendDetails.flavourTable.getModel(), blendID);
-            
-            blendDetails.ingCombo.setSelectedIndex(-1);
-            blendDetails.ingCombo.requestFocus();
-            blendDetails.flavoursCombo.setSelectedIndex(-1);
-            blendDetails.flavoursCombo.requestFocus();
-            blendDetails.setVisible(true);
-            //JOptionPane.showMessageDialog(this, "Please Change Blend Name with New Blend Code to Update");
-            blendDetails.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            orderSearchCombo.setSelectedIndex(-1);
-        }catch(NullPointerException e){
-            JOptionPane.showMessageDialog(this, "You haven't select any blend !", "Empty Selection", JOptionPane.ERROR_MESSAGE);
-        }
+            try {
+                blendName = searchBlendComboBox.getSelectedItem().toString();
+                blendID = blend.getBlendIDByBlendName(blendName);
+                blendDetails.blendNameTxt.setText(blendName);
+                blendDetails.blendCodeTxt.setText(blendID);
+                blendDetails.blendCodeTxt.setEditable(false);
+                blendDetails.blendNameTxt.setEditable(false);
+                blendDetails.ingPerAddBtn.setEnabled(false);
+                blendDetails.flavoursPerAddBtn.setEnabled(false);
+                blendDetails.blendUpdateBtn.setEnabled(false);
+                blendDetails.blendAddnewBtn.setEnabled(false);
+                blendDetails.blendCategoryCombo.setEnabled(false);
+                blendDetails.baseCombo.setEnabled(false);
+
+                Blend blend = new Blend();
+                baseID = blend.getBaseByBlendID(blendID);
+                base = blend.getIngByBaseName(baseID);
+
+                blendDetails.baseCombo.setSelectedItem(base);
+
+                ingredient.populateBlendIngTable((DefaultTableModel) blendDetails.ingTable.getModel(), blendID);
+                ingredient.populateBlendFlavourTable((DefaultTableModel) blendDetails.flavourTable.getModel(), blendID);
+
+                blendDetails.ingCombo.setSelectedIndex(-1);
+                blendDetails.ingCombo.requestFocus();
+                blendDetails.flavoursCombo.setSelectedIndex(-1);
+                blendDetails.flavoursCombo.requestFocus();
+                blendDetails.setVisible(true);
+                //JOptionPane.showMessageDialog(this, "Please Change Blend Name with New Blend Code to Update");
+                blendDetails.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                orderSearchCombo.setSelectedIndex(-1);
+            } catch (NullPointerException e) {
+                JOptionPane.showMessageDialog(this, "You haven't select any blend !", "Empty Selection", JOptionPane.ERROR_MESSAGE);
+            }
+
         }
 
     }//GEN-LAST:event_searchProductBtnActionPerformed
@@ -1518,37 +1522,39 @@ public class AdminPannel extends javax.swing.JFrame {
         OrderDetails orderDetails = new OrderDetails();
         orderDetails.setAdminPannel(this);
         String id = "";
-        try{
+        try {
             id = orderSearchCombo.getSelectedItem().toString();
             Order tmp = order.viewOrder((DefaultTableModel) orderDetails.blendTable.getModel(), (DefaultTableModel) orderDetails.orderDetailsTable.getModel(), id);
             orderDetails.orderIDLabel.setText(tmp.getOrderID());
             orderDetails.dateLabel.setText(tmp.getDate());
-            
-            for(int i = 0; i < orderListTable.getRowCount(); i++){
-                if(id.equals(orderListTable.getValueAt(i, 0).toString())){
-                    if(null != orderListTable.getValueAt(i, 1).toString())switch (orderListTable.getValueAt(i, 1).toString()) {
-                        case "Pending":
-                            orderDetails.orderCompletedBtn.setVisible(false);
-                            break;
-                        case "Received":
-                            orderDetails.orderReceivedBtn.setVisible(false);
-                            orderDetails.updateOrderBtn.setVisible(false);
-                            orderDetails.orderDetailsTable.setEnabled(false);
-                            break;
-                        case "Completed":
-                            orderDetails.orderCompletedBtn.setVisible(false);
-                            orderDetails.orderReceivedBtn.setVisible(false);
-                            orderDetails.updateOrderBtn.setVisible(false);
-                            orderDetails.orderDetailsTable.setEnabled(false);
-                            break;
+
+            for (int i = 0; i < orderListTable.getRowCount(); i++) {
+                if (id.equals(orderListTable.getValueAt(i, 0).toString())) {
+                    if (null != orderListTable.getValueAt(i, 1).toString()) {
+                        switch (orderListTable.getValueAt(i, 1).toString()) {
+                            case "Pending":
+                                orderDetails.orderCompletedBtn.setVisible(false);
+                                break;
+                            case "Received":
+                                orderDetails.orderReceivedBtn.setVisible(false);
+                                orderDetails.updateOrderBtn.setVisible(false);
+                                orderDetails.orderDetailsTable.setEnabled(false);
+                                break;
+                            case "Completed":
+                                orderDetails.orderCompletedBtn.setVisible(false);
+                                orderDetails.orderReceivedBtn.setVisible(false);
+                                orderDetails.updateOrderBtn.setVisible(false);
+                                orderDetails.orderDetailsTable.setEnabled(false);
+                                break;
+                        }
                     }
                 }
             }
-            
+
             orderDetails.setVisible(true);
             orderDetails.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             orderSearchCombo.setSelectedIndex(-1);
-        }catch(NullPointerException e){
+        } catch (NullPointerException e) {
             JOptionPane.showMessageDialog(this, "You haven't select any order ID !", "Empty Selection", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_searchOrderBtnActionPerformed
@@ -1558,7 +1564,7 @@ public class AdminPannel extends javax.swing.JFrame {
     }//GEN-LAST:event_searchStockIngBtnActionPerformed
 
     private void searchStockBlendsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchStockBlendsBtnActionPerformed
-       searchStockBlendCombo();
+        searchStockBlendCombo();
     }//GEN-LAST:event_searchStockBlendsBtnActionPerformed
 
     private void deleteUserBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteUserBtnActionPerformed
@@ -1669,8 +1675,8 @@ public class AdminPannel extends javax.swing.JFrame {
             Blend blendForStock = new Blend();
 
             String selectedBlendName = (String) searchStockBlendComboBox.getSelectedItem();
-            
-            if (blendForStock.checkAndLoadBlendStockDetails(selectedBlendName.replace("'","\\'"))) {
+
+            if (blendForStock.checkAndLoadBlendStockDetails(selectedBlendName.replace("'", "\\'"))) {
                 searchStockBlendComboBox.setSelectedIndex(-1);
 
                 UpdateBlendStock updateBlendStock = new UpdateBlendStock();
@@ -1694,17 +1700,16 @@ public class AdminPannel extends javax.swing.JFrame {
         String[] resultArray = new String[5];
 
         String searchItem = (String) searchIngredientComboBox.getSelectedItem();
-        
 
         if (searchItem == null) {
-            
+
             JOptionPane.showMessageDialog(null, "You Haven't selected an Ingredient!!!", "Pleae select", 0);
 
         } else {
             try {
                 resultArray = ingredient.viewAllDetailsOfAIngredient((String) searchIngredientComboBox.getSelectedItem());
             } catch (SQLException ex) {
-               // Logger.getLogger(AdminPannel.class.getName()).log(Level.SEVERE, null, ex);
+                // Logger.getLogger(AdminPannel.class.getName()).log(Level.SEVERE, null, ex);
                 System.out.println("SQL error : " + ex);
             }
             IngredientDetails itemDetails = new IngredientDetails();
@@ -1719,7 +1724,6 @@ public class AdminPannel extends javax.swing.JFrame {
                 Logger.getLogger(AdminPannel.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-            
             itemDetails.itemNameTxt.setText(resultArray[0]);
             itemDetails.setName(resultArray[1]); //set ingid as name
             itemDetails.itemTypeCombo.setSelectedItem(resultArray[2]);
@@ -1774,7 +1778,7 @@ public class AdminPannel extends javax.swing.JFrame {
         }
     }
     /* end of searchProductCombo method */
-    
+
     private void orderSearchComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderSearchComboActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_orderSearchComboActionPerformed
@@ -1799,35 +1803,64 @@ public class AdminPannel extends javax.swing.JFrame {
     private void btnIngredientGoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngredientGoActionPerformed
         SimpleDateFormat javadate = new SimpleDateFormat("yyyy-MM-dd");
         if (StartDate.getDate() == null || EndDate.getDate() == null) {
-            JOptionPane.showMessageDialog(this, "Date Feilds Cannot be empty","Date choosing error",0);
+            JOptionPane.showMessageDialog(this, "Date Feilds Cannot be empty", "Date choosing error", 0);
         } else if (StartDate.getDate().after(EndDate.getDate())) {
-            JOptionPane.showMessageDialog(this, "Please Enter Valid Date Range","Date choosing error",0);
+            JOptionPane.showMessageDialog(this, "Please Enter Valid Date Range", "Date choosing error", 0);
         } else {
             Date start = StartDate.getDate();
             Date end = EndDate.getDate();
+
+            // increase date by one, because between query doesent get inclusive data in sQlite
+            Calendar c = Calendar.getInstance();
+            c.setTime(end);
+            c.add(Calendar.DATE, 1);
+            end = c.getTime();
+
             String startdate = javadate.format(start);
             String enddate = javadate.format(end);
-            StockHistory ingredientHistoryStock = new StockHistory();
-            ingredientHistoryStock.populateStockIngredientHistoryTableByDate((DefaultTableModel) ingStockHistoryTbl.getModel(), startdate, enddate);
-            ingredientGo = 1;
+
+            if (start.equals(end)) {
+                StockHistory ingredientHistoryStock = new StockHistory();
+                ingredientHistoryStock.populateStockIngredientHistoryTableForDate((DefaultTableModel) ingStockHistoryTbl.getModel(), startdate, enddate);
+                ingredientGo = 1;
+            } else {
+
+                StockHistory ingredientHistoryStock = new StockHistory();
+                ingredientHistoryStock.populateStockIngredientHistoryTableByDate((DefaultTableModel) ingStockHistoryTbl.getModel(), startdate, enddate);
+                ingredientGo = 1;
+            }
         }
     }//GEN-LAST:event_btnIngredientGoActionPerformed
 
     private void btnBlendGoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBlendGoActionPerformed
         SimpleDateFormat javadate = new SimpleDateFormat("yyyy-MM-dd");
         if (BlendStartDate.getDate() == null || blendEndDate.getDate() == null) {
-            JOptionPane.showMessageDialog(this, "Date Feilds Cannot be empty","Date choosing error",0);
+            JOptionPane.showMessageDialog(this, "Date Feilds Cannot be empty", "Date choosing error", 0);
         } else if (BlendStartDate.getDate().after(blendEndDate.getDate())) {
-            JOptionPane.showMessageDialog(this, "Please Enter Valid Date Range","Date choosing error",0);
+            JOptionPane.showMessageDialog(this, "Please Enter Valid Date Range", "Date choosing error", 0);
         } else {
             Date start = BlendStartDate.getDate();
             Date end = blendEndDate.getDate();
+
+            // increase date by one, because between query doesent get inclusive data in sQlite
+            Calendar c = Calendar.getInstance();
+            c.setTime(end);
+            c.add(Calendar.DATE, 1);
+            end = c.getTime();
+
             String startdate = javadate.format(start);
             String enddate = javadate.format(end);
-            StockHistory stockhistory = new StockHistory();
-            stockhistory.populateStockBlendHistoryTableByDate((DefaultTableModel) blendStockHistoryTbl.getModel(), startdate, enddate);
-            blendGo = 1;
-            //populateStockBlendHistoryTableByDate((DefaultTableModel) blendStockHistoryTbl.getModel(),startdate,enddate);
+
+            if (start.equals(end)) {
+                System.out.println("ssss");
+                StockHistory stockhistory = new StockHistory();
+                stockhistory.populateStockBlendHistoryTableForDate((DefaultTableModel) blendStockHistoryTbl.getModel(), startdate, enddate);
+                blendGo = 1;
+            } else {
+                StockHistory stockhistory = new StockHistory();
+                stockhistory.populateStockBlendHistoryTableByDate((DefaultTableModel) blendStockHistoryTbl.getModel(), startdate, enddate);
+                blendGo = 1;
+            }
         }
     }//GEN-LAST:event_btnBlendGoActionPerformed
 
@@ -1836,14 +1869,14 @@ public class AdminPannel extends javax.swing.JFrame {
     }//GEN-LAST:event_EndDateActionPerformed
 
     private void btnIngredientHistoryReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngredientHistoryReportActionPerformed
-        
-        if (StartDate.getDate()!=null && EndDate.getDate() != null &&blendGo == 0) {
+
+        if (StartDate.getDate() != null && EndDate.getDate() != null && blendGo == 0) {
             JOptionPane.showMessageDialog(this, "Please Press Go button to filter By date or Press Cancel ");
         } else {
             DefaultTableModel model = (DefaultTableModel) ingStockHistoryTbl.getModel();
             JTable temp = new JTable(model);
-            pdf.IngStockHistoryPdfGeneration(temp,today);
-            blendGo =0;
+            pdf.IngStockHistoryPdfGeneration(temp, today);
+            blendGo = 0;
         }
     }//GEN-LAST:event_btnIngredientHistoryReportActionPerformed
 
@@ -1866,49 +1899,49 @@ public class AdminPannel extends javax.swing.JFrame {
         if (BlendStartDate.getDate() != null && blendEndDate.getDate() != null && blendGo == 0) {
             JOptionPane.showMessageDialog(this, "Please Press Go button to filter By date or Press Cancel");
         } else {
-            
+
             DefaultTableModel model = (DefaultTableModel) blendStockHistoryTbl.getModel();
             JTable temp = new JTable(model);
-            pdf.BlendStockHistoryPdfGeneration(temp,today);
-            blendGo =0;
+            pdf.BlendStockHistoryPdfGeneration(temp, today);
+            blendGo = 0;
         }
     }//GEN-LAST:event_btnBlendHistoryReportGenerationActionPerformed
 
     /* start of loadBlendDetails method */
-    private void loadBlendDetails(int row){
-        
+    private void loadBlendDetails(int row) {
+
         Blend blendDetails = new Blend();
-        
-        blendDetails.setBlendID((String) productTable.getValueAt(row,0));
+
+        blendDetails.setBlendID((String) productTable.getValueAt(row, 0));
         blendDetails.setBlendName((String) productTable.getValueAt(row, 1));
         blendDetails.setBaseName((String) productTable.getValueAt(row, 2));
-        
+
         blendDetails.setBlendName(blendDetails.getBlendName().replace("'", "\\'"));
         blendDetails.setBaseName(blendDetails.getBaseName().replace("'", "\\'"));
-        
+
         blendNameLbl.setText(blendDetails.getBlendName());
         blendBaseLbl.setText(blendDetails.getBaseName());
-        
+
         boolean load = blendDetails.loadBlendIngredientDetails((DefaultTableModel) blendDetailsTbl.getModel());
-        
-        if (load){
-            
+
+        if (load) {
+
             load = blendDetails.loadBlendFlavourDetails((DefaultTableModel) blendDetailsTbl.getModel());
-            
-            if (load){
-            
+
+            if (load) {
+
                 blendDetails.getBlendCatgFromBlendName();
                 blendCatgLbl.setText(blendDetails.getBlendCategory());
-                
-            }else{
+
+            } else {
                 JOptionPane.showMessageDialog(this, "Unable to load flavour details !", "Load Fails", JOptionPane.ERROR_MESSAGE);
             }
-        }else{
+        } else {
             JOptionPane.showMessageDialog(this, "Unable to load ingredient details !", "Load Fails", JOptionPane.ERROR_MESSAGE);
-        }        
+        }
     }
     /* end of loadBlendDetails method */
-    
+
     /**
      * @param args the command line arguments
      */
