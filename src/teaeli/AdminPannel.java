@@ -82,6 +82,8 @@ public class AdminPannel extends javax.swing.JFrame {
         blendStockHistoryTbl.getTableHeader().setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
         userTable.getTableHeader().setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
         
+    
+        
         startClock();
 
         //Keep the window fullscreen

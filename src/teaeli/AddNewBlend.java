@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package teaeli;
 
 import classes.Blend;
@@ -21,10 +17,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 //import sun.org.mozilla.javascript.internal.Token;
 
-/**
- *
- * @author Thisara Salgado
- */
+
 public class AddNewBlend extends javax.swing.JFrame {
 
     private Ingredient ingredient1;
