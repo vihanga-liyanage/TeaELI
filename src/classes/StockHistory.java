@@ -142,7 +142,7 @@ public class StockHistory {
         String query = "SELECT S.date,I.ingName,S.oldQty,S.updatedQty,S.reason,U.username FROM ingredient I, "
                 + "ingredientstockhistory S, user U WHERE S.updatedBy=U.userID AND S.ingID=I.ingID AND "
                 + "s.date BETWEEN '" + startdate + "' and '" + enddate + "'";
-        System.out.println(query);
+        
         res = dbConn.getResultArray(query);
         if(res.size()==0){
             JOptionPane.showMessageDialog(null, "No records during this date range");
@@ -165,7 +165,7 @@ public class StockHistory {
 
         String query = "SELECT S.date,I.ingName,S.oldQty,S.updatedQty,S.reason,U.username FROM ingredient I, ingredientstockhistory S,"
                 + " user U WHERE S.updatedBy=U.userID AND S.ingID=I.ingID AND s.dateS.date Between '" + startdate + "' AND '"+endDate+"'";
-        System.out.println(query);
+        
         res = dbConn.getResultArray(query);
         if(res.size()==0){
             JOptionPane.showMessageDialog(null, "No records during this date range");
@@ -189,7 +189,7 @@ public class StockHistory {
         String query = "SELECT S.date,B.blendName,S.oldQty,S.updatedQty,S.reason,U.username FROM blend B, "
                 + "blendstockhistory S, user U WHERE S.updatedBy=U.userID AND "
                 + "S.blendID=B.blendID AND S.date Between '" + startdate + "' and  '" + enddate + "'";
-        System.out.println(query);
+        
         res = dbConn.getResultArray(query);
         if(res.size()==0){
             JOptionPane.showMessageDialog(null, "No records during this date range");
@@ -212,7 +212,7 @@ public class StockHistory {
 
         String query = "SELECT S.date,B.blendName,S.oldQty,S.updatedQty,S.reason,U.username FROM blend B, blendstockhistory S, "
                 + "user U WHERE S.updatedBy=U.userID AND S.blendID=B.blendID AND S.date Between '" + startdate + "' AND '"+endDate+"'";
-        System.out.println(query);
+        
         res = dbConn.getResultArray(query);
         
         if(res.size()==0){

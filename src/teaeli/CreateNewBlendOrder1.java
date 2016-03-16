@@ -533,6 +533,10 @@ public class CreateNewBlendOrder1 extends javax.swing.JFrame {
     }//GEN-LAST:event_blendListTblPropertyChange
 
     private void createOrderBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createOrderBtnActionPerformed
+        try {
+            blendListTbl.getCellEditor().stopCellEditing();
+        } catch (Exception e) {}
+        
         int count = blendListTbl.getRowCount();
         int totalFinalQty = 0;
         for (int i=0; i<count; i++) {
@@ -637,7 +641,9 @@ public class CreateNewBlendOrder1 extends javax.swing.JFrame {
     }//GEN-LAST:event_blendsQtyTxtActionPerformed
 
     private void blendsComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blendsComboActionPerformed
-
+        try {
+            blendListTbl.getCellEditor().stopCellEditing();
+        } catch (Exception e) {}
     }//GEN-LAST:event_blendsComboActionPerformed
 
     private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed

@@ -266,6 +266,7 @@ public class Ingredient {
         String query = "SELECT ingName FROM ingredient WHERE ingCategoryID=1 OR ingCategoryID=3 OR ingCategoryID=4 OR ingCategoryID=5 OR ingCategoryID=6 OR ingCategoryID=7 ORDER BY ingName";
         res = dbConn.getResultArray(query);
         autoSuggest.setAutoSuggest(ingCombo, res);
+        ingCombo.setSelectedIndex(-1);
 
     }
 
