@@ -415,53 +415,19 @@ public class Ingredient {
 
     //start of update ingredient method
     public int updateIngredient(int ingredientID, String ingredientName, int ingCategory, int supID, float unitPrice) throws SQLException {
-
         int insertOK = 0;
         //set name of the ingredient
         String query = "Update ingredient SET ingName = '" + ingredientName + "', ingCategoryID = '" + ingCategory + "',supID= '" + supID + "',unitPrice = '" + unitPrice + "' WHERE ingID = '" + ingredientID + "'";
-
         insertOK = dbConn.updateResult(query);
         return insertOK;
     }
 
-    public ArrayList<String> getSupplierDetails() {
-        Connection con = null;
-        PreparedStatement pst = null;
-        ResultSet rs = null;
-        Statement st = null;
-        ArrayList<String> result = new ArrayList<>();
-        try {
-            String query = "SELECT * FROM supplier";
-            con = dbConn.setConnection();
-            rs = dbConn.getResult(query, con);
-            while (rs.next()) {
-                result.add(rs.getString(2));
-            }
-
-            return result;
-
-        } catch (Exception e) {
-            System.err.println("ing 461 err : " + e);
-        } finally {
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (Exception e) {
-                    System.err.println("Resultset close error : " + e);
-                }
-            }
-            if (con != null) {
-                try {
-                    con.close();
-                } catch (Exception e) {
-                    System.err.println("Connection close error : " + e);
-                }
-            }
-        }
-        return null;
+    public ResultArray getSupplierDetails() {
+        ResultArray res = null;
+        String query = "SELECT * FROM supplier";
+        res = dbConn.getResultArray(query);
+        return res;
     }
-
-
 
     public int addNewIngredient(String Name, String type, String supplier, float price) {
         String rslt1= "",rslt2 ="";

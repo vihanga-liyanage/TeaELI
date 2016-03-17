@@ -3,6 +3,7 @@ package teaeli;
 import classes.AutoSuggest;
 import classes.DBConnection;
 import classes.Ingredient;
+import classes.ResultArray;
 import classes.Supplier;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -47,13 +48,10 @@ public class AddIngredient extends javax.swing.JFrame {
         setLocation(x, y);
         setResizable(false);
 
-        ArrayList<String> result = ingr.getSupplierDetails();
-        try {
-            for (int i = 0; i < result.size(); i++) {
-                supliercombo.addItem(result.get(i));
-            }
-        } catch (Exception e) {
-            System.out.println(e);
+        ResultArray res = ingr.getSupplierDetails();
+ 
+        while (res.next()) {
+            supliercombo.addItem(res.getString(1));
         }
 
     }
