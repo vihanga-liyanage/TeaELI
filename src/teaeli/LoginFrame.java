@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package teaeli;
 
 import classes.DBConnection;
@@ -23,10 +19,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import classes.User;
 
-/**
- *
- * @author CHAM PC
- */
+
 public class LoginFrame extends javax.swing.JFrame {
 
     User us = new User();
@@ -189,13 +182,13 @@ public class LoginFrame extends javax.swing.JFrame {
         } else if (us.checkLogin(userName, encriptedPass) == 4 | us.checkLogin(userName, encriptedPass) == 3) {
 
             if (passwrdCount != 3) {
-                JOptionPane.showMessageDialog(this, "Invalid username or password");//the provided password does not exist in the db
+                JOptionPane.showMessageDialog(this, "Invalid username or password","Invalid credentials",0);//the provided password does not exist in the db
                 txtUsername.setText("");
                 txtPassword.setText("");
                 txtUsername.requestFocusInWindow();
                 passwrdCount++;
             } else if (passwrdCount == 3) {
-                JOptionPane.showMessageDialog(this, "ERROR!!! System will close!");
+                JOptionPane.showMessageDialog(this, "Maximum Three Attempts are allowed for login","Login Error",0);
                 setVisible(false);
             }
         }

@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package teaeli;
 
 import classes.User;
@@ -21,10 +17,7 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-/**
- *
- * @author Thisara Salgado
- */
+
 public class EditProfile extends javax.swing.JFrame {
     User us = new User();
     int pswrdFlag =0;
@@ -243,11 +236,11 @@ public class EditProfile extends javax.swing.JFrame {
         if(pswrdFlag==0){
             int result1 = us.updateUserName(firstname, lastname, username);
             if (result1 == 1){
-                JOptionPane.showMessageDialog(this, "Succsfully updated");
+                JOptionPane.showMessageDialog(this, "Succsfully updated","Update successfully",1);
                 this.dispose();
             }
             else {
-                JOptionPane.showMessageDialog(this, "Error occurd while updating.. changes will not be saved");
+                JOptionPane.showMessageDialog(this, "Unable to update the details.Please try again.","Unable to Update",0);
             }
             
         } else {
@@ -256,17 +249,17 @@ public class EditProfile extends javax.swing.JFrame {
             confirmpassword = txtConfirmPassword.getText();
 
             if(currentpassword.isEmpty() || newpassword.isEmpty() || confirmpassword.isEmpty()){
-                JOptionPane.showMessageDialog(this, "Please fill all fields.", "Error", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Please fill all fields to continue.", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             } 
             
             if (newpassword.length() < 8) {
-                JOptionPane.showMessageDialog(this, "Password should at least have 8 characters!", "Error", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Password should contain at least 8 characters!", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
             
             if (!newpassword.equals(confirmpassword)) {
-                JOptionPane.showMessageDialog(this, "Passord and confirm password doesn't match!", "Error", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Passord and confirm password doesn't match!", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
             

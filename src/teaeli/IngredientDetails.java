@@ -341,17 +341,17 @@ public class IngredientDetails extends javax.swing.JFrame {
         String suplierName = JOptionPane.showInputDialog(null, "Enter Supplier Name");
 
         if (suplierName.equals("")) { // check for null input
-            JOptionPane.showMessageDialog(null, "Please enter supplier name!!!", "No suppier Name", 0);
+            JOptionPane.showMessageDialog(null, "Please enter supplier name!!!", "Enpty Supplier Name", 0);
         } else {
             try {
                 int inserted = supplier.addNewSupplier(suplierName);
 
                 if (inserted == 1) {
-                    JOptionPane.showMessageDialog(null, "New supplier added successfully", "New supplier added", 1);
+                    JOptionPane.showMessageDialog(null, "New supplier added successfully", "New Supplier Added", 1);
                     supplierCombobox.addItem(suplierName);
                     supplierCombobox.setSelectedItem(suplierName);
                 } else {
-                    JOptionPane.showMessageDialog(this, "Error occurd while Adding.. changes will not be saved");
+                    JOptionPane.showMessageDialog(this, "Unable to add new supplier.Please try again.","Unable to Add",0);
 
                 }
             } catch (SQLException ex) {

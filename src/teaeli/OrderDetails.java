@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 
 package teaeli;
 
@@ -26,10 +22,8 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
-/**
- *
- * @author Vihanga Liyanage
- */
+
+
 public class OrderDetails extends javax.swing.JFrame  {
     Order order = new Order();
     private AdminPannel adminPannel;
@@ -350,7 +344,7 @@ public class OrderDetails extends javax.swing.JFrame  {
         File file = new File(tempPath);
         File sameFileName = new File(tempPath);
         if (!file.renameTo(sameFileName)) {
-            JOptionPane.showMessageDialog(this, "The file you are going to update is already opened!!!\nPlease close the file before update the order", "File already open", 0);
+            JOptionPane.showMessageDialog(this, "The file you are going to update is already opened!!!\nPlease close the file before update the order.", "File is Already Open", 0);
             return;
         }
         
@@ -374,7 +368,7 @@ public class OrderDetails extends javax.swing.JFrame  {
             try{
                 additional = Double.parseDouble(str);
                 if(additional < 0){
-                    JOptionPane.showMessageDialog(this, "<html>Please enter only positive numbers for the additional qty column at row number <b>" +(i+1)+ "</b>!</html>", "Invalid Input", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "<html>Please enter only positive numbers for the additional qty column at row number <b>" +(i+1)+ "</b>!</html>", "Invalid Additional Quantity", 0);
                     return;
                 }
             }catch(NumberFormatException ex){
@@ -386,7 +380,7 @@ public class OrderDetails extends javax.swing.JFrame  {
             
             int result = order.updateOrderRowWise(orderID, additional, remark, ing);
         }
-        JOptionPane.showMessageDialog(this, "Values saved successfully !\nThe new RM Master plan PDF will be replaced with the old one", "Update Success", 1);
+        JOptionPane.showMessageDialog(this, "Values saved successfully !\nThe new RM Master plan PDF will be replaced with the old one", "Successfully Updated", 1);
         order.viewOrder((DefaultTableModel) blendTable.getModel(), (DefaultTableModel) orderDetailsTable.getModel(), orderIDLabel.getText());
         adminPannel.populateIngStockTable();
         
@@ -423,7 +417,7 @@ public class OrderDetails extends javax.swing.JFrame  {
         int result = order.updateOrderStatus(1, orderIDLabel.getText());
         
         if(result == 1 && updated){
-            JOptionPane.showMessageDialog(this, "Order status changed successfully !", "Changes Succeeded", 1);
+            JOptionPane.showMessageDialog(this, "Order status changed successfully !", "Successfully Changed", 1);
             adminPannel.populateOrderListTable();
             orderCompletedBtn.setVisible(true);
             orderReceivedBtn.setVisible(false);
@@ -433,7 +427,7 @@ public class OrderDetails extends javax.swing.JFrame  {
             
             adminPannel.populateIngStockTable();
         }else{
-            JOptionPane.showMessageDialog(this, "Changes did not affected !", "Changes Failed", 0);
+            JOptionPane.showMessageDialog(this, "Unable to change the status. Try again later. ", "Unable to Change", 0);
         }
     }//GEN-LAST:event_orderReceivedBtnActionPerformed
 
@@ -459,7 +453,7 @@ public class OrderDetails extends javax.swing.JFrame  {
         int result = order.updateOrderStatus(2, orderIDLabel.getText());
         
         if(result == 1 && updated){
-            JOptionPane.showMessageDialog(this, "Order status changed successfully !", "Changes Succeeded", 1);
+            JOptionPane.showMessageDialog(this, "Order status changed successfully!!!", "Successfully Changed", 1);
             adminPannel.populateOrderListTable();
             orderCompletedBtn.setVisible(false);
             orderReceivedBtn.setVisible(false);
@@ -468,8 +462,8 @@ public class OrderDetails extends javax.swing.JFrame  {
             adminPannel.populateBlendStockTable();
             
         }else{
-            JOptionPane.showMessageDialog(this, "Changes did not affected !", "Changes Failed", 0);
-        }
+        JOptionPane.showMessageDialog(this, "Unable to change the status. Try again later. ", "Unable to Change", 0);
+         }
     }//GEN-LAST:event_orderCompletedBtnActionPerformed
 
     //overiding Integer.parseInt() to accept nums with commas

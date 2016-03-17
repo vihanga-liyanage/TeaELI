@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package teaeli;
 
 import classes.Ingredient;
@@ -422,10 +418,9 @@ public class OrderConfirmation extends javax.swing.JFrame {
         getDiscounts();
         int lastIndex = discountList.size() - 1;
         String errorDiscount = discountList.get(lastIndex).toString();
-        if (errorDiscount == "1") {
-            System.out.println("inside if");
+        if (errorDiscount == "1") {           
 
-            JOptionPane.showMessageDialog(null, "Discount cannot be greater than 100!", "Error Value for discount", 0);
+            JOptionPane.showMessageDialog(null, "Discount cannot be greater than 100!", "Invalid Discount", 0);
         }else{
             getTaxes();
             pdf = new PDF();
@@ -463,7 +458,7 @@ public class OrderConfirmation extends javax.swing.JFrame {
                 }
                 this.dispose();
             }else{
-                JOptionPane.showMessageDialog(null, "Purchase orders didn't saved", "Error Occured", 0);
+                JOptionPane.showMessageDialog(null, "Purchase orders didn't saved", "Unable to save", 0);
             }
         }
 

@@ -44,7 +44,7 @@ public class DeliverBlend extends javax.swing.JFrame {
                 if (deliverQty.length() > 0) {
                     if (!testForInteger(deliverQty)) {
                         JOptionPane.showMessageDialog(deliverQtyTxt, "Deliver quantity must be a valid number",
-                                "Invalid Input", JOptionPane.ERROR_MESSAGE);
+                                "Invalid Deliver Quantity", 0);
                         deliverQtyTxt.setText(null);
                     } else {
                         deliverStockQty = Integer.parseInt(deliverQty);
@@ -68,7 +68,7 @@ public class DeliverBlend extends javax.swing.JFrame {
                 String unallocateQty = unallocateQtyTxt.getText();
                 if (unallocateQty.length() > 0) {
                     if (!testForInteger(unallocateQty)) {
-                        JOptionPane.showMessageDialog(unallocateQtyTxt, "Unallocate quantity must be a valid number", "Invalid Input", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(unallocateQtyTxt, "Unallocate quantity must be a valid number", "Invalid Unallocate Quantity", 0);
                         unallocateQtyTxt.setText(null);
                     } else {
                         unallocatedStockQty = Integer.parseInt(unallocateQty);
@@ -92,7 +92,7 @@ public class DeliverBlend extends javax.swing.JFrame {
                 String sampleQty = sampleQtyTxt.getText();
                 if (sampleQty.length() > 0) {
                     if (!testForInteger(sampleQty)) {
-                        JOptionPane.showMessageDialog(sampleQtyTxt, "Sample quantity must be a valid number", "Invalid Input", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(sampleQtyTxt, "Sample quantity must be a valid number", "Invalid Sample Quantity", 0);
                         sampleQtyTxt.setText(null);
                     } else {
                         sampleStockQty = Integer.parseInt(sampleQty);
@@ -431,17 +431,17 @@ public class DeliverBlend extends javax.swing.JFrame {
 
         if (!deliverQtyCheck()) {
             JOptionPane.showMessageDialog(this, "Deliver quantity should be less than or equal to "
-                    + allocatedStockQty + " g. ", "Stock Quantiy Exceeds", JOptionPane.ERROR_MESSAGE);
+                    + allocatedStockQty + " g. ", "Stock Quantiy Exceeds", 0);
             deliverQtyTxt.setText(null);
         } else {
 
             if (!unallocateQtyCheck()) {
                 JOptionPane.showMessageDialog(this, "Unallocating quantity should be less than or equal to "
-                        + (allocatedStockQty - deliverStockQty) + " g. ", "Stock Quantiy Exceeds", JOptionPane.ERROR_MESSAGE);
+                        + (allocatedStockQty - deliverStockQty) + " g. ", "Stock Quantiy Exceeds", 0);
                 unallocateQtyTxt.setText(null);
             } else {
                 if (!smapleQtyCheck()) {
-                    JOptionPane.showMessageDialog(this, "Sample quantity exceeds free stock quantity", "Stock Quantiy Exceeds", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Sample quantity exceeds free stock quantity", "Stock Quantiy Exceeds", 0);
                     unallocateQtyTxt.setText(null);
                 } else {
                     Blend blendDeliver = new Blend();
@@ -478,10 +478,10 @@ public class DeliverBlend extends javax.swing.JFrame {
                     blendDeliver.setVisibleStock((freeQty + unallocatedStockQty) - sampleStockQty);
 
                     if (blendDeliver.updateDeliverDetails()) {
-                        JOptionPane.showMessageDialog(this, "Updated Successfuly !", "Update Success", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(this, "Updated Successfuly !", "Update Success", 1);
                         close();
                     } else {
-                        JOptionPane.showMessageDialog(this, "Unable to update !", "Update Fails", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(this, "Unable to update the stock. Please try again.", "Unable to Update", 0);
                     }
                 }
             }
