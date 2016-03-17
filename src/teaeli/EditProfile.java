@@ -236,51 +236,60 @@ public class EditProfile extends javax.swing.JFrame {
     }//GEN-LAST:event_CancelActionPerformed
 
     private void SaveChangesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveChangesActionPerformed
-        firstname = txtFirstName.getText();
+        firstname = txtFirstName.getText().trim();
         lastname = txtLastName.getText();
         username = lblUserName.getText();
-        currentpassword = txtCurrentPassword.getText();
-        newpassword = txtNewPassword.getText();
-        confirmpassword = txtConfirmPassword.getText();
-        String encriptCurentPswrd = PswrdEncrypt.main2(currentpassword);
-        String encriptNewPassword = PswrdEncrypt.main2(newpassword);
-        
-        
+
         if(pswrdFlag==0){
-            int result1 = us.updateUserName(firstname, lastname,username);
+            int result1 = us.updateUserName(firstname, lastname, username);
             if (result1 == 1){
                 JOptionPane.showMessageDialog(this, "Succsfully updated");
-                this.setVisible(false);
+                this.dispose();
             }
             else {
                 JOptionPane.showMessageDialog(this, "Error occurd while updating.. changes will not be saved");
             }
             
-        }
-        else if(pswrdFlag==1 && encriptCurentPswrd.isEmpty() && newpassword.isEmpty() && confirmpassword.isEmpty()){
-            int result1 = us.updateUserName(firstname, lastname,username);
-            if (result1 == 1){
-                JOptionPane.showMessageDialog(this, "Succsfully updated");
-                this.setVisible(false);
-            }
-            else {
-                JOptionPane.showMessageDialog(this, "Error occurd while updating.. changes will not be saved");
+        } else {
+            currentpassword = txtCurrentPassword.getText();
+            newpassword = txtNewPassword.getText();
+            confirmpassword = txtConfirmPassword.getText();
+
+            if(currentpassword.isEmpty() || newpassword.isEmpty() || confirmpassword.isEmpty()){
+                JOptionPane.showMessageDialog(this, "Please fill all fields.", "Error", JOptionPane.WARNING_MESSAGE);
+                return;
+            } 
+            
+            if (newpassword.length() < 8) {
+                JOptionPane.showMessageDialog(this, "Password should at least have 8 characters!", "Error", JOptionPane.WARNING_MESSAGE);
+                return;
             }
             
-        }
+            if (!newpassword.equals(confirmpassword)) {
+                JOptionPane.showMessageDialog(this, "Passord and confirm password doesn't match!", "Error", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
             
-        
-        else if(pswrdFlag==1 && !currentpassword.isEmpty() && !newpassword.isEmpty() && !confirmpassword.isEmpty() && newpassword.equals(confirmpassword)){
-           int result2 = us.updatePassword(firstname, lastname, username, encriptNewPassword, encriptCurentPswrd);
-            if(result2==1){
-                JOptionPane.showMessageDialog(this, "Password succsfully updated");
-                this.setVisible(false);
-            }
-            else {
-                JOptionPane.showMessageDialog(this, "Error occurd while updating.. changes will not be saved");
+            //checking current password
+            String encriptCurentPswrd = PswrdEncrypt.main2(currentpassword);
+            int check = us.checkLogin(username, encriptCurentPswrd);
+            if (check!=1 && check!=2) {
+                JOptionPane.showMessageDialog(this, "Current password is incorrect!", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            } else {
+                
+                String encriptNewPassword = PswrdEncrypt.main2(newpassword);
+                
+                int result2 = us.updatePassword(firstname, lastname, username, encriptNewPassword, encriptCurentPswrd);
+                if(result2==1){
+                    JOptionPane.showMessageDialog(this, "Password succsfully updated", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    this.dispose();
+                }
+                else {
+                    JOptionPane.showMessageDialog(this, "Error occurd while updating.. changes will not be saved");
+                }
             }
         }
-        
     }//GEN-LAST:event_SaveChangesActionPerformed
 
     /**
