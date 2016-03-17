@@ -345,7 +345,7 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
             //placing order blend
             String[] data = {orderIDLabel.getText(), blendID, String.valueOf(reqQty), String.valueOf(visibleStock), String.valueOf(invisibleStock), balanceQty, excessQty};
             if (!order.placeOrderBlends(data)) {
-                JOptionPane.showMessageDialog(rootPane, "There were some issues with the database. Please contact developers.");
+                JOptionPane.showMessageDialog(rootPane, "There were some issues with the database. Please contact developers.\n\nError code : CreatNewBlendOrder2 348", "Error", JOptionPane.ERROR_MESSAGE);
                 System.exit(0);
             }
 
@@ -366,7 +366,7 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
             //updating blend stock
             data = new String[]{String.valueOf(visibleStock), String.valueOf(invisibleStock), blendID};
             if (!blend.updateBlendStock(data)) {
-                JOptionPane.showMessageDialog(rootPane, "There were some issues with the database. Please contact developers.");
+                JOptionPane.showMessageDialog(rootPane, "There were some issues with the database. Please contact developers.\n\nError code : CreatNewBlendOrder2 369", "Error", JOptionPane.ERROR_MESSAGE);
                 System.exit(0);
             }
         }
@@ -388,7 +388,7 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
             //placing order ingredients
             String[] data = {orderIDLabel.getText(), ingID, String.valueOf(reqQty), String.valueOf(visibleStock), String.valueOf(invisibleStock), balanceQty, excessQty};
             if (!order.placeOrderIngredients(data)) {
-                JOptionPane.showMessageDialog(rootPane, "There were some issues with the database. Please contact developers.");
+                JOptionPane.showMessageDialog(rootPane, "There were some issues with the database. Please contact developers.\n\nError code : CreatNewBlendOrder2 391", "Error", JOptionPane.ERROR_MESSAGE);
                 System.exit(0);
             }
 
@@ -409,7 +409,7 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
             //updating ingredient stock
             data = new String[]{String.valueOf(visibleStock), String.valueOf(invisibleStock), ingID};
             if (!ingredient.updateIngredientStock(data)) {
-                JOptionPane.showMessageDialog(rootPane, "There were some issues with the database. Please contact developers.");
+                JOptionPane.showMessageDialog(rootPane, "There were some issues with the database. Please contact developers.\n\nError code : CreatNewBlendOrder2 412", "Error", JOptionPane.ERROR_MESSAGE);
                 System.exit(0);
             }
         }
@@ -681,7 +681,7 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
 
             //placing the order in order table
             if (!order.placeOrder(orderIDLabel.getText())) {
-                JOptionPane.showMessageDialog(rootPane, "There were some issues with the database. Please contact developers.");
+                JOptionPane.showMessageDialog(rootPane, "There were some issues with the database. Please contact developers.\n\nError code : CreatNewBlendOrder2 684", "Error", JOptionPane.ERROR_MESSAGE);
                 System.exit(0);
             }
             //placing orderBlends and updating blend table

@@ -10,17 +10,16 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Vector;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class Blend {
 
     //attributes
     private String blendID, blendName, baseName, blendCategory, stockUpdateReason;
-    private int baseID, visibleStock, alocatedStock, invisibleStock;
+    private int visibleStock, alocatedStock, invisibleStock;
     private int orderReqQty, orderExcessQty, oldStockQty, updatedStockQTy;
     private int deliverQty, delRemoveQty, sampleQty;
-    private ArrayList<Ingredient> ingredientArray;
-    private ArrayList<Ingredient> flavourArray;
 
     Ingredient ingredient;
     DBConnection dbConn = new DBConnection();
@@ -32,7 +31,6 @@ public class Blend {
         this.baseName = "";
         this.blendCategory = "";
         this.stockUpdateReason = "";
-        this.baseID = 0;
         this.visibleStock = 0;
         this.alocatedStock = 0;
         this.invisibleStock = 0;
@@ -43,8 +41,6 @@ public class Blend {
         this.deliverQty = 0;
         this.delRemoveQty = 0;
         this.sampleQty = 0;
-        this.ingredientArray = new ArrayList();
-        this.flavourArray = new ArrayList();
 
         ingredient = new Ingredient();
     }
@@ -72,14 +68,6 @@ public class Blend {
 
     public void setBaseName(String baseName) {
         this.baseName = baseName;
-    }
-
-    public int getBaseID() {
-        return baseID;
-    }
-
-    public void setBaseID(int baseID) {
-        this.baseID = baseID;
     }
 
     public int getVisibleStock() {
@@ -122,22 +110,6 @@ public class Blend {
         this.orderExcessQty = orderExcessQty;
     }
 
-    public ArrayList<Ingredient> getIngredientArray() {
-        return ingredientArray;
-    }
-
-    public void setIngredientArray(ArrayList<Ingredient> ingredientArray) {
-        this.ingredientArray = ingredientArray;
-    }
-
-    public ArrayList<Ingredient> getFlavourArray() {
-        return flavourArray;
-    }
-
-    public void setFlavourArray(ArrayList<Ingredient> flavourArray) {
-        this.flavourArray = flavourArray;
-    }
-
     public String getBlendCategory() {
         return blendCategory;
     }
@@ -170,16 +142,8 @@ public class Blend {
         this.updatedStockQTy = updatedStockQTy;
     }
 
-    public int getDeliverQty() {
-        return deliverQty;
-    }
-
     public void setDeliverQty(int deliverQty) {
         this.deliverQty = deliverQty;
-    }
-
-    public int getDelRemoveQty() {
-        return delRemoveQty;
     }
 
     public void setDelRemoveQty(int delRemoveQty) {
@@ -198,16 +162,11 @@ public class Blend {
 
     /* start of populateBlendTable method */
     public void populateBlendTable(DefaultTableModel tableModel) {
-
         ResultArray resultArray;
-
         try {
             String query = "SELECT blendCategory,blendName,visibleStock,invisibleStock FROM blend ORDER BY blendCategory, blendName";
-
             resultArray = dbConn.getResultArray(query);
-
             tableModel.setRowCount(0);
-
             while (resultArray.next()) {
                 Vector newRow = new Vector();
                 for (int i = 0; i <= 4; i++) {
@@ -216,10 +175,10 @@ public class Blend {
                 tableModel.addRow(newRow);
             }
         } catch (Exception e) {
-            System.err.println("blend err : " + e);
+            JOptionPane.showMessageDialog(null, "There were some issues with the database. Please contact developers.\n\nError code : Blend 215", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(0);
         }
     }
-    /* end of populateBlendTable method */
 
     /* start of initializing blend combo in CreateNewBlendOrder */
     public void initBlendCombo(JComboBox blendsCombo) {
@@ -231,21 +190,16 @@ public class Blend {
 
     /* start of loadNameForSearchStockBlendsComboBox method */
     public ResultArray loadNameForSearchStockBlendsComboBox() {
-
         ResultArray resultArray = null;
-
         try {
-
             String query = "SELECT blendName FROM blend ";
-
             resultArray = dbConn.getResultArray(query);
-
         } catch (Exception e) {
-            System.err.println("Exception : " + e);
+            JOptionPane.showMessageDialog(null, "There were some issues with the database. Please contact developers.\n\nError code : Blend 241", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(0);
         }
         return resultArray;
     }
-    /* end of loadNameForSearchStockBlendsComboBox method */
 
     /* start of checkAndLoadBlendStockDetails method */
     public boolean checkAndLoadBlendStockDetails(String selectedBlendName) {
