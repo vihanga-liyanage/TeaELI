@@ -1463,7 +1463,7 @@ public class AdminPannel extends javax.swing.JFrame {
         int ret = 0;
 
         if (searchBlendComboBox.getSelectedIndex() == -1) {
-            JOptionPane.showMessageDialog(null, "Please Select a Blend");
+            JOptionPane.showMessageDialog(null, "Please Select a Blend","Empty Blend Selection",0);
         } else {
             try {
                 blendName = searchBlendComboBox.getSelectedItem().toString();
@@ -1496,7 +1496,7 @@ public class AdminPannel extends javax.swing.JFrame {
                 blendDetails.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 orderSearchCombo.setSelectedIndex(-1);
             } catch (NullPointerException e) {
-                JOptionPane.showMessageDialog(this, "You haven't select any blend !", "Empty Selection", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Please select a blend!!!", "Empty Blend Selection", 0);
             }
 
         }
@@ -1548,7 +1548,7 @@ public class AdminPannel extends javax.swing.JFrame {
             orderDetails.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             orderSearchCombo.setSelectedIndex(-1);
         } catch (NullPointerException e) {
-            JOptionPane.showMessageDialog(this, "You haven't select any order ID !", "Empty Selection", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Please select a order ID!!!", "Empty Order Selection", 0);
         }
     }//GEN-LAST:event_searchOrderBtnActionPerformed
 
@@ -1564,9 +1564,9 @@ public class AdminPannel extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) userTable.getModel();
         if (userTable.getSelectedRow() == -1) {
             if (userTable.getSelectedRow() == 0) {
-                JOptionPane.showMessageDialog(this, "Table is empty");
+                JOptionPane.showMessageDialog(this, "Table is empty","No Records to show",0);
             } else {
-                JOptionPane.showMessageDialog(this, "Please select a row to delete");
+                JOptionPane.showMessageDialog(this, "Please select a row to delete","Empty Selection",0);
             }
         } else {
             int dialogButton = JOptionPane.YES_NO_OPTION;
@@ -1579,9 +1579,9 @@ public class AdminPannel extends javax.swing.JFrame {
                 int rst = user.removeUser(id);
                 if (rst == 1) {
                     user.viewUser((DefaultTableModel) userTable.getModel());
-                    JOptionPane.showMessageDialog(this, "User successfully deleted");
+                    JOptionPane.showMessageDialog(this, "User successfully deleted","Deleted Successfuly",1);
                 } else {
-                    JOptionPane.showMessageDialog(this, "Error occured! User couldn't be deleted");
+                    JOptionPane.showMessageDialog(this, "Unable to delete,Please try again","Unable to delete",0);
                 }
 
             } else {
@@ -1596,7 +1596,7 @@ public class AdminPannel extends javax.swing.JFrame {
         int selectedIndex = searchStockBlendComboBox.getSelectedIndex();
 
         if (selectedIndex == -1) {
-            JOptionPane.showMessageDialog(this, "You haven't select any ingredient name !", "Empty Selection", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Please select an ingredient name!!!", "Empty Ingredient Selection",0);
         } else {
 
             String selectedIngName = (String) searchStockBlendComboBox.getSelectedItem();
@@ -1618,7 +1618,7 @@ public class AdminPannel extends javax.swing.JFrame {
                 deliverBlend.freeQtyLbl.setText(String.valueOf(blendDelivery.getVisibleStock()) + " g");
 
             } else {
-                JOptionPane.showMessageDialog(this, "You have selected invalid blend name !", "Invalid Name", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Please select a valid blend name!!!", "Invalid Blend Name", 0);
                 searchStockBlendComboBox.setSelectedIndex(-1);
             }
         }
@@ -1630,7 +1630,7 @@ public class AdminPannel extends javax.swing.JFrame {
         int selectedIndex = searchStockIngComboBox.getSelectedIndex();
 
         if (selectedIndex == -1) {
-            JOptionPane.showMessageDialog(this, "You haven't select any ingredient name !", "Empty Selection", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Please select an ingredient!!!", "Empty Ingredient Selection", 0);
         } else {
 
             String selectedIngName = (String) searchStockIngComboBox.getSelectedItem();
@@ -1649,7 +1649,7 @@ public class AdminPannel extends javax.swing.JFrame {
                 updateStock.updateStockCategoryLbl.setText(ingredeintForStock.getIngCategoryName());
                 updateStock.stockQtyLbl.setText(String.valueOf(ingredeintForStock.getVisibleStock()) + " g");
             } else {
-                JOptionPane.showMessageDialog(this, "You have selected invalid ingredient!", "Invalid Name", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Plese Select a valid ingredient!!!", "Invalid Ingredient Name", 0);
                 searchStockIngComboBox.setSelectedIndex(-1);
             }
         }
@@ -1662,7 +1662,7 @@ public class AdminPannel extends javax.swing.JFrame {
         int selectedIndex = searchStockBlendComboBox.getSelectedIndex();
 
         if (selectedIndex == -1) {
-            JOptionPane.showMessageDialog(this, "You haven't select any blend name !", "Empty Selection", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Please select a blend!!!", "Empty Blend Selection", 0);
         } else {
 
             Blend blendForStock = new Blend();
@@ -1681,7 +1681,7 @@ public class AdminPannel extends javax.swing.JFrame {
                 updateBlendStock.updateStockItemCategoryLbl.setText(blendForStock.getBlendCategory());
                 updateBlendStock.stockQtyLbl.setText(String.valueOf(blendForStock.getVisibleStock()) + " g");
             } else {
-                JOptionPane.showMessageDialog(this, "You have selected invalid blend name !", "Invalid Name", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Please select a valid blend!!!", "Invalid Blend Name", 0);
                 searchStockBlendComboBox.setSelectedIndex(-1);
             }
         }
@@ -1693,7 +1693,7 @@ public class AdminPannel extends javax.swing.JFrame {
         String[] resultArray = new String[5];
         String searchItem = (String) searchIngredientComboBox.getSelectedItem();
         if (searchItem == null) {
-            JOptionPane.showMessageDialog(null, "You Haven't selected an Ingredient!!!", "Pleae select", 0);
+            JOptionPane.showMessageDialog(null, "Please select an Ingredient!!!", "Empty Ingredient Selection", 0);
         } else {
             resultArray = ingredient.viewAllDetailsOfAIngredient((String) searchIngredientComboBox.getSelectedItem());
             IngredientDetails itemDetails = new IngredientDetails();
@@ -1731,7 +1731,7 @@ public class AdminPannel extends javax.swing.JFrame {
         int ret = 0;
 
         if (searchBlendComboBox.getSelectedIndex() == -1) {
-            JOptionPane.showMessageDialog(null, "Please Select a Blend");
+            JOptionPane.showMessageDialog(null, "Please Select a blend!!!","Empty Blend Selection",0);
         } else {
             try {
                 blendName = searchBlendComboBox.getSelectedItem().toString();
@@ -1756,7 +1756,7 @@ public class AdminPannel extends javax.swing.JFrame {
                 blendDetails.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 orderSearchCombo.setSelectedIndex(-1);
             } catch (NullPointerException e) {
-                JOptionPane.showMessageDialog(this, "You haven't select any blend !", "Empty Selection", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Please select a blend!!!", "Empty Selection", 0);
             }
         }
     }
@@ -1786,9 +1786,9 @@ public class AdminPannel extends javax.swing.JFrame {
     private void btnIngredientGoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngredientGoActionPerformed
         SimpleDateFormat javadate = new SimpleDateFormat("yyyy-MM-dd");
         if (StartDate.getDate() == null || EndDate.getDate() == null) {
-            JOptionPane.showMessageDialog(this, "Date Feilds Cannot be empty", "Date choosing error", 0);
+            JOptionPane.showMessageDialog(this, "Date Feilds Cannot be empty!!!", "Date Selection Error", 0);
         } else if (StartDate.getDate().after(EndDate.getDate())) {
-            JOptionPane.showMessageDialog(this, "Please Enter Valid Date Range", "Date choosing error", 0);
+            JOptionPane.showMessageDialog(this, "Please Enter Valid Date Range!!!", "Date Selection Error", 0);
         } else {
             Date start = StartDate.getDate();
             Date end = EndDate.getDate();
@@ -1818,9 +1818,9 @@ public class AdminPannel extends javax.swing.JFrame {
     private void btnBlendGoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBlendGoActionPerformed
         SimpleDateFormat javadate = new SimpleDateFormat("yyyy-MM-dd");
         if (BlendStartDate.getDate() == null || blendEndDate.getDate() == null) {
-            JOptionPane.showMessageDialog(this, "Date Feilds Cannot be empty", "Date choosing error", 0);
+            JOptionPane.showMessageDialog(this, "Date Feilds Cannot be empty!!!", "Date Selection Error", 0);
         } else if (BlendStartDate.getDate().after(blendEndDate.getDate())) {
-            JOptionPane.showMessageDialog(this, "Please Enter Valid Date Range", "Date choosing error", 0);
+            JOptionPane.showMessageDialog(this, "Please Enter Valid Date Range!!!", "Date Selection Error", 0);
         } else {
             Date start = BlendStartDate.getDate();
             Date end = blendEndDate.getDate();
@@ -1917,10 +1917,10 @@ public class AdminPannel extends javax.swing.JFrame {
                 blendCatgLbl.setText(blendDetails.getBlendCategory());
 
             } else {
-                JOptionPane.showMessageDialog(this, "Unable to load flavour details !", "Load Fails", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Unable to load flavour details!!!", "Unable to Load", 0);
             }
         } else {
-            JOptionPane.showMessageDialog(this, "Unable to load ingredient details !", "Load Fails", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Unable to load ingredient details!!!", "Unable to Load", 0);
         }
     }
     /* end of loadBlendDetails method */
