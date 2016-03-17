@@ -76,6 +76,10 @@ public class OrderDetails extends javax.swing.JFrame  {
         
         //Hiding the ingredient category column from the orderDetailsTable
         orderDetailsTable.removeColumn(orderDetailsTable.getColumn(orderDetailsTable.getColumnName(8)));
+        
+        //Hiding visible and invisible stock colomns
+        orderDetailsTable.removeColumn(orderDetailsTable.getColumn("Visible Stock (g)"));
+        orderDetailsTable.removeColumn(orderDetailsTable.getColumn("Invisible Stock (g)"));
     }
 
     /**
@@ -340,11 +344,12 @@ public class OrderDetails extends javax.swing.JFrame  {
     }//GEN-LAST:event_cancelBtnActionPerformed
 
     private void updateOrderBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateOrderBtnActionPerformed
-        String tempPath = "C:\\Teaeli\\RM-Orders\\" + orderIDLabel.getText() + "\\RM_Order_Master_Plan-" + orderIDLabel.getText() + ".pdf";
+        String fileName = "RM_Order_Master_Plan-" + orderIDLabel.getText() + ".pdf";
+        String tempPath = "C:\\Teaeli\\RM-Orders\\" + orderIDLabel.getText() + "\\" + fileName;
         File file = new File(tempPath);
         File sameFileName = new File(tempPath);
         if (!file.renameTo(sameFileName)) {
-            JOptionPane.showMessageDialog(this, "The file you are going to update is already opened!!!\nPlease close the file before update the order.", "File is Already Open", 0);
+            JOptionPane.showMessageDialog(this, "<html>The file <strong>" + fileName + "</strong> is already opened.\nPlease close it and try again.", "File is Already Open", 0);
             return;
         }
         
@@ -424,6 +429,7 @@ public class OrderDetails extends javax.swing.JFrame  {
             
             //set table editing false after order recieved
             orderDetailsTable.setEnabled(false);
+            updateOrderBtn.setVisible(false);
             
             adminPannel.populateIngStockTable();
         }else{

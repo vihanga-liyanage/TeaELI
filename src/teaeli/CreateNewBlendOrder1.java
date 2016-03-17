@@ -567,6 +567,9 @@ public class CreateNewBlendOrder1 extends javax.swing.JFrame {
         } else if (blendsQtyTxt.getText().equals("")) {
             JOptionPane.showMessageDialog(blendsQtyTxt, "Please enter blend quantity to add.", "Empty Blend Quantity", 0);
             blendsQtyTxt.requestFocus();
+        } else if (parseInt(blendsQtyTxt.getText()) <= 0) {
+            JOptionPane.showMessageDialog(blendsQtyTxt, "Blend quantity is zero.", "Invalid Blend Quantity", 0);
+            blendsQtyTxt.requestFocus();
         } else {
             String blendName = (String) blendsCombo.getSelectedItem();
             blendName = blendName.replace("'", "\\'");

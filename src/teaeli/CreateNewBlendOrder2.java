@@ -96,7 +96,8 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
             public void windowClosing(WindowEvent e) {
                 int confirmed = JOptionPane.showConfirmDialog(null,
                         "Are you sure you want to cancel phase 2?", "Confirm window close",
-                        JOptionPane.YES_NO_OPTION);
+                        JOptionPane.YES_NO_OPTION
+                );
                 if (confirmed == JOptionPane.YES_OPTION) {
                     createNewBlendOrder1.setVisible(true);
                     dispose();
@@ -294,7 +295,7 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
     }
 
     private String formatNum(float num) {
-        num = round(num, 2);
+        num = round(num, 3);
         return formatNum(Float.toString(num));
     }
 
@@ -704,6 +705,7 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
             for (int i=0; i<model.getRowCount(); i++) {
                 if (parseFloat(model.getValueAt(i, 6).toString()) <= 0) {
                     model.removeRow(i);
+                    i -= 1;
                 }
             }
             

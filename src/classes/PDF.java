@@ -14,7 +14,6 @@ import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import java.awt.Desktop;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -26,8 +25,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
@@ -37,7 +34,7 @@ import javax.swing.JTable;
  */
 public class PDF {
 
-    private String font = "Segoe UI Semilight";
+    private String font = "Segoe UI Light";
     private String path = "C:\\Teaeli\\";
 
     public PDF() {
@@ -131,7 +128,7 @@ public class PDF {
 
     private PdfPCell PODetails(String text) {
         PdfPCell cell = new PdfPCell();
-        Paragraph p = new Paragraph(text, FontFactory.getFont(font, 12, BaseColor.BLACK));
+        Paragraph p = new Paragraph(text, FontFactory.getFont(font, 11, BaseColor.BLACK));
         p.setAlignment(Element.ALIGN_JUSTIFIED);
 
         cell.addElement(p);
@@ -363,8 +360,8 @@ public class PDF {
                 float[] widths = {2, 1, 1};
                 table2.setWidths(widths);
                 table2.addCell(SupName(suppName));
-                table2.addCell(PODetails("PO Code : " + '\n' + "Delivery Date: " + '\n' + "Retrieve Location : " + '\n' + "Supplier Reference: "));
-                table2.addCell(PODetails(" PO0053" + '\n' + "20160201" + '\n' + "OFOffice" + '\n' + "ALLOCATION PLAN 003"));
+                table2.addCell(PODetails("PO Code" + '\n' + "Delivery Date" + '\n' + "Retrieve Location" + '\n' + "Supplier Reference"));
+                table2.addCell(PODetails(": PO0053" + '\n' + ": 20160201" + '\n' + ": OFOffice" + '\n' + ": ALLOCATION PLAN 003"));
                 doc.add(table2);
 
                 //po table
