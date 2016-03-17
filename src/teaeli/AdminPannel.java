@@ -1691,20 +1691,11 @@ public class AdminPannel extends javax.swing.JFrame {
     /* start of searchIngredientCombo method */
     private void serchIngredientCombo() {
         String[] resultArray = new String[5];
-
         String searchItem = (String) searchIngredientComboBox.getSelectedItem();
-
         if (searchItem == null) {
-
             JOptionPane.showMessageDialog(null, "You Haven't selected an Ingredient!!!", "Pleae select", 0);
-
         } else {
-            try {
-                resultArray = ingredient.viewAllDetailsOfAIngredient((String) searchIngredientComboBox.getSelectedItem());
-            } catch (SQLException ex) {
-                // Logger.getLogger(AdminPannel.class.getName()).log(Level.SEVERE, null, ex);
-                System.out.println("SQL error : " + ex);
-            }
+            resultArray = ingredient.viewAllDetailsOfAIngredient((String) searchIngredientComboBox.getSelectedItem());
             IngredientDetails itemDetails = new IngredientDetails();
             Supplier supplier = new Supplier();
 
@@ -1729,7 +1720,6 @@ public class AdminPannel extends javax.swing.JFrame {
             searchIngredientComboBox.setSelectedIndex(-1);
         }
     }
-    /* end of searchIngredientCombo method */
 
     /* sttart of searchProductCombo method */
     private void searchProductCombo() {

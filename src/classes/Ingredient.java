@@ -205,18 +205,14 @@ public class Ingredient {
         }
         return null;
     }
-    /* end */
-    /* end */
 
     /* start of populateIngredientTable method */
     public void populateIngredientTable(DefaultTableModel tableModel) {
-
         ResultArray resultSet;
-
-        String query = "SELECT ing.categoryName , i.ingName,i.visibleStock,i.invisibleStock FROM ingredient i JOIN ingredientcategory ing ON i.ingCategoryID = ing.ingCategoryID ORDER BY ing.categoryName,i.ingName ";
-
+        String query = "SELECT ing.categoryName , i.ingName,i.visibleStock,i.invisibleStock "
+                + "FROM ingredient i JOIN ingredientcategory ing ON i.ingCategoryID = ing.ingCategoryID "
+                + "ORDER BY ing.categoryName,i.ingName ";
         resultSet = dbConn.getResultArray(query);
-
         tableModel.setRowCount(0);
 
         while (resultSet.next()) {
@@ -227,12 +223,13 @@ public class Ingredient {
             tableModel.addRow(newRow);
         }
     }
-    /* */
 
     //Populate Blend detail's ingredients table according to blend
     public void populateBlendIngTable(DefaultTableModel tableModel, String blendID) {
         ResultArray resultSet;
-        String query = "SELECT I.ingName, R.ingPercent FROM ingredient I, recipie R WHERE I.ingID = R.ingID AND R.blendID = '" + blendID + "' AND R.type = 0";
+        String query = "SELECT I.ingName, R.ingPercent "
+                + "FROM ingredient I, recipie R "
+                + "WHERE I.ingID = R.ingID AND R.blendID = '" + blendID + "' AND R.type = 0";
         resultSet = dbConn.getResultArray(query);
         tableModel.setRowCount(0);
         while (resultSet.next()) {
@@ -247,7 +244,9 @@ public class Ingredient {
     //Populate Blend detail's flavours table according to blend
     public void populateBlendFlavourTable(DefaultTableModel tableModel, String blendID) {
         ResultArray resultSet;
-        String query = "SELECT I.ingName, R.ingPercent FROM ingredient I, recipie R WHERE I.ingID = R.ingID AND R.blendID = '" + blendID + "' AND R.type = 1";
+        String query = "SELECT I.ingName, R.ingPercent "
+                + "FROM ingredient I, recipie R "
+                + "WHERE I.ingID = R.ingID AND R.blendID = '" + blendID + "' AND R.type = 1";
         resultSet = dbConn.getResultArray(query);
         tableModel.setRowCount(0);
         while (resultSet.next()) {
@@ -263,11 +262,12 @@ public class Ingredient {
     public void initIngCombo(JComboBox ingCombo) {
         ResultArray res = null;
         AutoSuggest autoSuggest = new AutoSuggest();
-        String query = "SELECT ingName FROM ingredient WHERE ingCategoryID=1 OR ingCategoryID=3 OR ingCategoryID=4 OR ingCategoryID=5 OR ingCategoryID=6 OR ingCategoryID=7 ORDER BY ingName";
+        String query = "SELECT ingName FROM ingredient "
+                + "WHERE ingCategoryID=1 OR ingCategoryID=3 OR ingCategoryID=4 OR ingCategoryID=5 OR ingCategoryID=6 OR ingCategoryID=7 "
+                + "ORDER BY ingName";
         res = dbConn.getResultArray(query);
         autoSuggest.setAutoSuggest(ingCombo, res);
         ingCombo.setSelectedIndex(-1);
-
     }
 
     /* start of initializing flavour combo in AddNewBlend */
@@ -298,7 +298,6 @@ public class Ingredient {
     public boolean checkAndLoadIngredientStockDetails(String selectedIngName) {
         boolean validIngName = false;
         ResultArray resultArray;
-
         this.setIngName(selectedIngName.replace("'", "\\'"));
 
         try {
@@ -319,13 +318,10 @@ public class Ingredient {
         }
         return validIngName;
     }
-    /* end of checkAndLoadIngredientStockDetails method */
 
     /* start of getIngIDFromIngName method */
     public void getIngIDFromIngName() {
-
         this.setIngName(this.getIngName().replace("'", "\\'"));
-
         ResultArray resultArray;
         try {
             String query = "SELECT ingID FROM ingredient WHERE ingName = '" + this.getIngName() + "'";
@@ -337,58 +333,49 @@ public class Ingredient {
             System.err.println("Exception : " + e);
         }
     }
-    /* end of getIngIDFromIngName method */
 
     /* start of updateStockQty method */
     public boolean updateStockQty() {
-
         boolean updated = false;
 
         //get user id 
         User updatedUser = new User();
         updatedUser.getIDByUsername();
 
-        try {
-            //get ingID of the ingredient
-            this.getIngIDFromIngName();
-            
-            //to get current date
-            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            Date currentDate = Calendar.getInstance().getTime();
-            dateFormat.format(currentDate);
-            Timestamp date = new Timestamp(currentDate.getTime());
+        //get ingID of the ingredient
+        this.getIngIDFromIngName();
 
-            //query to update ingredient stock
-            String query = "UPDATE ingredient SET visibleStock = '" + this.getVisibleStock() + "' WHERE ingID = '" + this.getIngID() + "'";
+        //to get current date
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date currentDate = Calendar.getInstance().getTime();
+        dateFormat.format(currentDate);
+        Timestamp date = new Timestamp(currentDate.getTime());
 
-            int i = dbConn.updateResult(query);
+        //query to update ingredient stock
+        String query = "UPDATE ingredient SET visibleStock = '" + this.getVisibleStock() + "' WHERE ingID = '" + this.getIngID() + "'";
+
+        int i = dbConn.updateResult(query);
+
+        if (i == 1) {
+            //query to inesrt into stock history
+            query = "INSERT INTO ingredientstockhistory"
+                    + "(`ingID`, `date`, `oldQty`, `updatedQty`, `reason`, `updatedBy`)"
+                    + " VALUES ('" + this.getIngID() + "', '" + date + "', '" + this.getOldStockQty() + "','" + this.getUpdatedStockQTy() + "','" + this.getStockUpdateReason() + "','" + updatedUser.getUserID() + "')";
+
+            i = dbConn.updateResult(query);
 
             if (i == 1) {
-
-                //query to inesrt into stock history
-                query = "INSERT INTO ingredientstockhistory"
-                        + "(`ingID`, `date`, `oldQty`, `updatedQty`, `reason`, `updatedBy`)"
-                        + " VALUES ('" + this.getIngID() + "', '" + date + "', '" + this.getOldStockQty() + "','" + this.getUpdatedStockQTy() + "','" + this.getStockUpdateReason() + "','" + updatedUser.getUserID() + "')";
-
-                i = dbConn.updateResult(query);
-
-                if (i == 1) {
-                    updated = true;
-                }
+                updated = true;
             }
-        } catch (Exception e) {
-            System.err.println("Exception : " + e);
         }
         return updated;
     }
-    /* end of updateStockQty method */
 
     //start of view all ingredients method
     public void viewAllIngredients(DefaultTableModel table) {
         ResultArray res = null;
         String query = "SELECT ingName,unitPrice,supName FROM ingredient,supplier where ingredient.supID = supplier.supID";
         res = dbConn.getResultArray(query);
-
         while (res.next()) {
             //DefaultTableModel model = (DefaultTableModel) adminPannel.settingsIngredientTable.getModel();
             table.addRow(new Object[]{res.getString(0), res.getString(2), res.getString(1)});
@@ -398,9 +385,7 @@ public class Ingredient {
     public String getUnitPriceByIngName(String ingName) {
         String unitPrice = "";
         ResultArray res = null;
-
         this.setIngName(ingName.replace("'", "\\'"));
-
         String query = "SELECT unitPrice FROM ingredient where ingredient.ingName = '" + this.getIngName() + "' ";
         res = dbConn.getResultArray(query);
         if (res.next()) {
@@ -410,43 +395,23 @@ public class Ingredient {
     }
 
     //start of view all details of a ingredient
-    public String[] viewAllDetailsOfAIngredient(String ingredientName) throws SQLException {
-
-        Connection connection = dbConn.setConnection();
-        ResultSet resultSet = null;
+    public String[] viewAllDetailsOfAIngredient(String ingredientName) {
+        ResultArray res = null;
         String[] resultArray = new String[5];
         //set name of the ingredient
         resultArray[0] = ingredientName;
 
-        String query = "SELECT ingID,categoryName,supName,unitPrice  FROM ingredient I,supplier S,ingredientcategory IC where I.ingName = '" + ingredientName + "' and I.supID = S.supID and I.ingCategoryID = IC.ingCategoryID;";
-        try {
-            resultSet = dbConn.getResult(query, connection);
-            while (resultSet.next()) {
-                for (int i = 1; i <= 4; i++) {
-                    resultArray[i] = resultSet.getString(i);
-                }
-            }
-        } catch (Exception e) {
-            System.err.println("ing 389 err : " + e);
-        } finally {
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (Exception e) {
-                    System.err.println("Resultset close error : " + e);
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (Exception e) {
-                    System.err.println("Connection close error : " + e);
-                }
+        String query = "SELECT ingID,categoryName,supName,unitPrice "
+                + "FROM ingredient I,supplier S,ingredientcategory IC "
+                + "where I.ingName = '" + ingredientName + "' and I.supID = S.supID and I.ingCategoryID = IC.ingCategoryID;";
+        res = dbConn.getResultArray(query);
+        while (res.next()) {
+            for (int i = 1; i <= 4; i++) {
+                resultArray[i] = res.getString(i-1);
             }
         }
         return resultArray;
     }
-   //end of view all details of a ingredient
 
     //start of update ingredient method
     public int updateIngredient(int ingredientID, String ingredientName, int ingCategory, int supID, float unitPrice) throws SQLException {
