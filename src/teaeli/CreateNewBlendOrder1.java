@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package teaeli;
 
 import classes.Blend;
@@ -85,10 +81,10 @@ public class CreateNewBlendOrder1 extends javax.swing.JFrame {
                 String qty = blendsQtyTxt.getText();
                 if (qty.length() > 0) {
                     if (!(new Validation().isInt(qty))) {
-                        JOptionPane.showMessageDialog(blendsQtyTxt, "Blend quantity must be a valid number!", "Error", JOptionPane.WARNING_MESSAGE);
+                        JOptionPane.showMessageDialog(blendsQtyTxt, "Blend quantity must be a valid number!", "Invalid Blend Quantity", 0);
                         blendsQtyTxt.setText(qty.substring(0, qty.length() - 1));
                     } else if (Integer.parseInt(qty) < 0) {
-                        JOptionPane.showMessageDialog(blendsQtyTxt, "Blend quantity cannot be less than 0!", "Error", JOptionPane.WARNING_MESSAGE);
+                        JOptionPane.showMessageDialog(blendsQtyTxt, "Blend quantity cannot be less than 0!", "Invalid Blend Quantity", 0);
                         blendsQtyTxt.setText(qty.substring(0, qty.length() - 1));
                     }
                 }
@@ -172,7 +168,7 @@ public class CreateNewBlendOrder1 extends javax.swing.JFrame {
                 blendListTbl.setValueAt(formatNum(finalQty - requiredQty), row, 5);
             }
         } else {
-            JOptionPane.showMessageDialog(blendListTbl, "<html>Please enter a valid final quantity for <b>" + blendName + "</b>.</html>", "Error", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(blendListTbl, "<html>Please enter a valid final quantity for <b>" + blendName + "</b>.</html>", "Invalid Final Blend Quantity", 0);
             blendListTbl.setValueAt(formatNum(requiredQty), row, 6);
         }
     }
@@ -553,11 +549,11 @@ public class CreateNewBlendOrder1 extends javax.swing.JFrame {
                     this.setVisible(false);
                 }
             } else {
-                JOptionPane.showMessageDialog(this, "Final order quantity is zero. Please add more blends.", "Error", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Final order quantity is zero. Please add more blends.", "Error", 0);
                 blendsCombo.requestFocus();
             }
         } else {
-            JOptionPane.showMessageDialog(this, "Please add at least one blend to create an order.", "Error", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Please add at least one blend to create an order.", "Empty Blend Selection", 0);
             blendsCombo.requestFocus();
         }
                 
@@ -565,11 +561,11 @@ public class CreateNewBlendOrder1 extends javax.swing.JFrame {
 
     private void blendAddBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blendAddBtnActionPerformed
         if (blendsCombo.getSelectedIndex() == -1){
-            JOptionPane.showMessageDialog(blendsCombo, "Please select a blend to add.", "Error", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(blendsCombo, "Please select a blend to add.", "Empty Blend Selection",0);
             blendsCombo.requestFocus();
             blendsCombo.setSelectedIndex(-1);
         } else if (blendsQtyTxt.getText().equals("")) {
-            JOptionPane.showMessageDialog(blendsQtyTxt, "Please enter blend quantity to add.", "Error", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(blendsQtyTxt, "Please enter blend quantity to add.", "Empty Blend Quantity", 0);
             blendsQtyTxt.requestFocus();
         } else {
             String blendName = (String) blendsCombo.getSelectedItem();
@@ -647,7 +643,7 @@ public class CreateNewBlendOrder1 extends javax.swing.JFrame {
     }//GEN-LAST:event_blendsComboActionPerformed
 
     private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
-        int dialogResult = JOptionPane.showConfirmDialog(blendListTbl, "Please confirm record deletion", "Confirm Deletion", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+        int dialogResult = JOptionPane.showConfirmDialog(blendListTbl, "Please confirm record deletion", "Confirm Deletion", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (dialogResult == JOptionPane.YES_OPTION){
             DefaultTableModel model = (DefaultTableModel)blendListTbl.getModel();
             model.removeRow(blendListTbl.getSelectedRow());

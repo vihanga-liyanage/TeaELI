@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package teaeli;
 
 import classes.Blend;
@@ -190,13 +186,13 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
         if (new Validation().isFloat(masterPlanTbl.getValueAt(row, 6).toString())) {
             float finalQty = parseFloat(masterPlanTbl.getValueAt(row, 6).toString());
             if (finalQty < requiredQty) {
-                JOptionPane.showMessageDialog(masterPlanTbl, "<html>You cannot decrease the <b>" + ingName + "</b> final quantity less than required quantity!</html>", "Error", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(masterPlanTbl, "<html>You cannot decrease the <b>" + ingName + "</b> final quantity less than required quantity!</html>", "Invalid Final Quantity", 0);
                 masterPlanTbl.setValueAt(formatNum(requiredQty), row, 6);
             } else {
                 masterPlanTbl.setValueAt(formatNum(finalQty - requiredQty), row, 5);
             }
         } else {
-            JOptionPane.showMessageDialog(masterPlanTbl, "<html>Please enter a valid final quantity for <b>" + ingName + "</b>.</html>", "Error", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(masterPlanTbl, "<html>Please enter a valid final quantity for <b>" + ingName + "</b>.</html>", "Invalid Final Quantity", 0);
             masterPlanTbl.setValueAt(formatNum(requiredQty), row, 6);
         }
     }
