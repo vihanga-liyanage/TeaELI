@@ -5,7 +5,10 @@ import classes.DBConnection;
 import classes.Ingredient;
 import classes.ResultArray;
 import classes.Validation;
+import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
@@ -13,6 +16,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
+import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 //import sun.org.mozilla.javascript.internal.Token;
@@ -115,6 +119,7 @@ public class AddNewBlend extends javax.swing.JFrame {
                 }
             }
         });
+        
     }
 
     //End of the Constructor
@@ -436,7 +441,7 @@ public class AddNewBlend extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void blendNameTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blendNameTxtActionPerformed
-        // TODO add your handling code here:
+        blendCategoryCombo.requestFocus();
     }//GEN-LAST:event_blendNameTxtActionPerformed
 
     private void flavourPerTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_flavourPerTxtActionPerformed
@@ -448,51 +453,57 @@ public class AddNewBlend extends javax.swing.JFrame {
     }//GEN-LAST:event_cancelBtnActionPerformed
 
     private void blendCodeTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blendCodeTxtActionPerformed
-        // TODO add your handling code here:
+        blendNameTxt.requestFocus();
     }//GEN-LAST:event_blendCodeTxtActionPerformed
 
-    private void ingPerAddBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingPerAddBtnActionPerformed
+    private void ingPerAddBtnActionPerformed(java.awt.event.ActionEvent evt) {                                             
         if (ingCombo.getSelectedIndex() == -1) {
-            //System.out.println("ing combo");
             JOptionPane.showMessageDialog(ingCombo, "Please select an ingredient to add.", "Empty Ingredient Selection", 0);
             ingCombo.requestFocus();
-            ingCombo.setSelectedIndex(-1);
-    }//GEN-LAST:event_ingPerAddBtnActionPerformed
-        else if (ingPerTxt.getText().equals("")) {
-            JOptionPane.showMessageDialog(ingPerTxt, "Please enter a ingredient percentage to add.", "Empty Ingredient Percentage", 0);
-            ingPerTxt.requestFocus();
-        } else {
-            String ingName = (String) ingCombo.getSelectedItem();
-            float ingPer = Float.parseFloat(ingPerTxt.getText());
-            boolean isNew = true;
-            //Search if the ingredient is already added
-            int rowCount = addNewBlendIngTbl.getRowCount();
-            for (int i = 0; i < rowCount; i++) {
-                if (ingName.equals(addNewBlendIngTbl.getValueAt(i, 0))) {
-                    isNew = false;
-                    break;
-                }
-            }
-            if (isNew) {
-                if (ingPer > 100) {
-                    JOptionPane.showMessageDialog(ingPerTxt, "Please enter a valid percentage to add.", "Invalid Ingredient Percentage", 0);
-                    ingPerTxt.setText("");
-                    ingPerTxt.requestFocus();
-                } else {
-                    ResultArray res = ingredient1.getIngDataByIngName(ingName);
-                    Vector newRow = new Vector();
-                    res.next();
-                    newRow.addElement(res.getString(1));
-                    newRow.addElement(ingPer);
-
-                    DefaultTableModel model = (DefaultTableModel) addNewBlendIngTbl.getModel();
-                    model.addRow(newRow);
-                }
-            }
-            ingPerTxt.setText("");
-            ingCombo.setSelectedIndex(-1);
-            ingCombo.requestFocus();
+            return;
         }
+        if (ingPerTxt.getText().equals("")) {
+            JOptionPane.showMessageDialog(ingPerTxt, "Please enter an ingredient percentage to add.", "Empty Ingredient Percentage", 0);
+            ingPerTxt.requestFocus();
+            return;
+        }
+        String ingName = (String) ingCombo.getSelectedItem();
+        float ingPer = Float.parseFloat(ingPerTxt.getText());
+        boolean isNew = true;
+        //Search if the ingredient is already added
+        int rowCount = addNewBlendIngTbl.getRowCount();
+        float totalPercentage = ingPer;
+        for (int i = 0; i < rowCount; i++) {
+            if (ingName.equals(addNewBlendIngTbl.getValueAt(i, 0))) {
+                isNew = false;
+            }
+            totalPercentage += Float.parseFloat(addNewBlendIngTbl.getValueAt(i, 1).toString());
+        }
+        if (totalPercentage > 100) {
+            JOptionPane.showMessageDialog(ingPerTxt, "Total of ingredient percentages cannot be greater than 100.", "Invalid Ingredient Percentages", 2);
+            ingPerTxt.setText("");
+            ingPerTxt.requestFocus();
+            return;
+        }
+        if (isNew) {
+            if (ingPer > 100) {
+                JOptionPane.showMessageDialog(ingPerTxt, "Please enter a valid percentage to add.", "Invalid Ingredient Percentage", 2);
+                ingPerTxt.setText("");
+                ingPerTxt.requestFocus();
+            } else {
+                ResultArray res = ingredient1.getIngDataByIngName(ingName);
+                Vector newRow = new Vector();
+                res.next();
+                newRow.addElement(res.getString(1));
+                newRow.addElement(ingPer);
+
+                DefaultTableModel model = (DefaultTableModel) addNewBlendIngTbl.getModel();
+                model.addRow(newRow);
+            }
+        }
+        ingPerTxt.setText("");
+        ingCombo.setSelectedIndex(-1);
+        ingCombo.requestFocus();
     }
 
     private void flavourComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_flavourComboActionPerformed
@@ -546,141 +557,156 @@ public class AddNewBlend extends javax.swing.JFrame {
 
 
     private void blendCategoryComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blendCategoryComboActionPerformed
-        // TODO add your handling code here:
+        baseCombo.requestFocus();
     }//GEN-LAST:event_blendCategoryComboActionPerformed
 
     String blendID, blendName, blendCategory, base;
 
     private void addNewBlendBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addNewBlendBtnActionPerformed
+        //validation
+        if (blendCodeTxt.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please add a blend code.", "Empty Fields", 2);
+            blendCodeTxt.requestFocus();
+            return;
+        } else if (blend.checkExistingBlendID(blendCodeTxt.getText()) == 1) {
+            JOptionPane.showMessageDialog(this, "Blend code already exists.", "Error", JOptionPane.WARNING_MESSAGE);
+            blendCodeTxt.requestFocus();
+            return;
+        }
+        
+        if (blendNameTxt.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please add a blend name.", "Empty Fields", JOptionPane.WARNING_MESSAGE);
+            blendNameTxt.requestFocus();
+            return;
+        } else if (blend.checkExistingBlendName(blendCodeTxt.getText()) == 1) {
+            JOptionPane.showMessageDialog(this, "Blend name already exists.", "Error", JOptionPane.WARNING_MESSAGE);
+            blendNameTxt.requestFocus();
+            return;
+        }
+        
+        if (blendCategoryCombo.getSelectedIndex() == -1) {
+            JOptionPane.showMessageDialog(this, "Please select a blend category.", "Empty Fields", JOptionPane.WARNING_MESSAGE);
+            blendCategoryCombo.requestFocus();
+            return;
+        }
+        
+        if (baseCombo.getSelectedIndex() == -1) {
+            JOptionPane.showMessageDialog(this, "Please select a base composition.", "Empty Fields", JOptionPane.WARNING_MESSAGE);
+            baseCombo.requestFocus();
+            return;
+        }
+        
+
         blendID = blendCodeTxt.getText();
         blendName = blendNameTxt.getText();
         blendCategory = blendCategoryCombo.getSelectedItem().toString();
         base = baseCombo.getSelectedItem().toString();
 
-        int ID, Name;
-        ID = blend.checkExistingBlendID(blendID);
-        Name = blend.checkExistingBlendName(blendName);
-        if (blendID.isEmpty() || blendName.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Every Field must be filled", "Empty Fields", 0);
+        float ingPerCount = 0;
+        float flavPerCount = 0;
+        int ingCount = addNewBlendIngTbl.getRowCount();
+        int flavCount = addNewBlendFlavourTbl.getRowCount();
+        int recCount = ingCount + flavCount;
+
+        if (ingCount == 0) {
+            JOptionPane.showMessageDialog(this, "Blend must have at least one ingredient", "No Ingredient Added", 0);
         } else {
-            if (ID != 0) {
-                JOptionPane.showMessageDialog(this, "This ID is already Exsist", "Duplicate Blend ID", 0);
-                blendCodeTxt.setText("");
-                blendCodeTxt.requestFocus();
-            } else {
-                if (Name != 0) {
-                    JOptionPane.showMessageDialog(this, "This Name is already Exsist", "Duplicate Blend Name", 0);
-                    blendNameTxt.setText("");
-                    blendNameTxt.requestFocus();
+            if (flavCount == 0) {
+                for (int i = 0; i < ingCount; i++) {
+                    float initPer = Float.parseFloat(addNewBlendIngTbl.getValueAt(i, 1).toString());;
+                    ingPerCount = ingPerCount + initPer;
+                }
+
+                if (ingPerCount <= 0 || ingPerCount >= 100) {
+                    JOptionPane.showMessageDialog(this, "Invalid percentage");
+
                 } else {
-                    float ingPerCount = 0;
-                    float flavPerCount = 0;
-                    int ingCount = addNewBlendIngTbl.getRowCount();
-                    int flavCount = addNewBlendFlavourTbl.getRowCount();
-                    int recCount = ingCount + flavCount;
+                    int ret = blend.addNewBlend(blendID, blendName, base, blendCategory);
 
-                    if (ingCount == 0) {
-                        JOptionPane.showMessageDialog(this, "Blend must have at least one ingredient", "No Ingredient Added", 0);
+                    ArrayList<Integer> ingID = new ArrayList<>();
+                    for (int i = 0; i < ingCount; i++) {
+                        Blend a = new Blend();
+                        ingID.add(a.getIngIDRecByIngName(addNewBlendIngTbl.getValueAt(i, 0).toString()));
+                    }
+
+                    int x = 0;
+                    for (int i = 0; i < ingCount; i++) {
+                        int a = ingID.get(i);
+                        double b = Double.parseDouble(addNewBlendIngTbl.getValueAt(i, 1).toString());
+                        String query1 = "INSERT INTO recipie (blendID, ingID, ingPercent, type) VALUES ('" + blendID + "','" + a + "','" + b + "',0)";
+                        x = dbConn.updateResult(query1);
+                    }
+
+                    if (x == 1) {
+                        JOptionPane.showMessageDialog(this, "New Blend Added Successfuly.", "Successflly Added", 1);
+                        close();
+                        this.dispose();
                     } else {
-                        if (flavCount == 0) {
-                            for (int i = 0; i < ingCount; i++) {
-                                float initPer = Float.parseFloat(addNewBlendIngTbl.getValueAt(i, 1).toString());;
-                                ingPerCount = ingPerCount + initPer;
-                            }
+                        JOptionPane.showMessageDialog(this, "Unable to add the new ingredient.Please try again.", "Unable to add", 0);
+                    }
+                }
 
-                            if (ingPerCount <= 0 || ingPerCount >= 100) {
-                                JOptionPane.showMessageDialog(this, "Invalid percentage");
+            } else {
+                //addedboth ing and flavour data tor ecipie
+                for (int i = 0; i < ingCount; i++) {
+                    float initPer = Float.parseFloat(addNewBlendIngTbl.getValueAt(i, 1).toString());;
+                    ingPerCount = ingPerCount + initPer;
+                }
 
-                            } else {
-                                int ret = blend.addNewBlend(blendID, blendName, base, blendCategory);
+                for (int i = 0; i < flavCount; i++) {
+                    float initPer = Float.parseFloat(addNewBlendFlavourTbl.getValueAt(i, 1).toString());;
+                    flavPerCount = flavPerCount + initPer;
+                }
 
-                                ArrayList<Integer> ingID = new ArrayList<>();
-                                for (int i = 0; i < ingCount; i++) {
-                                    Blend a = new Blend();
-                                    ingID.add(a.getIngIDRecByIngName(addNewBlendIngTbl.getValueAt(i, 0).toString()));
-                                }
+                if (ingPerCount <= 0 || ingPerCount >= 100) {
+                    JOptionPane.showMessageDialog(this, "Invalid percentage");
 
-                                int x = 0;
-                                for (int i = 0; i < ingCount; i++) {
-                                    int a = ingID.get(i);
-                                    double b = Double.parseDouble(addNewBlendIngTbl.getValueAt(i, 1).toString());
-                                    String query1 = "INSERT INTO recipie (blendID, ingID, ingPercent, type) VALUES ('" + blendID + "','" + a + "','" + b + "',0)";
-                                    x = dbConn.updateResult(query1);
-                                }
+                } else if (flavPerCount <= 0 || flavPerCount >= 100) {
+                    JOptionPane.showMessageDialog(this, "Invalid percentage");
+                } else {
+                    int ret = blend.addNewBlend(blendID, blendName, base, blendCategory);
 
-                                if (x == 1) {
-                                    JOptionPane.showMessageDialog(this, "New Blend Added Successfuly.", "Successflly Added", 1);
-                                    close();
-                                    this.dispose();
-                                } else {
-                                    JOptionPane.showMessageDialog(this, "Unable to add the new ingredient.Please try again.", "Unable to add", 0);
-                                }
-                            }
+                    ArrayList<Integer> ingID = new ArrayList<>();
+                    ArrayList<Integer> flavourID = new ArrayList<>();
+                    for (int i = 0; i < ingCount; i++) {
+                        Blend a = new Blend();
 
-                        } else {
-                            //addedboth ing and flavour data tor ecipie
-                            for (int i = 0; i < ingCount; i++) {
-                                float initPer = Float.parseFloat(addNewBlendIngTbl.getValueAt(i, 1).toString());;
-                                ingPerCount = ingPerCount + initPer;
-                            }
+                        ingID.add(a.getIngIDRecByIngName(addNewBlendIngTbl.getValueAt(i, 0).toString()));
+                    }
 
-                            for (int i = 0; i < flavCount; i++) {
-                                float initPer = Float.parseFloat(addNewBlendFlavourTbl.getValueAt(i, 1).toString());;
-                                flavPerCount = flavPerCount + initPer;
-                            }
+                    for (int i = 0; i < flavCount; i++) {
+                        Blend a = new Blend();
+                        flavourID.add(a.getIngIDRecByIngName(addNewBlendFlavourTbl.getValueAt(i, 0).toString()));
+                    }
+                    int x = 0;
+                    int y = 0;
+                    for (int i = 0; i < ingCount; i++) {
+                        int a = ingID.get(i);
+                        double b = Double.parseDouble(addNewBlendIngTbl.getValueAt(i, 1).toString());
+                        String query1 = "INSERT INTO recipie (blendID, ingID, ingPercent, type) VALUES ('" + blendID + "','" + a + "','" + b + "',0)";
+                        x = dbConn.updateResult(query1);
 
-                            if (ingPerCount <= 0 || ingPerCount >= 100) {
-                                JOptionPane.showMessageDialog(this, "Invalid percentage");
+                    }
 
-                            } else if (flavPerCount <= 0 || flavPerCount >= 100) {
-                                JOptionPane.showMessageDialog(this, "Invalid percentage");
-                            } else {
-                                int ret = blend.addNewBlend(blendID, blendName, base, blendCategory);
+                    for (int j = 0; j < flavCount; j++) {
+                        int c = flavourID.get(j);
+                        double d = Double.parseDouble(addNewBlendFlavourTbl.getValueAt(j, 1).toString());
+                        String query2 = "INSERT INTO recipie (blendID, ingID, ingPercent, type) VALUES ('" + blendID + "','" + c + "','" + d + "',1)";
+                        y = dbConn.updateResult(query2);
 
-                                ArrayList<Integer> ingID = new ArrayList<>();
-                                ArrayList<Integer> flavourID = new ArrayList<>();
-                                for (int i = 0; i < ingCount; i++) {
-                                    Blend a = new Blend();
+                    }
 
-                                    ingID.add(a.getIngIDRecByIngName(addNewBlendIngTbl.getValueAt(i, 0).toString()));
-                                }
+                    if (x == 1 && y == 1) {
+                        JOptionPane.showMessageDialog(this, "New Blend Added Successfuly.", "Successflly Added", 1);
+                        close();
 
-                                for (int i = 0; i < flavCount; i++) {
-                                    Blend a = new Blend();
-                                    flavourID.add(a.getIngIDRecByIngName(addNewBlendFlavourTbl.getValueAt(i, 0).toString()));
-                                }
-                                int x = 0;
-                                int y = 0;
-                                for (int i = 0; i < ingCount; i++) {
-                                    int a = ingID.get(i);
-                                    double b = Double.parseDouble(addNewBlendIngTbl.getValueAt(i, 1).toString());
-                                    String query1 = "INSERT INTO recipie (blendID, ingID, ingPercent, type) VALUES ('" + blendID + "','" + a + "','" + b + "',0)";
-                                    x = dbConn.updateResult(query1);
-
-                                }
-
-                                for (int j = 0; j < flavCount; j++) {
-                                    int c = flavourID.get(j);
-                                    double d = Double.parseDouble(addNewBlendFlavourTbl.getValueAt(j, 1).toString());
-                                    String query2 = "INSERT INTO recipie (blendID, ingID, ingPercent, type) VALUES ('" + blendID + "','" + c + "','" + d + "',1)";
-                                    y = dbConn.updateResult(query2);
-
-                                }
-
-                                if (x == 1 && y == 1) {
-                                    JOptionPane.showMessageDialog(this, "New Blend Added Successfuly.", "Successflly Added", 1);
-                                    close();
-
-                                } else {
-                                    JOptionPane.showMessageDialog(this, "Unable to add the new ingredient.Please try again.", "Unable to add", 0);
-                                }
-
-                            }
-                        }
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Unable to add the new ingredient.Please try again.", "Unable to add", 0);
                     }
 
                 }
             }
+     
         }
 
 
@@ -692,7 +718,7 @@ public class AddNewBlend extends javax.swing.JFrame {
     }//GEN-LAST:event_ingPerTxtActionPerformed
 
     private void baseComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_baseComboActionPerformed
-        // TODO add your handling code here:
+        ingCombo.requestFocus();
     }//GEN-LAST:event_baseComboActionPerformed
 
     public void FillIngCombo() {
