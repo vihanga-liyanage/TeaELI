@@ -73,16 +73,13 @@ public class User {
     //Method to add the result set of the user table in the DB to the user table in the Admin Pannel
     public void viewUser(DefaultTableModel tModel) {
         ResultArray resultSet;
-
         String query = "SELECT userID, username, firstname, lastname FROM user;";
-
         resultSet = dbConn.getResultArray(query);
         tModel.setRowCount(0);
 
         while (resultSet.next()) {
             tModel.addRow(new Object[]{resultSet.getString(0), resultSet.getString(1), resultSet.getString(2), resultSet.getString(3)});
         }
-
     }
 
     //method to remove user from the user table in the admin pannel(completely remove user from the system)
@@ -107,23 +104,17 @@ public class User {
     }
 
     public int addNewUser(User user) {
-
         String query = "INSERT INTO user (username,firstname,lastname,password,designation)values(  '" + user.getUserName() + "','" + user.getFirstName() + "','" + user.getLastName() + "', '" + user.getPassword() + "', '" + user.getDesignation() + "')";
-
         int rslt = dbConn.updateResult(query);
         return rslt;
     }
 
     /* satrt of getIDByUsername method */
     public void getIDByUsername() {
-
         ResultArray resultArray;
-
         try {
             String query = "SELECT userID FROM user WHERE username = '" + loginFrame.user + "'";
-
             resultArray = dbConn.getResultArray(query);
-
             if (resultArray.next()) {
                 this.setUserID(Integer.parseInt(resultArray.getString(0)));
             }
@@ -131,7 +122,6 @@ public class User {
             System.out.println("Exception : " + e);
         } 
     }
-    /* end of getIDByUsername method */
     
     public int checkLogin(String userName, String password) {
             String query = "SELECT username,designation FROM user where password = '" + password + "' and username = ('" + userName + "')";
@@ -148,8 +138,6 @@ public class User {
             }
             return 4;
     }
-
-    
     
     public int updateUserName(String firstname, String lastname, String username) {
         String query = "UPDATE user SET firstname =' " + firstname + "', lastname = '" + lastname + "' WHERE username = '" + username + "'";
