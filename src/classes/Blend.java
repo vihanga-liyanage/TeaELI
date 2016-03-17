@@ -263,38 +263,6 @@ public class Blend {
         return updated;
     }
 
-    /* start of loadNameForSearchStockBlendsComboBox method*/
-    public ResultSet loadNameForsearchBlendIngComboBox() {
-        Connection connection = null;
-        ResultSet resultSet = null;
-
-        try {
-            connection = dbConn.setConnection();
-            String query = "SELECT ingName FROM ingredient";
-            resultSet = dbConn.getResult(query, connection);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "There were some issues with the database. Please contact developers.\n\nError code : Blend 294", "Error", JOptionPane.ERROR_MESSAGE);
-            System.exit(0);
-        }
-        return resultSet;
-    }
-
-    /* start of loadNameForSearchStockBlendsComboBox method*/
-    public ResultSet loadNameForsearchBlendBaseComboBox() {
-        Connection connection = null;
-        ResultSet resultSet = null;
-
-        try {
-            connection = dbConn.setConnection();
-            String query = "SELECT ingName FROM ingredient";
-            resultSet = dbConn.getResult(query, connection);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "There were some issues with the database. Please contact developers.\n\nError code : Blend 310", "Error", JOptionPane.ERROR_MESSAGE);
-            System.exit(0);
-        }
-        return resultSet;
-    }
-
     /* Get blend data when blend name is given */
     public ResultArray getBlendDataByBlendName(String blendName) {
         String query = "SELECT * FROM blend WHERE blendName='" + blendName + "'";
