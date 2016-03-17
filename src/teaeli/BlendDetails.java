@@ -3,6 +3,7 @@ package teaeli;
 import classes.Blend;
 import classes.DBConnection;
 import classes.Ingredient;
+import classes.ResultArray;
 import classes.Validation;
 import java.awt.Font;
 import java.awt.event.KeyAdapter;
@@ -500,10 +501,10 @@ public class BlendDetails extends javax.swing.JFrame {
                     ingPerTxt.setText("");
                     ingPerTxt.requestFocus();
                 } else {
-                    List<List<String>> res = ingredient1.getIngDataByIngName(ingName);
-                    //System.out.println(res);
+                    ResultArray res = ingredient1.getIngDataByIngName(ingName);
+                    res.next();
                     Vector newRow = new Vector();
-                    newRow.addElement(res.get(0).get(1));
+                    newRow.addElement(res.getString(1));
                     newRow.addElement(ingPer);
 
                     DefaultTableModel model = (DefaultTableModel) ingTable.getModel();
@@ -540,10 +541,10 @@ public class BlendDetails extends javax.swing.JFrame {
                     ingPerTxt.setText("");
                     ingPerTxt.requestFocus();
                 } else {
-                    List<List<String>> res = ingredient1.getIngDataByIngName(flavourName);
-                    //System.out.println(res);
+                    ResultArray res = ingredient1.getIngDataByIngName(flavourName);
+                    res.next();
                     Vector newRow = new Vector();
-                    newRow.addElement(res.get(0).get(1));
+                    newRow.addElement(res.getString(1));
                     newRow.addElement(ingPer);
 
                     DefaultTableModel model = (DefaultTableModel) flavourTable.getModel();

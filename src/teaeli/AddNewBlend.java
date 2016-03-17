@@ -3,6 +3,7 @@ package teaeli;
 import classes.Blend;
 import classes.DBConnection;
 import classes.Ingredient;
+import classes.ResultArray;
 import classes.Validation;
 import java.awt.Font;
 import java.awt.event.KeyAdapter;
@@ -449,12 +450,12 @@ public class AddNewBlend extends javax.swing.JFrame {
     private void ingPerAddBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingPerAddBtnActionPerformed
         if (ingCombo.getSelectedIndex() == -1) {
             //System.out.println("ing combo");
-            JOptionPane.showMessageDialog(ingCombo, "Please select a ingredient to add!!!", "Empty Ingredient Selection", 0);
+            JOptionPane.showMessageDialog(ingCombo, "Please select an ingredient to add.", "Empty Ingredient Selection", 0);
             ingCombo.requestFocus();
             ingCombo.setSelectedIndex(-1);
     }//GEN-LAST:event_ingPerAddBtnActionPerformed
         else if (ingPerTxt.getText().equals("")) {
-            JOptionPane.showMessageDialog(ingPerTxt, "Please enter ingredient percentage to add!!!", "Empty Ingredient Percentage", 0);
+            JOptionPane.showMessageDialog(ingPerTxt, "Please enter a ingredient percentage to add.", "Empty Ingredient Percentage", 0);
             ingPerTxt.requestFocus();
         } else {
             String ingName = (String) ingCombo.getSelectedItem();
@@ -470,28 +471,25 @@ public class AddNewBlend extends javax.swing.JFrame {
             }
             if (isNew) {
                 if (ingPer > 100) {
-                    JOptionPane.showMessageDialog(ingPerTxt, "Please enter valid percentage to add.", "Invalid Ingredient Percentage", 0);
+                    JOptionPane.showMessageDialog(ingPerTxt, "Please enter a valid percentage to add.", "Invalid Ingredient Percentage", 0);
                     ingPerTxt.setText("");
                     ingPerTxt.requestFocus();
                 } else {
-                    List<List<String>> res = ingredient1.getIngDataByIngName(ingName);
-                    //System.out.println(res);
+                    ResultArray res = ingredient1.getIngDataByIngName(ingName);
                     Vector newRow = new Vector();
-                    newRow.addElement(res.get(0).get(1));
+                    res.next();
+                    newRow.addElement(res.getString(1));
                     newRow.addElement(ingPer);
 
                     DefaultTableModel model = (DefaultTableModel) addNewBlendIngTbl.getModel();
                     model.addRow(newRow);
                 }
             }
-
             ingPerTxt.setText("");
             ingCombo.setSelectedIndex(-1);
             ingCombo.requestFocus();
         }
-
     }
-
 
     private void flavourComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_flavourComboActionPerformed
         // TODO add your handling code here:
@@ -524,10 +522,10 @@ public class AddNewBlend extends javax.swing.JFrame {
                     ingPerTxt.setText("");
                     ingPerTxt.requestFocus();
                 } else {
-                    List<List<String>> res = ingredient1.getIngDataByIngName(flavourName);
-                    //System.out.println(res);
+                    ResultArray res = ingredient1.getIngDataByIngName(flavourName);
+                    res.next();
                     Vector newRow = new Vector();
-                    newRow.addElement(res.get(0).get(1));
+                    newRow.addElement(res.getString(1));
                     newRow.addElement(ingPer);
 
                     DefaultTableModel model = (DefaultTableModel) addNewBlendFlavourTbl.getModel();
