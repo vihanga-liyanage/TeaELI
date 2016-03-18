@@ -34,7 +34,7 @@ public class UpdateBlendStock extends javax.swing.JFrame {
                 String newQty = newQtyTxt.getText();
                 if (newQty.length() > 0) {
                     if (!testForInteger(newQty)) {
-                        JOptionPane.showMessageDialog(newQtyTxt, "Change Qty value must be a valid number", "Invalid Input", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(newQtyTxt, "Change Qty value must be a valid number", "Invalid Quantity", 0);
                         newQtyTxt.setText(null);
                     }
                 }
@@ -296,32 +296,32 @@ public class UpdateBlendStock extends javax.swing.JFrame {
                     blend.setVisibleStock(oldStockQty + stockChangeQty);
 
                     if (blend.updateStockQty()) {
-                        JOptionPane.showMessageDialog(this, "Updated Successfuly !", "Update Success", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(this, "Updated Successfuly!!!", "Updated Successfully", 1);
                         close();
                     } else {
-                        JOptionPane.showMessageDialog(this, "Unable to update !", "Update Fails", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(this, "Unable to update. Please try again.", "Unable to Update", 0);
                     }
                 } else {
                     blend.setVisibleStock(oldStockQty - stockChangeQty);
 
                     if (blend.getVisibleStock() < 0) {
-                        JOptionPane.showMessageDialog(this, "Stock Qty can not be negative !", "Invalid Input", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(this, "Stock Qty can not be less than 0!!!", "Invalid Stock Quantity", 0);
                         this.newQtyTxt.setText(null);
                     } else {
                         if (blend.updateStockQty()) {
-                            JOptionPane.showMessageDialog(this, "Updated Successfuly !", "Update Success", JOptionPane.INFORMATION_MESSAGE);
+                            JOptionPane.showMessageDialog(this, "Updated Successfuly!!!", "Updated Successfully", 1);
                             close();
                         } else {
-                            JOptionPane.showMessageDialog(this, "Unable to update !", "Update Fails", JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.showMessageDialog(this, "Unable to update.Please try again.", "Unable to Update", 0);
                         }
                     }
                 }
 
             } else {
-                JOptionPane.showMessageDialog(this, "Please fill all fields before save", "Empty Fields", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Please fill all fields before save", "Empty Fields",0);
             }
         } else {
-            JOptionPane.showMessageDialog(this, "Please fill all fields before save", "Empty Fields", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Please fill all fields before save", "Empty Fields", 0);
         }
     }//GEN-LAST:event_saveBtnActionPerformed
 
