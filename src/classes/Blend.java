@@ -257,7 +257,7 @@ public class Blend {
             }
         }
         }catch(Exception e){
-            JOptionPane.showMessageDialog(null, "There were some issues with the database. Please contact developers.\n\nError code : Blend 260", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "There were some issues with the database. Please contact developers.\n\nError code : Blend 260", "Error", 0);
             System.exit(0);
         }
         return updated;
