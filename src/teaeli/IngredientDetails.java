@@ -31,8 +31,8 @@ public class IngredientDetails extends javax.swing.JFrame {
         int x, y;
         screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         frameSize = getSize();
-        x = (screenSize.width - frameSize.width) / 4;
-        y = (screenSize.height - frameSize.height) / 4;
+        x = (screenSize.width - frameSize.width)/2;
+        y = (screenSize.height - frameSize.height)/2;
         setLocation(x, y);
         setResizable(false);
 

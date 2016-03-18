@@ -5,7 +5,9 @@ import classes.DBConnection;
 import classes.Ingredient;
 import classes.ResultArray;
 import classes.Validation;
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
@@ -30,6 +32,15 @@ public class AddNewBlend extends javax.swing.JFrame {
     public AddNewBlend() {
 
         initComponents();
+        
+        Dimension screenSize, frameSize;
+        int x, y;
+        screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        frameSize = getSize();
+        x = (screenSize.width - frameSize.width)/2;
+        y = (screenSize.height - frameSize.height)/2;
+        setLocation(x, y);
+        setResizable(false);
 
         //Changing table headers to bold
         addNewBlendFlavourTbl.getTableHeader().setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));

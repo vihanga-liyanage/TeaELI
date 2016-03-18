@@ -3,7 +3,9 @@ package teaeli;
 import classes.Ingredient;
 import classes.PDF;
 import java.awt.Desktop;
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -42,6 +44,14 @@ public class OrderConfirmation extends javax.swing.JFrame {
     public OrderConfirmation(CreateNewBlendOrder2 cnb, String orderID) { // pass CreateNewBlendOrder2 object to get the master list in the interface
 
         initComponents();
+        Dimension screenSize, frameSize;
+        int x, y;
+        screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        frameSize = getSize();
+        x = (screenSize.width - frameSize.width)/2;
+        y = (screenSize.height - frameSize.height)/2;
+        setLocation(x, y);
+        setResizable(false);
 
         //Changing table headers to bold
         tblMasterPlanEditingView.getTableHeader().setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));

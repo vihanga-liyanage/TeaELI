@@ -548,11 +548,11 @@ public class CreateNewBlendOrder1 extends javax.swing.JFrame {
                     this.setVisible(false);
                 }
             } else {
-                JOptionPane.showMessageDialog(this, "Final order quantity is zero. Please add more blends.", "Error", 0);
+                JOptionPane.showMessageDialog(this, "Final order quantity is zero. Please add more blends.", "Error", 2);
                 blendsCombo.requestFocus();
             }
         } else {
-            JOptionPane.showMessageDialog(this, "Please add at least one blend to create an order.", "Empty Blend Selection", 0);
+            JOptionPane.showMessageDialog(this, "Please add at least one blend to create an order.", "Empty Blend Selection", 2);
             blendsCombo.requestFocus();
         }
                 

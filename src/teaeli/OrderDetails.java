@@ -4,7 +4,9 @@ import classes.Blend;
 import classes.Ingredient;
 import classes.Order;
 import classes.PDF;
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
@@ -40,6 +42,14 @@ public class OrderDetails extends javax.swing.JFrame {
         }
 
         initComponents();
+        Dimension screenSize, frameSize;
+        int x, y;
+        screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        frameSize = getSize();
+        x = (screenSize.width - frameSize.width)/2;
+        y = (screenSize.height - frameSize.height)/2;
+        setLocation(x, y);
+        setResizable(false);
 
         //Changing table headers to bold
         blendTable.getTableHeader().setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
