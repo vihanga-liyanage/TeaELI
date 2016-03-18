@@ -15,7 +15,12 @@ import java.io.IOException;
  */
 public class test {
     public static void main(String[] args) throws IOException {
-        Runtime.getRuntime().exec("explorer /select,  " + "C:");
+        String str = "2_37,790.188776";
+        if (str.matches("[[,]*[0-9]{1,3}]*.[0-9]*")) {
+            System.out.println("true");
+        } else {
+            System.out.println("false");
+        }
     }
    
 }

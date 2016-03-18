@@ -55,28 +55,6 @@ public class AddNewBlend extends javax.swing.JFrame {
         blendCategoryCombo.setSelectedIndex(-1);
         //baseCombo.setSelectedIndex(-1);
 
-        //Validation on Ing percentage, when key released
-        ingPerTxt.addKeyListener(new KeyAdapter() {
-            public void keyReleased(KeyEvent e) {
-                String per = ingPerTxt.getText();
-                if (per.length() > 0) {
-                    if (!(new Validation().isFloat(per))) {
-                        JOptionPane.showMessageDialog(ingPerTxt, "Ingredient percentage must be a valid number!!!", "Invalid Ingredient Percentage", 0);
-                        ingPerTxt.setText(per.substring(0, per.length() - 1));
-                    } else if (Float.parseFloat(per) < 0) {
-                        JOptionPane.showMessageDialog(ingPerTxt, "Ingredient percentage cannot be less than 0!!!", "Invalid Ingredient Percentage", 0);
-                        ingPerTxt.setText(per.substring(0, per.length() - 1));
-                    }
-                }
-            }
-
-            public void keyTyped(KeyEvent e) {
-            }
-
-            public void keyPressed(KeyEvent e) {
-            }
-        });
-
         //setting focus to ing per txt when item selected
         ingCombo.getEditor().getEditorComponent().addKeyListener(new KeyAdapter() {
             @Override
@@ -86,26 +64,45 @@ public class AddNewBlend extends javax.swing.JFrame {
                 }
             }
         });
-
-        flavourPerTxt.addKeyListener(new KeyAdapter() {
+        
+        //Validation ingredient percentage, when key released
+        ingPerTxt.addKeyListener(new KeyAdapter() {
             public void keyReleased(KeyEvent e) {
-                String per = flavourPerTxt.getText();
-                if (per.length() > 0) {
-                    if (!(new Validation().isFloat(per))) {
-                        JOptionPane.showMessageDialog(flavourPerTxt, "Flavour percentage must be a valid number!!!", "Invalid Flavour Percentage", 0);
-                        ingPerTxt.setText(per.substring(0, per.length() - 1));
-                    } else if (Float.parseFloat(per) < 0) {
-                        JOptionPane.showMessageDialog(flavourPerTxt, "Flavour percentage cannot be less than 0!!!", "Invalid Flavour Percentager", 0);
-                        flavourPerTxt.setText(per.substring(0, per.length() - 1));
+                String ingPercentage = ingPerTxt.getText();
+                if (ingPercentage.length() > 0) {
+                    if (!(new Validation().isFloatPure(ingPercentage))) {
+                        JOptionPane.showMessageDialog(ingPerTxt, "Ingredient percentage must be a valid number.", "Invalid ingredient percentage", 2);
+                        ingPerTxt.setText(ingPercentage.substring(0, ingPercentage.length() - 1));
+                    } else if (Float.parseFloat(ingPercentage) < 0) {
+                        JOptionPane.showMessageDialog(ingPerTxt, "Ingredient percentage cannot be less than 0.", "Invalid ingredient percentage", 2);
+                        ingPerTxt.setText(ingPercentage.substring(0, ingPercentage.length() - 1));
                     }
                 }
             }
 
-            public void keyTyped(KeyEvent e) {
+            public void keyTyped(KeyEvent e) {}
+
+            public void keyPressed(KeyEvent e) {}
+        });
+        
+        //Validation flavour percentage, when key released
+        flavourPerTxt.addKeyListener(new KeyAdapter() {
+            public void keyReleased(KeyEvent e) {
+                String flvPercentage = flavourPerTxt.getText();
+                if (flvPercentage.length() > 0) {
+                    if (!(new Validation().isFloatPure(flvPercentage))) {
+                        JOptionPane.showMessageDialog(flavourPerTxt, "Flavour percentage must be a valid number.", "Invalid flavour percentage", 2);
+                        flavourPerTxt.setText(flvPercentage.substring(0, flvPercentage.length() - 1));
+                    } else if (Float.parseFloat(flvPercentage) < 0) {
+                        JOptionPane.showMessageDialog(flavourPerTxt, "Flavour percentage cannot be less than 0.", "Invalid flavour percentage", 2);
+                        flavourPerTxt.setText(flvPercentage.substring(0, flvPercentage.length() - 1));
+                    }
+                }
             }
 
-            public void keyPressed(KeyEvent e) {
-            }
+            public void keyTyped(KeyEvent e) {}
+
+            public void keyPressed(KeyEvent e) {}
         });
 
         //setting focus to flavour per txt when item selected
@@ -592,12 +589,12 @@ public class AddNewBlend extends javax.swing.JFrame {
 
     private void flavourPerAddBtnActionPerformed(java.awt.event.ActionEvent evt) {                                                 
         if (flavourCombo.getSelectedIndex() == -1) {
-            JOptionPane.showMessageDialog(flavourCombo, "Please select a flavour to add.", "Empty Flavour Selection", 0);
+            JOptionPane.showMessageDialog(flavourCombo, "Please select a flavour to add.", "Empty Flavour Selection", 2);
             flavourCombo.requestFocus();
             return;
         }
         if (flavourPerTxt.getText().equals("")) {
-            JOptionPane.showMessageDialog(flavourPerTxt, "Please enter a flavour percentage to add.", "Empty Flavour Percentage", 0);
+            JOptionPane.showMessageDialog(flavourPerTxt, "Please enter a flavour percentage to add.", "Empty Flavour Percentage", 2);
             flavourPerTxt.requestFocus();
             return;
         }
@@ -657,29 +654,29 @@ public class AddNewBlend extends javax.swing.JFrame {
             blendCodeTxt.requestFocus();
             return;
         } else if (blend.checkExistingBlendID(blendCodeTxt.getText()) == 1) {
-            JOptionPane.showMessageDialog(this, "Blend code already exists.", "Error", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Blend code already exists.", "Error", 2);
             blendCodeTxt.requestFocus();
             return;
         }
         
         if (blendNameTxt.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please add a blend name.", "Empty Fields", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Please add a blend name.", "Empty Fields", 2);
             blendNameTxt.requestFocus();
             return;
-        } else if (blend.checkExistingBlendName(blendCodeTxt.getText()) == 1) {
-            JOptionPane.showMessageDialog(this, "Blend name already exists.", "Error", JOptionPane.WARNING_MESSAGE);
+        } else if (blend.checkExistingBlendName(blendNameTxt.getText()) == 1) {
+            JOptionPane.showMessageDialog(this, "Blend name already exists.", "Error", 2);
             blendNameTxt.requestFocus();
             return;
         }
         
         if (blendCategoryCombo.getSelectedIndex() == -1) {
-            JOptionPane.showMessageDialog(this, "Please select a blend category.", "Empty Fields", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Please select a blend category.", "Empty Fields", 2);
             blendCategoryCombo.requestFocus();
             return;
         }
         
         if (baseCombo.getSelectedIndex() == -1) {
-            JOptionPane.showMessageDialog(this, "Please select a base composition.", "Empty Fields", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Please select a base composition.", "Empty Fields", 2);
             baseCombo.requestFocus();
             return;
         }
@@ -696,7 +693,7 @@ public class AddNewBlend extends javax.swing.JFrame {
         int recCount = ingCount + flavCount;
 
         if (ingCount == 0) {
-            JOptionPane.showMessageDialog(this, "Blend must have at least one ingredient", "No Ingredient Added", 0);
+            JOptionPane.showMessageDialog(this, "A blend must have at least one ingredient", "No Ingredients Added", 2);
             return;
         }
         if (flavCount == 0) {
