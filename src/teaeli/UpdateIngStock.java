@@ -8,7 +8,7 @@ import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 
 public class UpdateIngStock extends javax.swing.JFrame {
-    
+
     public UpdateIngStock() {
         initComponents();
 
@@ -28,7 +28,7 @@ public class UpdateIngStock extends javax.swing.JFrame {
                 String newQty = newQtyTxt.getText();
                 if (newQty.length() > 0) {
                     if (!testForFloat(newQty)) {
-                        JOptionPane.showMessageDialog(newQtyTxt, "Change Qty value must be a valid number", "Invalid Quantity", 0);
+                        JOptionPane.showMessageDialog(newQtyTxt, "Change Qty value must be a valid number", "Invalid Quantity", 2);
                         newQtyTxt.setText(null);
                     }
                 }
@@ -43,7 +43,7 @@ public class UpdateIngStock extends javax.swing.JFrame {
             }
         });
     }
-    
+
     private AdminPannel adminPannel;
 
     public void setAdminPannel(AdminPannel adminPannel) {
@@ -51,13 +51,13 @@ public class UpdateIngStock extends javax.swing.JFrame {
     }
 
     //method to refresh related tables and close this window
-    private void close(){
+    private void close() {
         this.setVisible(false);
         adminPannel.populateIngStockTable();
         adminPannel.populateIngHistoryTable();
         this.dispose();
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -270,7 +270,7 @@ public class UpdateIngStock extends javax.swing.JFrame {
         float stockChangeQty, oldStockQty;
 
         if (!changeQty.isEmpty()) {
-            
+
             //set  new updating qty and reason
             stockChangeQty = Float.parseFloat(changeQty);
             String reason = this.reasonTxt.getText();
@@ -283,7 +283,7 @@ public class UpdateIngStock extends javax.swing.JFrame {
                 ingredient.setStockUpdateReason(this.reasonTxt.getText());
 
                 String oldStock = this.stockQtyLbl.getText().replace(" g", "");
-                
+
                 oldStockQty = Float.parseFloat(oldStock);
                 ingredient.setOldStockQty(oldStockQty);
                 ingredient.setUpdatedStockQTy(stockChangeQty);
@@ -292,31 +292,33 @@ public class UpdateIngStock extends javax.swing.JFrame {
                     ingredient.setVisibleStock(oldStockQty + stockChangeQty);
 
                     if (ingredient.updateStockQty()) {
-                         JOptionPane.showMessageDialog(this, "Stock updated successfuly!!!", "Updated Successfully", 1);
+                        JOptionPane.showMessageDialog(this, "Stock updated successfuly!!!", "Updated Successfully", 1);
                         close();
                     } else {
-                        JOptionPane.showMessageDialog(this, "Unable to update the stock.Please try again.", "Unable to update", 0);
-                   }
+                        JOptionPane.showMessageDialog(this, "There were some issues with the database. Please contact developers.\n\nError code : UpdateIngStock 298", "Error", 0);
+                        System.exit(0);
+                    }
                 } else {
                     ingredient.setVisibleStock(oldStockQty - stockChangeQty);
 
                     if (ingredient.getVisibleStock() < 0) {
-                        JOptionPane.showMessageDialog(this, "Stock Qty can not be negative !", "Invalid Stock Quantity", 0);
+                        JOptionPane.showMessageDialog(this, "Stock Qty can not be negative !", "Invalid Stock Quantity", 2);
                         this.newQtyTxt.setText(null);
                     } else {
                         if (ingredient.updateStockQty()) {
-                             JOptionPane.showMessageDialog(this, "Stock updated successfuly!!!", "Updated Successfully", 1);
-                        close();
-                    } else {
-                        JOptionPane.showMessageDialog(this, "Unable to update the stock.Please try again.", "Unable to update", 0);
-                   }
+                            JOptionPane.showMessageDialog(this, "Stock updated successfuly!!!", "Updated Successfully", 1);
+                            close();
+                        } else {
+                            JOptionPane.showMessageDialog(this, "There were some issues with the database. Please contact developers.\n\nError code : UpdateIngStock 312", "Error", 0);
+                            System.exit(0);
+                        }
                     }
-                }                
+                }
             } else {
-                JOptionPane.showMessageDialog(this, "Please fill all fields before save", "Empty Fields", 0);
+                JOptionPane.showMessageDialog(this, "Please fill all fields before save", "Empty Fields", 2);
             }
         } else {
-            JOptionPane.showMessageDialog(this, "Please fill all fields before save", "Empty Fields", 0);
+            JOptionPane.showMessageDialog(this, "Please fill all fields before save", "Empty Fields", 2);
         }
     }//GEN-LAST:event_saveBtnActionPerformed
 
@@ -341,7 +343,7 @@ public class UpdateIngStock extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
-        
+
         //</editor-fold>
         //</editor-fold>
 

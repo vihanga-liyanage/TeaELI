@@ -50,10 +50,10 @@ public class BlendDetails extends javax.swing.JFrame {
                 String per = ingPerTxt.getText();
                 if (per.length() > 0) {
                     if (!(new Validation().isFloat(per))) {
-                        JOptionPane.showMessageDialog(ingPerTxt, "Ingredient percentage must be a valid number!!!", "Invalid Ingredient Percentage", 0);
+                        JOptionPane.showMessageDialog(ingPerTxt, "Ingredient percentage must be a valid number!!!", "Invalid Ingredient Percentage", 2);
                         ingPerTxt.setText(per.substring(0, per.length() - 1));
                     } else if (Float.parseFloat(per) < 0) {
-                        JOptionPane.showMessageDialog(ingPerTxt, "Ingredient percentage cannot be less than 0!!!", "Invalid Ingredient Percentage", 0);
+                        JOptionPane.showMessageDialog(ingPerTxt, "Ingredient percentage cannot be less than 0!!!", "Invalid Ingredient Percentage", 2);
                         ingPerTxt.setText(per.substring(0, per.length() - 1));
                     }
                 }
@@ -481,7 +481,7 @@ public class BlendDetails extends javax.swing.JFrame {
     private void ingPerAddBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingPerAddBtnActionPerformed
         if (ingCombo.getSelectedItem().equals("")) {
             //System.out.println("ing combo");
-            JOptionPane.showMessageDialog(ingCombo, "Please select a ingredient to add.", "Empty Ingredient Selection", 0);
+            JOptionPane.showMessageDialog(ingCombo, "Please select a ingredient to add.", "Empty Ingredient Selection", 2);
             ingCombo.requestFocus();
         } else {
             String ingName = (String) ingCombo.getSelectedItem();
@@ -497,7 +497,7 @@ public class BlendDetails extends javax.swing.JFrame {
             }
             if (isNew) {
                 if (ingPer > 100) {
-                    JOptionPane.showMessageDialog(ingPerTxt, "Please enter valid percentage to add.", "Invalid Ingredient Percentage", 0);
+                    JOptionPane.showMessageDialog(ingPerTxt, "Please enter valid percentage to add.", "Invalid Ingredient Percentage", 2);
                     ingPerTxt.setText("");
                     ingPerTxt.requestFocus();
                 } else {
@@ -521,7 +521,7 @@ public class BlendDetails extends javax.swing.JFrame {
 
     private void flavoursPerAddBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_flavoursPerAddBtnActionPerformed
         if (flavoursCombo.getSelectedItem().equals("")) {
-            JOptionPane.showMessageDialog(flavoursCombo, "Please select a flavour to add.", "Empty Flavour Selection", 0);
+            JOptionPane.showMessageDialog(flavoursCombo, "Please select a flavour to add.", "Empty Flavour Selection", 2);
             flavoursCombo.requestFocus();
         } else {
             String flavourName = (String) flavoursCombo.getSelectedItem();
@@ -537,7 +537,7 @@ public class BlendDetails extends javax.swing.JFrame {
             }
             if (isNew) {
                 if (ingPer > 100) {
-                    JOptionPane.showMessageDialog(ingPerTxt, "Please enter valid percentage to add.", "Invalid Flavour Percentage", 0);
+                    JOptionPane.showMessageDialog(ingPerTxt, "Please enter valid percentage to add.", "Invalid Flavour Percentage", 2);
                     ingPerTxt.setText("");
                     ingPerTxt.requestFocus();
                 } else {
@@ -570,7 +570,7 @@ public class BlendDetails extends javax.swing.JFrame {
         ID = blend.checkExistingBlendID(blendID);
         Name = blend.checkExistingBlendName(blendName);
         if (blendID.isEmpty() || blendName.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Every field must be filled!!!", "Empty Fields", 0);
+            JOptionPane.showMessageDialog(this, "Every field must be filled!!!", "Empty Fields", 2);
         } else {
             if (ID != 0) {
                 JOptionPane.showMessageDialog(this, "This ID is already Exsists!!!", "Duplicate Blend ID", 0);
@@ -589,7 +589,7 @@ public class BlendDetails extends javax.swing.JFrame {
                     int recCount = ingCount + flavCount;
 
                     if (ingCount == 0) {
-                        JOptionPane.showMessageDialog(this, "Blend must have at least one ingredient", "No Ingredient Added", 0);
+                        JOptionPane.showMessageDialog(this, "A blend must have at least one ingredient", "No Ingredient Added", 0);
                     } else {
                         if (flavCount == 0) {
                             for (int i = 0; i < ingCount; i++) {

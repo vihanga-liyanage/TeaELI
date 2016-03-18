@@ -34,7 +34,7 @@ public class UpdateBlendStock extends javax.swing.JFrame {
                 String newQty = newQtyTxt.getText();
                 if (newQty.length() > 0) {
                     if (!testForInteger(newQty)) {
-                        JOptionPane.showMessageDialog(newQtyTxt, "Change Qty value must be a valid number", "Invalid Quantity", 0);
+                        JOptionPane.showMessageDialog(newQtyTxt, "Change Qty value must be a valid number", "Invalid Quantity", 2);
                         newQtyTxt.setText(null);
                     }
                 }
@@ -299,29 +299,31 @@ public class UpdateBlendStock extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(this, "Stock updated successfuly!!!", "Updated Successfully", 1);
                         close();
                     } else {
-                        JOptionPane.showMessageDialog(this, "Unable to update the stock.Please try again.", "Unable to update", 0);
+                        JOptionPane.showMessageDialog(this, "There were some issues with the database. Please contact developers.\n\nError code : UpdateBlendStock 302", "Error", 0);
+                        System.exit(0);
                     }
                 } else {
                     blend.setVisibleStock(oldStockQty - stockChangeQty);
 
                     if (blend.getVisibleStock() < 0) {
-                        JOptionPane.showMessageDialog(this, "Stock Qty can not be negative!!!", "Invalid Stock Quantity", 0);
+                        JOptionPane.showMessageDialog(this, "Stock Qty can not be negative!!!", "Invalid Stock Quantity", 2);
                         this.newQtyTxt.setText(null);
                     } else {
                         if (blend.updateStockQty()) {
                             JOptionPane.showMessageDialog(this, "Stock updated successfuly!!!", "Updated Successfully", 1);
                             close();
                         } else {
-                            JOptionPane.showMessageDialog(this, "Unable to update the stock.Please try again.", "Unable to update", 0);
+                            JOptionPane.showMessageDialog(this, "There were some issues with the database. Please contact developers.\n\nError code : UpdateBlendStock 316", "Error", 0);
+                            System.exit(0);
                         }
                     }
                 }
 
             } else {
-                JOptionPane.showMessageDialog(this, "Please fill all fields before save", "Empty Fields", 0);
+                JOptionPane.showMessageDialog(this, "Please fill all fields before save", "Empty Fields", 2);
             }
         } else {
-            JOptionPane.showMessageDialog(this, "Please fill all fields before save", "Empty Fields", 0);
+            JOptionPane.showMessageDialog(this, "Please fill all fields before save", "Empty Fields", 2);
         }
     }//GEN-LAST:event_saveBtnActionPerformed
 

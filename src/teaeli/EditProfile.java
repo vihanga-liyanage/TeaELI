@@ -1,4 +1,3 @@
-
 package teaeli;
 
 import classes.User;
@@ -17,11 +16,11 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-
 public class EditProfile extends javax.swing.JFrame {
+
     User us = new User();
-    int pswrdFlag =0;
-    
+    int pswrdFlag = 0;
+
     public EditProfile() {
         //Add windows look and feel
         try {
@@ -30,13 +29,13 @@ public class EditProfile extends javax.swing.JFrame {
             Logger.getLogger(AdminPannel.class.getName()).log(Level.SEVERE, null, ex);
         }
         initComponents();
-        
-        Dimension screenSize,frameSize;
-        int x,y;
-        screenSize=Toolkit.getDefaultToolkit().getScreenSize();
-        frameSize=getSize();
-        x=(screenSize.width-frameSize.width)/4;
-        y=(screenSize.height-frameSize.height)/4;
+
+        Dimension screenSize, frameSize;
+        int x, y;
+        screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        frameSize = getSize();
+        x = (screenSize.width - frameSize.width) / 4;
+        y = (screenSize.height - frameSize.height) / 4;
         setLocation(x, y);
         setResizable(false);
     }
@@ -46,7 +45,8 @@ public class EditProfile extends javax.swing.JFrame {
     PreparedStatement pst = null;
     ResultSet rs = null;
     Statement st = null;
-    String firstname,lastname,username,currentpassword,newpassword,confirmpassword;
+    String firstname, lastname, username, currentpassword, newpassword, confirmpassword;
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -233,53 +233,53 @@ public class EditProfile extends javax.swing.JFrame {
         lastname = txtLastName.getText();
         username = lblUserName.getText();
 
-        if(pswrdFlag==0){
+        if (pswrdFlag == 0) {
             int result1 = us.updateUserName(firstname, lastname, username);
-            if (result1 == 1){
-                JOptionPane.showMessageDialog(this, "Succsfully updated","Update successfully",1);
+            if (result1 == 1) {
+                JOptionPane.showMessageDialog(this, "Succsfully updated", "Update successfully", 1);
                 this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(this, "There were some issues with the database. Please contact developers.\n\nError code : EditProfile 243", "Error", 0);
+                System.exit(0);
             }
-            else {
-                JOptionPane.showMessageDialog(this, "Unable to update the details.Please try again.","Unable to Update",0);
-            }
-            
+
         } else {
             currentpassword = txtCurrentPassword.getText();
             newpassword = txtNewPassword.getText();
             confirmpassword = txtConfirmPassword.getText();
 
-            if(currentpassword.isEmpty() || newpassword.isEmpty() || confirmpassword.isEmpty()){
-                JOptionPane.showMessageDialog(this, "Please fill all fields to continue.", "Error", JOptionPane.ERROR_MESSAGE);
+            if (currentpassword.isEmpty() || newpassword.isEmpty() || confirmpassword.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Please fill all fields to continue.", "Error", 2);
                 return;
-            } 
-            
+            }
+
             if (newpassword.length() < 8) {
-                JOptionPane.showMessageDialog(this, "Password should contain at least 8 characters!", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Password should contain at least 8 characters!!!", "Error", 2);
                 return;
             }
-            
+
             if (!newpassword.equals(confirmpassword)) {
-                JOptionPane.showMessageDialog(this, "Passord and confirm password doesn't match!", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Password and confirm password doesn't match!", "Error", 2);
                 return;
             }
-            
+
             //checking current password
             String encriptCurentPswrd = PswrdEncrypt.main2(currentpassword);
             int check = us.checkLogin(username, encriptCurentPswrd);
-            if (check!=1 && check!=2) {
-                JOptionPane.showMessageDialog(this, "Current password is incorrect!", "Error", JOptionPane.ERROR_MESSAGE);
+            if (check != 1 && check != 2) {
+                JOptionPane.showMessageDialog(this, "Current password is incorrect!!!", "Error", 2);
                 return;
             } else {
-                
+
                 String encriptNewPassword = PswrdEncrypt.main2(newpassword);
-                
+
                 int result2 = us.updatePassword(firstname, lastname, username, encriptNewPassword, encriptCurentPswrd);
-                if(result2==1){
-                    JOptionPane.showMessageDialog(this, "Password succsfully updated", "Success", JOptionPane.INFORMATION_MESSAGE);
+                if (result2 == 1) {
+                    JOptionPane.showMessageDialog(this, "Password succsfully updated", "Success", 1);
                     this.dispose();
-                }
-                else {
-                    JOptionPane.showMessageDialog(this, "Error occurd while updating.. changes will not be saved");
+                } else {
+                    JOptionPane.showMessageDialog(this, "There were some issues with the database. Please contact developers.\n\nError code : EditProfile 281", "Error", 0);
+                    System.exit(0);
                 }
             }
         }

@@ -80,10 +80,10 @@ public class CreateNewBlendOrder1 extends javax.swing.JFrame {
                 String qty = blendsQtyTxt.getText();
                 if (qty.length() > 0) {
                     if (!(new Validation().isInt(qty))) {
-                        JOptionPane.showMessageDialog(blendsQtyTxt, "Blend quantity must be a valid number!", "Invalid Blend Quantity", 0);
+                        JOptionPane.showMessageDialog(blendsQtyTxt, "Blend quantity must be a valid number!!!", "Invalid Blend Quantity", 2);
                         blendsQtyTxt.setText(qty.substring(0, qty.length() - 1));
                     } else if (Integer.parseInt(qty) < 0) {
-                        JOptionPane.showMessageDialog(blendsQtyTxt, "Blend quantity cannot be less than 0!", "Invalid Blend Quantity", 0);
+                        JOptionPane.showMessageDialog(blendsQtyTxt, "Blend quantity cannot be less than 0!!!", "Invalid Blend Quantity", 2);
                         blendsQtyTxt.setText(qty.substring(0, qty.length() - 1));
                     }
                 }
@@ -161,13 +161,13 @@ public class CreateNewBlendOrder1 extends javax.swing.JFrame {
         if (new Validation().isInt(blendListTbl.getValueAt(row, 6).toString())) {
             int finalQty = parseInt(blendListTbl.getValueAt(row, 6).toString());
             if (finalQty < requiredQty) {
-                JOptionPane.showMessageDialog(blendListTbl, "<html>You cannot decrease the <b>" + blendName + "</b> final quantity less than required quantity!</html>", "Error", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(blendListTbl, "<html>You cannot decrease the <b>" + blendName + "</b> final quantity less than required quantity!</html>", "Error", 2);
                 blendListTbl.setValueAt(formatNum(requiredQty), row, 6);
             } else {
                 blendListTbl.setValueAt(formatNum(finalQty - requiredQty), row, 5);
             }
         } else {
-            JOptionPane.showMessageDialog(blendListTbl, "<html>Please enter a valid final quantity for <b>" + blendName + "</b>.</html>", "Invalid Final Blend Quantity", 0);
+            JOptionPane.showMessageDialog(blendListTbl, "<html>Please enter a valid final quantity for <b>" + blendName + "</b>.</html>", "Invalid Final Blend Quantity", 2);
             blendListTbl.setValueAt(formatNum(requiredQty), row, 6);
         }
     }
@@ -540,7 +540,7 @@ public class CreateNewBlendOrder1 extends javax.swing.JFrame {
         }
         if (blendListTbl.getRowCount() > 0) {
             if (totalFinalQty > 0) {
-                int dialogResult = JOptionPane.showConfirmDialog(this, "Are you sure you want to move into next phase?", "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+                int dialogResult = JOptionPane.showConfirmDialog(this, "Are you sure you want to move into next phase?", "Confirm", JOptionPane.YES_NO_OPTION, 2);
                 if (dialogResult == JOptionPane.YES_OPTION){
                     CreateNewBlendOrder2 creatNewBlendOrder2 = new CreateNewBlendOrder2(this);
                     creatNewBlendOrder2.setVisible(true);
@@ -560,14 +560,14 @@ public class CreateNewBlendOrder1 extends javax.swing.JFrame {
 
     private void blendAddBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blendAddBtnActionPerformed
         if (blendsCombo.getSelectedIndex() == -1){
-            JOptionPane.showMessageDialog(blendsCombo, "Please select a blend to add.", "Empty Blend Selection",0);
+            JOptionPane.showMessageDialog(blendsCombo, "Please select a blend to add.", "Empty Blend Selection",2);
             blendsCombo.requestFocus();
             blendsCombo.setSelectedIndex(-1);
         } else if (blendsQtyTxt.getText().equals("")) {
-            JOptionPane.showMessageDialog(blendsQtyTxt, "Please enter blend quantity to add.", "Empty Blend Quantity", 0);
+            JOptionPane.showMessageDialog(blendsQtyTxt, "Please enter blend quantity to add.", "Empty Blend Quantity", 2);
             blendsQtyTxt.requestFocus();
         } else if (parseInt(blendsQtyTxt.getText()) <= 0) {
-            JOptionPane.showMessageDialog(blendsQtyTxt, "Blend quantity is zero.", "Invalid Blend Quantity", 0);
+            JOptionPane.showMessageDialog(blendsQtyTxt, "Blend quantity is zero.", "Invalid Blend Quantity", 2);
             blendsQtyTxt.requestFocus();
         } else {
             String blendName = (String) blendsCombo.getSelectedItem();

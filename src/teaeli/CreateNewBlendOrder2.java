@@ -28,10 +28,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author Janith
- */
+
 public class CreateNewBlendOrder2 extends javax.swing.JFrame {
 
     private Blend blend;
@@ -187,13 +184,13 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
         if (new Validation().isFloat(masterPlanTbl.getValueAt(row, 6).toString())) {
             float finalQty = parseFloat(masterPlanTbl.getValueAt(row, 6).toString());
             if (finalQty < requiredQty) {
-                JOptionPane.showMessageDialog(masterPlanTbl, "<html>You cannot decrease the <b>" + ingName + "</b> final quantity less than required quantity!</html>", "Invalid Final Quantity", 0);
+                JOptionPane.showMessageDialog(masterPlanTbl, "<html>You cannot decrease the <b>" + ingName + "</b> final quantity less than required quantity!</html>", "Invalid Final Quantity", 2);
                 masterPlanTbl.setValueAt(formatNum(requiredQty), row, 6);
             } else {
                 masterPlanTbl.setValueAt(formatNum(finalQty - requiredQty), row, 5);
             }
         } else {
-            JOptionPane.showMessageDialog(masterPlanTbl, "<html>Please enter a valid final quantity for <b>" + ingName + "</b>.</html>", "Invalid Final Quantity", 0);
+            JOptionPane.showMessageDialog(masterPlanTbl, "<html>Please enter a valid final quantity for <b>" + ingName + "</b>.</html>", "Invalid Final Quantity", 2);
             masterPlanTbl.setValueAt(formatNum(requiredQty), row, 6);
         }
     }

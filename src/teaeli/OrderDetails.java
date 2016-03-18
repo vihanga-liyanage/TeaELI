@@ -1,5 +1,3 @@
-
-
 package teaeli;
 
 import classes.Blend;
@@ -23,8 +21,8 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
+public class OrderDetails extends javax.swing.JFrame {
 
-public class OrderDetails extends javax.swing.JFrame  {
     Order order = new Order();
     private AdminPannel adminPannel;
     private PDF pdf;
@@ -32,7 +30,7 @@ public class OrderDetails extends javax.swing.JFrame  {
     public void setAdminPannel(AdminPannel adminPannel) {
         this.adminPannel = adminPannel;
     }
-    
+
     public OrderDetails() {
         //Add windows look and feel
         try {
@@ -40,43 +38,42 @@ public class OrderDetails extends javax.swing.JFrame  {
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
             Logger.getLogger(AdminPannel.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         initComponents();
-        
+
         //Changing table headers to bold
         blendTable.getTableHeader().setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
         orderDetailsTable.getTableHeader().setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
-        
+
         this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
-        
+
         /*Dimension screenSize,frameSize;
-        int x,y;
-        screenSize=Toolkit.getDefaultToolkit().getScreenSize();
-        frameSize=getSize();
-        x=(screenSize.width-frameSize.width)/4;
-        y=(screenSize.height-frameSize.height)/4;
-        setLocation(x, y);
-        setResizable(false);*/
-        
+         int x,y;
+         screenSize=Toolkit.getDefaultToolkit().getScreenSize();
+         frameSize=getSize();
+         x=(screenSize.width-frameSize.width)/4;
+         y=(screenSize.height-frameSize.height)/4;
+         setLocation(x, y);
+         setResizable(false);*/
         //Adding listner to prompt confirmation on window close
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                int confirmed = JOptionPane.showConfirmDialog(null, "Are you sure you want to cancel viewing the order", "Confirm window close",JOptionPane.YES_NO_OPTION);
+                int confirmed = JOptionPane.showConfirmDialog(null, "Are you sure you want to cancel viewing the order", "Confirm window close", JOptionPane.YES_NO_OPTION);
                 if (confirmed == JOptionPane.YES_OPTION) {
                     dispose();
                 }
             }
         });
         pdf = new PDF();
-        
+
         //enabling sorting for tables
         blendTable.setAutoCreateRowSorter(true);
         orderDetailsTable.setAutoCreateRowSorter(true);
-        
+
         //Hiding the ingredient category column from the orderDetailsTable
         orderDetailsTable.removeColumn(orderDetailsTable.getColumn(orderDetailsTable.getColumnName(8)));
-        
+
         //Hiding visible and invisible stock colomns
         orderDetailsTable.removeColumn(orderDetailsTable.getColumn("Visible Stock (g)"));
         orderDetailsTable.removeColumn(orderDetailsTable.getColumn("Invisible Stock (g)"));
@@ -338,7 +335,7 @@ public class OrderDetails extends javax.swing.JFrame  {
     private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
         int dialogButton = JOptionPane.YES_NO_OPTION;
         int a = JOptionPane.showConfirmDialog(null, "Are you sure you want to cancel viewing the order", "Confirm window close", dialogButton);
-        if (a == JOptionPane.YES_OPTION){
+        if (a == JOptionPane.YES_OPTION) {
             dispose();
         }
     }//GEN-LAST:event_cancelBtnActionPerformed
@@ -352,43 +349,43 @@ public class OrderDetails extends javax.swing.JFrame  {
             JOptionPane.showMessageDialog(this, "<html>The file <strong>" + fileName + "</strong> is already opened.\nPlease close it and try again.", "File is Already Open", 0);
             return;
         }
-        
-        try{
-            orderDetailsTable.getCellEditor().stopCellEditing();  
-        }catch(NullPointerException ex){
-            
+
+        try {
+            orderDetailsTable.getCellEditor().stopCellEditing();
+        } catch (NullPointerException ex) {
+
         }
-        for(int i = 0; i < orderDetailsTable.getRowCount(); i++){
+        for (int i = 0; i < orderDetailsTable.getRowCount(); i++) {
             double additional = 0;
-            String str,remark = "";
-            
-            try{
+            String str, remark = "";
+
+            try {
                 str = orderDetailsTable.getValueAt(i, 8).toString();
                 remark = orderDetailsTable.getValueAt(i, 9).toString();
-            }catch(NullPointerException e){
+            } catch (NullPointerException e) {
                 str = "0";
                 remark = "";
             }
-            
-            try{
+
+            try {
                 additional = Double.parseDouble(str);
-                if(additional < 0){
-                    JOptionPane.showMessageDialog(this, "<html>Please enter only positive numbers for the additional qty column at row number <b>" +(i+1)+ "</b>!</html>", "Invalid Additional Quantity", 0);
+                if (additional < 0) {
+                    JOptionPane.showMessageDialog(this, "<html>Please enter only positive numbers for the additional qty column at row number <b>" + (i + 1) + "</b>!</html>", "Invalid Additional Quantity", 2);
                     return;
                 }
-            }catch(NumberFormatException ex){
+            } catch (NumberFormatException ex) {
                 additional = 0;
             }
-            
-            String orderID = orderIDLabel.getText();           
+
+            String orderID = orderIDLabel.getText();
             String ing = orderDetailsTable.getValueAt(i, 0).toString();
-            
+
             int result = order.updateOrderRowWise(orderID, additional, remark, ing);
         }
         JOptionPane.showMessageDialog(this, "Values saved successfully !\nThe new RM Master plan PDF will be replaced with the old one", "Successfully Updated", 1);
         order.viewOrder((DefaultTableModel) blendTable.getModel(), (DefaultTableModel) orderDetailsTable.getModel(), orderIDLabel.getText());
         adminPannel.populateIngStockTable();
-        
+
         //Generating updated master plan PDF
         DefaultTableModel model = (DefaultTableModel) orderDetailsTable.getModel();
         JTable temp = new JTable(model);
@@ -401,75 +398,77 @@ public class OrderDetails extends javax.swing.JFrame  {
     }//GEN-LAST:event_updateOrderBtnActionPerformed
 
     private void orderReceivedBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderReceivedBtnActionPerformed
-        
+
         ArrayList<Ingredient> ingredientsOrdered = new ArrayList();
-        
+
         TableModel orderTableModel = orderDetailsTable.getModel();
-        
-        for (int r = 0; r < orderDetailsTable.getRowCount(); r++){
-            
+
+        for (int r = 0; r < orderDetailsTable.getRowCount(); r++) {
+
             Ingredient ing = new Ingredient();
-            
+
             ing.setIngName((String) orderTableModel.getValueAt(r, 0));
-            ing.setOrderReqQty(this.parseFloat( (String) orderTableModel.getValueAt(r, 1)));
+            ing.setOrderReqQty(this.parseFloat((String) orderTableModel.getValueAt(r, 1)));
             ing.setOrderExcessQty(this.parseFloat((String) orderTableModel.getValueAt(r, 5)));
-            
+
             ingredientsOrdered.add(ing);
         }
-        
+
         boolean updated = order.updateIngredientStock(ingredientsOrdered, orderIDLabel.getText());
-        
+
         int result = order.updateOrderStatus(1, orderIDLabel.getText());
-        
-        if(result == 1 && updated){
+
+        if (result == 1 && updated) {
             JOptionPane.showMessageDialog(this, "Order status changed successfully !", "Successfully Changed", 1);
             adminPannel.populateOrderListTable();
             orderCompletedBtn.setVisible(true);
             orderReceivedBtn.setVisible(false);
-            
+
             //set table editing false after order recieved
             orderDetailsTable.setEnabled(false);
             updateOrderBtn.setVisible(false);
-            
+
             adminPannel.populateIngStockTable();
-        }else{
-            JOptionPane.showMessageDialog(this, "Unable to change the status. Try again later. ", "Unable to Change", 0);
+        } else {
+            JOptionPane.showMessageDialog(this, "There were some issues with the database. Please contact developers.\n\nError code : OrderDetails 4334", "Error", 0);
+            System.exit(0);
         }
     }//GEN-LAST:event_orderReceivedBtnActionPerformed
 
     private void orderCompletedBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderCompletedBtnActionPerformed
-        
+
         ArrayList<Blend> blendsOrdered = new ArrayList();
-        
+
         TableModel orderTableModel = blendTable.getModel();
-        
-        for (int r = 0; r < blendTable.getRowCount(); r++){
-            
+
+        for (int r = 0; r < blendTable.getRowCount(); r++) {
+
             Blend blend = new Blend();
-            
+
             blend.setBlendName((String) orderTableModel.getValueAt(r, 1));
             blend.setOrderReqQty(this.parseInt((String) orderTableModel.getValueAt(r, 2)));
             blend.setOrderExcessQty(this.parseInt((String) orderTableModel.getValueAt(r, 6)));
-            
+
             blendsOrdered.add(blend);
         }
-        
+
         boolean updated = order.updateBlendStock(blendsOrdered, orderIDLabel.getText());
-        
+
         int result = order.updateOrderStatus(2, orderIDLabel.getText());
-        
-        if(result == 1 && updated){
+
+        if (result == 1 && updated) {
             JOptionPane.showMessageDialog(this, "Order status changed successfully!!!", "Successfully Changed", 1);
             adminPannel.populateOrderListTable();
             orderCompletedBtn.setVisible(false);
             orderReceivedBtn.setVisible(false);
             updateOrderBtn.setVisible(false);
-            
+
             adminPannel.populateBlendStockTable();
-            
-        }else{
-        JOptionPane.showMessageDialog(this, "Unable to change the status. Try again later. ", "Unable to Change", 0);
-         }
+
+        } else {
+            JOptionPane.showMessageDialog(this, "There were some issues with the database. Please contact developers.\n\nError code : OrderDetails 469", "Error", 0);
+            System.exit(0);
+        }
     }//GEN-LAST:event_orderCompletedBtnActionPerformed
 
     //overiding Integer.parseInt() to accept nums with commas
@@ -497,7 +496,7 @@ public class OrderDetails extends javax.swing.JFrame  {
         }
         return 0;
     }
-    
+
     /**
      * @param args the command line arguments
      */

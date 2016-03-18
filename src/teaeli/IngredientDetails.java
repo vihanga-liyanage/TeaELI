@@ -252,14 +252,14 @@ public class IngredientDetails extends javax.swing.JFrame {
             ingName = this.itemNameTxt.getText();
 
             if (ingName.equals("")) {
-                JOptionPane.showMessageDialog(null, "Please enter ingredient name.", "Invalid Ingredient Name", 0);
+                JOptionPane.showMessageDialog(itemNameTxt, "Please enter ingredient name.", "Invalid Ingredient Name", 2);
                 itemNameTxt.requestFocusInWindow();
             } else {
                 //get ingredient categoryid
                 int comboSelectedIgCat = this.itemTypeCombo.getSelectedIndex();
 
                 if (comboSelectedIgCat == -1) {
-                    JOptionPane.showMessageDialog(null, "Please select a ingredient type!!!");
+                    JOptionPane.showMessageDialog(this, "Please select a ingredient category!!!", "Empty Category Selection", 2);
                 } else {
                     ingCategoryID = comboSelectedIgCat + 1;
 
@@ -276,19 +276,19 @@ public class IngredientDetails extends javax.swing.JFrame {
 
                 //get unit price
                 String unitPriceString = this.unitPriceTxt.getText();
-                
+
                 int unitPriceOK = 0;
                 try {
                     unitPrice = Float.parseFloat(unitPriceString);
                     if (unitPrice < 0) {
-                        JOptionPane.showMessageDialog(null, "Please enter valid amount for unit price.", "Invalide Unit Price", 0);
+                        JOptionPane.showMessageDialog(unitPriceTxt, "Please enter valid amount for unit price.", "Invalide Unit Price", 2);
                         unitPriceTxt.requestFocusInWindow();
                         unitPriceTxt.setText("");
                     } else {
                         unitPriceOK = 1;
                     }
                 } catch (NumberFormatException e) {
-                    JOptionPane.showMessageDialog(null, "Please enter valid amount for unit price.", "Invalide Unit Price", 0);
+                    JOptionPane.showMessageDialog(unitPriceTxt, "Please enter valid amount for unit price.", "Invalide Unit Price", 2);
                     unitPriceTxt.requestFocusInWindow();
                     unitPriceTxt.setText("");
                 }
@@ -316,11 +316,12 @@ public class IngredientDetails extends javax.swing.JFrame {
                             }
 
                         } else if (updateOK == 2) {
-                            JOptionPane.showMessageDialog(null, "Ingredient Name must be unique.", "Duplicate Ingredient Name", 0);
+                            JOptionPane.showMessageDialog(this, "Ingredient Name must be unique.", "Duplicate Ingredient Name", 0);
                             itemNameTxt.requestFocusInWindow();
                             itemNameTxt.setText("");
                         } else {
-                            JOptionPane.showMessageDialog(null, "Ingredient update is not successfull. Please retry. ", "Unable to update", 0);
+                            JOptionPane.showMessageDialog(this, "There were some issues with the database. Please contact developers.\n\nError code : IngredientDetails 323", "Error", 0);
+                            System.exit(0);
                         }
 
                     } catch (SQLException ex) {
@@ -341,7 +342,7 @@ public class IngredientDetails extends javax.swing.JFrame {
         String suplierName = JOptionPane.showInputDialog(null, "Enter Supplier Name");
 
         if (suplierName.equals("")) { // check for null input
-            JOptionPane.showMessageDialog(null, "Please enter supplier name!!!", "Enpty Supplier Name", 0);
+            JOptionPane.showMessageDialog(this, "Please enter supplier name!!!", "Enpty Supplier Name", 2);
         } else {
             try {
                 int inserted = supplier.addNewSupplier(suplierName);
@@ -351,8 +352,8 @@ public class IngredientDetails extends javax.swing.JFrame {
                     supplierCombobox.addItem(suplierName);
                     supplierCombobox.setSelectedItem(suplierName);
                 } else {
-                    JOptionPane.showMessageDialog(this, "Unable to add new supplier.Please try again.","Unable to Add",0);
-
+                    JOptionPane.showMessageDialog(this, "There were some issues with the database. Please contact developers.\n\nError code : IngredientDetails 355", "Error", 0);
+                    System.exit(0);
                 }
             } catch (SQLException ex) {
                 System.out.println("SQL error : " + ex);
