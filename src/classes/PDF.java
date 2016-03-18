@@ -83,7 +83,7 @@ public class PDF {
     }
 
     //private method for po pdfs
-    private PdfPCell POLogo(String path){
+    private PdfPCell POLogo(String path) {
         Image img = null;
         try {
             img = Image.getInstance(path);
@@ -252,7 +252,6 @@ public class PDF {
             masterTable.setWidthPercentage(100);
 
             //Adding logo
-
             PdfPCell logoCell = new PdfPCell(Image.getInstance("C:\\Teaeli\\Logos\\logo-new (Custom).png"));
 
             logoCell.setColspan(3);
@@ -312,13 +311,15 @@ public class PDF {
             doc.close();
 
         } catch (FileNotFoundException | DocumentException ex) {
-            JOptionPane.showMessageDialog(null, "Error : " + ex);
+            JOptionPane.showMessageDialog(null, "There were some issues with the database. Please contact developers.\n\nError code : PDF 314", "Error", 0);
+            System.exit(0);
         } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, "Error : " + ex);
+            JOptionPane.showMessageDialog(null, "There were some issues with the database. Please contact developers.\n\nError code : PDF 317", "Error", 0);
+            System.exit(0);
         }
     }
 
-    public String generateSupplierwisePO(Set<String> supplierList, List<List> mainList, List<List> mainList2, String orderID, List discountList, List taxList, List totalList){
+    public String generateSupplierwisePO(Set<String> supplierList, List<List> mainList, List<List> mainList2, String orderID, List discountList, List taxList, List totalList) {
         int pdfOK = 1;
         int count = 0;
         String[] supNameArray = supplierList.toArray(new String[supplierList.size()]);
@@ -472,24 +473,23 @@ public class PDF {
         }
 
     }
-    
-    public void IngStockHistoryPdfGeneration(JTable table,String date) {
+
+    public void IngStockHistoryPdfGeneration(JTable table, String date) {
         try {
             Document doc = new Document(PageSize.A4.rotate(), 20, 20, 20, 20);
 
             //Creating the directory for the order
-            String tempPath = path + "Ingredient Stock History\\" ;
+            String tempPath = path + "Ingredient Stock History\\";
             new File(tempPath).mkdirs();
 
-            PdfWriter.getInstance(doc, new FileOutputStream(tempPath + "Ingredient_Stock_History " +date + ".pdf"));
+            PdfWriter.getInstance(doc, new FileOutputStream(tempPath + "Ingredient_Stock_History " + date + ".pdf"));
             doc.open();
 
-            float[] coloumWidths = {2,5, 2, 2, 5, 2};
+            float[] coloumWidths = {2, 5, 2, 2, 5, 2};
             PdfPTable masterTable = new PdfPTable(coloumWidths);
             masterTable.setWidthPercentage(100);
 
             //Adding logo
-
             PdfPCell logoCell = new PdfPCell(Image.getInstance("C:\\Teaeli\\Logos\\logo-new (Custom).png"));
 
             logoCell.setColspan(3);
@@ -505,7 +505,6 @@ public class PDF {
             headerTable.addCell(titleCell);
             headerTable.addCell(getHeaderNameCell("Date taken"));
             headerTable.addCell(getHeaderDataCell(date));
-            
 
             PdfPCell headerDataCell = new PdfPCell(headerTable);
             headerDataCell.setColspan(5);
@@ -519,11 +518,9 @@ public class PDF {
             masterTable.addCell(getTableHeaderCell("Reason"));
             masterTable.addCell(getTableHeaderCell("Updated By"));
             //Adding data from master table
-            
-            
 
             for (int i = 0; i < table.getRowCount(); i++) {
-                
+
                 masterTable.addCell(getTableDataCell(table.getValueAt(i, 0).toString()));
                 masterTable.addCell(getTableDataCell(table.getValueAt(i, 1).toString()));
                 masterTable.addCell(getTableDataCell(table.getValueAt(i, 2).toString()));
@@ -536,29 +533,30 @@ public class PDF {
             doc.close();
 
         } catch (FileNotFoundException | DocumentException ex) {
-            JOptionPane.showMessageDialog(null, "Error : " + ex);
+            JOptionPane.showMessageDialog(null, "There were some issues with the database. Please contact developers.\n\nError code : PDF 536", "Error", 0);
+            System.exit(0);
         } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, "Error : " + ex);
+            JOptionPane.showMessageDialog(null, "There were some issues with the database. Please contact developers.\n\nError code : PDF 539", "Error", 0);
+            System.exit(0);
         }
     }
-    
-    public void BlendStockHistoryPdfGeneration(JTable table,String date) {
+
+    public void BlendStockHistoryPdfGeneration(JTable table, String date) {
         try {
             Document doc = new Document(PageSize.A4.rotate(), 20, 20, 20, 20);
 
             //Creating the directory for the order
-            String tempPath = path + "Blend Stock History\\" ;
+            String tempPath = path + "Blend Stock History\\";
             new File(tempPath).mkdirs();
 
-            PdfWriter.getInstance(doc, new FileOutputStream(tempPath + "Blend_Stock_History " +date + ".pdf"));
+            PdfWriter.getInstance(doc, new FileOutputStream(tempPath + "Blend_Stock_History " + date + ".pdf"));
             doc.open();
 
-            float[] coloumWidths = {2,5, 2, 2, 5, 2};
+            float[] coloumWidths = {2, 5, 2, 2, 5, 2};
             PdfPTable masterTable = new PdfPTable(coloumWidths);
             masterTable.setWidthPercentage(100);
 
             //Adding logo
-
             PdfPCell logoCell = new PdfPCell(Image.getInstance("C:\\Teaeli\\Logos\\logo-new (Custom).png"));
 
             logoCell.setColspan(3);
@@ -587,11 +585,9 @@ public class PDF {
             masterTable.addCell(getTableHeaderCell("Reason"));
             masterTable.addCell(getTableHeaderCell("Updated By"));
             //Adding data from master table
-            
-            
 
             for (int i = 0; i < table.getRowCount(); i++) {
-                
+
                 masterTable.addCell(getTableDataCell(table.getValueAt(i, 0).toString()));
                 masterTable.addCell(getTableDataCell(table.getValueAt(i, 1).toString()));
                 masterTable.addCell(getTableDataCell(table.getValueAt(i, 2).toString()));
@@ -604,9 +600,11 @@ public class PDF {
             doc.close();
 
         } catch (FileNotFoundException | DocumentException ex) {
-            JOptionPane.showMessageDialog(null, "Error : " + ex);
+            JOptionPane.showMessageDialog(null, "There were some issues with the database. Please contact developers.\n\nError code : PDF 603", "Error", 0);
+            System.exit(0);
         } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, "Error : " + ex);
+            JOptionPane.showMessageDialog(null, "There were some issues with the database. Please contact developers.\n\nError code : PDF 606", "Error", 0);
+            System.exit(0);
         }
     }
 }

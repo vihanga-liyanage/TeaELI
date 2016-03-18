@@ -205,7 +205,7 @@ public class Blend {
                 validBlendName = true;
             }
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "There were some issues with the database. Please contact developers.\n\nError code : Blend 208", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "There were some issues with the database. Please contact developers.\n\nError code : Blend 208", "Error", 0);
             System.exit(0);
         }
         return validBlendName;

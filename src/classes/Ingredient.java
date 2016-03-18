@@ -269,7 +269,7 @@ public class Ingredient {
                 validIngName = true;
             }
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "There were some issues with the database. Please contact developers.\n\nError code : Ingredient 277", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "There were some issues with the database. Please contact developers.\n\nError code : Ingredient 277", "Error", 0);
             System.exit(0);
         }
         return validIngName;
@@ -286,7 +286,7 @@ public class Ingredient {
                 this.setIngID(Integer.parseInt(resultArray.getString(0)));
             }
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "There were some issues with the database. Please contact developers.\n\nError code : Ingredient 294", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "There were some issues with the database. Please contact developers.\n\nError code : Ingredient 294", "Error", 0);
             System.exit(0);
         }
     }

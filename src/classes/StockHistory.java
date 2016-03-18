@@ -61,7 +61,7 @@ public class StockHistory {
         
         res = dbConn.getResultArray(query);
         if(res.size()==0){
-            JOptionPane.showMessageDialog(null, "No records during this date range");
+            JOptionPane.showMessageDialog(null, "No records to show in this date range","No Records",0);
             return;
         }
         tableModel.setRowCount(0);
@@ -84,7 +84,7 @@ public class StockHistory {
         
         res = dbConn.getResultArray(query);
         if(res.size()==0){
-            JOptionPane.showMessageDialog(null, "No records during this date range");
+            JOptionPane.showMessageDialog(null, "No records to show in this date range","No Records",0);
             return;
         }
         tableModel.setRowCount(0);
@@ -107,7 +107,7 @@ public class StockHistory {
         
         res = dbConn.getResultArray(query);
         if(res.size()==0){
-            JOptionPane.showMessageDialog(null, "No records during this date range");
+            JOptionPane.showMessageDialog(null, "No records to show in this date range","No Records",0);
             return;
         }
         tableModel.setRowCount(0);
@@ -132,7 +132,7 @@ public class StockHistory {
         res = dbConn.getResultArray(query);
         
         if(res.size()==0){
-            JOptionPane.showMessageDialog(null, "No records during this date range");
+            JOptionPane.showMessageDialog(null, "No records to show in this date range","No Records",0);
             return;
         }
         tableModel.setRowCount(0);
