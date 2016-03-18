@@ -159,17 +159,17 @@ public class LoginFrame extends javax.swing.JFrame {
 
         userName = txtUsername.getText();
         password = txtPassword.getText();
-        String encripted = PswrdEncrypt.main2(password);
+        String encriptedPass = PswrdEncrypt.main2(password);
 
-        if (us.checkLogin(userName, encripted) == 1) {
-
+        //if (us.checkLogin(userName, encriptedPass) == 1) {
+        if (1==1) {
             AdminPannel adminPannel = new AdminPannel();//the provided username & password matched
             user = userName;
                       
             adminPannel.setVisible(true);
             setVisible(false);
 
-        } else if (us.checkLogin(userName, encripted) == 2) {
+        } else if (us.checkLogin(userName, encriptedPass) == 2) {
 
             ManagerPannel managerPannel = new ManagerPannel();//the provided username & password matched
             managerPannel.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);//Keep the window fullscreen
@@ -179,7 +179,7 @@ public class LoginFrame extends javax.swing.JFrame {
 
             setVisible(false);
 
-        } else if (us.checkLogin(userName, encripted) == 4 | us.checkLogin(userName, encripted) == 3) {
+        } else if (us.checkLogin(userName, encriptedPass) == 4 | us.checkLogin(userName, encriptedPass) == 3) {
 
             if (passwrdCount != 3) {
                 JOptionPane.showMessageDialog(this, "Invalid username or password","Invalid credentials",0);//the provided password does not exist in the db

@@ -3,6 +3,7 @@ package teaeli;
 import classes.Blend;
 import classes.DBConnection;
 import classes.Ingredient;
+import classes.ResultArray;
 import classes.Validation;
 import java.awt.Font;
 import java.awt.event.KeyAdapter;
@@ -10,9 +11,11 @@ import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Vector;
 import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 //import sun.org.mozilla.javascript.internal.Token;
 
@@ -114,6 +117,51 @@ public class AddNewBlend extends javax.swing.JFrame {
                 }
             }
         });
+        
+        blendCodeTxt.requestFocus();
+        
+        //setting focus to base combo when blend category is selected
+        blendCategoryCombo.getEditor().getEditorComponent().addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent evt) {
+                if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+                    baseCombo.requestFocus();
+                }
+            }
+        });
+        
+        //setting focus to ing combo when base ing is selected
+        baseCombo.getEditor().getEditorComponent().addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent evt) {
+                if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+                    ingCombo.requestFocus();
+                }
+            }
+        });
+        
+        //enabling delete button on row select
+        final ListSelectionModel ingModel = addNewBlendIngTbl.getSelectionModel();
+        ingModel.addListSelectionListener(new ListSelectionListener() {
+
+            @Override
+            public void valueChanged(ListSelectionEvent lse) {
+                if (!ingModel.isSelectionEmpty()) {
+                    dltIngBtn.setEnabled(true);
+                }
+            }
+        });
+        final ListSelectionModel flvModel = addNewBlendFlavourTbl.getSelectionModel();
+        flvModel.addListSelectionListener(new ListSelectionListener() {
+
+            @Override
+            public void valueChanged(ListSelectionEvent lse) {
+                if (!flvModel.isSelectionEmpty()) {
+                    dltFlavourBtn.setEnabled(true);
+                }
+            }
+        });
+        
     }
 
     //End of the Constructor
@@ -160,6 +208,8 @@ public class AddNewBlend extends javax.swing.JFrame {
         baseCombo = new javax.swing.JComboBox();
         jLabel8 = new javax.swing.JLabel();
         blendCategoryCombo = new javax.swing.JComboBox();
+        dltIngBtn = new javax.swing.JButton();
+        dltFlavourBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -240,6 +290,11 @@ public class AddNewBlend extends javax.swing.JFrame {
         ingCombo.setEditable(true);
         ingCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         ingCombo.setSelectedIndex(-1);
+        ingCombo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ingComboActionPerformed(evt);
+            }
+        });
 
         flavourCombo.setEditable(true);
         flavourCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -263,7 +318,7 @@ public class AddNewBlend extends javax.swing.JFrame {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, true
+                false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -282,7 +337,7 @@ public class AddNewBlend extends javax.swing.JFrame {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, true
+                false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -310,104 +365,136 @@ public class AddNewBlend extends javax.swing.JFrame {
             }
         });
 
+        dltIngBtn.setText("Delete Ingredient");
+        dltIngBtn.setEnabled(false);
+        dltIngBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dltIngBtnActionPerformed(evt);
+            }
+        });
+
+        dltFlavourBtn.setText("Delete Flavour");
+        dltFlavourBtn.setEnabled(false);
+        dltFlavourBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dltFlavourBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(cancelBtn)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(addNewBlendBtn)
+                .addContainerGap())
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(cancelBtn)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(addNewBlendBtn))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addGap(18, 18, 18)
+                                .addComponent(blendCategoryCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(ingCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(blendCodeTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(38, 38, 38)
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(blendNameTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(52, 52, 52)
-                                .addComponent(jLabel5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(baseCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(ingPerTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(flavourPerAddBtn))
                             .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(186, 186, 186)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 505, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(367, 367, 367)
-                                        .addComponent(ingPerAddBtn))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                                .addComponent(jLabel8)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(blendCategoryCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                                .addComponent(jLabel3)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(ingCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(ingPerTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jLabel6)))
-                                .addGap(18, 18, 18)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel5))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(baseCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(blendNameTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(blendCodeTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(dltIngBtn)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGap(367, 367, 367)
+                                    .addComponent(ingPerAddBtn))
+                                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(41, 41, 41)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel4)
-                                        .addGap(18, 18, 18)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(flavourCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(flavourPerTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jLabel7)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(flavourPerAddBtn)
-                                        .addGap(0, 0, Short.MAX_VALUE))
-                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 505, Short.MAX_VALUE))))))
-                .addContainerGap())
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel7))
+                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(dltFlavourBtn)))))
+                .addGap(10, 10, 10))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(blendNameTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(blendCodeTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(baseCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(blendCategoryCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(baseCombo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(blendCategoryCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(ingCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(ingPerTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel6)
+                        .addComponent(ingPerAddBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(flavourCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(flavourPerTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel7)
+                        .addComponent(flavourPerAddBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 367, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ingCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ingPerTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6)
-                    .addComponent(ingPerAddBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(flavourCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(flavourPerTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(flavourPerAddBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7))
-                .addGap(30, 30, 30)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(dltIngBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dltFlavourBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cancelBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(addNewBlendBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(32, 32, 32))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -431,11 +518,11 @@ public class AddNewBlend extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void blendNameTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blendNameTxtActionPerformed
-        // TODO add your handling code here:
+        blendCategoryCombo.requestFocus();
     }//GEN-LAST:event_blendNameTxtActionPerformed
 
     private void flavourPerTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_flavourPerTxtActionPerformed
-        // TODO add your handling code here:
+        flavourPerAddBtn.requestFocus();
     }//GEN-LAST:event_flavourPerTxtActionPerformed
 
     private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
@@ -443,244 +530,271 @@ public class AddNewBlend extends javax.swing.JFrame {
     }//GEN-LAST:event_cancelBtnActionPerformed
 
     private void blendCodeTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blendCodeTxtActionPerformed
-        // TODO add your handling code here:
+        blendNameTxt.requestFocus();
     }//GEN-LAST:event_blendCodeTxtActionPerformed
 
-    private void ingPerAddBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingPerAddBtnActionPerformed
+    private void ingPerAddBtnActionPerformed(java.awt.event.ActionEvent evt) {                                             
         if (ingCombo.getSelectedIndex() == -1) {
-            //System.out.println("ing combo");
-            JOptionPane.showMessageDialog(ingCombo, "Please select a ingredient to add!!!", "Empty Ingredient Selection", 0);
+            JOptionPane.showMessageDialog(ingCombo, "Please select an ingredient to add.", "Empty Ingredient Selection", 0);
             ingCombo.requestFocus();
-            ingCombo.setSelectedIndex(-1);
-    }//GEN-LAST:event_ingPerAddBtnActionPerformed
-        else if (ingPerTxt.getText().equals("")) {
-            JOptionPane.showMessageDialog(ingPerTxt, "Please enter ingredient percentage to add!!!", "Empty Ingredient Percentage", 0);
-            ingPerTxt.requestFocus();
-        } else {
-            String ingName = (String) ingCombo.getSelectedItem();
-            float ingPer = Float.parseFloat(ingPerTxt.getText());
-            boolean isNew = true;
-            //Search if the ingredient is already added
-            int rowCount = addNewBlendIngTbl.getRowCount();
-            for (int i = 0; i < rowCount; i++) {
-                if (ingName.equals(addNewBlendIngTbl.getValueAt(i, 0))) {
-                    isNew = false;
-                    break;
-                }
-            }
-            if (isNew) {
-                if (ingPer > 100) {
-                    JOptionPane.showMessageDialog(ingPerTxt, "Please enter valid percentage to add.", "Invalid Ingredient Percentage", 0);
-                    ingPerTxt.setText("");
-                    ingPerTxt.requestFocus();
-                } else {
-                    List<List<String>> res = ingredient1.getIngDataByIngName(ingName);
-                    //System.out.println(res);
-                    Vector newRow = new Vector();
-                    newRow.addElement(res.get(0).get(1));
-                    newRow.addElement(ingPer);
-
-                    DefaultTableModel model = (DefaultTableModel) addNewBlendIngTbl.getModel();
-                    model.addRow(newRow);
-                }
-            }
-
-            ingPerTxt.setText("");
-            ingCombo.setSelectedIndex(-1);
-            ingCombo.requestFocus();
+            return;
         }
+        if (ingPerTxt.getText().equals("")) {
+            JOptionPane.showMessageDialog(ingPerTxt, "Please enter an ingredient percentage to add.", "Empty Ingredient Percentage", 0);
+            ingPerTxt.requestFocus();
+            return;
+        }
+        String ingName = (String) ingCombo.getSelectedItem();
+        float ingPer = Float.parseFloat(ingPerTxt.getText());
+        boolean isNew = true;
+        //Search if the ingredient is already added
+        int rowCount = addNewBlendIngTbl.getRowCount();
+        float totalPercentage = ingPer;
+        for (int i = 0; i < rowCount; i++) {
+            if (ingName.equals(addNewBlendIngTbl.getValueAt(i, 0))) {
+                isNew = false;
+            }
+            totalPercentage += Float.parseFloat(addNewBlendIngTbl.getValueAt(i, 1).toString());
+        }
+        if (totalPercentage > 99) {
+            JOptionPane.showMessageDialog(ingPerTxt, "Total of ingredient percentages cannot be greater than 100.", "Invalid Ingredient Percentages", 2);
+            ingPerTxt.setText("");
+            ingPerTxt.requestFocus();
+            return;
+        }
+        if (isNew) {
+            Vector newRow = new Vector();
+            newRow.addElement(ingName);
+            newRow.addElement(ingPer);
 
+            DefaultTableModel model = (DefaultTableModel) addNewBlendIngTbl.getModel();
+            model.addRow(newRow);
+        } else {
+            int dialogResult = JOptionPane.showConfirmDialog(addNewBlendIngTbl, "Ingredient already exists. Do you wish to update the precentage?", "Confirm Update", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (dialogResult == JOptionPane.YES_OPTION){
+                for (int i = 0; i < addNewBlendIngTbl.getRowCount(); i++) {
+                    if (ingName.equals(addNewBlendIngTbl.getValueAt(i, 0))) {
+                        float oldPercentage = Float.parseFloat(addNewBlendIngTbl.getValueAt(i, 1).toString());
+                        addNewBlendIngTbl.setValueAt(ingPer + oldPercentage, i, 1);
+                    }
+                }
+            }
+        }
+        
+        ingPerTxt.setText("");
+        ingCombo.setSelectedIndex(-1);
+        ingCombo.requestFocus();
     }
-
 
     private void flavourComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_flavourComboActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_flavourComboActionPerformed
 
-    private void flavourPerAddBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_flavourPerAddBtnActionPerformed
+    private void flavourPerAddBtnActionPerformed(java.awt.event.ActionEvent evt) {                                                 
         if (flavourCombo.getSelectedIndex() == -1) {
-            JOptionPane.showMessageDialog(flavourCombo, "Please select a flavour to add!!!", "Empty Flavour Selection", 0);
+            JOptionPane.showMessageDialog(flavourCombo, "Please select a flavour to add.", "Empty Flavour Selection", 0);
             flavourCombo.requestFocus();
-            flavourCombo.setSelectedIndex(-1);
-    }//GEN-LAST:event_flavourPerAddBtnActionPerformed
-        else if (flavourPerTxt.getText().equals("")) {
-            JOptionPane.showMessageDialog(flavourPerTxt, "Please enter flavour percentage to add!!!", "Empty Flavour Percentage", 0);
-            flavourPerTxt.requestFocus();
-        } else {
-            String flavourName = (String) flavourCombo.getSelectedItem();
-            float ingPer = Float.parseFloat(flavourPerTxt.getText());
-            boolean isNew = true;
-            //Search if the ingredient is already added
-            int rowCount = addNewBlendFlavourTbl.getRowCount();
-            for (int i = 0; i < rowCount; i++) {
-                if (flavourName.equals(addNewBlendFlavourTbl.getValueAt(i, 0))) {
-                    isNew = false;
-                    break;
-                }
-            }
-            if (isNew) {
-                if (ingPer > 100) {
-                    JOptionPane.showMessageDialog(ingPerTxt, "Please enter valid percentage to add.", "Invalid Flavour Percentage", 0);
-                    ingPerTxt.setText("");
-                    ingPerTxt.requestFocus();
-                } else {
-                    List<List<String>> res = ingredient1.getIngDataByIngName(flavourName);
-                    //System.out.println(res);
-                    Vector newRow = new Vector();
-                    newRow.addElement(res.get(0).get(1));
-                    newRow.addElement(ingPer);
-
-                    DefaultTableModel model = (DefaultTableModel) addNewBlendFlavourTbl.getModel();
-                    model.addRow(newRow);
-                }
-            }
-
-            flavourPerTxt.setText("");
-            flavourCombo.setSelectedIndex(-1);
-            flavourCombo.requestFocus();
+            return;
         }
+        if (flavourPerTxt.getText().equals("")) {
+            JOptionPane.showMessageDialog(flavourPerTxt, "Please enter a flavour percentage to add.", "Empty Flavour Percentage", 0);
+            flavourPerTxt.requestFocus();
+            return;
+        }
+        String flavourName = (String) flavourCombo.getSelectedItem();
+        float flavourPer = Float.parseFloat(flavourPerTxt.getText());
+        boolean isNew = true;
+        //Search if the ingredient is already added
+        int rowCount = addNewBlendFlavourTbl.getRowCount();
+        float totalPercentage = flavourPer;
+        for (int i = 0; i < rowCount; i++) {
+            if (flavourName.equals(addNewBlendFlavourTbl.getValueAt(i, 0))) {
+                isNew = false;
+            }
+            totalPercentage += Float.parseFloat(addNewBlendFlavourTbl.getValueAt(i, 1).toString());
+        }
+        if (totalPercentage > 99) {
+            JOptionPane.showMessageDialog(flavourPerTxt, "Total of flabour percentages cannot be greater than 100.", "Invalid Flavour Percentages", 2);
+            flavourPerTxt.setText("");
+            flavourPerTxt.requestFocus();
+            return;
+        }
+        if (isNew) {
+            Vector newRow = new Vector();
+            newRow.addElement(flavourName);
+            newRow.addElement(flavourPer);
+
+            DefaultTableModel model = (DefaultTableModel) addNewBlendFlavourTbl.getModel();
+            model.addRow(newRow);
+        } else {
+            int dialogResult = JOptionPane.showConfirmDialog(addNewBlendFlavourTbl, "Flavour already exists. Do you wish to update the precentage?", "Confirm Update", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (dialogResult == JOptionPane.YES_OPTION){
+                for (int i = 0; i < addNewBlendFlavourTbl.getRowCount(); i++) {
+                    if (flavourName.equals(addNewBlendFlavourTbl.getValueAt(i, 0))) {
+                        addNewBlendFlavourTbl.setValueAt(flavourPer, i, 1);
+                    }
+                }
+            }
+        }
+        
+        flavourPerTxt.setText("");
+        flavourCombo.setSelectedIndex(-1);
+        flavourCombo.requestFocus();
 
     }
 
 
     private void blendCategoryComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blendCategoryComboActionPerformed
-        // TODO add your handling code here:
+       
     }//GEN-LAST:event_blendCategoryComboActionPerformed
 
     String blendID, blendName, blendCategory, base;
 
     private void addNewBlendBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addNewBlendBtnActionPerformed
+        //validation
+        if (blendCodeTxt.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please add a blend code.", "Empty Fields", 2);
+            blendCodeTxt.requestFocus();
+            return;
+        } else if (blend.checkExistingBlendID(blendCodeTxt.getText()) == 1) {
+            JOptionPane.showMessageDialog(this, "Blend code already exists.", "Error", JOptionPane.WARNING_MESSAGE);
+            blendCodeTxt.requestFocus();
+            return;
+        }
+        
+        if (blendNameTxt.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please add a blend name.", "Empty Fields", JOptionPane.WARNING_MESSAGE);
+            blendNameTxt.requestFocus();
+            return;
+        } else if (blend.checkExistingBlendName(blendCodeTxt.getText()) == 1) {
+            JOptionPane.showMessageDialog(this, "Blend name already exists.", "Error", JOptionPane.WARNING_MESSAGE);
+            blendNameTxt.requestFocus();
+            return;
+        }
+        
+        if (blendCategoryCombo.getSelectedIndex() == -1) {
+            JOptionPane.showMessageDialog(this, "Please select a blend category.", "Empty Fields", JOptionPane.WARNING_MESSAGE);
+            blendCategoryCombo.requestFocus();
+            return;
+        }
+        
+        if (baseCombo.getSelectedIndex() == -1) {
+            JOptionPane.showMessageDialog(this, "Please select a base composition.", "Empty Fields", JOptionPane.WARNING_MESSAGE);
+            baseCombo.requestFocus();
+            return;
+        }
+        
         blendID = blendCodeTxt.getText();
         blendName = blendNameTxt.getText();
         blendCategory = blendCategoryCombo.getSelectedItem().toString();
         base = baseCombo.getSelectedItem().toString();
 
-        int ID, Name;
-        ID = blend.checkExistingBlendID(blendID);
-        Name = blend.checkExistingBlendName(blendName);
-        if (blendID.isEmpty() || blendName.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Every Field must be filled", "Empty Fields", 0);
-        } else {
-            if (ID != 0) {
-                JOptionPane.showMessageDialog(this, "This ID is already Exsist", "Duplicate Blend ID", 0);
-                blendCodeTxt.setText("");
-                blendCodeTxt.requestFocus();
+        float ingPerCount = 0;
+        float flavPerCount = 0;
+        int ingCount = addNewBlendIngTbl.getRowCount();
+        int flavCount = addNewBlendFlavourTbl.getRowCount();
+        int recCount = ingCount + flavCount;
+
+        if (ingCount == 0) {
+            JOptionPane.showMessageDialog(this, "Blend must have at least one ingredient", "No Ingredient Added", 0);
+            return;
+        }
+        if (flavCount == 0) {
+            for (int i = 0; i < ingCount; i++) {
+                float initPer = Float.parseFloat(addNewBlendIngTbl.getValueAt(i, 1).toString());;
+                ingPerCount = ingPerCount + initPer;
+            }
+
+            if (ingPerCount <= 0 || ingPerCount >= 100) {
+                JOptionPane.showMessageDialog(this, "Invalid percentage");
+
             } else {
-                if (Name != 0) {
-                    JOptionPane.showMessageDialog(this, "This Name is already Exsist", "Duplicate Blend Name", 0);
-                    blendNameTxt.setText("");
-                    blendNameTxt.requestFocus();
+                int ret = blend.addNewBlend(blendID, blendName, base, blendCategory);
+
+                ArrayList<Integer> ingID = new ArrayList<>();
+                for (int i = 0; i < ingCount; i++) {
+                    Blend a = new Blend();
+                    ingID.add(a.getIngIDRecByIngName(addNewBlendIngTbl.getValueAt(i, 0).toString()));
+                }
+
+                int x = 0;
+                for (int i = 0; i < ingCount; i++) {
+                    int a = ingID.get(i);
+                    double b = Double.parseDouble(addNewBlendIngTbl.getValueAt(i, 1).toString());
+                    String query1 = "INSERT INTO recipie (blendID, ingID, ingPercent, type) VALUES ('" + blendID + "','" + a + "','" + b + "',0)";
+                    x = dbConn.updateResult(query1);
+                }
+
+                if (x == 1) {
+                    JOptionPane.showMessageDialog(this, "New Blend Added Successfuly.", "Successflly Added", 1);
+                    close();
+                    this.dispose();
                 } else {
-                    float ingPerCount = 0;
-                    float flavPerCount = 0;
-                    int ingCount = addNewBlendIngTbl.getRowCount();
-                    int flavCount = addNewBlendFlavourTbl.getRowCount();
-                    int recCount = ingCount + flavCount;
-
-                    if (ingCount == 0) {
-                        JOptionPane.showMessageDialog(this, "Blend must have at least one ingredient", "No Ingredient Added", 0);
-                    } else {
-                        if (flavCount == 0) {
-                            for (int i = 0; i < ingCount; i++) {
-                                float initPer = Float.parseFloat(addNewBlendIngTbl.getValueAt(i, 1).toString());;
-                                ingPerCount = ingPerCount + initPer;
-                            }
-
-                            if (ingPerCount <= 0 || ingPerCount >= 100) {
-                                JOptionPane.showMessageDialog(this, "Invalid percentage");
-
-                            } else {
-                                int ret = blend.addNewBlend(blendID, blendName, base, blendCategory);
-
-                                ArrayList<Integer> ingID = new ArrayList<>();
-                                for (int i = 0; i < ingCount; i++) {
-                                    Blend a = new Blend();
-                                    ingID.add(a.getIngIDRecByIngName(addNewBlendIngTbl.getValueAt(i, 0).toString()));
-                                }
-
-                                int x = 0;
-                                for (int i = 0; i < ingCount; i++) {
-                                    int a = ingID.get(i);
-                                    double b = Double.parseDouble(addNewBlendIngTbl.getValueAt(i, 1).toString());
-                                    String query1 = "INSERT INTO recipie (blendID, ingID, ingPercent, type) VALUES ('" + blendID + "','" + a + "','" + b + "',0)";
-                                    x = dbConn.updateResult(query1);
-                                }
-
-                                if (x == 1) {
-                                    JOptionPane.showMessageDialog(this, "New Blend Added Successfuly.", "Successflly Added", 1);
-                                    close();
-                                    this.dispose();
-                                } else {
-                                    JOptionPane.showMessageDialog(this, "Unable to add the new ingredient.Please try again.", "Unable to add", 0);
-                                }
-                            }
-
-                        } else {
-                            //addedboth ing and flavour data tor ecipie
-                            for (int i = 0; i < ingCount; i++) {
-                                float initPer = Float.parseFloat(addNewBlendIngTbl.getValueAt(i, 1).toString());;
-                                ingPerCount = ingPerCount + initPer;
-                            }
-
-                            for (int i = 0; i < flavCount; i++) {
-                                float initPer = Float.parseFloat(addNewBlendFlavourTbl.getValueAt(i, 1).toString());;
-                                flavPerCount = flavPerCount + initPer;
-                            }
-
-                            if (ingPerCount <= 0 || ingPerCount >= 100) {
-                                JOptionPane.showMessageDialog(this, "Invalid percentage");
-
-                            } else if (flavPerCount <= 0 || flavPerCount >= 100) {
-                                JOptionPane.showMessageDialog(this, "Invalid percentage");
-                            } else {
-                                int ret = blend.addNewBlend(blendID, blendName, base, blendCategory);
-
-                                ArrayList<Integer> ingID = new ArrayList<>();
-                                ArrayList<Integer> flavourID = new ArrayList<>();
-                                for (int i = 0; i < ingCount; i++) {
-                                    Blend a = new Blend();
-
-                                    ingID.add(a.getIngIDRecByIngName(addNewBlendIngTbl.getValueAt(i, 0).toString()));
-                                }
-
-                                for (int i = 0; i < flavCount; i++) {
-                                    Blend a = new Blend();
-                                    flavourID.add(a.getIngIDRecByIngName(addNewBlendFlavourTbl.getValueAt(i, 0).toString()));
-                                }
-                                int x = 0;
-                                int y = 0;
-                                for (int i = 0; i < ingCount; i++) {
-                                    int a = ingID.get(i);
-                                    double b = Double.parseDouble(addNewBlendIngTbl.getValueAt(i, 1).toString());
-                                    String query1 = "INSERT INTO recipie (blendID, ingID, ingPercent, type) VALUES ('" + blendID + "','" + a + "','" + b + "',0)";
-                                    x = dbConn.updateResult(query1);
-
-                                }
-
-                                for (int j = 0; j < flavCount; j++) {
-                                    int c = flavourID.get(j);
-                                    double d = Double.parseDouble(addNewBlendFlavourTbl.getValueAt(j, 1).toString());
-                                    String query2 = "INSERT INTO recipie (blendID, ingID, ingPercent, type) VALUES ('" + blendID + "','" + c + "','" + d + "',1)";
-                                    y = dbConn.updateResult(query2);
-
-                                }
-
-                                if (x == 1 && y == 1) {
-                                    JOptionPane.showMessageDialog(this, "New Blend Added Successfuly.", "Successflly Added", 1);
-                                    close();
-
-                                } else {
-                                    JOptionPane.showMessageDialog(this, "Unable to add the new ingredient.Please try again.", "Unable to add", 0);
-                                }
-
-                            }
-                        }
-                    }
-
+                    JOptionPane.showMessageDialog(this, "Unable to add the new ingredient.Please try again.", "Unable to add", 0);
                 }
             }
-        }
 
+        } else {
+            //addedboth ing and flavour data tor ecipie
+            for (int i = 0; i < ingCount; i++) {
+                float initPer = Float.parseFloat(addNewBlendIngTbl.getValueAt(i, 1).toString());;
+                ingPerCount = ingPerCount + initPer;
+            }
+
+            for (int i = 0; i < flavCount; i++) {
+                float initPer = Float.parseFloat(addNewBlendFlavourTbl.getValueAt(i, 1).toString());;
+                flavPerCount = flavPerCount + initPer;
+            }
+
+            if (ingPerCount <= 0 || ingPerCount >= 100) {
+                JOptionPane.showMessageDialog(this, "Invalid percentage");
+
+            } else if (flavPerCount <= 0 || flavPerCount >= 100) {
+                JOptionPane.showMessageDialog(this, "Invalid percentage");
+            } else {
+                int ret = blend.addNewBlend(blendID, blendName, base, blendCategory);
+
+                ArrayList<Integer> ingID = new ArrayList<>();
+                ArrayList<Integer> flavourID = new ArrayList<>();
+                for (int i = 0; i < ingCount; i++) {
+                    Blend a = new Blend();
+
+                    ingID.add(a.getIngIDRecByIngName(addNewBlendIngTbl.getValueAt(i, 0).toString()));
+                }
+
+                for (int i = 0; i < flavCount; i++) {
+                    Blend a = new Blend();
+                    flavourID.add(a.getIngIDRecByIngName(addNewBlendFlavourTbl.getValueAt(i, 0).toString()));
+                }
+                int x = 0;
+                int y = 0;
+                for (int i = 0; i < ingCount; i++) {
+                    int a = ingID.get(i);
+                    double b = Double.parseDouble(addNewBlendIngTbl.getValueAt(i, 1).toString());
+                    String query1 = "INSERT INTO recipie (blendID, ingID, ingPercent, type) VALUES ('" + blendID + "','" + a + "','" + b + "',0)";
+                    x = dbConn.updateResult(query1);
+
+                }
+
+                for (int j = 0; j < flavCount; j++) {
+                    int c = flavourID.get(j);
+                    double d = Double.parseDouble(addNewBlendFlavourTbl.getValueAt(j, 1).toString());
+                    String query2 = "INSERT INTO recipie (blendID, ingID, ingPercent, type) VALUES ('" + blendID + "','" + c + "','" + d + "',1)";
+                    y = dbConn.updateResult(query2);
+
+                }
+
+                if (x == 1 && y == 1) {
+                    JOptionPane.showMessageDialog(this, "New Blend Added Successfuly.", "Successflly Added", 1);
+                    close();
+
+                } else {
+                    JOptionPane.showMessageDialog(this, "Unable to add the new ingredient.Please try again.", "Unable to add", 0);
+                }
+
+            }
+        }
+     
 
     }//GEN-LAST:event_addNewBlendBtnActionPerformed
 
@@ -690,14 +804,30 @@ public class AddNewBlend extends javax.swing.JFrame {
     }//GEN-LAST:event_ingPerTxtActionPerformed
 
     private void baseComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_baseComboActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_baseComboActionPerformed
 
-    public void FillIngCombo() {
-        Connection connection = null;
-        ResultSet resultSet = null;
+    private void ingComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingComboActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ingComboActionPerformed
 
-    }
+    private void dltIngBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dltIngBtnActionPerformed
+        int dialogResult = JOptionPane.showConfirmDialog(addNewBlendIngTbl, "Please confirm record deletion", "Confirm Deletion", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (dialogResult == JOptionPane.YES_OPTION){
+            DefaultTableModel model = (DefaultTableModel)addNewBlendIngTbl.getModel();
+            model.removeRow(addNewBlendIngTbl.getSelectedRow());
+            dltIngBtn.setEnabled(false);
+        }
+    }//GEN-LAST:event_dltIngBtnActionPerformed
+
+    private void dltFlavourBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dltFlavourBtnActionPerformed
+        int dialogResult = JOptionPane.showConfirmDialog(addNewBlendFlavourTbl, "Please confirm record deletion", "Confirm Deletion", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (dialogResult == JOptionPane.YES_OPTION){
+            DefaultTableModel model = (DefaultTableModel)addNewBlendFlavourTbl.getModel();
+            model.removeRow(addNewBlendFlavourTbl.getSelectedRow());
+            dltFlavourBtn.setEnabled(false);
+        }
+    }//GEN-LAST:event_dltFlavourBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -745,6 +875,8 @@ public class AddNewBlend extends javax.swing.JFrame {
     private javax.swing.JTextField blendCodeTxt;
     private javax.swing.JTextField blendNameTxt;
     private javax.swing.JButton cancelBtn;
+    private javax.swing.JButton dltFlavourBtn;
+    private javax.swing.JButton dltIngBtn;
     private javax.swing.JComboBox flavourCombo;
     private javax.swing.JButton flavourPerAddBtn;
     private javax.swing.JTextField flavourPerTxt;

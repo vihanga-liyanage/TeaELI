@@ -3,6 +3,7 @@ package teaeli;
 import classes.AutoSuggest;
 import classes.DBConnection;
 import classes.Ingredient;
+import classes.ResultArray;
 import classes.Supplier;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -47,13 +48,10 @@ public class AddIngredient extends javax.swing.JFrame {
         setLocation(x, y);
         setResizable(false);
 
-        ArrayList<String> result = ingr.getSupplierDetails();
-        try {
-            for (int i = 0; i < result.size(); i++) {
-                supliercombo.addItem(result.get(i));
-            }
-        } catch (Exception e) {
-            System.out.println(e);
+        ResultArray res = ingr.getSupplierDetails();
+
+        while (res.next()) {
+            supliercombo.addItem(res.getString(1));
         }
 
     }
@@ -238,7 +236,7 @@ public class AddIngredient extends javax.swing.JFrame {
 
         if (name.isEmpty() || supname.isEmpty() || txtPrice.getText().isEmpty()) {
 
-            JOptionPane.showMessageDialog(this, "Every field must be filled.","Empty fields",0);
+            JOptionPane.showMessageDialog(this, "Every field must be filled.", "Empty fields", 2);
 
         } else {
             String unitPriceString = this.txtPrice.getText();
@@ -246,14 +244,14 @@ public class AddIngredient extends javax.swing.JFrame {
             try {
                 price = Float.parseFloat(unitPriceString);
                 if (price < 0) {
-                    JOptionPane.showMessageDialog(null, "Please enter valid amount for unit price.", "Invalide Unit Price", 0);
+                    JOptionPane.showMessageDialog(this, "Please enter valid amount for unit price.", "Invalide Unit Price", 2);
                     txtPrice.requestFocusInWindow();
                     txtPrice.setText("");
                 } else {
                     unitPriceOK = 1;
                 }
             } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "Please enter valid amount for unit price.", "Invalide Unit Price", 0);
+                JOptionPane.showMessageDialog(this, "Please enter valid amount for unit price.", "Invalide Unit Price", 2);
                 txtPrice.requestFocusInWindow();
                 txtPrice.setText("");
             }
@@ -262,7 +260,7 @@ public class AddIngredient extends javax.swing.JFrame {
                 price = Float.parseFloat(txtPrice.getText());
                 int result = ingr.addNewIngredient(name, type, supname, price);
                 if (result == 1) {
-                    JOptionPane.showMessageDialog(null, "Ingredient successfully added", "Succeeded", 1);
+                    JOptionPane.showMessageDialog(this, "Ingredient successfully added", "Succeeded", 1);
                     this.setVisible(false);
                     AutoSuggest searchIngredientComboBoxAutoSuggest = new AutoSuggest();
                     searchIngredientComboBoxAutoSuggest.setAutoSuggest(adminPannel.searchIngredientComboBox, ingr.loadNameForSearchStockIngComboBox());
@@ -273,7 +271,8 @@ public class AddIngredient extends javax.swing.JFrame {
                     this.dispose();
 
                 } else {
-                    JOptionPane.showMessageDialog(null, "Unable to add ingredient. Please try again", "Unable to Add", 0);
+                    JOptionPane.showMessageDialog(this, "There were some issues with the database. Please contact developers.\n\nError code : AddIngredient 274", "Error", 0);
+                    System.exit(0);
                 }
 
             }
@@ -283,22 +282,22 @@ public class AddIngredient extends javax.swing.JFrame {
 
     private void btnAddSupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddSupplierActionPerformed
         try {
-            String suplierName = JOptionPane.showInputDialog(null, "Enter Supplier Name");
+            String suplierName = JOptionPane.showInputDialog(this, "Enter Supplier Name");
 
             if (suplierName.equals("")) { // check for null input
-                JOptionPane.showMessageDialog(null, "Please enter supplier name.", "Empty Supplier Name", 0);
+                JOptionPane.showMessageDialog(this, "Please enter supplier name.", "Empty Supplier Name", 2);
             } else {
                 try {
                     int inserted = supplier.addNewSupplier(suplierName);
 
                     if (inserted == 1) {
-                        JOptionPane.showMessageDialog(null, "New supplier added successfully", "New supplier added", 1);
+                        JOptionPane.showMessageDialog(this, "New supplier added successfully", "New supplier added", 1);
                         supliercombo.addItem(suplierName);
                         supliercombo.setSelectedItem(suplierName);
                         supplierCombobox.addItem(suplierName);
                     } else {
-                        JOptionPane.showMessageDialog(null, "Unable to add the new supplier. Please try again", "Unable to add", 0);
-
+                        JOptionPane.showMessageDialog(this, "There were some issues with the database. Please contact developers.\n\nError code : AddNewUser 245", "Error", 0);
+                        System.exit(0);
                     }
                 } catch (SQLException ex) {
                     System.out.println("SQL error : " + ex);

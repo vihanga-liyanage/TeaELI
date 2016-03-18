@@ -3,6 +3,7 @@ package teaeli;
 import classes.Blend;
 import classes.DBConnection;
 import classes.Ingredient;
+import classes.ResultArray;
 import classes.Validation;
 import java.awt.Font;
 import java.awt.event.KeyAdapter;
@@ -49,10 +50,10 @@ public class BlendDetails extends javax.swing.JFrame {
                 String per = ingPerTxt.getText();
                 if (per.length() > 0) {
                     if (!(new Validation().isFloat(per))) {
-                        JOptionPane.showMessageDialog(ingPerTxt, "Ingredient percentage must be a valid number!!!", "Invalid Ingredient Percentage", 0);
+                        JOptionPane.showMessageDialog(ingPerTxt, "Ingredient percentage must be a valid number!!!", "Invalid Ingredient Percentage", 2);
                         ingPerTxt.setText(per.substring(0, per.length() - 1));
                     } else if (Float.parseFloat(per) < 0) {
-                        JOptionPane.showMessageDialog(ingPerTxt, "Ingredient percentage cannot be less than 0!!!", "Invalid Ingredient Percentage", 0);
+                        JOptionPane.showMessageDialog(ingPerTxt, "Ingredient percentage cannot be less than 0!!!", "Invalid Ingredient Percentage", 2);
                         ingPerTxt.setText(per.substring(0, per.length() - 1));
                     }
                 }
@@ -379,8 +380,8 @@ public class BlendDetails extends javax.swing.JFrame {
                                         .addComponent(blendCategoryCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(blendNameTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(baseCombo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(blendNameTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(baseCombo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -480,7 +481,7 @@ public class BlendDetails extends javax.swing.JFrame {
     private void ingPerAddBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingPerAddBtnActionPerformed
         if (ingCombo.getSelectedItem().equals("")) {
             //System.out.println("ing combo");
-            JOptionPane.showMessageDialog(ingCombo, "Please select a ingredient to add.", "Empty Ingredient Selection", 0);
+            JOptionPane.showMessageDialog(ingCombo, "Please select a ingredient to add.", "Empty Ingredient Selection", 2);
             ingCombo.requestFocus();
         } else {
             String ingName = (String) ingCombo.getSelectedItem();
@@ -496,14 +497,14 @@ public class BlendDetails extends javax.swing.JFrame {
             }
             if (isNew) {
                 if (ingPer > 100) {
-                    JOptionPane.showMessageDialog(ingPerTxt, "Please enter valid percentage to add.", "Invalid Ingredient Percentage", 0);
+                    JOptionPane.showMessageDialog(ingPerTxt, "Please enter valid percentage to add.", "Invalid Ingredient Percentage", 2);
                     ingPerTxt.setText("");
                     ingPerTxt.requestFocus();
                 } else {
-                    List<List<String>> res = ingredient1.getIngDataByIngName(ingName);
-                    //System.out.println(res);
+                    ResultArray res = ingredient1.getIngDataByIngName(ingName);
+                    res.next();
                     Vector newRow = new Vector();
-                    newRow.addElement(res.get(0).get(1));
+                    newRow.addElement(res.getString(1));
                     newRow.addElement(ingPer);
 
                     DefaultTableModel model = (DefaultTableModel) ingTable.getModel();
@@ -520,7 +521,7 @@ public class BlendDetails extends javax.swing.JFrame {
 
     private void flavoursPerAddBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_flavoursPerAddBtnActionPerformed
         if (flavoursCombo.getSelectedItem().equals("")) {
-            JOptionPane.showMessageDialog(flavoursCombo, "Please select a flavour to add.", "Empty Flavour Selection", 0);
+            JOptionPane.showMessageDialog(flavoursCombo, "Please select a flavour to add.", "Empty Flavour Selection", 2);
             flavoursCombo.requestFocus();
         } else {
             String flavourName = (String) flavoursCombo.getSelectedItem();
@@ -536,14 +537,14 @@ public class BlendDetails extends javax.swing.JFrame {
             }
             if (isNew) {
                 if (ingPer > 100) {
-                    JOptionPane.showMessageDialog(ingPerTxt, "Please enter valid percentage to add.", "Invalid Flavour Percentage", 0);
+                    JOptionPane.showMessageDialog(ingPerTxt, "Please enter valid percentage to add.", "Invalid Flavour Percentage", 2);
                     ingPerTxt.setText("");
                     ingPerTxt.requestFocus();
                 } else {
-                    List<List<String>> res = ingredient1.getIngDataByIngName(flavourName);
-                    //System.out.println(res);
+                    ResultArray res = ingredient1.getIngDataByIngName(flavourName);
+                    res.next();
                     Vector newRow = new Vector();
-                    newRow.addElement(res.get(0).get(1));
+                    newRow.addElement(res.getString(1));
                     newRow.addElement(ingPer);
 
                     DefaultTableModel model = (DefaultTableModel) flavourTable.getModel();
@@ -569,7 +570,7 @@ public class BlendDetails extends javax.swing.JFrame {
         ID = blend.checkExistingBlendID(blendID);
         Name = blend.checkExistingBlendName(blendName);
         if (blendID.isEmpty() || blendName.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Every field must be filled!!!", "Empty Fields", 0);
+            JOptionPane.showMessageDialog(this, "Every field must be filled!!!", "Empty Fields", 2);
         } else {
             if (ID != 0) {
                 JOptionPane.showMessageDialog(this, "This ID is already Exsists!!!", "Duplicate Blend ID", 0);
@@ -588,7 +589,7 @@ public class BlendDetails extends javax.swing.JFrame {
                     int recCount = ingCount + flavCount;
 
                     if (ingCount == 0) {
-                        JOptionPane.showMessageDialog(this, "Blend must have at least one ingredient", "No Ingredient Added", 0);
+                        JOptionPane.showMessageDialog(this, "A blend must have at least one ingredient", "No Ingredient Added", 0);
                     } else {
                         if (flavCount == 0) {
                             for (int i = 0; i < ingCount; i++) {

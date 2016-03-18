@@ -28,10 +28,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author Janith
- */
+
 public class CreateNewBlendOrder2 extends javax.swing.JFrame {
 
     private Blend blend;
@@ -96,7 +93,8 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
             public void windowClosing(WindowEvent e) {
                 int confirmed = JOptionPane.showConfirmDialog(null,
                         "Are you sure you want to cancel phase 2?", "Confirm window close",
-                        JOptionPane.YES_NO_OPTION);
+                        JOptionPane.YES_NO_OPTION
+                );
                 if (confirmed == JOptionPane.YES_OPTION) {
                     createNewBlendOrder1.setVisible(true);
                     dispose();
@@ -186,13 +184,13 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
         if (new Validation().isFloat(masterPlanTbl.getValueAt(row, 6).toString())) {
             float finalQty = parseFloat(masterPlanTbl.getValueAt(row, 6).toString());
             if (finalQty < requiredQty) {
-                JOptionPane.showMessageDialog(masterPlanTbl, "<html>You cannot decrease the <b>" + ingName + "</b> final quantity less than required quantity!</html>", "Invalid Final Quantity", 0);
+                JOptionPane.showMessageDialog(masterPlanTbl, "<html>You cannot decrease the <b>" + ingName + "</b> final quantity less than required quantity!</html>", "Invalid Final Quantity", 2);
                 masterPlanTbl.setValueAt(formatNum(requiredQty), row, 6);
             } else {
                 masterPlanTbl.setValueAt(formatNum(finalQty - requiredQty), row, 5);
             }
         } else {
-            JOptionPane.showMessageDialog(masterPlanTbl, "<html>Please enter a valid final quantity for <b>" + ingName + "</b>.</html>", "Invalid Final Quantity", 0);
+            JOptionPane.showMessageDialog(masterPlanTbl, "<html>Please enter a valid final quantity for <b>" + ingName + "</b>.</html>", "Invalid Final Quantity", 2);
             masterPlanTbl.setValueAt(formatNum(requiredQty), row, 6);
         }
     }
@@ -294,7 +292,7 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
     }
 
     private String formatNum(float num) {
-        num = round(num, 2);
+        num = round(num, 3);
         return formatNum(Float.toString(num));
     }
 
@@ -344,7 +342,7 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
             //placing order blend
             String[] data = {orderIDLabel.getText(), blendID, String.valueOf(reqQty), String.valueOf(visibleStock), String.valueOf(invisibleStock), balanceQty, excessQty};
             if (!order.placeOrderBlends(data)) {
-                JOptionPane.showMessageDialog(rootPane, "There were some issues with the database. Please contact developers.");
+                JOptionPane.showMessageDialog(rootPane, "There were some issues with the database. Please contact developers.\n\nError code : CreatNewBlendOrder2 348", "Error", JOptionPane.ERROR_MESSAGE);
                 System.exit(0);
             }
 
@@ -365,7 +363,7 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
             //updating blend stock
             data = new String[]{String.valueOf(visibleStock), String.valueOf(invisibleStock), blendID};
             if (!blend.updateBlendStock(data)) {
-                JOptionPane.showMessageDialog(rootPane, "There were some issues with the database. Please contact developers.");
+                JOptionPane.showMessageDialog(rootPane, "There were some issues with the database. Please contact developers.\n\nError code : CreatNewBlendOrder2 369", "Error", JOptionPane.ERROR_MESSAGE);
                 System.exit(0);
             }
         }
@@ -387,7 +385,7 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
             //placing order ingredients
             String[] data = {orderIDLabel.getText(), ingID, String.valueOf(reqQty), String.valueOf(visibleStock), String.valueOf(invisibleStock), balanceQty, excessQty};
             if (!order.placeOrderIngredients(data)) {
-                JOptionPane.showMessageDialog(rootPane, "There were some issues with the database. Please contact developers.");
+                JOptionPane.showMessageDialog(rootPane, "There were some issues with the database. Please contact developers.\n\nError code : CreatNewBlendOrder2 391", "Error", JOptionPane.ERROR_MESSAGE);
                 System.exit(0);
             }
 
@@ -408,7 +406,7 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
             //updating ingredient stock
             data = new String[]{String.valueOf(visibleStock), String.valueOf(invisibleStock), ingID};
             if (!ingredient.updateIngredientStock(data)) {
-                JOptionPane.showMessageDialog(rootPane, "There were some issues with the database. Please contact developers.");
+                JOptionPane.showMessageDialog(rootPane, "There were some issues with the database. Please contact developers.\n\nError code : CreatNewBlendOrder2 412", "Error", JOptionPane.ERROR_MESSAGE);
                 System.exit(0);
             }
         }
@@ -680,7 +678,7 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
 
             //placing the order in order table
             if (!order.placeOrder(orderIDLabel.getText())) {
-                JOptionPane.showMessageDialog(rootPane, "There were some issues with the database. Please contact developers.");
+                JOptionPane.showMessageDialog(rootPane, "There were some issues with the database. Please contact developers.\n\nError code : CreatNewBlendOrder2 684", "Error", JOptionPane.ERROR_MESSAGE);
                 System.exit(0);
             }
             //placing orderBlends and updating blend table
@@ -704,6 +702,7 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
             for (int i=0; i<model.getRowCount(); i++) {
                 if (parseFloat(model.getValueAt(i, 6).toString()) <= 0) {
                     model.removeRow(i);
+                    i -= 1;
                 }
             }
             
