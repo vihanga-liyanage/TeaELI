@@ -349,6 +349,13 @@ public class Blend {
         return ret;
     }
     
+    //Add new recipie
+    public int addRecipie(String[] data) {
+        String query = "INSERT INTO recipie (blendID, ingID, ingPercent, type) "
+                + "VALUES ('" + data[0] + "','" + data[1] + "','" + data[2] + "','" + data[3] +"')";
+        return dbConn.updateResult(query);
+    }
+    
     //Update Blend when Change the base/category or both
     public int updateBlend(String blendID, String blendName, String base, String blendCategory) {
         String baseCom = ingredient.getIngIDByIngName(base);

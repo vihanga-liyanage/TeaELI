@@ -133,14 +133,10 @@ public class AdminPannel extends javax.swing.JFrame {
 
         searchStockIngComboBox.setSelectedIndex(-1);
 
-        AutoSuggest searchStockBlendComboBoxAutoSuggest = new AutoSuggest();
-        searchStockBlendComboBoxAutoSuggest.setAutoSuggest(searchStockBlendComboBox, blend.loadNameForSearchStockBlendsComboBox());
-
-        searchStockBlendComboBox.setSelectedIndex(-1);
+        initStockBlendCombo();
 
         /*Auto suggest method loads for the combo box in blends tab*/
-        blend.initBlendCombo(searchBlendComboBox);
-        searchBlendComboBox.setSelectedIndex(-1);
+        initSettingsBlendCombo();
 
         //method for combox value setting when table row select in inventryIngredient
         final ListSelectionModel selectionalModForStockIngTable = inventryIngredientTable.getSelectionModel();
@@ -302,9 +298,19 @@ public class AdminPannel extends javax.swing.JFrame {
     public void populateSettingsIngredientTable() {
         DefaultTableModel model = (DefaultTableModel) settingsIngredientTable.getModel();
         ingredient.viewAllIngredients(model);
-
     }
 
+    public void initSettingsBlendCombo() {
+        blend.initBlendCombo(searchBlendComboBox);
+        searchBlendComboBox.setSelectedIndex(-1);
+    }
+    
+    public void initStockBlendCombo() {
+        AutoSuggest searchStockBlendComboBoxAutoSuggest = new AutoSuggest();
+        searchStockBlendComboBoxAutoSuggest.setAutoSuggest(searchStockBlendComboBox, blend.loadNameForSearchStockBlendsComboBox());
+        searchStockBlendComboBox.setSelectedIndex(-1);
+    }
+    
     //Setting default font
     public static void setUIFont(javax.swing.plaf.FontUIResource f) {
         java.util.Enumeration keys = UIManager.getDefaults().keys();
@@ -932,13 +938,14 @@ public class AdminPannel extends javax.swing.JFrame {
         });
 
         jLabel13.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel13.setText(" Blend Name         :");
+        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel13.setText("Blend Name             :");
 
         jLabel14.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel14.setText("Blend Category     :");
+        jLabel14.setText("Blend Category        :");
 
         jLabel16.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel16.setText("Base Composition :");
+        jLabel16.setText("Base Composition    :");
 
         blendNameLbl.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
@@ -962,13 +969,13 @@ public class AdminPannel extends javax.swing.JFrame {
                             .addGroup(settingsBlendPanelLayout.createSequentialGroup()
                                 .addGroup(settingsBlendPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
-                                    .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel14, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(33, 33, 33)
+                                    .addComponent(jLabel14, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(settingsBlendPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(blendCatgLbl)
-                                    .addComponent(blendNameLbl)
-                                    .addComponent(blendBaseLbl, javax.swing.GroupLayout.Alignment.TRAILING))))
+                                    .addComponent(blendNameLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(blendCatgLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(blendBaseLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(0, 8, Short.MAX_VALUE))
                     .addGroup(settingsBlendPanelLayout.createSequentialGroup()
                         .addGroup(settingsBlendPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -987,21 +994,8 @@ public class AdminPannel extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(settingsBlendPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(settingsBlendPanelLayout.createSequentialGroup()
-                        .addGroup(settingsBlendPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(addProductBtn))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(settingsBlendPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(searchProductBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(searchBlendComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(inventoryBlendLbl1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, Short.MAX_VALUE)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(settingsBlendPanelLayout.createSequentialGroup()
                         .addGap(78, 78, 78)
-                        .addGroup(settingsBlendPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(blendNameLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(blendNameLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addGroup(settingsBlendPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(blendCatgLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1011,7 +1005,20 @@ public class AdminPannel extends javax.swing.JFrame {
                             .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(blendBaseLbl, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(settingsBlendPanelLayout.createSequentialGroup()
+                        .addGroup(settingsBlendPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(addProductBtn))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(settingsBlendPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(searchProductBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(searchBlendComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(inventoryBlendLbl1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, Short.MAX_VALUE)
+                        .addGroup(settingsBlendPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(102, 102, 102))
         );
 
@@ -1412,10 +1419,10 @@ public class AdminPannel extends javax.swing.JFrame {
     }//GEN-LAST:event_addItemBtnActionPerformed
 
     private void addProductBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addProductBtnActionPerformed
-        AddNewBlend addNewProduct = new AddNewBlend();
-        addNewProduct.setVisible(true);
-        addNewProduct.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
+        AddNewBlend addNewBlend = new AddNewBlend();
+        addNewBlend.setVisible(true);
+        addNewBlend.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        addNewBlend.adminpanel = this;
     }//GEN-LAST:event_addProductBtnActionPerformed
 
     private void searchIngredientBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchIngredientBtnActionPerformed
@@ -1903,6 +1910,9 @@ public class AdminPannel extends javax.swing.JFrame {
         blendDetails.setBlendName(blendDetails.getBlendName().replace("'", "\\'"));
         blendDetails.setBaseName(blendDetails.getBaseName().replace("'", "\\'"));
 
+        blendDetails.setBlendName(blendDetails.getBlendName().trim());
+        blendDetails.setBaseName(blendDetails.getBaseName().trim());
+        
         blendNameLbl.setText(blendDetails.getBlendName());
         blendBaseLbl.setText(blendDetails.getBaseName());
 

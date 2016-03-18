@@ -841,14 +841,14 @@
                                           <Group type="102" alignment="0" attributes="0">
                                               <Group type="103" groupAlignment="1" max="-2" attributes="0">
                                                   <Component id="jLabel16" pref="138" max="32767" attributes="0"/>
-                                                  <Component id="jLabel13" alignment="0" max="32767" attributes="0"/>
                                                   <Component id="jLabel14" alignment="0" max="32767" attributes="0"/>
+                                                  <Component id="jLabel13" alignment="1" max="32767" attributes="0"/>
                                               </Group>
-                                              <EmptySpace min="33" pref="33" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="blendCatgLbl" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="blendNameLbl" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="blendBaseLbl" alignment="1" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="blendNameLbl" min="-2" pref="159" max="-2" attributes="0"/>
+                                                  <Component id="blendCatgLbl" alignment="0" min="-2" pref="151" max="-2" attributes="0"/>
+                                                  <Component id="blendBaseLbl" alignment="0" min="-2" pref="142" max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
                                       </Group>
@@ -877,25 +877,8 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="1" attributes="0">
                                   <Group type="102" attributes="0">
-                                      <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="addProductBtn" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace max="32767" attributes="0"/>
-                                      <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="searchProductBtn" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
-                                          <Component id="searchBlendComboBox" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
-                                          <Component id="inventoryBlendLbl1" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace type="separate" max="32767" attributes="0"/>
-                                      <Component id="jScrollPane4" min="-2" pref="360" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" attributes="0">
                                       <EmptySpace min="-2" pref="78" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="blendNameLbl" alignment="0" min="-2" pref="25" max="-2" attributes="0"/>
-                                          <Component id="jLabel13" alignment="0" min="-2" pref="25" max="-2" attributes="0"/>
-                                      </Group>
+                                      <Component id="blendNameLbl" min="-2" pref="25" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="3" attributes="0">
                                           <Component id="blendCatgLbl" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
@@ -908,6 +891,23 @@
                                       </Group>
                                       <EmptySpace max="32767" attributes="0"/>
                                       <Component id="jScrollPane3" min="-2" pref="227" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <Group type="103" groupAlignment="3" attributes="0">
+                                          <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="addProductBtn" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace max="32767" attributes="0"/>
+                                      <Group type="103" groupAlignment="3" attributes="0">
+                                          <Component id="searchProductBtn" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                                          <Component id="searchBlendComboBox" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                                          <Component id="inventoryBlendLbl1" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace type="separate" max="32767" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="jLabel13" min="-2" pref="25" max="-2" attributes="0"/>
+                                          <Component id="jScrollPane4" min="-2" pref="360" max="-2" attributes="0"/>
+                                      </Group>
                                   </Group>
                               </Group>
                               <EmptySpace min="-2" pref="102" max="-2" attributes="0"/>
@@ -1048,7 +1048,8 @@
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Segoe UI" size="14" style="0"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value=" Blend Name         :"/>
+                        <Property name="horizontalAlignment" type="int" value="2"/>
+                        <Property name="text" type="java.lang.String" value="Blend Name             :"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel14">
@@ -1056,7 +1057,7 @@
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Segoe UI" size="14" style="0"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="Blend Category     :"/>
+                        <Property name="text" type="java.lang.String" value="Blend Category        :"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel16">
@@ -1064,7 +1065,7 @@
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Segoe UI" size="14" style="0"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="Base Composition :"/>
+                        <Property name="text" type="java.lang.String" value="Base Composition    :"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JLabel" name="blendNameLbl">

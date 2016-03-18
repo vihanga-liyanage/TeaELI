@@ -46,8 +46,6 @@ public class DeliverBlend extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(deliverQtyTxt, "Deliver quantity must be a valid number",
                                 "Invalid Deliver Quantity", 2);
                         deliverQtyTxt.setText(null);
-                    } else {
-                        deliverStockQty = Integer.parseInt(deliverQty);
                     }
                 }
             }
@@ -70,8 +68,6 @@ public class DeliverBlend extends javax.swing.JFrame {
                     if (!testForInteger(unallocateQty)) {
                         JOptionPane.showMessageDialog(unallocateQtyTxt, "Unallocate quantity must be a valid number", "Invalid Unallocate Quantity", 2);
                         unallocateQtyTxt.setText(null);
-                    } else {
-                        unallocatedStockQty = Integer.parseInt(unallocateQty);
                     }
                 }
             }
@@ -94,8 +90,6 @@ public class DeliverBlend extends javax.swing.JFrame {
                     if (!testForInteger(sampleQty)) {
                         JOptionPane.showMessageDialog(sampleQtyTxt, "Sample quantity must be a valid number", "Invalid Sample Quantity", 2);
                         sampleQtyTxt.setText(null);
-                    } else {
-                        sampleStockQty = Integer.parseInt(sampleQty);
                     }
                 }
             }
@@ -425,67 +419,86 @@ public class DeliverBlend extends javax.swing.JFrame {
     }//GEN-LAST:event_cancelBtnActionPerformed
 
     private void deliverBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deliverBtnActionPerformed
+        
+        deliverStockQty = 0;
+        unallocatedStockQty = 0;
+        sampleStockQty = 0;
+        
+        if(testForInteger(deliverQtyTxt.getText())) 
+            deliverStockQty = Integer.parseInt(deliverQtyTxt.getText());
+        
+        if( (allocateFreeStockCombo.getSelectedIndex() == 2) && testForInteger(unallocateQtyTxt.getText()))
+            unallocatedStockQty = Integer.parseInt(unallocateQtyTxt.getText());
+        
+        if( (sampleDeliverCombo.getSelectedIndex() == 1) && testForInteger(sampleQtyTxt.getText()))
+            sampleStockQty = Integer.parseInt(sampleQtyTxt.getText());
 
-        allocatedStockQty = Integer.parseInt(allocatedQtyLbl.getText().replace(" g", ""));
-        freeQty = Integer.parseInt(freeQtyLbl.getText().replace(" g", ""));
+        if (deliverStockQty > 0) {
 
-        if (!deliverQtyCheck()) {
-            JOptionPane.showMessageDialog(this, "Deliver quantity should be less than or equal to "
-                    + allocatedStockQty + " g. ", "Stock Quantiy Exceeds", 2);
-            deliverQtyTxt.setText(null);
-        } else {
+            allocatedStockQty = Integer.parseInt(allocatedQtyLbl.getText().replace(" g", ""));
+            freeQty = Integer.parseInt(freeQtyLbl.getText().replace(" g", ""));
 
-            if (!unallocateQtyCheck()) {
-                JOptionPane.showMessageDialog(this, "Unallocating quantity should be less than or equal to "
-                        + (allocatedStockQty - deliverStockQty) + " g. ", "Stock Quantiy Exceeds", 2);
-                unallocateQtyTxt.setText(null);
+            if (!deliverQtyCheck()) {
+                JOptionPane.showMessageDialog(this, "Deliver quantity should be less than or equal to "
+                        + allocatedStockQty + " g. ", "Stock Quantiy Exceeds", 2);
+                deliverQtyTxt.setText(null);
             } else {
-                if (!smapleQtyCheck()) {
-                    JOptionPane.showMessageDialog(this, "Sample quantity exceeds free stock quantity", "Stock Quantiy Exceeds", 2);
+
+                if (!unallocateQtyCheck()) {
+                    JOptionPane.showMessageDialog(this, "Unallocating quantity should be less than or equal to "
+                            + (allocatedStockQty - deliverStockQty) + " g. ", "Stock Quantiy Exceeds", 2);
                     unallocateQtyTxt.setText(null);
+                    
                 } else {
-                    Blend blendDeliver = new Blend();
-
-                    blendDeliver.setBlendName(blendNameLbl.getText().replace("'", "\\'"));
-
-                    //set old stock qty and updated qty for blend deliver history
-                    blendDeliver.setOldStockQty(allocatedStockQty);
-                    blendDeliver.setUpdatedStockQTy(deliverStockQty);
-                    blendDeliver.setStockUpdateReason(deliverReasonTxt.getText());
-
-                    blendDeliver.setDeliverQty(deliverStockQty);
-
-                    //set deliver remove qty if allocate to free stock combo is Yes or other
-                    if (allocateFreeStockCombo.getSelectedIndex() == 1) {
-
-                        unallocatedStockQty = allocatedStockQty - deliverStockQty;
-                        blendDeliver.setDelRemoveQty(unallocatedStockQty);
-
-                    } else if (allocateFreeStockCombo.getSelectedIndex() == 2) {
-                        blendDeliver.setDelRemoveQty(unallocatedStockQty);
-                    }
-
-                    //set sample qty if sample delive combo is yes
-                    if (sampleDeliverCombo.getSelectedIndex() == 1) {
-                        blendDeliver.setSampleQty(sampleStockQty);
-                    }
-
-                    //set new ordered stock
-                    int leftAlocatedStock = allocatedStockQty - (deliverStockQty + unallocatedStockQty);
-                    blendDeliver.setAlocatedStock(leftAlocatedStock);
-
-                    //set new visible stock
-                    blendDeliver.setVisibleStock((freeQty + unallocatedStockQty) - sampleStockQty);
-
-                    if (blendDeliver.updateDeliverDetails()) {
-                        JOptionPane.showMessageDialog(this, "Updated Successfuly !", "Update Success", 1);
-                        close();
+                    if (!smapleQtyCheck()) {
+                        JOptionPane.showMessageDialog(this, "Sample quantity exceeds free stock quantity", "Stock Quantiy Exceeds", 2);
+                        unallocateQtyTxt.setText(null);
                     } else {
-                        JOptionPane.showMessageDialog(this, "There were some issues with the database. Please contact developers.\n\nError code : DeliverBlend 484", "Error", 0);
-                        System.exit(0);
+                        Blend blendDeliver = new Blend();
+
+                        blendDeliver.setBlendName(blendNameLbl.getText().replace("'", "\\'"));
+
+                        //set old stock qty and updated qty for blend deliver history
+                        blendDeliver.setOldStockQty(allocatedStockQty);
+                        blendDeliver.setUpdatedStockQTy(deliverStockQty);
+                        blendDeliver.setStockUpdateReason(deliverReasonTxt.getText());
+
+                        blendDeliver.setDeliverQty(deliverStockQty);
+
+                        //set deliver remove qty if allocate to free stock combo is Yes or other
+                        if (allocateFreeStockCombo.getSelectedIndex() == 1) {
+
+                            unallocatedStockQty = allocatedStockQty - deliverStockQty;
+                            blendDeliver.setDelRemoveQty(unallocatedStockQty);
+
+                        } else if (allocateFreeStockCombo.getSelectedIndex() == 2) {
+                            blendDeliver.setDelRemoveQty(unallocatedStockQty);
+                        }
+
+                        //set sample qty if sample delive combo is yes
+                        if (sampleDeliverCombo.getSelectedIndex() == 1) {
+                            blendDeliver.setSampleQty(sampleStockQty);
+                        }
+
+                        //set new ordered stock
+                        int leftAlocatedStock = allocatedStockQty - (deliverStockQty + unallocatedStockQty);
+                        blendDeliver.setAlocatedStock(leftAlocatedStock);
+
+                        //set new visible stock
+                        blendDeliver.setVisibleStock((freeQty + unallocatedStockQty) - sampleStockQty);
+
+                        if (blendDeliver.updateDeliverDetails()) {
+                            JOptionPane.showMessageDialog(this, "Updated Successfuly !", "Update Success", 1);
+                            close();
+                        } else {
+                            JOptionPane.showMessageDialog(this, "There were some issues with the database. Please contact developers.\n\nError code : DeliverBlend 484", "Error", 0);
+                            System.exit(0);
+                        }
                     }
                 }
             }
+        } else {
+            JOptionPane.showMessageDialog(this, "Please add deliver amount to deliver", "Empty Fields", 2);
         }
     }//GEN-LAST:event_deliverBtnActionPerformed
 
