@@ -145,11 +145,13 @@
                       <Component id="jLabel2" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="blendCategoryCombo" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
-                      <Component id="jLabel8" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="baseCombo" alignment="1" min="-2" pref="25" max="-2" attributes="0"/>
-                      <Component id="jLabel5" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="blendCategoryCombo" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                          <Component id="jLabel8" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                          <Component id="jLabel5" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">

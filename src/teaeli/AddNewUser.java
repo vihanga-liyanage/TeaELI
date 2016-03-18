@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package teaeli;
 
 import classes.PswrdEncrypt;
@@ -14,21 +9,18 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-/**
- *
- * @author ASHI
- */
+
 public class AddNewUser extends javax.swing.JFrame {
 
     //create an instance of the entity class
     User user1 = new User();
-    
+
     private AdminPannel adminPannel;
 
     public void setAdminPannel(AdminPannel adminPannel) {
         this.adminPannel = adminPannel;
     }
-    
+
     public AddNewUser() {
         //Add windows look and feel
         try {
@@ -37,24 +29,24 @@ public class AddNewUser extends javax.swing.JFrame {
             Logger.getLogger(AdminPannel.class.getName()).log(Level.SEVERE, null, ex);
         }
         initComponents();
-        
-        Dimension screenSize,frameSize;
-        int x,y;
-        screenSize=Toolkit.getDefaultToolkit().getScreenSize();
-        frameSize=getSize();
-        x=(screenSize.width-frameSize.width)/4;
-        y=(screenSize.height-frameSize.height)/4;
+
+        Dimension screenSize, frameSize;
+        int x, y;
+        screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        frameSize = getSize();
+        x = (screenSize.width - frameSize.width) / 4;
+        y = (screenSize.height - frameSize.height) / 4;
         setLocation(x, y);
         setResizable(false);
     }
 
     //method to refresh related tables and close this window
-    private void close(){
+    private void close() {
         this.setVisible(false);
         adminPannel.populateUserTable();
         this.dispose();
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -215,17 +207,17 @@ public class AddNewUser extends javax.swing.JFrame {
     }//GEN-LAST:event_cancelBtnActionPerformed
 
     private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
-        if (firstnameTxt.getText().isEmpty() || lastnameTxt.getText().isEmpty() || usernameTxt.getText().isEmpty() || passwordTxt.getText().isEmpty() || cnfrmPasswordTxt.getText().isEmpty() ){
-            JOptionPane.showMessageDialog(this, "Every field must be filled!!!","Empty Fields",0);
+        if (firstnameTxt.getText().isEmpty() || lastnameTxt.getText().isEmpty() || usernameTxt.getText().isEmpty() || passwordTxt.getText().isEmpty() || cnfrmPasswordTxt.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Every field must be filled!!!", "Empty Fields", 2);
             return;
         }
-        if(passwordTxt.getText().length()<8){
-            JOptionPane.showMessageDialog(this, "Password length should be at least 8 characters!!!","Invalid password Length",0);
+        if (passwordTxt.getText().length() < 8) {
+            JOptionPane.showMessageDialog(this, "Password length should be at least 8 characters!!!", "Invalid password Length", 2);
             passwordTxt.setText("");
             cnfrmPasswordTxt.setText("");
             return;
         }
-        
+
         if (passwordTxt.getText().equals(cnfrmPasswordTxt.getText())) {
             int x = user1.checkUserName(usernameTxt.getText());
 
@@ -237,24 +229,25 @@ public class AddNewUser extends javax.swing.JFrame {
                 user1.setPassword(PswrdEncrypt.main2(passwordTxt.getText()));
 
                 int result = user1.addNewUser(user1);
-                if (result == 1) {                    
-                    JOptionPane.showMessageDialog(this, "New entry has been added succesfully","Successfully Added",1);
+                if (result == 1) {
+                    JOptionPane.showMessageDialog(this, "New entry has been added succesfully", "Successfully Added", 1);
                     this.setVisible(false);
-                    close();                 
+                    close();
                 } else {
                     //if insert is not successful
-                    JOptionPane.showMessageDialog(this, "Unable to add new user. Please enter again.","Unable to add",0);
+                    JOptionPane.showMessageDialog(this, "There were some issues with the database. Please contact developers.\n\nError code : AddNewUser 238", "Error", 0);
+                    System.exit(0);
                 }
             } else if (x == 0) {
-                JOptionPane.showMessageDialog(this, "UserName already exists!!!","Duplicate Username",0);
+                JOptionPane.showMessageDialog(this, "UserName already exists!!!", "Duplicate Username", 2);
                 usernameTxt.setText("");
             } else {
-                JOptionPane.showMessageDialog(this, "Error occured while checking the userName!");
-                return;
+                JOptionPane.showMessageDialog(this, "There were some issues with the database. Please contact developers.\n\nError code : AddNewUser 245", "Error", 0);
+                System.exit(0);
             }
 
         } else {
-            JOptionPane.showMessageDialog(this, "Passwords do not match!!!!","Error",0);
+            JOptionPane.showMessageDialog(this, "Passwords do not match!!!!", "Error", 0);
             passwordTxt.setText("");
             cnfrmPasswordTxt.setText("");
         }

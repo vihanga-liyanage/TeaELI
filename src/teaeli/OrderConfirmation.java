@@ -1,4 +1,3 @@
-
 package teaeli;
 
 import classes.Ingredient;
@@ -19,7 +18,6 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
-
 public class OrderConfirmation extends javax.swing.JFrame {
 
     public Object pannel;
@@ -34,23 +32,25 @@ public class OrderConfirmation extends javax.swing.JFrame {
     String orderID = "";
 
     private CreateNewBlendOrder2 createNewBlendOrder2;
+
     /**
      * Creates new form OrderConfirmation
+     *
      * @param cnb
      * @param orderID
      */
     public OrderConfirmation(CreateNewBlendOrder2 cnb, String orderID) { // pass CreateNewBlendOrder2 object to get the master list in the interface
-        
+
         initComponents();
-        
+
         //Changing table headers to bold
         tblMasterPlanEditingView.getTableHeader().setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
         supplierWiseOrderDetailsTbl.getTableHeader().setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
-        
+
         this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
-        
+
         createNewBlendOrder2 = cnb;
-                
+
         setResizable(false);
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
@@ -87,7 +87,6 @@ public class OrderConfirmation extends javax.swing.JFrame {
         tblMasterPlanEditingView.setAutoCreateRowSorter(true);
         supplierWiseOrderDetailsTbl.setAutoCreateRowSorter(true);
 
-       
     }
 
     private OrderConfirmation() {
@@ -418,19 +417,19 @@ public class OrderConfirmation extends javax.swing.JFrame {
         getDiscounts();
         int lastIndex = discountList.size() - 1;
         String errorDiscount = discountList.get(lastIndex).toString();
-        if (errorDiscount == "1") {           
+        if (errorDiscount == "1") {
 
-            JOptionPane.showMessageDialog(null, "Discount cannot be greater than 100!", "Invalid Discount", 0);
-        }else{
+            JOptionPane.showMessageDialog(this, "Discount cannot be greater than 100!", "Invalid Discount", 2);
+        } else {
             getTaxes();
             pdf = new PDF();
             String path = pdf.generateSupplierwisePO(supplierList, mainList, mainList2, orderID, discountList, taxList, totalList);
 
-            if(path != null){
+            if (path != null) {
                 int response = JOptionPane.showConfirmDialog(
-                        null, 
-                        "Purchase orders saved successfully. Do you want to open the containing folder?", 
-                        "Purchase orders", 
+                        null,
+                        "Purchase orders saved successfully. Do you want to open the containing folder?",
+                        "Purchase orders",
                         JOptionPane.YES_NO_OPTION
                 );
                 if (response == JOptionPane.YES_OPTION) {
@@ -441,7 +440,7 @@ public class OrderConfirmation extends javax.swing.JFrame {
                         System.out.println("IOException : " + ex.getMessage());
                     }
                 }
-                
+
                 //finishing order
                 this.createNewBlendOrder2.dispose();
                 //Re-generating the admin panel since the data is changed
@@ -457,8 +456,9 @@ public class OrderConfirmation extends javax.swing.JFrame {
                     old.dispose();
                 }
                 this.dispose();
-            }else{
-                JOptionPane.showMessageDialog(null, "Purchase orders didn't saved", "Unable to save", 0);
+            } else {
+                JOptionPane.showMessageDialog(this, "There were some issues with the database. Please contact developers.\n\nError code : OrderConfirmation 460", "Error", 0);
+                System.exit(0);
             }
         }
 
