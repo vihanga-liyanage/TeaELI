@@ -2,11 +2,6 @@ package classes;
 
 import java.sql.SQLException;
 import javax.swing.table.DefaultTableModel;
-import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Vector;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
@@ -302,12 +297,6 @@ public class Ingredient {
         //get ingID of the ingredient
         this.getIngIDFromIngName();
 
-        //to get current date
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date currentDate = Calendar.getInstance().getTime();
-        dateFormat.format(currentDate);
-        Timestamp date = new Timestamp(currentDate.getTime());
-
         //query to update ingredient stock
         String query = "UPDATE ingredient SET visibleStock = '" + this.getVisibleStock() + "' WHERE ingID = '" + this.getIngID() + "'";
 
@@ -316,8 +305,8 @@ public class Ingredient {
         if (i == 1) {
             //query to inesrt into stock history
             query = "INSERT INTO ingredientstockhistory"
-                    + "(`ingID`, `date`, `oldQty`, `updatedQty`, `reason`, `updatedBy`)"
-                    + " VALUES ('" + this.getIngID() + "', '" + date + "', '" + this.getOldStockQty() + "','" + this.getUpdatedStockQTy() + "','" + this.getStockUpdateReason() + "','" + updatedUser.getUserID() + "')";
+                    + "(`ingID`,`oldQty`, `updatedQty`, `reason`, `updatedBy`)"
+                    + " VALUES ('" + this.getIngID() + "', '" + this.getOldStockQty() + "','" + this.getUpdatedStockQTy() + "','" + this.getStockUpdateReason() + "','" + updatedUser.getUserID() + "')";
 
             i = dbConn.updateResult(query);
 

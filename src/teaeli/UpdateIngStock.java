@@ -300,7 +300,10 @@ public class UpdateIngStock extends javax.swing.JFrame {
                     }
                 } else {
                     ingredient.setVisibleStock(oldStockQty - stockChangeQty);
-
+                    
+                    //multiply updatedQty to show minus value
+                    ingredient.setUpdatedStockQTy(ingredient.getUpdatedStockQTy()*-1);
+                    
                     if (ingredient.getVisibleStock() < 0) {
                         JOptionPane.showMessageDialog(this, "Stock Qty can not be negative !", "Invalid Stock Quantity", 2);
                         this.newQtyTxt.setText(null);

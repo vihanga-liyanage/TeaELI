@@ -1,12 +1,5 @@
 package classes;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Vector;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
@@ -233,12 +226,6 @@ public class Blend {
         //get blendID
         this.getBlendIDFromBlendName();
 
-        //to get current date
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date currentDate = Calendar.getInstance().getTime();
-        dateFormat.format(currentDate);
-        Timestamp date = new Timestamp(currentDate.getTime());
-
         //query to update blend stock
         String query = "UPDATE blend SET visibleStock = '" + this.getVisibleStock() + "' WHERE blendID = '" + this.getBlendID() + "'";
 
@@ -247,8 +234,8 @@ public class Blend {
         if (i == 1) {
             //query to insert into stock history table
             query = "INSERT INTO blendstockhistory "
-                    + "(`blendID`, `date` , `oldQty`, `updatedQty`, `reason`, `updatedBy`) "
-                    + "VALUES ('" + this.getBlendID() + "', '" + date + "', '" + this.getOldStockQty() + "', '" + this.getUpdatedStockQTy() + "', '" + this.getStockUpdateReason() + "', '" + updatedUser.getUserID() + "')";
+                    + "(`blendID`, `oldQty`, `updatedQty`, `reason`, `updatedBy`) "
+                    + "VALUES ('" + this.getBlendID() + "', '" + this.getOldStockQty() + "', '" + this.getUpdatedStockQTy() + "', '" + this.getStockUpdateReason() + "', '" + updatedUser.getUserID() + "')";
 
             i = dbConn.updateResult(query);
 
@@ -397,11 +384,6 @@ public class Blend {
         this.getBlendIDFromBlendName();
 
         try {
-            //to get current date
-            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            Date currentDate = Calendar.getInstance().getTime();
-            dateFormat.format(currentDate);
-            Timestamp date = new Timestamp(currentDate.getTime());
 
             //query to update blend stock
             String query = "UPDATE blend SET visibleStock = '" + this.getVisibleStock() + "' , alocatedStock = '"
@@ -413,8 +395,8 @@ public class Blend {
                 String reason = "Blend Deliver (From allocated stock) : " + this.getStockUpdateReason();
 
                 //query to insert into stock history table about delivered amount
-                query = "INSERT INTO blendstockhistory (`blendID`, `date`, `oldQty`, `updatedQty`, `reason`, `updatedBy`) "
-                        + "VALUES ('" + this.getBlendID() + "','" + date + "','"
+                query = "INSERT INTO blendstockhistory (`blendID`, `oldQty`, `updatedQty`, `reason`, `updatedBy`) "
+                        + "VALUES ('" + this.getBlendID() + "','"
                         + this.getOldStockQty() + "','" + this.getUpdatedStockQTy() + "','" + reason
                         + "','" + updatedUser.getUserID() + "')";
 
@@ -428,8 +410,8 @@ public class Blend {
 
                     //query to insert into stock history table about sample deliver amount
                     query = "INSERT INTO blendstockhistory "
-                            + "(`blendID`, `date`, `oldQty`, `updatedQty`, `reason`, `updatedBy`) "
-                            + "VALUES ('" + this.getBlendID() + "','" + date + "','"
+                            + "(`blendID`, `oldQty`, `updatedQty`, `reason`, `updatedBy`) "
+                            + "VALUES ('" + this.getBlendID() + "','"
                             + oldStock + "','" + updatedStock + "','" + reason + "','" + updatedUser.getUserID() + "')";
 
                     i = dbConn.updateResult(query);
@@ -443,8 +425,8 @@ public class Blend {
 
                         //query to insert into stock history table about ubdelivered amount
                         query = "INSERT INTO blendstockhistory "
-                                + "(`blendID`, `date`, `oldQty`, `updatedQty`, `reason`, `updatedBy`) "
-                                + "VALUES ('" + this.getBlendID() + "','" + date + "','"
+                                + "(`blendID`, `oldQty`, `updatedQty`, `reason`, `updatedBy`) "
+                                + "VALUES ('" + this.getBlendID() + "','"
                                 + oldStock + "','" + updatedStock + "','" + reason + "','" + updatedUser.getUserID() + "')";
 
                         i = dbConn.updateResult(query);

@@ -485,7 +485,7 @@ public class PDF {
             PdfWriter.getInstance(doc, new FileOutputStream(tempPath + "Ingredient_Stock_History-" + dateRange + ".pdf"));
             doc.open();
 
-            float[] coloumWidths = {7, 8, 3, 4, 10, 4};
+            float[] coloumWidths = {5, 8, 3, 4, 12, 4};
             PdfPTable masterTable = new PdfPTable(coloumWidths);
             masterTable.setWidthPercentage(100);
 
@@ -556,7 +556,7 @@ public class PDF {
             PdfWriter.getInstance(doc, new FileOutputStream(tempPath + "Blend_Stock_History-" + dateRange + ".pdf"));
             doc.open();
 
-            float[] coloumWidths = {2, 5, 2, 2, 5, 2};
+            float[] coloumWidths = {5, 8, 3, 4, 12, 4};
             PdfPTable masterTable = new PdfPTable(coloumWidths);
             masterTable.setWidthPercentage(100);
 
@@ -605,11 +605,13 @@ public class PDF {
 
             doc.close();
 
+            JOptionPane.showMessageDialog(null, "Pdf generated successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
+            
         } catch (FileNotFoundException | DocumentException ex) {
-            JOptionPane.showMessageDialog(null, "There were some issues with the database. Please contact developers.\n\nError code : PDF 609", "Error", 0);
+            JOptionPane.showMessageDialog(null, "There were some issues with the database. Please contact developers.\n\nError code : PDF 611", "Error", 0);
             System.exit(0);
         } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, "There were some issues with the database. Please contact developers.\n\nError code : PDF 612", "Error", 0);
+            JOptionPane.showMessageDialog(null, "There were some issues with the database. Please contact developers.\n\nError code : PDF 614", "Error", 0);
             System.exit(0);
         }
     }

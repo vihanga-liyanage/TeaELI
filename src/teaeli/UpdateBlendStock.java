@@ -305,6 +305,9 @@ public class UpdateBlendStock extends javax.swing.JFrame {
                 } else {
                     blend.setVisibleStock(oldStockQty - stockChangeQty);
 
+                    //multiply updatedQty to show minus value
+                    blend.setUpdatedStockQTy(blend.getUpdatedStockQTy()*-1);
+                    
                     if (blend.getVisibleStock() < 0) {
                         JOptionPane.showMessageDialog(this, "Stock Qty can not be negative!!!", "Invalid Stock Quantity", 2);
                         this.newQtyTxt.setText(null);
