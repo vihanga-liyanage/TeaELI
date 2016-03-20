@@ -59,11 +59,11 @@ public class StockHistory {
                 + "WHERE S.updatedBy=U.userID AND S.ingID=I.ingID AND s.date BETWEEN '" + startdate + "' and '" + enddate + "'";
         
         res = dbConn.getResultArray(query);
+        tableModel.setRowCount(0);
         if(res.size()==0){
-            JOptionPane.showMessageDialog(null, "No records to show in this date range","No Records",0);
+            JOptionPane.showMessageDialog(null, "No records available in this date range","No Records",1);
             return;
         }
-        tableModel.setRowCount(0);
 
         while (res.next()) {
             Vector newRow = new Vector();
@@ -82,11 +82,11 @@ public class StockHistory {
                 + "WHERE S.updatedBy=U.userID AND S.ingID=I.ingID AND s.dateS.date Between '" + startdate + "' AND '"+endDate+"'";
         
         res = dbConn.getResultArray(query);
+        tableModel.setRowCount(0);
         if(res.size()==0){
-            JOptionPane.showMessageDialog(null, "No records to show in this date range","No Records",0);
+            JOptionPane.showMessageDialog(null, "No records available in this date range","No Records",1);
             return;
         }
-        tableModel.setRowCount(0);
 
         while (res.next()) {
             Vector newRow = new Vector();
@@ -105,11 +105,11 @@ public class StockHistory {
                 + "S.blendID=B.blendID AND S.date Between '" + startdate + "' and  '" + enddate + "'";
         
         res = dbConn.getResultArray(query);
+        tableModel.setRowCount(0);
         if(res.size()==0){
-            JOptionPane.showMessageDialog(null, "No records to show in this date range","No Records",0);
+            JOptionPane.showMessageDialog(null, "No records available in this date range","No Records",1);
             return;
         }
-        tableModel.setRowCount(0);
 
         while (res.next()) {
             Vector newRow = new Vector();
@@ -129,12 +129,11 @@ public class StockHistory {
                 + "WHERE S.updatedBy=U.userID AND S.blendID=B.blendID AND S.date Between '" + startdate + "' AND '"+endDate+"'";
         
         res = dbConn.getResultArray(query);
-        
+        tableModel.setRowCount(0);
         if(res.size()==0){
-            JOptionPane.showMessageDialog(null, "No records to show in this date range","No Records",0);
+            JOptionPane.showMessageDialog(null, "No records available in this date range","No Records",1);
             return;
         }
-        tableModel.setRowCount(0);
         while (res.next()) {
             Vector newRow = new Vector();
             for (int i = 0; i <= 5; i++) {

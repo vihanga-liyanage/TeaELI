@@ -14,6 +14,7 @@ import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import java.awt.Desktop;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -311,9 +312,11 @@ public class PDF {
             doc.close();
 
         } catch (FileNotFoundException | DocumentException ex) {
+            System.out.println(ex.getMessage());
             JOptionPane.showMessageDialog(null, "There were some issues with the database. Please contact developers.\n\nError code : PDF 314", "Error", 0);
             System.exit(0);
         } catch (IOException ex) {
+            System.out.println(ex.getMessage());
             JOptionPane.showMessageDialog(null, "There were some issues with the database. Please contact developers.\n\nError code : PDF 317", "Error", 0);
             System.exit(0);
         }
@@ -533,13 +536,28 @@ public class PDF {
             doc.add(masterTable);
 
             doc.close();
-            
-            JOptionPane.showMessageDialog(null, "Pdf generated successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
+           
+            int response = JOptionPane.showConfirmDialog(
+                    null,
+                    "PDF generated successfully. Would you like to open the containing folder?",
+                    "PSuccess",
+                    JOptionPane.YES_NO_OPTION
+            );
+            if (response == JOptionPane.YES_OPTION) {
+                try {
+                    //Opening the new directory
+                    Desktop.getDesktop().open(new File(tempPath));
+                } catch (IOException ex) {
+                    System.out.println("IOException : " + ex.getMessage());
+                }
+            }
             
         } catch (FileNotFoundException | DocumentException ex) {
+            System.out.println(ex.getMessage());
             JOptionPane.showMessageDialog(null, "There were some issues with the database. Please contact developers.\n\nError code : PDF 540", "Error", 0);
             System.exit(0);
         } catch (IOException ex) {
+            System.out.println(ex.getMessage());
             JOptionPane.showMessageDialog(null, "There were some issues with the database. Please contact developers.\n\nError code : PDF 543", "Error", 0);
             System.exit(0);
         }
@@ -605,12 +623,27 @@ public class PDF {
 
             doc.close();
 
-            JOptionPane.showMessageDialog(null, "Pdf generated successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
+            int response = JOptionPane.showConfirmDialog(
+                    null,
+                    "PDF generated successfully. Would you like to open the containing folder?",
+                    "PSuccess",
+                    JOptionPane.YES_NO_OPTION
+            );
+            if (response == JOptionPane.YES_OPTION) {
+                try {
+                    //Opening the new directory
+                    Desktop.getDesktop().open(new File(tempPath));
+                } catch (IOException ex) {
+                    System.out.println("IOException : " + ex.getMessage());
+                }
+            }
             
         } catch (FileNotFoundException | DocumentException ex) {
+            System.out.println(ex.getMessage());
             JOptionPane.showMessageDialog(null, "There were some issues with the database. Please contact developers.\n\nError code : PDF 611", "Error", 0);
             System.exit(0);
         } catch (IOException ex) {
+            System.out.println(ex.getMessage());
             JOptionPane.showMessageDialog(null, "There were some issues with the database. Please contact developers.\n\nError code : PDF 614", "Error", 0);
             System.exit(0);
         }

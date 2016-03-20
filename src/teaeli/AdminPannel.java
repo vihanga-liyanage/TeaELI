@@ -405,9 +405,9 @@ public class AdminPannel extends javax.swing.JFrame {
         ingStockHistoryTbl = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        StartDate = new org.jdesktop.swingx.JXDatePicker();
+        ingStartDate = new org.jdesktop.swingx.JXDatePicker();
         jLabel8 = new javax.swing.JLabel();
-        EndDate = new org.jdesktop.swingx.JXDatePicker();
+        ingEndDate = new org.jdesktop.swingx.JXDatePicker();
         btnIngredientGo = new javax.swing.JButton();
         btnIngredientHistoryReport = new javax.swing.JButton();
         btnCancelIngHistory = new javax.swing.JButton();
@@ -416,7 +416,7 @@ public class AdminPannel extends javax.swing.JFrame {
         blendStockHistoryTbl = new javax.swing.JTable();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        BlendStartDate = new org.jdesktop.swingx.JXDatePicker();
+        blendStartDate = new org.jdesktop.swingx.JXDatePicker();
         jLabel12 = new javax.swing.JLabel();
         blendEndDate = new org.jdesktop.swingx.JXDatePicker();
         btnBlendGo = new javax.swing.JButton();
@@ -1069,9 +1069,9 @@ public class AdminPannel extends javax.swing.JFrame {
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel8.setText("To");
 
-        EndDate.addActionListener(new java.awt.event.ActionListener() {
+        ingEndDate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                EndDateActionPerformed(evt);
+                ingEndDateActionPerformed(evt);
             }
         });
 
@@ -1113,11 +1113,11 @@ public class AdminPannel extends javax.swing.JFrame {
                             .addGroup(settingsIngHistoryPanelLayout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addGap(18, 18, 18)
-                                .addComponent(StartDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(ingStartDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel8)
                                 .addGap(18, 18, 18)
-                                .addComponent(EndDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(ingEndDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(btnIngredientGo)
                                 .addGap(18, 18, 18)
@@ -1133,9 +1133,9 @@ public class AdminPannel extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(settingsIngHistoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(StartDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ingStartDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(EndDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ingEndDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnIngredientGo)
                     .addComponent(btnCancelIngHistory))
                 .addGap(34, 34, 34)
@@ -1230,7 +1230,7 @@ public class AdminPannel extends javax.swing.JFrame {
                             .addGroup(settingsBlendHistoryPanelLayout.createSequentialGroup()
                                 .addComponent(jLabel11)
                                 .addGap(18, 18, 18)
-                                .addComponent(BlendStartDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(blendStartDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel12)
                                 .addGap(18, 18, 18)
@@ -1250,7 +1250,7 @@ public class AdminPannel extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(settingsBlendHistoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BlendStartDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(blendStartDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(blendEndDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBlendGo)
@@ -1795,13 +1795,13 @@ public class AdminPannel extends javax.swing.JFrame {
 
     private void btnIngredientGoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngredientGoActionPerformed
         SimpleDateFormat javadate = new SimpleDateFormat("yyyy-MM-dd");
-        if (StartDate.getDate() == null || EndDate.getDate() == null) {
-            JOptionPane.showMessageDialog(this, "Date Feilds Cannot be empty!!!", "Date Selection Error", 2);
-        } else if (StartDate.getDate().after(EndDate.getDate())) {
-            JOptionPane.showMessageDialog(this, "Please Enter Valid Date Range!!!", "Date Selection Error", 2);
+        if (ingStartDate.getDate() == null || ingEndDate.getDate() == null) {
+            JOptionPane.showMessageDialog(this, "Date feilds cannot be empty.", "Date Selection Error", 2);
+        } else if (ingStartDate.getDate().after(ingEndDate.getDate())) {
+            JOptionPane.showMessageDialog(this, "Please enter a valid date range.", "Date Selection Error", 2);
         } else {
-            Date start = StartDate.getDate();
-            Date end = EndDate.getDate();
+            Date start = ingStartDate.getDate();
+            Date end = ingEndDate.getDate();
 
             // increase date by one, because between query doesent get inclusive data in sQlite
             Calendar c = Calendar.getInstance();
@@ -1827,12 +1827,12 @@ public class AdminPannel extends javax.swing.JFrame {
 
     private void btnBlendGoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBlendGoActionPerformed
         SimpleDateFormat javadate = new SimpleDateFormat("yyyy-MM-dd");
-        if (BlendStartDate.getDate() == null || blendEndDate.getDate() == null) {
-            JOptionPane.showMessageDialog(this, "Date Feilds Cannot be empty.", "Date Selection Error", 2);
-        } else if (BlendStartDate.getDate().after(blendEndDate.getDate())) {
-            JOptionPane.showMessageDialog(this, "Please Enter Valid Date Range.", "Date Selection Error", 2);
+        if (blendStartDate.getDate() == null || blendEndDate.getDate() == null) {
+            JOptionPane.showMessageDialog(this, "Date feilds cannot be empty.", "Date Selection Error", 2);
+        } else if (blendStartDate.getDate().after(blendEndDate.getDate())) {
+            JOptionPane.showMessageDialog(this, "Please enter a valid date range.", "Date Selection Error", 2);
         } else {
-            Date start = BlendStartDate.getDate();
+            Date start = blendStartDate.getDate();
             Date end = blendEndDate.getDate();
 
             // increase date by one, because between query doesent get inclusive data in sQlite
@@ -1845,7 +1845,6 @@ public class AdminPannel extends javax.swing.JFrame {
             String enddate = javadate.format(end);
 
             if (start.equals(end)) {
-                System.out.println("ssss");
                 StockHistory stockhistory = new StockHistory();
                 stockhistory.populateStockBlendHistoryTableForDate((DefaultTableModel) blendStockHistoryTbl.getModel(), startdate, enddate);
                 blendGo = 1;
@@ -1857,9 +1856,9 @@ public class AdminPannel extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnBlendGoActionPerformed
 
-    private void EndDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EndDateActionPerformed
+    private void ingEndDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingEndDateActionPerformed
 
-    }//GEN-LAST:event_EndDateActionPerformed
+    }//GEN-LAST:event_ingEndDateActionPerformed
 
     private void btnIngredientHistoryReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngredientHistoryReportActionPerformed
         if (ingredientGo == 0) {
@@ -1878,8 +1877,8 @@ public class AdminPannel extends javax.swing.JFrame {
                 pdf.IngStockHistoryPdfGeneration(temp, today, name);
             }
         } else {
-            String sDate = sdf3.format(StartDate.getDate());
-            String eDate = sdf3.format(EndDate.getDate());
+            String sDate = sdf3.format(ingStartDate.getDate());
+            String eDate = sdf3.format(ingEndDate.getDate());
             String name = sDate + "-" + eDate;
             DefaultTableModel model = (DefaultTableModel) ingStockHistoryTbl.getModel();
             JTable temp = new JTable(model);
@@ -1888,17 +1887,19 @@ public class AdminPannel extends javax.swing.JFrame {
     }//GEN-LAST:event_btnIngredientHistoryReportActionPerformed
 
     private void BtnCancelBlendHistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCancelBlendHistoryActionPerformed
-        BlendStartDate.getEditor().setText("");
-        blendEndDate.getEditor().setText("");
+        blendStartDate.setDate(null);
+        blendEndDate.setDate(null);
         StockHistory stockhistory = new StockHistory();
         stockhistory.populateStockBlendHistoryTable((DefaultTableModel) blendStockHistoryTbl.getModel());
+        blendGo = 0;
     }//GEN-LAST:event_BtnCancelBlendHistoryActionPerformed
 
     private void btnCancelIngHistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelIngHistoryActionPerformed
-        StartDate.getEditor().setText("");
-        EndDate.getEditor().setText("");
+        ingStartDate.setDate(null);
+        ingEndDate.setDate(null);
         StockHistory ingredientHistoryStock = new StockHistory();
         ingredientHistoryStock.populateStockIngredientHistoryTable((DefaultTableModel) ingStockHistoryTbl.getModel());
+        ingredientGo = 0;
     }//GEN-LAST:event_btnCancelIngHistoryActionPerformed
 
     private void btnBlendHistoryReportGenerationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBlendHistoryReportGenerationActionPerformed
@@ -1918,8 +1919,8 @@ public class AdminPannel extends javax.swing.JFrame {
                 pdf.BlendStockHistoryPdfGeneration(temp, today, name);
             }
         } else {
-            String sDate = sdf3.format(StartDate.getDate());
-            String eDate = sdf3.format(EndDate.getDate());
+            String sDate = sdf3.format(ingStartDate.getDate());
+            String eDate = sdf3.format(ingEndDate.getDate());
             String name = sDate + "-" + eDate;
             DefaultTableModel model = (DefaultTableModel) blendStockHistoryTbl.getModel();
             JTable temp = new JTable(model);
@@ -1996,10 +1997,7 @@ public class AdminPannel extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private org.jdesktop.swingx.JXDatePicker BlendStartDate;
     private javax.swing.JButton BtnCancelBlendHistory;
-    private org.jdesktop.swingx.JXDatePicker EndDate;
-    private org.jdesktop.swingx.JXDatePicker StartDate;
     private javax.swing.JButton addItemBtn;
     private javax.swing.JButton addNewBlendsBtn;
     private javax.swing.JButton addProductBtn;
@@ -2010,6 +2008,7 @@ public class AdminPannel extends javax.swing.JFrame {
     private javax.swing.JTable blendDetailsTbl;
     private org.jdesktop.swingx.JXDatePicker blendEndDate;
     private javax.swing.JLabel blendNameLbl;
+    private org.jdesktop.swingx.JXDatePicker blendStartDate;
     public javax.swing.JTable blendStockHistoryTbl;
     private javax.swing.JButton btnBlendGo;
     private javax.swing.JButton btnBlendHistoryReportGeneration;
@@ -2017,6 +2016,8 @@ public class AdminPannel extends javax.swing.JFrame {
     private javax.swing.JButton btnIngredientGo;
     private javax.swing.JButton btnIngredientHistoryReport;
     private javax.swing.JButton deleteUserBtn;
+    private org.jdesktop.swingx.JXDatePicker ingEndDate;
+    private org.jdesktop.swingx.JXDatePicker ingStartDate;
     public javax.swing.JTable ingStockHistoryTbl;
     private javax.swing.JLabel inventoryBlendLbl;
     private javax.swing.JLabel inventoryBlendLbl1;

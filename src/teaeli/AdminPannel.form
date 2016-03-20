@@ -1122,11 +1122,11 @@
                                           <Group type="102" alignment="0" attributes="0">
                                               <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                                              <Component id="StartDate" min="-2" max="-2" attributes="0"/>
+                                              <Component id="ingStartDate" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace type="separate" max="-2" attributes="0"/>
                                               <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                                              <Component id="EndDate" min="-2" max="-2" attributes="0"/>
+                                              <Component id="ingEndDate" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace type="separate" max="-2" attributes="0"/>
                                               <Component id="btnIngredientGo" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -1148,9 +1148,9 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabel4" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
-                                  <Component id="StartDate" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="ingStartDate" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel8" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
-                                  <Component id="EndDate" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="ingEndDate" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="btnIngredientGo" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="btnCancelIngHistory" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
@@ -1246,7 +1246,7 @@
                         <Property name="text" type="java.lang.String" value="Starts from"/>
                       </Properties>
                     </Component>
-                    <Component class="org.jdesktop.swingx.JXDatePicker" name="StartDate">
+                    <Component class="org.jdesktop.swingx.JXDatePicker" name="ingStartDate">
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel8">
                       <Properties>
@@ -1257,9 +1257,9 @@
                         <Property name="text" type="java.lang.String" value="To"/>
                       </Properties>
                     </Component>
-                    <Component class="org.jdesktop.swingx.JXDatePicker" name="EndDate">
+                    <Component class="org.jdesktop.swingx.JXDatePicker" name="ingEndDate">
                       <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="EndDateActionPerformed"/>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ingEndDateActionPerformed"/>
                       </Events>
                     </Component>
                     <Component class="javax.swing.JButton" name="btnIngredientGo">
@@ -1319,7 +1319,7 @@
                                           <Group type="102" alignment="0" attributes="0">
                                               <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                                              <Component id="BlendStartDate" min="-2" max="-2" attributes="0"/>
+                                              <Component id="blendStartDate" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace type="separate" max="-2" attributes="0"/>
                                               <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -1345,7 +1345,7 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabel11" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
-                                  <Component id="BlendStartDate" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="blendStartDate" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel12" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                                   <Component id="blendEndDate" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="btnBlendGo" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -1443,7 +1443,7 @@
                         <Property name="text" type="java.lang.String" value="Starts from"/>
                       </Properties>
                     </Component>
-                    <Component class="org.jdesktop.swingx.JXDatePicker" name="BlendStartDate">
+                    <Component class="org.jdesktop.swingx.JXDatePicker" name="blendStartDate">
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel12">
                       <Properties>
