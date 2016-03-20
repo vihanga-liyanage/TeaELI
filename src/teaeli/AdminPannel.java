@@ -49,7 +49,7 @@ public class AdminPannel extends javax.swing.JFrame {
     int blendGo = 0, ingredientGo = 0;
     private Object ingTable;
     java.util.Date date = new java.util.Date();
-    SimpleDateFormat sdf3 = new SimpleDateFormat("yyyy-MM-dd");
+    SimpleDateFormat sdf3 = new SimpleDateFormat("yyyy.MM.dd");
     String today = sdf3.format(date);
 
     /**
@@ -1057,7 +1057,7 @@ public class AdminPannel extends javax.swing.JFrame {
             ingStockHistoryTbl.getColumnModel().getColumn(5).setPreferredWidth(200);
         }
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel2.setText("Search History By Date Range");
 
@@ -1104,24 +1104,25 @@ public class AdminPannel extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(settingsIngHistoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 1230, Short.MAX_VALUE)
-                    .addGroup(settingsIngHistoryPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel4)
-                        .addGap(18, 18, 18)
-                        .addComponent(StartDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel8)
-                        .addGap(18, 18, 18)
-                        .addComponent(EndDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnIngredientGo)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnCancelIngHistory)
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, settingsIngHistoryPanelLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnIngredientHistoryReport, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnIngredientHistoryReport, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(settingsIngHistoryPanelLayout.createSequentialGroup()
+                        .addGroup(settingsIngHistoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addGroup(settingsIngHistoryPanelLayout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addGap(18, 18, 18)
+                                .addComponent(StartDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel8)
+                                .addGap(18, 18, 18)
+                                .addComponent(EndDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnIngredientGo)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnCancelIngHistory)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         settingsIngHistoryPanelLayout.setVerticalGroup(
@@ -1129,7 +1130,7 @@ public class AdminPannel extends javax.swing.JFrame {
             .addGroup(settingsIngHistoryPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(settingsIngHistoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(StartDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1137,7 +1138,7 @@ public class AdminPannel extends javax.swing.JFrame {
                     .addComponent(EndDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnIngredientGo)
                     .addComponent(btnCancelIngHistory))
-                .addGap(22, 22, 22)
+                .addGap(34, 34, 34)
                 .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnIngredientHistoryReport, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1179,9 +1180,9 @@ public class AdminPannel extends javax.swing.JFrame {
             blendStockHistoryTbl.getColumnModel().getColumn(5).setPreferredWidth(200);
         }
 
-        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel10.setText("Search History By Date Range:");
+        jLabel10.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel10.setText("Search History By Date Range");
 
         jLabel11.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -1220,24 +1221,25 @@ public class AdminPannel extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(settingsBlendHistoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane9, javax.swing.GroupLayout.DEFAULT_SIZE, 1230, Short.MAX_VALUE)
-                    .addGroup(settingsBlendHistoryPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel11)
-                        .addGap(18, 18, 18)
-                        .addComponent(BlendStartDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel12)
-                        .addGap(18, 18, 18)
-                        .addComponent(blendEndDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnBlendGo)
-                        .addGap(18, 18, 18)
-                        .addComponent(BtnCancelBlendHistory)
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, settingsBlendHistoryPanelLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnBlendHistoryReportGeneration, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnBlendHistoryReportGeneration, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(settingsBlendHistoryPanelLayout.createSequentialGroup()
+                        .addGroup(settingsBlendHistoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(settingsBlendHistoryPanelLayout.createSequentialGroup()
+                                .addComponent(jLabel11)
+                                .addGap(18, 18, 18)
+                                .addComponent(BlendStartDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel12)
+                                .addGap(18, 18, 18)
+                                .addComponent(blendEndDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnBlendGo)
+                                .addGap(18, 18, 18)
+                                .addComponent(BtnCancelBlendHistory)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         settingsBlendHistoryPanelLayout.setVerticalGroup(
@@ -1245,7 +1247,7 @@ public class AdminPannel extends javax.swing.JFrame {
             .addGroup(settingsBlendHistoryPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(settingsBlendHistoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BlendStartDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1253,7 +1255,7 @@ public class AdminPannel extends javax.swing.JFrame {
                     .addComponent(blendEndDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBlendGo)
                     .addComponent(BtnCancelBlendHistory))
-                .addGap(22, 22, 22)
+                .addGap(34, 34, 34)
                 .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnBlendHistoryReportGeneration, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1826,9 +1828,9 @@ public class AdminPannel extends javax.swing.JFrame {
     private void btnBlendGoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBlendGoActionPerformed
         SimpleDateFormat javadate = new SimpleDateFormat("yyyy-MM-dd");
         if (BlendStartDate.getDate() == null || blendEndDate.getDate() == null) {
-            JOptionPane.showMessageDialog(this, "Date Feilds Cannot be empty!!!", "Date Selection Error", 2);
+            JOptionPane.showMessageDialog(this, "Date Feilds Cannot be empty.", "Date Selection Error", 2);
         } else if (BlendStartDate.getDate().after(blendEndDate.getDate())) {
-            JOptionPane.showMessageDialog(this, "Please Enter Valid Date Range!!!", "Date Selection Error", 2);
+            JOptionPane.showMessageDialog(this, "Please Enter Valid Date Range.", "Date Selection Error", 2);
         } else {
             Date start = BlendStartDate.getDate();
             Date end = blendEndDate.getDate();
@@ -1860,17 +1862,30 @@ public class AdminPannel extends javax.swing.JFrame {
     }//GEN-LAST:event_EndDateActionPerformed
 
     private void btnIngredientHistoryReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngredientHistoryReportActionPerformed
-
-        if (StartDate.getDate() != null && EndDate.getDate() != null && blendGo == 0) {
-            JOptionPane.showMessageDialog(this, "Please Press Go button to filter By date or Press Cancel ");
+        if (ingredientGo == 0) {
+            int confirm = JOptionPane.showConfirmDialog(
+                    this, 
+                    "Are you sure you want to genarate the entire history PDF?", 
+                    "Confirm", 
+                    JOptionPane.YES_NO_OPTION, 
+                    JOptionPane.INFORMATION_MESSAGE
+            );
+            if (confirm == JOptionPane.YES_OPTION) {
+                String sDate = "2016.01.01";
+                String name = sDate + "-" + today;
+                DefaultTableModel model = (DefaultTableModel) ingStockHistoryTbl.getModel();
+                JTable temp = new JTable(model);
+                pdf.IngStockHistoryPdfGeneration(temp, today, name);
+            }
         } else {
+            String sDate = sdf3.format(StartDate.getDate());
+            String eDate = sdf3.format(EndDate.getDate());
+            String name = sDate + "-" + eDate;
             DefaultTableModel model = (DefaultTableModel) ingStockHistoryTbl.getModel();
             JTable temp = new JTable(model);
-            pdf.IngStockHistoryPdfGeneration(temp, today);
-            blendGo = 0;
+            pdf.IngStockHistoryPdfGeneration(temp, today, name);
         }
     }//GEN-LAST:event_btnIngredientHistoryReportActionPerformed
-
 
     private void BtnCancelBlendHistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCancelBlendHistoryActionPerformed
         BlendStartDate.getEditor().setText("");
@@ -1887,14 +1902,28 @@ public class AdminPannel extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelIngHistoryActionPerformed
 
     private void btnBlendHistoryReportGenerationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBlendHistoryReportGenerationActionPerformed
-        if (BlendStartDate.getDate() != null && blendEndDate.getDate() != null && blendGo == 0) {
-            JOptionPane.showMessageDialog(this, "Please Press Go button to filter By date or Press Cancel");
+        if (blendGo == 0) {
+            int confirm = JOptionPane.showConfirmDialog(
+                    this, 
+                    "Are you sure you want to genarate the entire history PDF?", 
+                    "Confirm", 
+                    JOptionPane.YES_NO_OPTION, 
+                    JOptionPane.INFORMATION_MESSAGE
+            );
+            if (confirm == JOptionPane.YES_OPTION) {
+                String sDate = "2016.01.01";
+                String name = sDate + "-" + today;
+                DefaultTableModel model = (DefaultTableModel) blendStockHistoryTbl.getModel();
+                JTable temp = new JTable(model);
+                pdf.BlendStockHistoryPdfGeneration(temp, today, name);
+            }
         } else {
-
+            String sDate = sdf3.format(StartDate.getDate());
+            String eDate = sdf3.format(EndDate.getDate());
+            String name = sDate + "-" + eDate;
             DefaultTableModel model = (DefaultTableModel) blendStockHistoryTbl.getModel();
             JTable temp = new JTable(model);
-            pdf.BlendStockHistoryPdfGeneration(temp, today);
-            blendGo = 0;
+            pdf.BlendStockHistoryPdfGeneration(temp, today, name);
         }
     }//GEN-LAST:event_btnBlendHistoryReportGenerationActionPerformed
 

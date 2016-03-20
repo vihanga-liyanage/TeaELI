@@ -474,7 +474,7 @@ public class PDF {
 
     }
 
-    public void IngStockHistoryPdfGeneration(JTable table, String date) {
+    public void IngStockHistoryPdfGeneration(JTable table, String date, String dateRange) {
         try {
             Document doc = new Document(PageSize.A4.rotate(), 20, 20, 20, 20);
 
@@ -482,10 +482,10 @@ public class PDF {
             String tempPath = path + "Ingredient Stock History\\";
             new File(tempPath).mkdirs();
 
-            PdfWriter.getInstance(doc, new FileOutputStream(tempPath + "Ingredient_Stock_History " + date + ".pdf"));
+            PdfWriter.getInstance(doc, new FileOutputStream(tempPath + "Ingredient_Stock_History-" + dateRange + ".pdf"));
             doc.open();
 
-            float[] coloumWidths = {2, 5, 2, 2, 5, 2};
+            float[] coloumWidths = {7, 8, 3, 4, 10, 4};
             PdfPTable masterTable = new PdfPTable(coloumWidths);
             masterTable.setWidthPercentage(100);
 
@@ -505,6 +505,8 @@ public class PDF {
             headerTable.addCell(titleCell);
             headerTable.addCell(getHeaderNameCell("Date taken"));
             headerTable.addCell(getHeaderDataCell(date));
+            headerTable.addCell(getHeaderNameCell("Date Range"));
+            headerTable.addCell(getHeaderDataCell(dateRange));
 
             PdfPCell headerDataCell = new PdfPCell(headerTable);
             headerDataCell.setColspan(5);
@@ -531,17 +533,19 @@ public class PDF {
             doc.add(masterTable);
 
             doc.close();
-
+            
+            JOptionPane.showMessageDialog(null, "Pdf generated successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
+            
         } catch (FileNotFoundException | DocumentException ex) {
-            JOptionPane.showMessageDialog(null, "There were some issues with the database. Please contact developers.\n\nError code : PDF 536", "Error", 0);
+            JOptionPane.showMessageDialog(null, "There were some issues with the database. Please contact developers.\n\nError code : PDF 540", "Error", 0);
             System.exit(0);
         } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, "There were some issues with the database. Please contact developers.\n\nError code : PDF 539", "Error", 0);
+            JOptionPane.showMessageDialog(null, "There were some issues with the database. Please contact developers.\n\nError code : PDF 543", "Error", 0);
             System.exit(0);
         }
     }
 
-    public void BlendStockHistoryPdfGeneration(JTable table, String date) {
+    public void BlendStockHistoryPdfGeneration(JTable table, String date, String dateRange) {
         try {
             Document doc = new Document(PageSize.A4.rotate(), 20, 20, 20, 20);
 
@@ -549,7 +553,7 @@ public class PDF {
             String tempPath = path + "Blend Stock History\\";
             new File(tempPath).mkdirs();
 
-            PdfWriter.getInstance(doc, new FileOutputStream(tempPath + "Blend_Stock_History " + date + ".pdf"));
+            PdfWriter.getInstance(doc, new FileOutputStream(tempPath + "Blend_Stock_History-" + dateRange + ".pdf"));
             doc.open();
 
             float[] coloumWidths = {2, 5, 2, 2, 5, 2};
@@ -572,6 +576,8 @@ public class PDF {
             headerTable.addCell(titleCell);
             headerTable.addCell(getHeaderNameCell("Date taken"));
             headerTable.addCell(getHeaderDataCell(date));
+            headerTable.addCell(getHeaderNameCell("Date Range"));
+            headerTable.addCell(getHeaderDataCell(dateRange));
 
             PdfPCell headerDataCell = new PdfPCell(headerTable);
             headerDataCell.setColspan(5);
@@ -600,10 +606,10 @@ public class PDF {
             doc.close();
 
         } catch (FileNotFoundException | DocumentException ex) {
-            JOptionPane.showMessageDialog(null, "There were some issues with the database. Please contact developers.\n\nError code : PDF 603", "Error", 0);
+            JOptionPane.showMessageDialog(null, "There were some issues with the database. Please contact developers.\n\nError code : PDF 609", "Error", 0);
             System.exit(0);
         } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, "There were some issues with the database. Please contact developers.\n\nError code : PDF 606", "Error", 0);
+            JOptionPane.showMessageDialog(null, "There were some issues with the database. Please contact developers.\n\nError code : PDF 612", "Error", 0);
             System.exit(0);
         }
     }
