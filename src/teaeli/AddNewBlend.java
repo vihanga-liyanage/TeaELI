@@ -535,12 +535,12 @@ public class AddNewBlend extends javax.swing.JFrame {
 
     private void ingPerAddBtnActionPerformed(java.awt.event.ActionEvent evt) {                                             
         if (ingCombo.getSelectedIndex() == -1) {
-            JOptionPane.showMessageDialog(ingCombo, "Please select an ingredient to add.", "Empty Ingredient Selection", 0);
+            JOptionPane.showMessageDialog(ingCombo, "Please select an ingredient to add.", "Empty Ingredient Selection", 2);
             ingCombo.requestFocus();
             return;
         }
         if (ingPerTxt.getText().equals("")) {
-            JOptionPane.showMessageDialog(ingPerTxt, "Please enter an ingredient percentage to add.", "Empty Ingredient Percentage", 0);
+            JOptionPane.showMessageDialog(ingPerTxt, "Please enter an ingredient percentage to add.", "Empty Ingredient Percentage", 2);
             ingPerTxt.requestFocus();
             return;
         }
@@ -657,7 +657,7 @@ public class AddNewBlend extends javax.swing.JFrame {
             blendCodeTxt.requestFocus();
             return;
         } else if (blend.checkExistingBlendID(blendCodeTxt.getText()) == 1) {
-            JOptionPane.showMessageDialog(this, "Blend code already exists.", "Error", 2);
+            JOptionPane.showMessageDialog(this, "Blend code already exists.", "Error", 0);
             blendCodeTxt.requestFocus();
             return;
         }
@@ -667,7 +667,7 @@ public class AddNewBlend extends javax.swing.JFrame {
             blendNameTxt.requestFocus();
             return;
         } else if (blend.checkExistingBlendName(blendNameTxt.getText()) == 1) {
-            JOptionPane.showMessageDialog(this, "Blend name already exists.", "Error", 2);
+            JOptionPane.showMessageDialog(this, "Blend name already exists.", "Error", 0);
             blendNameTxt.requestFocus();
             return;
         }
