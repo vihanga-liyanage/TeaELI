@@ -972,10 +972,10 @@ public class AdminPannel extends javax.swing.JFrame {
                                     .addComponent(jLabel14, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(settingsBlendPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(blendNameLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(blendCatgLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(blendBaseLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGroup(settingsBlendPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(blendNameLbl, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+                                    .addComponent(blendCatgLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(blendBaseLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addGap(0, 8, Short.MAX_VALUE))
                     .addGroup(settingsBlendPanelLayout.createSequentialGroup()
                         .addGroup(settingsBlendPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1487,7 +1487,14 @@ public class AdminPannel extends javax.swing.JFrame {
                 blendDetails.blendAddnewBtn.setEnabled(false);
                 blendDetails.blendCategoryCombo.setEnabled(false);
                 blendDetails.baseCombo.setEnabled(false);
-
+                
+                blendDetails.ingCombo.setEnabled(false);
+                blendDetails.ingPerTxt.setEnabled(false);
+                blendDetails.flavoursCombo.setEnabled(false);
+                blendDetails.flavoursPerTxt.setEnabled(false);
+                blendDetails.ingTable.setEnabled(false);
+                blendDetails.flavourTable.setEnabled(false);
+                
                 Blend blend = new Blend();
                 baseID = blend.getBaseByBlendID(blendID);
                 base = blend.getIngByBaseName(baseID);
@@ -1498,9 +1505,9 @@ public class AdminPannel extends javax.swing.JFrame {
                 ingredient.populateBlendFlavourTable((DefaultTableModel) blendDetails.flavourTable.getModel(), blendID);
 
                 blendDetails.ingCombo.setSelectedIndex(-1);
-                blendDetails.ingCombo.requestFocus();
+                //blendDetails.ingCombo.requestFocus();
                 blendDetails.flavoursCombo.setSelectedIndex(-1);
-                blendDetails.flavoursCombo.requestFocus();
+                //blendDetails.flavoursCombo.requestFocus();
                 blendDetails.setVisible(true);
                 blendDetails.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 orderSearchCombo.setSelectedIndex(-1);

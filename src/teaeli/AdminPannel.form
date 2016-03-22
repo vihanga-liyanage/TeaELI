@@ -845,10 +845,10 @@
                                                   <Component id="jLabel13" alignment="1" max="32767" attributes="0"/>
                                               </Group>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="blendNameLbl" min="-2" pref="159" max="-2" attributes="0"/>
-                                                  <Component id="blendCatgLbl" alignment="0" min="-2" pref="151" max="-2" attributes="0"/>
-                                                  <Component id="blendBaseLbl" alignment="0" min="-2" pref="142" max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                                  <Component id="blendNameLbl" pref="300" max="32767" attributes="0"/>
+                                                  <Component id="blendCatgLbl" alignment="0" max="32767" attributes="0"/>
+                                                  <Component id="blendBaseLbl" alignment="0" max="32767" attributes="0"/>
                                               </Group>
                                           </Group>
                                       </Group>

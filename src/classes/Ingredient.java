@@ -183,11 +183,9 @@ public class Ingredient {
         resultSet = dbConn.getResultArray(query);
         tableModel.setRowCount(0);
         while (resultSet.next()) {
-            Vector newRow = new Vector();
-            for (int i = 0; i <= 2; i++) {
-                newRow.addElement(resultSet.getString(i));
-            }
-            tableModel.addRow(newRow);
+            String nme = resultSet.getString(0);
+            double per = Double.parseDouble(resultSet.getString(1));
+            tableModel.addRow(new Object[]{nme,per});
         }
     }
 
@@ -200,11 +198,9 @@ public class Ingredient {
         resultSet = dbConn.getResultArray(query);
         tableModel.setRowCount(0);
         while (resultSet.next()) {
-            Vector newRow = new Vector();
-            for (int i = 0; i <= 2; i++) {
-                newRow.addElement(resultSet.getString(i));
-            }
-            tableModel.addRow(newRow);
+            String nme = resultSet.getString(0);
+            double per = Double.parseDouble(resultSet.getString(1));
+            tableModel.addRow(new Object[]{nme,per});
         }
     }
 
