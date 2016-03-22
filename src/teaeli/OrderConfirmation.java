@@ -453,6 +453,7 @@ public class OrderConfirmation extends javax.swing.JFrame {
 
                 //finishing order
                 this.createNewBlendOrder2.dispose();
+                
                 //Re-generating the admin panel since the data is changed
                 if ("teaeli.AdminPannel".equals(pannel.getClass().getName())) {
                     AdminPannel adminPannel = new AdminPannel();

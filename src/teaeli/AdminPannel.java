@@ -1432,23 +1432,18 @@ public class AdminPannel extends javax.swing.JFrame {
     }//GEN-LAST:event_searchIngredientBtnActionPerformed
 
     private void addNewBlendsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addNewBlendsBtnActionPerformed
-        /*
          String[] counts = order.getOrderCounts();
          if ((Integer.parseInt(counts[0]) > 0) && (Integer.parseInt(counts[1]) > 0)){
-         JOptionPane.showMessageDialog(this, "You have 1 pending order and 1 not completed order. You cannot place new orders.");
+            JOptionPane.showMessageDialog(this, "You have 1 pending order and 1 not completed order. You cannot place new orders.");
          } else if (Integer.parseInt(counts[0]) > 1){
-         JOptionPane.showMessageDialog(this, "You have 2 pending orders. You cannot place new orders.");
+            JOptionPane.showMessageDialog(this, "You have 2 pending orders. You cannot place new orders.");
          } else if (Integer.parseInt(counts[1]) > 1){
-         JOptionPane.showMessageDialog(this, "You have 2 not completed orders. You cannot place new orders.");
+            JOptionPane.showMessageDialog(this, "You have 2 not completed orders. You cannot place new orders.");
          } else {
-         CreateNewBlendOrder1 createNewBlendOrder = new CreateNewBlendOrder1();
-         createNewBlendOrder.setVisible(true);
-         createNewBlendOrder.pannel = this;
+            CreateNewBlendOrder1 createNewBlendOrder = new CreateNewBlendOrder1();
+            createNewBlendOrder.setVisible(true);
+            createNewBlendOrder.pannel = this;
          }
-         */
-        CreateNewBlendOrder1 createNewBlendOrder = new CreateNewBlendOrder1();
-        createNewBlendOrder.setVisible(true);
-        createNewBlendOrder.pannel = this;
     }//GEN-LAST:event_addNewBlendsBtnActionPerformed
 
     private void profileBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profileBtnActionPerformed
@@ -1477,7 +1472,7 @@ public class AdminPannel extends javax.swing.JFrame {
 
     private void searchOrderBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchOrderBtnActionPerformed
         OrderDetails orderDetails = new OrderDetails();
-        orderDetails.setAdminPannel(this);
+        orderDetails.setPannel(this);
         String id = "";
         try {
             id = orderSearchCombo.getSelectedItem().toString();
@@ -1574,7 +1569,7 @@ public class AdminPannel extends javax.swing.JFrame {
 
                 DeliverBlend deliverBlend = new DeliverBlend();
 
-                deliverBlend.setAdminPannel(this);
+                deliverBlend.setPannel(this);
                 deliverBlend.setVisible(true);
                 deliverBlend.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
                 deliverBlend.blendNameLbl.setText(blendDelivery.getBlendName());
@@ -1607,7 +1602,7 @@ public class AdminPannel extends javax.swing.JFrame {
 
                 UpdateIngStock updateStock = new UpdateIngStock();
 
-                updateStock.setAdminPannel(this);
+                updateStock.setPannel(this);
                 updateStock.setVisible(true);
                 updateStock.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 updateStock.updateStockItemNameLbl.setText(ingredeintForStock.getIngName());
@@ -1639,7 +1634,7 @@ public class AdminPannel extends javax.swing.JFrame {
 
                 UpdateBlendStock updateBlendStock = new UpdateBlendStock();
 
-                updateBlendStock.setAdminPannel(this);
+                updateBlendStock.setPannel(this);
                 updateBlendStock.setVisible(true);
                 updateBlendStock.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 updateBlendStock.updateStockItemNameLbl.setText(blendForStock.getBlendName());
@@ -1689,6 +1684,7 @@ public class AdminPannel extends javax.swing.JFrame {
     /* sttart of searchProductCombo method */
     private void searchProductCombo() {
         BlendDetails blendDetails = new BlendDetails();
+        blendDetails.adminpanel = this;
         String blendID = "";
         String blendName = "";
         int baseID = 0;
@@ -1946,7 +1942,7 @@ public class AdminPannel extends javax.swing.JFrame {
 
             } 
         } else {
-            JOptionPane.showMessageDialog(this, "No recepie for this Blend!!!", "No recepie", 0);
+            JOptionPane.showMessageDialog(this, "No recepie found for this Blend.", "No recepie", 0);
         }
     }
     /* end of loadBlendDetails method */

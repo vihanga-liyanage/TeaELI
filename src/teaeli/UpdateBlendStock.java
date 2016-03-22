@@ -9,10 +9,10 @@ import javax.swing.JOptionPane;
 
 public class UpdateBlendStock extends javax.swing.JFrame {
 
-    private AdminPannel adminPannel;
+    private Object pannel;
 
-    public void setAdminPannel(AdminPannel adminPannel) {
-        this.adminPannel = adminPannel;
+    public void setPannel(Object pannel) {
+        this.pannel = pannel;
     }
 
     public UpdateBlendStock() {
@@ -53,8 +53,14 @@ public class UpdateBlendStock extends javax.swing.JFrame {
     //method to refresh related tables and close this window
     private void close() {
         this.setVisible(false);
-        adminPannel.populateBlendStockTable();
-        adminPannel.populateBlendHistoryTable();
+        if ("teaeli.AdminPannel".equals(pannel.getClass().getName())) {
+            AdminPannel adminPannel = (AdminPannel) pannel;
+            adminPannel.populateBlendStockTable();
+            adminPannel.populateBlendHistoryTable();
+        } else if ("teaeli.ManagerPannel".equals(pannel.getClass().getName())) {
+            ManagerPannel managerPannel = (ManagerPannel) pannel;
+            managerPannel.populateBlendStockTable();
+        }
         this.dispose();
     }
 

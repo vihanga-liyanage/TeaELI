@@ -44,17 +44,23 @@ public class UpdateIngStock extends javax.swing.JFrame {
         });
     }
 
-    private AdminPannel adminPannel;
+    private Object pannel;
 
-    public void setAdminPannel(AdminPannel adminPannel) {
-        this.adminPannel = adminPannel;
+    public void setPannel(Object pannel) {
+        this.pannel = pannel;
     }
 
     //method to refresh related tables and close this window
     private void close() {
         this.setVisible(false);
-        adminPannel.populateIngStockTable();
-        adminPannel.populateIngHistoryTable();
+        if ("teaeli.AdminPannel".equals(pannel.getClass().getName())) {
+            AdminPannel adminPannel = (AdminPannel) pannel;
+            adminPannel.populateIngStockTable();
+            adminPannel.populateIngHistoryTable();
+        } else if ("teaeli.ManagerPannel".equals(pannel.getClass().getName())) {
+            ManagerPannel managerPannel = (ManagerPannel) pannel;
+            managerPannel.populateIngStockTable();
+        }
         this.dispose();
     }
 
