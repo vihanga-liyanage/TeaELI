@@ -737,6 +737,8 @@ public class BlendDetails extends javax.swing.JFrame {
         DefaultComboBoxModel model = (DefaultComboBoxModel) baseCombo.getModel();
         if(model.getIndexOf(base) == -1){
             JOptionPane.showMessageDialog(this, "Please select a valid base composition", "Invalid Base Composition", 2);
+            baseCombo.setSelectedIndex(-1);
+            baseCombo.requestFocus();
             return;
         }
         
@@ -996,6 +998,8 @@ public class BlendDetails extends javax.swing.JFrame {
         DefaultComboBoxModel model = (DefaultComboBoxModel) baseCombo.getModel();
         if(model.getIndexOf(base) == -1){
             JOptionPane.showMessageDialog(this, "Please select a valid base composition", "Invalid Base Composition", 2);
+            baseCombo.setSelectedIndex(-1);
+            baseCombo.requestFocus();
             return;
         }
 
