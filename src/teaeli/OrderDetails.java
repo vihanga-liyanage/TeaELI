@@ -370,8 +370,8 @@ public class OrderDetails extends javax.swing.JFrame {
             String str, remark = "";
 
             try {
-                str = orderDetailsTable.getValueAt(i, 8).toString();
-                remark = orderDetailsTable.getValueAt(i, 9).toString();
+                str = orderDetailsTable.getValueAt(i, 6).toString();
+                remark = orderDetailsTable.getValueAt(i, 7).toString();
             } catch (NullPointerException e) {
                 str = "0";
                 remark = "";

@@ -129,7 +129,7 @@ public class UpdateBlendStock extends javax.swing.JFrame {
 
         updateStockChangeName.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         updateStockChangeName.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        updateStockChangeName.setText("New Qty");
+        updateStockChangeName.setText("Changing Qty");
 
         updateStockItemCategoryName.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         updateStockItemCategoryName.setText("Blend Category");
@@ -164,11 +164,11 @@ public class UpdateBlendStock extends javax.swing.JFrame {
                         .addComponent(updateStockReasonLbl))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(updateStockItemCategoryName, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(updateStockItemCategoryName, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(updateStockItemName, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(updateStockQtyInStockLbl, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(updateStockChangeName, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(updateStockChangeName, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()

@@ -62,8 +62,8 @@
                       <Component id="updateStockItemName" min="-2" max="-2" attributes="0"/>
                       <Component id="updateStockCategoryName" min="-2" max="-2" attributes="0"/>
                       <Component id="updateStockQtyInStockName" min="-2" pref="89" max="-2" attributes="0"/>
-                      <Component id="updateStockChangeName" min="-2" pref="80" max="-2" attributes="0"/>
                       <Component id="updateStockReasonName" min="-2" max="-2" attributes="0"/>
+                      <Component id="updateStockChangeName" alignment="1" min="-2" pref="98" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
@@ -253,7 +253,7 @@
               <Font name="Segoe UI" size="14" style="0"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="4"/>
-            <Property name="text" type="java.lang.String" value="Change Qty"/>
+            <Property name="text" type="java.lang.String" value="Changing Qty"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="updateStockCategoryName">
