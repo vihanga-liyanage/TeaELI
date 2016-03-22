@@ -39,7 +39,7 @@
                       <EmptySpace max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
-                              <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
+                              <Component id="greetingsLbl" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="profileBtn" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
@@ -63,7 +63,7 @@
                       <Component id="timeLabel" min="-2" pref="23" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="greetingsLbl" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="logoutBtn" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="profileBtn" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
@@ -155,7 +155,7 @@
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jLabel1" min="-2" pref="27" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jScrollPane7" pref="405" max="32767" attributes="0"/>
+                      <Component id="jScrollPane7" pref="406" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -364,7 +364,7 @@
                                   <Component id="searchStockIngComboBox" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jScrollPane6" pref="412" max="32767" attributes="0"/>
+                              <Component id="jScrollPane6" pref="413" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -513,7 +513,7 @@
                                   <Component id="blendDeliveryBtn" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jScrollPane2" pref="412" max="32767" attributes="0"/>
+                              <Component id="jScrollPane2" pref="413" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -634,12 +634,11 @@
         <Property name="horizontalAlignment" type="int" value="4"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel9">
+    <Component class="javax.swing.JLabel" name="greetingsLbl">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Segoe UI" size="14" style="0"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Hello Mr. Dushantha"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="logoutBtn">

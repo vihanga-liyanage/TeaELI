@@ -173,4 +173,14 @@ public class User {
         editProfile.txtFirstName.setText(getFirstName());
         editProfile.txtLastName.setText(getLastName());
     }
+    
+    public String getUserFirstName(String username){
+        String query = "SELECT firstname FROM user WHERE username='" + username + "'";
+        ResultArray rs = dbConn.getResultArray(query);
+        String name = "";
+        while (rs.next()){
+            name = rs.getString(0);
+        }
+        return name;
+    }
 }

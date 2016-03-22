@@ -3,21 +3,14 @@ package teaeli;
 import classes.Blend;
 import classes.Ingredient;
 import classes.StockHistory;
-import classes.DBConnection;
 import classes.AutoSuggest;
 import classes.Order;
-import classes.Supplier;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import classes.User;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -33,8 +26,6 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import classes.PDF;
-import java.util.Calendar;
-import javax.swing.JTable;
 
 public class ManagerPannel extends javax.swing.JFrame {
 
@@ -175,12 +166,10 @@ public class ManagerPannel extends javax.swing.JFrame {
 
     }
 
-    DBConnection dbcon = new DBConnection();
-    Connection con = null;
-    PreparedStatement pst = null;
-    ResultSet rs = null;
-    Statement st = null;
-
+    public void setGreetings(String greeting){
+        greetingsLbl.setText(greeting);
+    }
+    
     public void populateIngStockTable() {
         ingredient.populateIngredientTable((DefaultTableModel) inventryIngredientTable.getModel());
     }
@@ -265,7 +254,7 @@ public class ManagerPannel extends javax.swing.JFrame {
         blendDeliveryBtn = new javax.swing.JButton();
         logoLabel = new javax.swing.JLabel();
         timeLabel = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
+        greetingsLbl = new javax.swing.JLabel();
         logoutBtn = new javax.swing.JButton();
         profileBtn = new javax.swing.JButton();
 
@@ -394,7 +383,7 @@ public class ManagerPannel extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 405, Short.MAX_VALUE)
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -484,7 +473,7 @@ public class ManagerPannel extends javax.swing.JFrame {
                     .addComponent(searchStockIngBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(searchStockIngComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 412, Short.MAX_VALUE))
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 413, Short.MAX_VALUE))
         );
 
         inventoryManagementSplitPane.setLeftComponent(inventoryManagementIngredientPanel);
@@ -576,7 +565,7 @@ public class ManagerPannel extends javax.swing.JFrame {
                     .addComponent(searchStockBlendComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(blendDeliveryBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 412, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 413, Short.MAX_VALUE))
         );
 
         inventoryManagementSplitPane.setRightComponent(inventoryManagementBlendPanel);
@@ -603,8 +592,7 @@ public class ManagerPannel extends javax.swing.JFrame {
         timeLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         timeLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
 
-        jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel9.setText("Hello Mr. Dushantha");
+        greetingsLbl.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         logoutBtn.setText("Log Out");
         logoutBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -633,7 +621,7 @@ public class ManagerPannel extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel9)
+                                .addComponent(greetingsLbl)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(profileBtn)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -651,7 +639,7 @@ public class ManagerPannel extends javax.swing.JFrame {
                         .addComponent(timeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel9)
+                            .addComponent(greetingsLbl)
                             .addComponent(logoutBtn)
                             .addComponent(profileBtn))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -884,6 +872,7 @@ public class ManagerPannel extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addNewBlendsBtn;
     private javax.swing.JButton blendDeliveryBtn;
+    private javax.swing.JLabel greetingsLbl;
     private javax.swing.JLabel inventoryBlendLbl;
     private javax.swing.JLabel inventoryIngredientsLbl;
     private javax.swing.JPanel inventoryManagementBlendPanel;
@@ -896,7 +885,6 @@ public class ManagerPannel extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
