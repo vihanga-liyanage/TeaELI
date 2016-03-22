@@ -38,8 +38,8 @@ public class BlendDetails extends javax.swing.JFrame {
         int x, y;
         screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         frameSize = getSize();
-        x = (screenSize.width - frameSize.width)/2;
-        y = (screenSize.height - frameSize.height)/2;
+        x = (screenSize.width - frameSize.width) / 2;
+        y = (screenSize.height - frameSize.height) / 2;
         setLocation(x, y);
         setResizable(false);
 
@@ -795,8 +795,8 @@ public class BlendDetails extends javax.swing.JFrame {
                                     JOptionPane.showMessageDialog(this, "New Blend Added Successfuly.", "Successflly Added", 1);
                                     this.dispose();
                                 } else {
-                                    JOptionPane.showMessageDialog(this, "Unable to add the new ingredient.Please try again.", "Unable to add", 0);
-
+                                    JOptionPane.showMessageDialog(this, "There were some issues with the database. Please contact developers.\n\nError code : BlendDetails 634", "Error", 0);
+                                    System.exit(0);
                                 }
                             }
 
@@ -856,8 +856,8 @@ public class BlendDetails extends javax.swing.JFrame {
                                     this.dispose();
                                     //this.setVisible(true);
                                 } else {
-                                    JOptionPane.showMessageDialog(this, "Unable to add the new ingredient.Please try again.", "Unable to add", 0);
-
+                                    JOptionPane.showMessageDialog(this, "There were some issues with the database. Please contact developers.\n\nError code : BlendDetails 695", "Error", 0);
+                                    System.exit(0);
                                 }
 
                             }
@@ -1035,7 +1035,8 @@ public class BlendDetails extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this, "Blend Updated Successfuly.", "Successflly Updated", 1);
                     this.dispose();
                 } else {
-                    JOptionPane.showMessageDialog(this, "Unable to update the ingredient.Please try again.", "Unable to Update", 0);
+                    JOptionPane.showMessageDialog(this, "There were some issues with the database. Please contact developers.\n\nError code : BlendDetails 789", "Error", 0);
+                    System.exit(0);
                 }
             }
 
@@ -1094,7 +1095,8 @@ public class BlendDetails extends javax.swing.JFrame {
                    JOptionPane.showMessageDialog(this, "Blend Updated Successfuly.", "Successflly Updated", 1);
                     this.dispose();
                 } else {
-                    JOptionPane.showMessageDialog(this, "Unable to update the ingredient.Please try again.", "Unable to Update", 0);
+                    JOptionPane.showMessageDialog(this, "There were some issues with the database. Please contact developers.\n\nError code : BlendDetails 849", "Error", 0);
+                    System.exit(0);
                 }
 
             }

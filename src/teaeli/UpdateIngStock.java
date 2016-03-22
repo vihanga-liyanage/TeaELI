@@ -126,7 +126,7 @@ public class UpdateIngStock extends javax.swing.JFrame {
 
         updateStockChangeName.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         updateStockChangeName.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        updateStockChangeName.setText("Change Qty");
+        updateStockChangeName.setText("Changing Qty");
 
         updateStockCategoryName.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         updateStockCategoryName.setText("Ingredient Cateogry");
@@ -160,8 +160,8 @@ public class UpdateIngStock extends javax.swing.JFrame {
                     .addComponent(updateStockItemName)
                     .addComponent(updateStockCategoryName)
                     .addComponent(updateStockQtyInStockName, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(updateStockChangeName, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(updateStockReasonName))
+                    .addComponent(updateStockReasonName)
+                    .addComponent(updateStockChangeName, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()

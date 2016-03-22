@@ -1516,7 +1516,9 @@ public class AdminPannel extends javax.swing.JFrame {
             }
 
         }
-
+        
+        //meke edit karala iwara nam code ekama searchProductCombo() kiyana method ekata danna copy karala. e method eka call karanna methandii
+        //me code ekama one enter key press ekatath 
     }//GEN-LAST:event_searchProductBtnActionPerformed
 
 
@@ -1748,12 +1750,21 @@ public class AdminPannel extends javax.swing.JFrame {
         int ret = 0;
 
         if (searchBlendComboBox.getSelectedIndex() == -1) {
-            JOptionPane.showMessageDialog(this, "Please Select a blend!!!", "Empty Blend Selection", 2);
+            JOptionPane.showMessageDialog(this, "Please Select a Blend", "Empty Blend Selection", 2);
         } else {
             try {
                 blendName = searchBlendComboBox.getSelectedItem().toString();
                 blendID = blend.getBlendIDByBlendName(blendName);
                 blendDetails.blendNameTxt.setText(blendName);
+                blendDetails.blendCodeTxt.setText(blendID);
+                blendDetails.blendCodeTxt.setEditable(false);
+                blendDetails.blendNameTxt.setEditable(false);
+                blendDetails.ingPerAddBtn.setEnabled(false);
+                blendDetails.flavoursPerAddBtn.setEnabled(false);
+                blendDetails.blendUpdateBtn.setEnabled(false);
+                blendDetails.blendAddnewBtn.setEnabled(false);
+                blendDetails.blendCategoryCombo.setEnabled(false);
+                blendDetails.baseCombo.setEnabled(false);
 
                 Blend blend = new Blend();
                 baseID = blend.getBaseByBlendID(blendID);
@@ -1769,12 +1780,12 @@ public class AdminPannel extends javax.swing.JFrame {
                 blendDetails.flavoursCombo.setSelectedIndex(-1);
                 blendDetails.flavoursCombo.requestFocus();
                 blendDetails.setVisible(true);
-                JOptionPane.showMessageDialog(this, "Please Change Blend Name with New Blend Code to Update");
                 blendDetails.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 orderSearchCombo.setSelectedIndex(-1);
             } catch (NullPointerException e) {
-                JOptionPane.showMessageDialog(this, "Please select a blend!!!", "Empty Selection", 2);
+                JOptionPane.showMessageDialog(this, "Please select a blend!!!", "Empty Blend Selection", 2);
             }
+
         }
     }
     /* end of searchProductCombo method */
@@ -1802,10 +1813,14 @@ public class AdminPannel extends javax.swing.JFrame {
 
     private void btnIngredientGoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngredientGoActionPerformed
         SimpleDateFormat javadate = new SimpleDateFormat("yyyy-MM-dd");
+        Date currentDate = new Date();
+        
         if (ingStartDate.getDate() == null || ingEndDate.getDate() == null) {
             JOptionPane.showMessageDialog(this, "Date feilds cannot be empty.", "Date Selection Error", 2);
         } else if (ingStartDate.getDate().after(ingEndDate.getDate())) {
             JOptionPane.showMessageDialog(this, "Please enter a valid date range.", "Date Selection Error", 2);
+        } else if (ingStartDate.getDate().after(currentDate) || ingEndDate.getDate().after(currentDate)){
+            JOptionPane.showMessageDialog(this, "Date range can't go beyond current date.", "Date Selection Error", 2); 
         } else {
             Date start = ingStartDate.getDate();
             Date end = ingEndDate.getDate();
@@ -1834,11 +1849,17 @@ public class AdminPannel extends javax.swing.JFrame {
 
     private void btnBlendGoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBlendGoActionPerformed
         SimpleDateFormat javadate = new SimpleDateFormat("yyyy-MM-dd");
+        
+        Date currentDate = new Date();
+        
         if (blendStartDate.getDate() == null || blendEndDate.getDate() == null) {
             JOptionPane.showMessageDialog(this, "Date feilds cannot be empty.", "Date Selection Error", 2);
         } else if (blendStartDate.getDate().after(blendEndDate.getDate())) {
             JOptionPane.showMessageDialog(this, "Please enter a valid date range.", "Date Selection Error", 2);
+        } else if (blendStartDate.getDate().after(currentDate) || blendEndDate.getDate().after(currentDate)){
+            JOptionPane.showMessageDialog(this, "Date range can't go beyond current date.", "Date Selection Error", 2);
         } else {
+        
             Date start = blendStartDate.getDate();
             Date end = blendEndDate.getDate();
 
@@ -1850,6 +1871,7 @@ public class AdminPannel extends javax.swing.JFrame {
 
             String startdate = javadate.format(start);
             String enddate = javadate.format(end);
+
 
             if (start.equals(end)) {
                 StockHistory stockhistory = new StockHistory();
@@ -1877,13 +1899,17 @@ public class AdminPannel extends javax.swing.JFrame {
                     JOptionPane.INFORMATION_MESSAGE
             );
             if (confirm == JOptionPane.YES_OPTION) {
-                String sDate = "2016.01.01";
+                
+                int year = Calendar.getInstance().get(Calendar.YEAR);
+                
+                String sDate = String.valueOf(year) + ".01.01";
                 String name = sDate + "-" + today;
                 DefaultTableModel model = (DefaultTableModel) ingStockHistoryTbl.getModel();
                 JTable temp = new JTable(model);
                 pdf.IngStockHistoryPdfGeneration(temp, today, name);
             }
         } else {
+            
             String sDate = sdf3.format(ingStartDate.getDate());
             String eDate = sdf3.format(ingEndDate.getDate());
             String name = sDate + "-" + eDate;
@@ -1919,15 +1945,19 @@ public class AdminPannel extends javax.swing.JFrame {
                     JOptionPane.INFORMATION_MESSAGE
             );
             if (confirm == JOptionPane.YES_OPTION) {
-                String sDate = "2016.01.01";
+                
+                int year = Calendar.getInstance().get(Calendar.YEAR);
+                
+                String sDate = String.valueOf(year) + ".01.01";
                 String name = sDate + "-" + today;
                 DefaultTableModel model = (DefaultTableModel) blendStockHistoryTbl.getModel();
                 JTable temp = new JTable(model);
                 pdf.BlendStockHistoryPdfGeneration(temp, today, name);
             }
         } else {
-            String sDate = sdf3.format(ingStartDate.getDate());
-            String eDate = sdf3.format(ingEndDate.getDate());
+            
+            String sDate = sdf3.format(blendStartDate.getDate());
+            String eDate = sdf3.format(blendEndDate.getDate());
             String name = sDate + "-" + eDate;
             DefaultTableModel model = (DefaultTableModel) blendStockHistoryTbl.getModel();
             JTable temp = new JTable(model);
