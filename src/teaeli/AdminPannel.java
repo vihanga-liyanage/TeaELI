@@ -1464,61 +1464,7 @@ public class AdminPannel extends javax.swing.JFrame {
 
 
     private void searchProductBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchProductBtnActionPerformed
-        BlendDetails blendDetails = new BlendDetails();
-        String blendID = "";
-        String blendName = "";
-        int baseID = 0;
-        String base = "";
-        int ret = 0;
-
-        if (searchBlendComboBox.getSelectedIndex() == -1) {
-            JOptionPane.showMessageDialog(this, "Please Select a Blend", "Empty Blend Selection", 2);
-        } else {
-            try {
-                blendName = searchBlendComboBox.getSelectedItem().toString();
-                blendID = blend.getBlendIDByBlendName(blendName);
-                blendDetails.blendNameTxt.setText(blendName);
-                blendDetails.blendCodeTxt.setText(blendID);
-                blendDetails.blendCodeTxt.setEditable(false);
-                blendDetails.blendNameTxt.setEditable(false);
-                blendDetails.ingPerAddBtn.setEnabled(false);
-                blendDetails.flavoursPerAddBtn.setEnabled(false);
-                blendDetails.blendUpdateBtn.setEnabled(false);
-                blendDetails.blendAddnewBtn.setEnabled(false);
-                blendDetails.blendCategoryCombo.setEnabled(false);
-                blendDetails.baseCombo.setEnabled(false);
-                
-                blendDetails.ingCombo.setEnabled(false);
-                blendDetails.ingPerTxt.setEnabled(false);
-                blendDetails.flavoursCombo.setEnabled(false);
-                blendDetails.flavoursPerTxt.setEnabled(false);
-                blendDetails.ingTable.setEnabled(false);
-                blendDetails.flavourTable.setEnabled(false);
-                
-                Blend blend = new Blend();
-                baseID = blend.getBaseByBlendID(blendID);
-                base = blend.getIngByBaseName(baseID);
-
-                blendDetails.baseCombo.setSelectedItem(base);
-
-                ingredient.populateBlendIngTable((DefaultTableModel) blendDetails.ingTable.getModel(), blendID);
-                ingredient.populateBlendFlavourTable((DefaultTableModel) blendDetails.flavourTable.getModel(), blendID);
-
-                blendDetails.ingCombo.setSelectedIndex(-1);
-                //blendDetails.ingCombo.requestFocus();
-                blendDetails.flavoursCombo.setSelectedIndex(-1);
-                //blendDetails.flavoursCombo.requestFocus();
-                blendDetails.setVisible(true);
-                blendDetails.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                orderSearchCombo.setSelectedIndex(-1);
-            } catch (NullPointerException e) {
-                JOptionPane.showMessageDialog(this, "Please select a blend!!!", "Empty Blend Selection", 2);
-            }
-
-        }
-        
-        //meke edit karala iwara nam code ekama searchProductCombo() kiyana method ekata danna copy karala. e method eka call karanna methandii
-        //me code ekama one enter key press ekatath 
+        searchProductCombo();
     }//GEN-LAST:event_searchProductBtnActionPerformed
 
 
@@ -1765,7 +1711,14 @@ public class AdminPannel extends javax.swing.JFrame {
                 blendDetails.blendAddnewBtn.setEnabled(false);
                 blendDetails.blendCategoryCombo.setEnabled(false);
                 blendDetails.baseCombo.setEnabled(false);
-
+                
+                blendDetails.ingCombo.setEnabled(false);
+                blendDetails.ingPerTxt.setEnabled(false);
+                blendDetails.flavoursCombo.setEnabled(false);
+                blendDetails.flavoursPerTxt.setEnabled(false);
+                blendDetails.ingTable.setEnabled(false);
+                blendDetails.flavourTable.setEnabled(false);
+                
                 Blend blend = new Blend();
                 baseID = blend.getBaseByBlendID(blendID);
                 base = blend.getIngByBaseName(baseID);
@@ -1776,9 +1729,9 @@ public class AdminPannel extends javax.swing.JFrame {
                 ingredient.populateBlendFlavourTable((DefaultTableModel) blendDetails.flavourTable.getModel(), blendID);
 
                 blendDetails.ingCombo.setSelectedIndex(-1);
-                blendDetails.ingCombo.requestFocus();
+                //blendDetails.ingCombo.requestFocus();
                 blendDetails.flavoursCombo.setSelectedIndex(-1);
-                blendDetails.flavoursCombo.requestFocus();
+                //blendDetails.flavoursCombo.requestFocus();
                 blendDetails.setVisible(true);
                 blendDetails.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 orderSearchCombo.setSelectedIndex(-1);
