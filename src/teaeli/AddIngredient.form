@@ -209,7 +209,7 @@
                 <StringItem index="3" value="Leaves"/>
                 <StringItem index="4" value="Other"/>
                 <StringItem index="5" value="Tea"/>
-                <StringItem index="6" value="Flavours"/>
+                <StringItem index="6" value="Flavour"/>
               </StringArray>
             </Property>
           </Properties>
