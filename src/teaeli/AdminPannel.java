@@ -83,7 +83,7 @@ public class AdminPannel extends javax.swing.JFrame {
         userTable.getTableHeader().setFont(new Font("Segoe UI Semibold", Font.PLAIN, 14));
 
         startClock();
-        
+
         //Keep the window fullscreen
         this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
 
@@ -259,10 +259,10 @@ public class AdminPannel extends javax.swing.JFrame {
 
     }
 
-    public void setGreetings(String greeting){
+    public void setGreetings(String greeting) {
         greetingsLbl.setText(greeting);
     }
-    
+
     public void populateIngStockTable() {
         ingredient.populateIngredientTable((DefaultTableModel) inventryIngredientTable.getModel());
     }
@@ -1427,18 +1427,18 @@ public class AdminPannel extends javax.swing.JFrame {
     }//GEN-LAST:event_searchIngredientBtnActionPerformed
 
     private void addNewBlendsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addNewBlendsBtnActionPerformed
-         String[] counts = order.getOrderCounts();
-         if ((Integer.parseInt(counts[0]) > 0) && (Integer.parseInt(counts[1]) > 0)){
+        String[] counts = order.getOrderCounts();
+        if ((Integer.parseInt(counts[0]) > 0) && (Integer.parseInt(counts[1]) > 0)) {
             JOptionPane.showMessageDialog(this, "You have 1 pending order and 1 not completed order. You cannot place new orders.");
-         } else if (Integer.parseInt(counts[0]) > 1){
+        } else if (Integer.parseInt(counts[0]) > 1) {
             JOptionPane.showMessageDialog(this, "You have 2 pending orders. You cannot place new orders.");
-         } else if (Integer.parseInt(counts[1]) > 1){
+        } else if (Integer.parseInt(counts[1]) > 1) {
             JOptionPane.showMessageDialog(this, "You have 2 not completed orders. You cannot place new orders.");
-         } else {
+        } else {
             CreateNewBlendOrder1 createNewBlendOrder = new CreateNewBlendOrder1();
             createNewBlendOrder.setVisible(true);
             createNewBlendOrder.pannel = this;
-         }
+        }
     }//GEN-LAST:event_addNewBlendsBtnActionPerformed
 
     private void profileBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profileBtnActionPerformed
@@ -1926,15 +1926,13 @@ public class AdminPannel extends javax.swing.JFrame {
         blendNameLbl.setText(blendDetails.getBlendName());
         blendBaseLbl.setText(blendDetails.getBaseName());
 
+        blendDetails.getBlendCatgFromBlendID();
+        blendCatgLbl.setText(blendDetails.getBlendCategory());
+
         boolean load = blendDetails.loadBlendIngredientDetails((DefaultTableModel) blendDetailsTbl.getModel());
 
         if (load) {
             load = blendDetails.loadBlendFlavourDetails((DefaultTableModel) blendDetailsTbl.getModel());
-            if (load) {
-                blendDetails.getBlendCatgFromBlendName();
-                blendCatgLbl.setText(blendDetails.getBlendCategory());
-
-            }
         } else {
             JOptionPane.showMessageDialog(this, "No recepie found for this Blend.", "No recepie", 0);
         }

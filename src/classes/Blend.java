@@ -524,6 +524,17 @@ public class Blend {
         }
     }
     
+    /* start of getBlendCatgFromBlendID method */
+    public void getBlendCatgFromBlendID() {
+        ResultArray resultArray;
+        String query = "SELECT blendCategory FROM blend WHERE blendID = '" + this.getBlendID() + "'";
+        System.out.println(query);
+        resultArray = dbConn.getResultArray(query);
+        if (resultArray.next()) {
+            this.setBlendCategory(resultArray.getString(0));
+        }
+    }
+    
     /* start of updateBlendStock method -- for orderRecieved when no pending */
     public boolean updateBlendStockWithoutPending(){
         String blendName = this.getBlendName().replace("'", "\\'");
