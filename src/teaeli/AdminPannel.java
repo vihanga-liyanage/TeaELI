@@ -29,6 +29,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import classes.PDF;
 import java.util.Calendar;
+import javax.swing.ImageIcon;
 import javax.swing.JTable;
 
 public class AdminPannel extends javax.swing.JFrame {
@@ -52,6 +53,8 @@ public class AdminPannel extends javax.swing.JFrame {
      */
     public AdminPannel() {
 
+        ImageIcon img = new ImageIcon("C:\\Users\\Poornima\\Desktop\\TeaEli Project\\TeaELI\\src\\teaeli\\logo-new (Custom).png");
+        this.setIconImage(img.getImage());
         try {
             setUIFont(new javax.swing.plaf.FontUIResource("Segoe UI", Font.PLAIN, 14));
         } catch (Exception e) {
