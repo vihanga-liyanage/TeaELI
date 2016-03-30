@@ -1,16 +1,11 @@
 
 package teaeli;
 
-import classes.DBConnection;
 import classes.PswrdEncrypt;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
@@ -23,7 +18,6 @@ import classes.User;
 public class LoginFrame extends javax.swing.JFrame {
 
     User us = new User();
-    public static AdminPannel adminPannel = new AdminPannel();
 
     public String user;
 
@@ -48,12 +42,6 @@ public class LoginFrame extends javax.swing.JFrame {
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
-
-    DBConnection dbcon = new DBConnection();
-    Connection con = null;
-    PreparedStatement pst = null;
-    ResultSet rs = null;
-    Statement st = null;
 
     String userName, password;
     int passwrdCount = 0;
@@ -161,12 +149,16 @@ public class LoginFrame extends javax.swing.JFrame {
         password = txtPassword.getText();
         String encriptedPass = PswrdEncrypt.main2(password);
 
-        //if (us.checkLogin(userName, encriptedPass) == 1) {
-        if (1==1) {
+        if (us.checkLogin(userName, encriptedPass) == 1) {
             AdminPannel adminPannel = new AdminPannel();//the provided username & password matched
             user = userName;
                       
             adminPannel.setVisible(true);
+            
+            //setting greetings label
+            String name = us.getUserFirstName(user);
+            adminPannel.setGreetings("Welcome, Mr. " + name);
+            
             setVisible(false);
 
         } else if (us.checkLogin(userName, encriptedPass) == 2) {
@@ -177,6 +169,10 @@ public class LoginFrame extends javax.swing.JFrame {
             
             managerPannel.setVisible(true);
 
+            //setting greetings label
+            String name = us.getUserFirstName(user);
+            managerPannel.setGreetings("Welcome, Mr. " + name);
+            
             setVisible(false);
 
         } else if (us.checkLogin(userName, encriptedPass) == 4 | us.checkLogin(userName, encriptedPass) == 3) {

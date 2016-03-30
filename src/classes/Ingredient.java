@@ -374,18 +374,26 @@ public class Ingredient {
     }
 
     public int addNewIngredient(String Name, String type, String supplier, float price) {
-        String rslt1= "",rslt2 ="";
+        String rslt1= "", rslt2 ="";
+        
         String query1 = "SELECT ingCategoryID FROM ingredientcategory WHERE categoryName = '" + type + "' ";
+        System.out.println(query1);
+        
         ResultArray rs1 = dbConn.getResultArray(query1);
+        
         rs1.next();
         rslt1 = rs1.getString(0);
         
         String query2 = "SELECT supID FROM supplier WHERE supName = '" + supplier + "' ";
+        System.out.println(query2);
+        
         ResultArray rs2 = dbConn.getResultArray(query2);
         rs2.next();
         rslt2 = rs2.getString(0);
 
         String query3 = "INSERT INTO ingredient(ingName,ingCategoryID,visibleStock,alocatedStock,invisibleStock,supID,unitPrice) values('" + Name + "','" + rslt1 + "',0,0,0,'" + rslt2 + "','" + price + "') ";
+        System.out.println(query3);
+        
         int rslt3 = dbConn.updateResult(query3);
         return rslt3;
     }

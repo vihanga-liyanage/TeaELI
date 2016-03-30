@@ -26,11 +26,11 @@ import javax.swing.table.TableModel;
 public class OrderDetails extends javax.swing.JFrame {
 
     Order order = new Order();
-    private AdminPannel adminPannel;
+    private Object pannel;
     private PDF pdf;
 
-    public void setAdminPannel(AdminPannel adminPannel) {
-        this.adminPannel = adminPannel;
+    public void setPannel(Object pannel) {
+        this.pannel = pannel;
     }
 
     public OrderDetails() {
@@ -392,9 +392,16 @@ public class OrderDetails extends javax.swing.JFrame {
 
             int result = order.updateOrderRowWise(orderID, additional, remark, ing);
         }
-        JOptionPane.showMessageDialog(this, "Values saved successfully !\nThe new RM Master plan PDF will be replaced with the old one", "Successfully Updated", 1);
+        JOptionPane.showMessageDialog(this, "Values saved successfully !\nThe new RM Master plan PDF replaced with the old one", "Successfully Updated", 1);
         order.viewOrder((DefaultTableModel) blendTable.getModel(), (DefaultTableModel) orderDetailsTable.getModel(), orderIDLabel.getText());
-        adminPannel.populateIngStockTable();
+        
+        if ("teaeli.AdminPannel".equals(pannel.getClass().getName())) {
+            AdminPannel adminPannel = (AdminPannel) pannel;
+            adminPannel.populateIngStockTable();
+        } else if ("teaeli.ManagerPannel".equals(pannel.getClass().getName())) {
+            ManagerPannel managerPannel = (ManagerPannel) pannel;
+            managerPannel.populateIngStockTable();
+        }
 
         //Generating updated master plan PDF
         DefaultTableModel model = (DefaultTableModel) orderDetailsTable.getModel();
@@ -430,15 +437,24 @@ public class OrderDetails extends javax.swing.JFrame {
 
         if (result == 1 && updated) {
             JOptionPane.showMessageDialog(this, "Order status changed successfully !", "Successfully Changed", 1);
-            adminPannel.populateOrderListTable();
+            
+            //Reloading pannel data
+            if ("teaeli.AdminPannel".equals(pannel.getClass().getName())) {
+                AdminPannel adminPannel = (AdminPannel) pannel;
+                adminPannel.populateOrderListTable();
+                adminPannel.populateIngStockTable();
+            } else if ("teaeli.ManagerPannel".equals(pannel.getClass().getName())) {
+                ManagerPannel managerPannel = (ManagerPannel) pannel;
+                managerPannel.populateOrderListTable();
+                managerPannel.populateIngStockTable();
+            }
+
             orderCompletedBtn.setVisible(true);
             orderReceivedBtn.setVisible(false);
 
             //set table editing false after order recieved
             orderDetailsTable.setEnabled(false);
             updateOrderBtn.setVisible(false);
-
-            adminPannel.populateIngStockTable();
         } else {
             JOptionPane.showMessageDialog(this, "There were some issues with the database. Please contact developers.\n\nError code : OrderDetails 4334", "Error", 0);
             System.exit(0);
@@ -468,12 +484,21 @@ public class OrderDetails extends javax.swing.JFrame {
 
         if (result == 1 && updated) {
             JOptionPane.showMessageDialog(this, "Order status changed successfully!!!", "Successfully Changed", 1);
-            adminPannel.populateOrderListTable();
+            
+            //Reloading pannel data
+            if ("teaeli.AdminPannel".equals(pannel.getClass().getName())) {
+                AdminPannel adminPannel = (AdminPannel) pannel;
+                adminPannel.populateOrderListTable();
+                adminPannel.populateBlendStockTable();
+            } else if ("teaeli.ManagerPannel".equals(pannel.getClass().getName())) {
+                ManagerPannel managerPannel = (ManagerPannel) pannel;
+                managerPannel.populateOrderListTable();
+                managerPannel.populateBlendStockTable();
+            }
+            
             orderCompletedBtn.setVisible(false);
             orderReceivedBtn.setVisible(false);
             updateOrderBtn.setVisible(false);
-
-            adminPannel.populateBlendStockTable();
 
         } else {
             JOptionPane.showMessageDialog(this, "There were some issues with the database. Please contact developers.\n\nError code : OrderDetails 469", "Error", 0);

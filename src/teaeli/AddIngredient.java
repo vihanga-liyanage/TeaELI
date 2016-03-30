@@ -122,7 +122,7 @@ public class AddIngredient extends javax.swing.JFrame {
             }
         });
 
-        itemTypeCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Herbs", "Flowers", "Fruits", "Leaves", "Other", "Tea", "Flavours" }));
+        itemTypeCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Herbs", "Flowers", "Fruits", "Leaves", "Other", "Tea", "Flavour" }));
         itemTypeCombo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 itemTypeComboActionPerformed(evt);
@@ -230,19 +230,26 @@ public class AddIngredient extends javax.swing.JFrame {
     }//GEN-LAST:event_itemTypeComboActionPerformed
 
     private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
+
         name = txtName.getText();
         type = itemTypeCombo.getSelectedItem().toString();
         supname = supliercombo.getSelectedItem().toString();
+        
+        System.out.println(name + " " + type + " " + supname);
 
         if (name.isEmpty() || supname.isEmpty() || txtPrice.getText().isEmpty()) {
 
             JOptionPane.showMessageDialog(this, "Every field must be filled.", "Empty fields", 2);
 
         } else {
+            
             String unitPriceString = this.txtPrice.getText();
+            
             int unitPriceOK = 0;
+            
             try {
                 price = Float.parseFloat(unitPriceString);
+            
                 if (price < 0) {
                     JOptionPane.showMessageDialog(this, "Please enter valid amount for unit price.", "Invalide Unit Price", 2);
                     txtPrice.requestFocusInWindow();
@@ -258,7 +265,9 @@ public class AddIngredient extends javax.swing.JFrame {
 
             if (unitPriceOK == 1) {
                 price = Float.parseFloat(txtPrice.getText());
+                
                 int result = ingr.addNewIngredient(name, type, supname, price);
+                
                 if (result == 1) {
                     JOptionPane.showMessageDialog(this, "Ingredient successfully added", "Succeeded", 1);
                     this.setVisible(false);

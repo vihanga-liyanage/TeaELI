@@ -91,14 +91,7 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                int confirmed = JOptionPane.showConfirmDialog(null,
-                        "Are you sure you want to cancel phase 2?", "Confirm window close",
-                        JOptionPane.YES_NO_OPTION
-                );
-                if (confirmed == JOptionPane.YES_OPTION) {
-                    createNewBlendOrder1.setVisible(true);
-                    dispose();
-                }
+                confirmClose();
             }
         });
 
@@ -119,22 +112,6 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
                 }
             }
         });
-
-        //Prompt confirmation on window close
-        this.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                int confirmed = JOptionPane.showConfirmDialog(null,
-                        "Are you sure you want to close the window?\nAll data you entered will be lost.", 
-                        "Confirm window close",
-                        JOptionPane.YES_NO_OPTION, 
-                        JOptionPane.WARNING_MESSAGE
-                );
-                if (confirmed == JOptionPane.YES_OPTION) {
-                    close();
-                }
-            }
-        });
         
         //Removing the category colum from master table
         masterPlanTbl.removeColumn(masterPlanTbl.getColumn(masterPlanTbl.getColumnName(8)));
@@ -144,6 +121,10 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
         masterPlanTbl.setAutoCreateRowSorter(true);
     }
 
+    private void confirmClose(){
+        cancelBtn.doClick();
+    }
+    
     private void close(){
         this.dispose();
     }
@@ -523,7 +504,7 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
             }
         });
 
-        cancelBtn.setText("Cancel");
+        cancelBtn.setText("< Back");
         cancelBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancelBtnActionPerformed(evt);
@@ -717,7 +698,7 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
     }//GEN-LAST:event_confirmBtnActionPerformed
 
     private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
-        int dialogResult = JOptionPane.showConfirmDialog(this, "Are you sure you want to cancel phase 2?", "Confirm window close", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+        int dialogResult = JOptionPane.showConfirmDialog(this, "Are you sure you want to go back?", "Confirm window close", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
         if (dialogResult == JOptionPane.YES_OPTION) {
             createNewBlendOrder1.setVisible(true);
             this.dispose();

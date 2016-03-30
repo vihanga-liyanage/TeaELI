@@ -540,13 +540,10 @@ public class CreateNewBlendOrder1 extends javax.swing.JFrame {
         }
         if (blendListTbl.getRowCount() > 0) {
             if (totalFinalQty > 0) {
-                int dialogResult = JOptionPane.showConfirmDialog(this, "Are you sure you want to move into next phase?", "Confirm", JOptionPane.YES_NO_OPTION, 2);
-                if (dialogResult == JOptionPane.YES_OPTION){
-                    CreateNewBlendOrder2 creatNewBlendOrder2 = new CreateNewBlendOrder2(this);
-                    creatNewBlendOrder2.setVisible(true);
-                    creatNewBlendOrder2.pannel = this.pannel;
-                    this.setVisible(false);
-                }
+                CreateNewBlendOrder2 creatNewBlendOrder2 = new CreateNewBlendOrder2(this);
+                creatNewBlendOrder2.setVisible(true);
+                creatNewBlendOrder2.pannel = this.pannel;
+                this.setVisible(false);
             } else {
                 JOptionPane.showMessageDialog(this, "Final order quantity is zero. Please add more blends.", "Error", 2);
                 blendsCombo.requestFocus();

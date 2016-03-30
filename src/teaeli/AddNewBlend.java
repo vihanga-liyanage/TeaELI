@@ -614,7 +614,7 @@ public class AddNewBlend extends javax.swing.JFrame {
             totalPercentage += Float.parseFloat(addNewBlendFlavourTbl.getValueAt(i, 1).toString());
         }
         if (totalPercentage > 99) {
-            JOptionPane.showMessageDialog(flavourPerTxt, "Total of flabour percentages cannot be greater than 100.", "Invalid Flavour Percentages", 2);
+            JOptionPane.showMessageDialog(flavourPerTxt, "Total of flavour percentages cannot be greater than 100.", "Invalid Flavour Percentages", 2);
             flavourPerTxt.setText("");
             flavourPerTxt.requestFocus();
             return;
@@ -717,7 +717,7 @@ public class AddNewBlend extends javax.swing.JFrame {
             blend.addRecipie(data);
         }
         
-        JOptionPane.showMessageDialog(this, "Blend added succesfully!", "success", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Blend added succesfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
         close();
     }//GEN-LAST:event_addNewBlendBtnActionPerformed
 
