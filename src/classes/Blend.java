@@ -494,7 +494,7 @@ public class Blend {
                 + "recipie r ON i.ingID = r.ingID WHERE r.blendID = '" + this.getBlendID() + "' AND type = '1'";
 
         resultArray = dbConn.getResultArray(query);
-
+        defaultTableModel.setRowCount(0);
         Vector mainRow = new Vector();
         defaultTableModel.addRow(mainRow);
 

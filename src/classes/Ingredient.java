@@ -320,6 +320,7 @@ public class Ingredient {
         ResultArray res = null;
         String query = "SELECT ingName,unitPrice,supName FROM ingredient,supplier where ingredient.supID = supplier.supID";
         res = dbConn.getResultArray(query);
+        table.setRowCount(0);
         while (res.next()) {
             //DefaultTableModel model = (DefaultTableModel) adminPannel.settingsIngredientTable.getModel();
             table.addRow(new Object[]{res.getString(0), res.getString(2), res.getString(1)});
