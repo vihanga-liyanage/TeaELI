@@ -20,9 +20,9 @@ public class IngredientDetails extends javax.swing.JFrame {
     private Supplier supplier = new Supplier();
 
     public IngredientDetails() {
-         ImageIcon img = new ImageIcon("C:\\Users\\Poornima\\Desktop\\TeaEli Project\\TeaELI\\src\\teaeli\\logo-new (Custom).png");
+        ImageIcon img = new ImageIcon("C:\\Users\\Poornima\\Desktop\\TeaEli Project\\TeaELI\\src\\teaeli\\logo-new (Custom).png");
         this.setIconImage(img.getImage());
-        
+
         //Add windows look and feel
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
@@ -35,8 +35,8 @@ public class IngredientDetails extends javax.swing.JFrame {
         int x, y;
         screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         frameSize = getSize();
-        x = (screenSize.width - frameSize.width)/2;
-        y = (screenSize.height - frameSize.height)/2;
+        x = (screenSize.width - frameSize.width) / 2;
+        y = (screenSize.height - frameSize.height) / 2;
         setLocation(x, y);
         setResizable(false);
 
@@ -250,7 +250,13 @@ public class IngredientDetails extends javax.swing.JFrame {
             float unitPrice = 0;
 
             //get ingID
-            ingID = Integer.parseInt(this.getName());
+            try {
+                ingID = Integer.parseInt(this.getName());
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "There were some issues with the database. Please contact developers.\n\nError code : IngredientDetails 256", "Error", 0);
+                System.exit(0);
+
+            }
 
             //get ingredient name
             ingName = this.itemNameTxt.getText();
