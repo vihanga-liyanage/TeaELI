@@ -528,7 +528,6 @@ public class Blend {
     public void getBlendCatgFromBlendID() {
         ResultArray resultArray;
         String query = "SELECT blendCategory FROM blend WHERE blendID = '" + this.getBlendID() + "'";
-        System.out.println(query);
         resultArray = dbConn.getResultArray(query);
         if (resultArray.next()) {
             this.setBlendCategory(resultArray.getString(0));

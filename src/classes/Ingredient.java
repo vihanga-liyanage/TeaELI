@@ -423,8 +423,8 @@ public class Ingredient {
     /* start of updateIngredientStock method -- for orderRecieved when no pending */
     public boolean updateIngredientStockWithoutPending(){
         String ingName = this.getIngName().replace("'", "\\'");
-        String query = "UPDATE ingredient SET alocatedStock = alocatedStock + '" + this.getOrderReqQty() + "'"
-                + " , visibleStock = visibleStock + '" + this.getOrderExcessQty() + "' "
+        String query = "UPDATE ingredient SET "
+                + "visibleStock = visibleStock + '" + this.getOrderExcessQty() + "' "
                 + " , invisibleStock = invisibleStock - '" + this.getOrderExcessQty() + "' "
                 + " WHERE ingName = '" + ingName + "' ";
         
@@ -434,8 +434,8 @@ public class Ingredient {
     /* start of updateIngredientStock method -- for orderRecieved */
     public boolean updateIngredientStockWithPending(){
         String ingName = this.getIngName().replace("'", "\\'");
-        String query = "UPDATE ingredient SET alocatedStock = '" + this.getAlocatedStock() + "'"
-                + " , visibleStock = '" + this.getVisibleStock() + "', invisibleStock = '" + this.getInvisibleStock() + "' "
+        String query = "UPDATE ingredient SET "
+                + "visibleStock = '" + this.getVisibleStock() + "', invisibleStock = '" + this.getInvisibleStock() + "' "
                 + " WHERE ingName = '" + ingName + "' ";
         
         return (dbConn.updateResult(query) == 1);
