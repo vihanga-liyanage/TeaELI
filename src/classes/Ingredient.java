@@ -378,7 +378,6 @@ public class Ingredient {
         String rslt1= "", rslt2 ="";
         
         String query1 = "SELECT ingCategoryID FROM ingredientcategory WHERE categoryName = '" + type + "' ";
-        System.out.println(query1);
         
         ResultArray rs1 = dbConn.getResultArray(query1);
         
@@ -386,14 +385,12 @@ public class Ingredient {
         rslt1 = rs1.getString(0);
         
         String query2 = "SELECT supID FROM supplier WHERE supName = '" + supplier + "' ";
-        System.out.println(query2);
         
         ResultArray rs2 = dbConn.getResultArray(query2);
         rs2.next();
         rslt2 = rs2.getString(0);
 
         String query3 = "INSERT INTO ingredient(ingName,ingCategoryID,visibleStock,alocatedStock,invisibleStock,supID,unitPrice) values('" + Name + "','" + rslt1 + "',0,0,0,'" + rslt2 + "','" + price + "') ";
-        System.out.println(query3);
         
         int rslt3 = dbConn.updateResult(query3);
         return rslt3;
@@ -424,8 +421,8 @@ public class Ingredient {
     /* start of updateIngredientStock method -- for orderRecieved when no pending */
     public boolean updateIngredientStockWithoutPending(){
         String ingName = this.getIngName().replace("'", "\\'");
-        String query = "UPDATE ingredient SET alocatedStock = alocatedStock + '" + this.getOrderReqQty() + "'"
-                + " , visibleStock = visibleStock + '" + this.getOrderExcessQty() + "' "
+        String query = "UPDATE ingredient SET "
+                + "visibleStock = visibleStock + '" + this.getOrderExcessQty() + "' "
                 + " , invisibleStock = invisibleStock - '" + this.getOrderExcessQty() + "' "
                 + " WHERE ingName = '" + ingName + "' ";
         
@@ -435,8 +432,8 @@ public class Ingredient {
     /* start of updateIngredientStock method -- for orderRecieved */
     public boolean updateIngredientStockWithPending(){
         String ingName = this.getIngName().replace("'", "\\'");
-        String query = "UPDATE ingredient SET alocatedStock = '" + this.getAlocatedStock() + "'"
-                + " , visibleStock = '" + this.getVisibleStock() + "', invisibleStock = '" + this.getInvisibleStock() + "' "
+        String query = "UPDATE ingredient SET "
+                + "visibleStock = '" + this.getVisibleStock() + "', invisibleStock = '" + this.getInvisibleStock() + "' "
                 + " WHERE ingName = '" + ingName + "' ";
         
         return (dbConn.updateResult(query) == 1);
