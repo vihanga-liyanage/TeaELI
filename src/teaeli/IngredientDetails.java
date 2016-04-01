@@ -20,7 +20,8 @@ public class IngredientDetails extends javax.swing.JFrame {
     private Supplier supplier = new Supplier();
 
     public IngredientDetails() {
-        ImageIcon img = new ImageIcon("C:\\Users\\Poornima\\Desktop\\TeaEli Project\\TeaELI\\src\\teaeli\\logo-new (Custom).png");
+        //Setting icon
+        ImageIcon img = new ImageIcon(".\\src\\teaeli\\icon-1.png");
         this.setIconImage(img.getImage());
 
         //Add windows look and feel

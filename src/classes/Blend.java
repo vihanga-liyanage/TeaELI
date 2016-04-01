@@ -219,32 +219,32 @@ public class Blend {
     public boolean updateStockQty() {
         boolean updated = false;
 
-        try{
-        //get current user id
-        User updatedUser = new User();
-        updatedUser.getIDByUsername();
+        try {
+            //get current user id
+            User updatedUser = new User();
+            updatedUser.getIDByUsername();
 
-        //get blendID
-        this.getBlendIDFromBlendName();
+            //get blendID
+            this.getBlendIDFromBlendName();
 
-        //query to update blend stock
-        String query = "UPDATE blend SET visibleStock = '" + this.getVisibleStock() + "' WHERE blendID = '" + this.getBlendID() + "'";
+            //query to update blend stock
+            String query = "UPDATE blend SET visibleStock = '" + this.getVisibleStock() + "' WHERE blendID = '" + this.getBlendID() + "'";
 
-        int i = dbConn.updateResult(query);
-
-        if (i == 1) {
-            //query to insert into stock history table
-            query = "INSERT INTO blendstockhistory "
-                    + "(`blendID`, `oldQty`, `updatedQty`, `reason`, `updatedBy`) "
-                    + "VALUES ('" + this.getBlendID() + "', '" + this.getOldStockQty() + "', '" + this.getUpdatedStockQTy() + "', '" + this.getStockUpdateReason() + "', '" + updatedUser.getUserID() + "')";
-
-            i = dbConn.updateResult(query);
+            int i = dbConn.updateResult(query);
 
             if (i == 1) {
-                updated = true;
+                //query to insert into stock history table
+                query = "INSERT INTO blendstockhistory "
+                        + "(`blendID`, `oldQty`, `updatedQty`, `reason`, `updatedBy`) "
+                        + "VALUES ('" + this.getBlendID() + "', '" + this.getOldStockQty() + "', '" + this.getUpdatedStockQTy() + "', '" + this.getStockUpdateReason() + "', '" + updatedUser.getUserID() + "')";
+
+                i = dbConn.updateResult(query);
+
+                if (i == 1) {
+                    updated = true;
+                }
             }
-        }
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             JOptionPane.showMessageDialog(null, "There were some issues with the database. Please contact developers.\n\nError code : Blend 260", "Error", 0);
             System.exit(0);
@@ -265,11 +265,10 @@ public class Blend {
         return res.getString(0);
     }
 
-    public int getBaseByBlendID(String blendID) {
-        String query = "SELECT baseID FROM blend WHERE blendID = '" + blendID + "' ";
+    public ResultArray getDataByBlendID(String blendID) {
+        String query = "SELECT baseID, blendCategory FROM blend WHERE blendID = '" + blendID + "' ";
         ResultArray res = dbConn.getResultArray(query);
-        res.next();
-        return Integer.parseInt(res.getString(0));
+        return res;
     }
 
     public String getIngByBaseName(int base) {
@@ -285,25 +284,25 @@ public class Blend {
         res.next();
         return res.getString(0);
     }
-    
-    public int checkExistingBlendID(String blendID){
+
+    public int checkExistingBlendID(String blendID) {
         String query = "SELECT blendID FROM blend WHERE blendID = '" + blendID + "' ";
         ResultArray res = dbConn.getResultArray(query);
-        
-        if(res.next()==true){
+
+        if (res.next() == true) {
             return 1;
-        }else{
+        } else {
             return 0;
         }
     }
-    
-    public int checkExistingBlendName(String blendName){
+
+    public int checkExistingBlendName(String blendName) {
         String query = "SELECT blendID FROM blend WHERE blendName = '" + blendName + "' ";
         ResultArray res = dbConn.getResultArray(query);
-        
-        if(res.next()==true){
+
+        if (res.next() == true) {
             return 1;
-        }else{
+        } else {
             return 0;
         }
     }
@@ -337,18 +336,18 @@ public class Blend {
         int ret = dbConn.updateResult(query);
         return ret;
     }
-    
+
     //Add new recipie
     public int addRecipie(String[] data) {
         String query = "INSERT INTO recipie (blendID, ingID, ingPercent, type) "
-                + "VALUES ('" + data[0] + "','" + data[1] + "','" + data[2] + "','" + data[3] +"')";
+                + "VALUES ('" + data[0] + "','" + data[1] + "','" + data[2] + "','" + data[3] + "')";
         return dbConn.updateResult(query);
     }
-    
+
     //Update Blend when Change the base/category or both
     public int updateBlend(String blendID, String blendName, String base, String blendCategory) {
         String baseCom = ingredient.getIngIDByIngName(base);
-        String query = "UPDATE blend SET baseID = '" + baseCom + "', blendCategory = '" + blendCategory + "' WHERE blendID = '" + blendID + "' " ;
+        String query = "UPDATE blend SET baseID = '" + baseCom + "', blendCategory = '" + blendCategory + "' WHERE blendID = '" + blendID + "' ";
         int ret = dbConn.updateResult(query);
         return ret;
     }
@@ -523,7 +522,7 @@ public class Blend {
             this.setBlendCategory(resultArray.getString(0));
         }
     }
-    
+
     /* start of getBlendCatgFromBlendID method */
     public void getBlendCatgFromBlendID() {
         ResultArray resultArray;
@@ -534,25 +533,25 @@ public class Blend {
             this.setBlendCategory(resultArray.getString(0));
         }
     }
-    
+
     /* start of updateBlendStock method -- for orderRecieved when no pending */
-    public boolean updateBlendStockWithoutPending(){
+    public boolean updateBlendStockWithoutPending() {
         String blendName = this.getBlendName().replace("'", "\\'");
         String query = "UPDATE blend SET alocatedStock = alocatedStock + '" + this.getOrderReqQty() + "'"
                 + " , visibleStock = visibleStock + '" + this.getOrderExcessQty() + "' "
                 + " , invisibleStock = invisibleStock - '" + this.getOrderExcessQty() + "' "
                 + " WHERE blendName = '" + blendName + "' ";
-        
+
         return (dbConn.updateResult(query) == 1);
     }
-    
+
     /* start of updateBlendStock method -- for orderRecieved */
-    public boolean updateBlendStockWithPending(){
+    public boolean updateBlendStockWithPending() {
         String blendName = this.getBlendName().replace("'", "\\'");
         String query = "UPDATE blend SET alocatedStock = '" + this.getAlocatedStock() + "'"
                 + " , visibleStock = '" + this.getVisibleStock() + "', invisibleStock = '" + this.getInvisibleStock() + "' "
                 + " WHERE blendName = '" + blendName + "' ";
-        
+
         return (dbConn.updateResult(query) == 1);
     }
 }

@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -22,6 +23,10 @@ public class EditProfile extends javax.swing.JFrame {
     int pswrdFlag = 0;
 
     public EditProfile() {
+        //Setting icon
+        ImageIcon img = new ImageIcon(".\\src\\teaeli\\icon-1.png");
+        this.setIconImage(img.getImage());
+        
         //Add windows look and feel
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");

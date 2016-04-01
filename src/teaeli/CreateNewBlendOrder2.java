@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
@@ -45,6 +46,10 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
      * @param cNBO1
      */
     public CreateNewBlendOrder2(CreateNewBlendOrder1 cNBO1) {
+        //Setting icon
+        ImageIcon img = new ImageIcon(".\\src\\teaeli\\icon-1.png");
+        this.setIconImage(img.getImage());
+        
         //Add windows look and feel
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");

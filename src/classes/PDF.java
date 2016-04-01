@@ -451,14 +451,14 @@ public class PDF {
                 PdfPTable poweredBy = new PdfPTable(1);
                 poweredBy.setWidthPercentage(100);
                 poweredBy.setSpacingBefore(5);
-                poweredBy.addCell(companyNameAndDate("Powered By : Our Name "));
+                poweredBy.addCell(companyNameAndDate("Powered By : Reid Solutions "));
                 doc.add(poweredBy);
 
                 //copyright
                 PdfPTable copyRight = new PdfPTable(1);
                 copyRight.setWidthPercentage(100);
                 copyRight.setSpacingBefore(5);
-                copyRight.addCell(companyNameAndDate("\u00a9" + "  2016 Our Name All RIGHTS RESERVED"));
+                copyRight.addCell(companyNameAndDate("\u00a9" + "  2016 Reid Solutions All RIGHTS RESERVED"));
                 doc.add(copyRight);
 
             } catch (DocumentException ex) {

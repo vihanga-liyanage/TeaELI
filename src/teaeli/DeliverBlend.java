@@ -7,6 +7,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 public class DeliverBlend extends javax.swing.JFrame {
@@ -20,7 +21,10 @@ public class DeliverBlend extends javax.swing.JFrame {
 
     public DeliverBlend() {
         initComponents();
-
+        //Setting icon
+        ImageIcon img = new ImageIcon(".\\src\\teaeli\\icon-1.png");
+        this.setIconImage(img.getImage());
+        
         Dimension screenSize, frameSize;
         int x, y;
         screenSize = Toolkit.getDefaultToolkit().getScreenSize();

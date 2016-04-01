@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import classes.User;
+import javax.swing.ImageIcon;
 
 
 public class LoginFrame extends javax.swing.JFrame {
@@ -23,6 +24,10 @@ public class LoginFrame extends javax.swing.JFrame {
 
     public LoginFrame() {
 
+        //Setting icon
+        ImageIcon img = new ImageIcon(".\\src\\teaeli\\icon-1.png");
+        this.setIconImage(img.getImage());
+        
         //Add windows look and feel
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
@@ -64,7 +69,7 @@ public class LoginFrame extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("User Login");
+        setTitle("TFlex By Reid Solutions");
         getContentPane().setLayout(null);
 
         jLabel2.setFont(new java.awt.Font("Segoe UI Semibold", 0, 15)); // NOI18N

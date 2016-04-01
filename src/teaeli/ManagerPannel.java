@@ -26,6 +26,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import classes.PDF;
+import javax.swing.ImageIcon;
 
 public class ManagerPannel extends javax.swing.JFrame {
 
@@ -47,7 +48,10 @@ public class ManagerPannel extends javax.swing.JFrame {
      * Creates new form AdminPannel
      */
     public ManagerPannel() {
-
+        //Setting icon
+        ImageIcon img = new ImageIcon(".\\src\\teaeli\\icon-1.png");
+        this.setIconImage(img.getImage());
+        
         try {
             setUIFont(new javax.swing.plaf.FontUIResource("Segoe UI", Font.PLAIN, 14));
         } catch (Exception e) {
@@ -259,7 +263,7 @@ public class ManagerPannel extends javax.swing.JFrame {
         profileBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("System Name");
+        setTitle("TFlex By Reid Solutions");
         setBackground(new java.awt.Color(51, 51, 255));
         setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
 

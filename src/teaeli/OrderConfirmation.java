@@ -13,6 +13,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
@@ -42,7 +43,10 @@ public class OrderConfirmation extends javax.swing.JFrame {
      * @param orderID
      */
     public OrderConfirmation(CreateNewBlendOrder2 cnb, String orderID) { // pass CreateNewBlendOrder2 object to get the master list in the interface
-
+        //Setting icon
+        ImageIcon img = new ImageIcon(".\\src\\teaeli\\icon-1.png");
+        this.setIconImage(img.getImage());
+        
         initComponents();
         Dimension screenSize, frameSize;
         int x, y;

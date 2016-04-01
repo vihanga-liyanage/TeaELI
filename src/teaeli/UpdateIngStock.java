@@ -5,13 +5,17 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 public class UpdateIngStock extends javax.swing.JFrame {
 
     public UpdateIngStock() {
         initComponents();
-
+        //Setting icon
+        ImageIcon img = new ImageIcon(".\\src\\teaeli\\icon-1.png");
+        this.setIconImage(img.getImage());
+        
         Dimension screenSize, frameSize;
         int x, y;
         screenSize = Toolkit.getDefaultToolkit().getScreenSize();

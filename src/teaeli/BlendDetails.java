@@ -12,6 +12,7 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
@@ -30,7 +31,10 @@ public class BlendDetails extends javax.swing.JFrame {
     DBConnection dbConn = new DBConnection();
 
     public BlendDetails() {
-
+        //Setting icon
+        ImageIcon img = new ImageIcon(".\\src\\teaeli\\icon-1.png");
+        this.setIconImage(img.getImage());
+        
         initComponents();
         Dimension screenSize, frameSize;
         int x, y;
@@ -349,7 +353,7 @@ public class BlendDetails extends javax.swing.JFrame {
         category.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         category.setText("Category");
 
-        blendCategoryCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Artisian Special V2", "Artisian Special V26", "Black", "Green Tea", "Organic Black", "Organic Green", "Organic Infusion", "Infusions", "Iced Teas" }));
+        blendCategoryCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Artisian Special V1", "Artisian Special V2", "Black", "Green Tea", "Organic Black", "Organic Green", "Organic Infusion", "Infusions", "Iced Teas" }));
         blendCategoryCombo.setToolTipText("");
         blendCategoryCombo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -504,7 +508,7 @@ public class BlendDetails extends javax.swing.JFrame {
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnDeleteFlv)
                     .addComponent(btnDeleteIng))
                 .addGap(18, 18, 18)

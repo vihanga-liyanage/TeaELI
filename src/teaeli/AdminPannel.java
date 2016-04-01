@@ -28,6 +28,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import classes.PDF;
+import classes.ResultArray;
 import java.util.Calendar;
 import javax.swing.ImageIcon;
 import javax.swing.JTable;
@@ -52,9 +53,10 @@ public class AdminPannel extends javax.swing.JFrame {
      * Creates new form AdminPannel
      */
     public AdminPannel() {
-
-        ImageIcon img = new ImageIcon("C:\\Users\\Poornima\\Desktop\\TeaEli Project\\TeaELI\\src\\teaeli\\logo-new (Custom).png");
+        //Setting icon
+        ImageIcon img = new ImageIcon(".\\src\\teaeli\\icon-1.png");
         this.setIconImage(img.getImage());
+        
         try {
             setUIFont(new javax.swing.plaf.FontUIResource("Segoe UI", Font.PLAIN, 14));
         } catch (Exception e) {
@@ -430,7 +432,7 @@ public class AdminPannel extends javax.swing.JFrame {
         profileBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("System Name");
+        setTitle("TFlex By Reid Solutions");
         setBackground(new java.awt.Color(51, 51, 255));
         setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
 
@@ -1711,9 +1713,15 @@ public class AdminPannel extends javax.swing.JFrame {
                 blendDetails.flavourTable.setEnabled(false);
 
                 Blend blend = new Blend();
-                baseID = blend.getBaseByBlendID(blendID);
+                ResultArray res = blend.getDataByBlendID(blendID);
+                res.next();
+                //setting base component
+                baseID = Integer.parseInt(res.getString(0));
                 base = blend.getIngByBaseName(baseID);
-
+                //setting blend category
+                String category = res.getString(1);
+                blendDetails.blendCategoryCombo.setSelectedItem(category);
+                
                 blendDetails.baseCombo.setSelectedItem(base);
 
                 ingredient.populateBlendIngTable((DefaultTableModel) blendDetails.ingTable.getModel(), blendID);
