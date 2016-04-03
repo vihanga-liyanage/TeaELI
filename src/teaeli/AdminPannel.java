@@ -32,6 +32,7 @@ import classes.ResultArray;
 import java.util.Calendar;
 import javax.swing.ImageIcon;
 import javax.swing.JTable;
+import static teaeli.TeaELI.loginFrame;
 
 public class AdminPannel extends javax.swing.JFrame {
 
@@ -1431,11 +1432,11 @@ public class AdminPannel extends javax.swing.JFrame {
     private void addNewBlendsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addNewBlendsBtnActionPerformed
         String[] counts = order.getOrderCounts();
         if ((Integer.parseInt(counts[0]) > 0) && (Integer.parseInt(counts[1]) > 0)) {
-            JOptionPane.showMessageDialog(this, "You have 1 pending order and 1 not completed order. You cannot place new orders.");
+            JOptionPane.showMessageDialog(this, "You have 1 pending order and 1 not completed order. You cannot place new orders.", "Error", JOptionPane.WARNING_MESSAGE);
         } else if (Integer.parseInt(counts[0]) > 1) {
-            JOptionPane.showMessageDialog(this, "You have 2 pending orders. You cannot place new orders.");
+            JOptionPane.showMessageDialog(this, "You have 2 pending orders. You cannot place new orders.", "Error", JOptionPane.WARNING_MESSAGE);
         } else if (Integer.parseInt(counts[1]) > 1) {
-            JOptionPane.showMessageDialog(this, "You have 2 not completed orders. You cannot place new orders.");
+            JOptionPane.showMessageDialog(this, "You have 2 not completed orders. You cannot place new orders.", "Error", JOptionPane.WARNING_MESSAGE);
         } else {
             CreateNewBlendOrder1 createNewBlendOrder = new CreateNewBlendOrder1();
             createNewBlendOrder.setVisible(true);
@@ -1462,9 +1463,10 @@ public class AdminPannel extends javax.swing.JFrame {
 
     private void logoutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutBtnActionPerformed
         this.setVisible(false);
-        LoginFrame lf = new LoginFrame();
-        lf.setVisible(true);
-        lf.setSize(740, 400);
+        loginFrame.dispose();
+        loginFrame = new LoginFrame();
+        loginFrame.setVisible(true);
+        loginFrame.setSize(740, 400);
     }//GEN-LAST:event_logoutBtnActionPerformed
 
     private void searchOrderBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchOrderBtnActionPerformed

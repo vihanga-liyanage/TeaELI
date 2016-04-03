@@ -1,7 +1,9 @@
 
 package teaeli;
 
+import classes.DBConnection;
 import classes.PswrdEncrypt;
+import classes.ResultArray;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -18,10 +20,12 @@ import javax.swing.ImageIcon;
 
 public class LoginFrame extends javax.swing.JFrame {
 
-    User us = new User();
-
     public String user;
+    private String userName, password;
+    private int passwrdCount = 0;
 
+    DBConnection dbConn = new DBConnection();
+    
     public LoginFrame() {
 
         //Setting icon
@@ -48,8 +52,21 @@ public class LoginFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    String userName, password;
-    int passwrdCount = 0;
+    public int checkLogin(String userName, String password) {
+        String query = "SELECT username,designation FROM user where password = '" + password + "' and username = ('" + userName + "')";
+        ResultArray rs = dbConn.getResultArray(query);
+        while(rs.next()){
+
+            if (rs.getString(1).equals("Admin")) {
+                return 1;
+            } else if (rs.getString(1).equals("Manager")) {
+                return 2;
+            } else {
+                return 3;
+            }   
+        }
+        return 4;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -154,9 +171,13 @@ public class LoginFrame extends javax.swing.JFrame {
         password = txtPassword.getText();
         String encriptedPass = PswrdEncrypt.main2(password);
 
-        if (us.checkLogin(userName, encriptedPass) == 1) {
-            AdminPannel adminPannel = new AdminPannel();//the provided username & password matched
+        int loginResponse = checkLogin(userName, encriptedPass);
+        
+        if (loginResponse == 1) {
             user = userName;
+            User us = new User();
+            
+            AdminPannel adminPannel = new AdminPannel();//the provided username & password matched
                       
             adminPannel.setVisible(true);
             
@@ -166,11 +187,12 @@ public class LoginFrame extends javax.swing.JFrame {
             
             setVisible(false);
 
-        } else if (us.checkLogin(userName, encriptedPass) == 2) {
-
+        } else if (loginResponse == 2) {
+            user = userName;
+            User us = new User();
+            
             ManagerPannel managerPannel = new ManagerPannel();//the provided username & password matched
             managerPannel.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);//Keep the window fullscreen
-            user = userName;
             
             managerPannel.setVisible(true);
 
@@ -180,7 +202,7 @@ public class LoginFrame extends javax.swing.JFrame {
             
             setVisible(false);
 
-        } else if (us.checkLogin(userName, encriptedPass) == 4 | us.checkLogin(userName, encriptedPass) == 3) {
+        } else if (loginResponse == 4 | loginResponse == 3) {
 
             if (passwrdCount != 3) {
                 JOptionPane.showMessageDialog(this, "Invalid username or password","Invalid credentials",0);//the provided password does not exist in the db
@@ -190,7 +212,7 @@ public class LoginFrame extends javax.swing.JFrame {
                 passwrdCount++;
             } else if (passwrdCount == 3) {
                 JOptionPane.showMessageDialog(this, "Maximum Three Attempts are allowed for login","Login Error",0);
-                setVisible(false);
+                System.exit(0);
             }
         }
 

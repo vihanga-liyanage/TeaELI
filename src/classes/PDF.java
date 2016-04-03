@@ -129,7 +129,7 @@ public class PDF {
 
     private PdfPCell PODetails(String text) {
         PdfPCell cell = new PdfPCell();
-        Paragraph p = new Paragraph(text, FontFactory.getFont(font, 11, BaseColor.BLACK));
+        Paragraph p = new Paragraph(text, FontFactory.getFont(font, 10, BaseColor.BLACK));
         p.setAlignment(Element.ALIGN_JUSTIFIED);
 
         cell.addElement(p);
@@ -309,6 +309,20 @@ public class PDF {
             }
             doc.add(masterTable);
 
+            //powered by
+            PdfPTable poweredBy = new PdfPTable(1);
+            poweredBy.setWidthPercentage(100);
+            poweredBy.setSpacingBefore(5);
+            poweredBy.addCell(companyNameAndDate("Powered By : Reid Solutions "));
+            doc.add(poweredBy);
+
+            //copyright
+            PdfPTable copyRight = new PdfPTable(1);
+            copyRight.setWidthPercentage(100);
+            copyRight.setSpacingBefore(5);
+            copyRight.addCell(companyNameAndDate("\u00a9" + "  2016 Reid Solutions All RIGHTS RESERVED"));
+            doc.add(copyRight);
+                
             doc.close();
 
         } catch (FileNotFoundException | DocumentException ex) {
@@ -361,11 +375,14 @@ public class PDF {
                 //sup name and po details
                 PdfPTable table2 = new PdfPTable(3);
                 table2.setWidthPercentage(100);
-                float[] widths = {2, 1, 1};
+                float[] widths = {7, 4, 5};
                 table2.setWidths(widths);
                 table2.addCell(SupName(suppName));
-                table2.addCell(PODetails("PO Code" + '\n' + "Delivery Date" + '\n' + "Retrieve Location" + '\n' + "Supplier Reference"));
-                table2.addCell(PODetails(": PO0053" + '\n' + ": 20160201" + '\n' + ": OFOffice" + '\n' + ": ALLOCATION PLAN 003"));
+                //get date 
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                Date date = new Date();
+                table2.addCell(PODetails("Order Date" + '\n' + "PO Code" + '\n' + "Delivery Date" + '\n' + "Retrieve Location" + '\n' + "Supplier Reference"));
+                table2.addCell(PODetails(": " + dateFormat.format(date) + '\n' + ": PO0053" + '\n' + ": 20160201" + '\n' + ": OFOffice" + '\n' + ": ALLOCATION PLAN 003"));
                 doc.add(table2);
 
                 //po table
@@ -438,14 +455,8 @@ public class PDF {
                 PdfPTable companyNameAndDate = new PdfPTable(2);
                 companyNameAndDate.setWidthPercentage(100);
                 companyNameAndDate.setSpacingBefore(20);
-                companyNameAndDate.setWidths(new int[]{4, 1});
+                companyNameAndDate.setWidths(new int[]{5, 1});
                 companyNameAndDate.addCell(companyNameAndDate("The Leaf & Spice Company"));
-
-                //get date 
-                DateFormat dateFormat = new SimpleDateFormat("yyyy - MM - dd");
-                Date date = new Date();
-                companyNameAndDate.addCell(companyNameAndDate(dateFormat.format(date)));
-                doc.add(companyNameAndDate);
 
                 //powered by
                 PdfPTable poweredBy = new PdfPTable(1);

@@ -654,18 +654,18 @@ public class ManagerPannel extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addNewBlendsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addNewBlendsBtnActionPerformed
-         String[] counts = order.getOrderCounts();
-         if ((Integer.parseInt(counts[0]) > 0) && (Integer.parseInt(counts[1]) > 0)){
-            JOptionPane.showMessageDialog(this, "You have 1 pending order and 1 not completed order. You cannot place new orders.");
-         } else if (Integer.parseInt(counts[0]) > 1){
-            JOptionPane.showMessageDialog(this, "You have 2 pending orders. You cannot place new orders.");
-         } else if (Integer.parseInt(counts[1]) > 1){
-            JOptionPane.showMessageDialog(this, "You have 2 not completed orders. You cannot place new orders.");
-         } else {
+        String[] counts = order.getOrderCounts();
+        if ((Integer.parseInt(counts[0]) > 0) && (Integer.parseInt(counts[1]) > 0)) {
+            JOptionPane.showMessageDialog(this, "You have 1 pending order and 1 not completed order. You cannot place new orders.", "Error", JOptionPane.WARNING_MESSAGE);
+        } else if (Integer.parseInt(counts[0]) > 1) {
+            JOptionPane.showMessageDialog(this, "You have 2 pending orders. You cannot place new orders.", "Error", JOptionPane.WARNING_MESSAGE);
+        } else if (Integer.parseInt(counts[1]) > 1) {
+            JOptionPane.showMessageDialog(this, "You have 2 not completed orders. You cannot place new orders.", "Error", JOptionPane.WARNING_MESSAGE);
+        } else {
             CreateNewBlendOrder1 createNewBlendOrder = new CreateNewBlendOrder1();
             createNewBlendOrder.setVisible(true);
             createNewBlendOrder.pannel = this;
-         }
+        }
     }//GEN-LAST:event_addNewBlendsBtnActionPerformed
 
     private void profileBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profileBtnActionPerformed

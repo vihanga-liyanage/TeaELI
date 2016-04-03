@@ -19,7 +19,9 @@ public class User {
         this.firstName = "";
         this.lastName = "";
         this.designation = "";
-        this.userID = 0;
+        getIDByUsername();
+        
+        //System.out.println("User onject created, userId:" + userID + " username:" + loginFrame.user);
     }
 
     public String getUserName() {
@@ -121,22 +123,6 @@ public class User {
         } catch (NumberFormatException e) {
             System.out.println("Exception : " + e);
         } 
-    }
-    
-    public int checkLogin(String userName, String password) {
-            String query = "SELECT username,designation FROM user where password = '" + password + "' and username = ('" + userName + "')";
-            ResultArray rs = dbConn.getResultArray(query);
-            while(rs.next()){
-            
-                if (rs.getString(1).equals("Admin")) {
-                    return 1;
-                } else if (rs.getString(1).equals("Manager")) {
-                    return 2;
-                } else {
-                    return 3;
-                }   
-            }
-            return 4;
     }
     
     public int updateUserName(String firstname, String lastname, String username) {

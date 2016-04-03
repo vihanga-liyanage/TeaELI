@@ -8,7 +8,6 @@ import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,6 +15,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import static teaeli.TeaELI.loginFrame;
 
 public class EditProfile extends javax.swing.JFrame {
 
@@ -270,7 +270,7 @@ public class EditProfile extends javax.swing.JFrame {
 
             //checking current password
             String encriptCurentPswrd = PswrdEncrypt.main2(currentpassword);
-            int check = us.checkLogin(username, encriptCurentPswrd);
+            int check = loginFrame.checkLogin(username, encriptCurentPswrd);
             if (check != 1 && check != 2) {
                 JOptionPane.showMessageDialog(this, "Current password is incorrect!!!", "Error", 2);
                 return;
