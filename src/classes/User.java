@@ -21,7 +21,7 @@ public class User {
         this.designation = "";
         getIDByUsername();
         
-        System.out.println("User onject created, userId:" + userID + " username:" + loginFrame.user);
+        //System.out.println("User onject created, userId:" + userID + " username:" + loginFrame.user);
     }
 
     public String getUserName() {

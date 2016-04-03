@@ -38,7 +38,7 @@ public class Order {
     public void populateOrderListTable(DefaultTableModel tModel) {
         ResultArray resultSet;
 
-        String query = "SELECT o.orderID, o.orderStatus, o.date, u.username FROM user u JOIN `order` o ON o.placedBy = u.userID ORDER BY o.orderStatus, o.orderID;";
+        String query = "SELECT o.orderID, o.orderStatus, datetime(o.date, 'localtime'), u.username FROM user u JOIN `order` o ON o.placedBy = u.userID ORDER BY o.orderStatus, o.orderID;";
 
         resultSet = dbConn.getResultArray(query);
         tModel.setRowCount(0);
@@ -108,7 +108,7 @@ public class Order {
         tModelBlend.setRowCount(0);
         tModelIng.setRowCount(0);
 
-        String query1 = "select o.orderID, o.date, ob.blendID, ob.requiredQty, ob.visibleStock, ob.invisibleStock, ob.balance, ob.excessQty, b.blendName from `order` o inner join orderblend ob on o.orderID = ob.orderID inner join blend b on ob.blendID = b.blendID where o.orderID = '" + orderID + "';";
+        String query1 = "select o.orderID, datetime(o.date, 'localtime'), ob.blendID, ob.requiredQty, ob.visibleStock, ob.invisibleStock, ob.balance, ob.excessQty, b.blendName from `order` o inner join orderblend ob on o.orderID = ob.orderID inner join blend b on ob.blendID = b.blendID where o.orderID = '" + orderID + "';";
         resultSet1 = dbConn.getResultArray(query1);
         while (resultSet1.next()) {
             String req = formatNum(resultSet1.getString(3));

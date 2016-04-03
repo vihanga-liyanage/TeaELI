@@ -14,7 +14,7 @@ public class StockHistory {
     public void populateStockIngredientHistoryTable(DefaultTableModel tableModel) {
         ResultArray res = null;
 
-        String query = "SELECT S.date,I.ingName,S.oldQty,S.updatedQty,S.reason,U.username "
+        String query = "SELECT datetime(S.date, 'localtime'),I.ingName,S.oldQty,S.updatedQty,S.reason,U.username "
                 + "FROM ingredient I INNER JOIN ingredientstockhistory S ON S.ingID=I.ingID INNER JOIN user U ON S.updatedBy=U.userID;";
 
         res = dbConn.getResultArray(query);
@@ -34,7 +34,7 @@ public class StockHistory {
     public void populateStockBlendHistoryTable(DefaultTableModel tableModel) {
         ResultArray res = null;
 
-        String query = "SELECT S.date,B.blendName,S.oldQty,S.updatedQty,S.reason,U.username "
+        String query = "SELECT datetime(S.date, 'localtime'),B.blendName,S.oldQty,S.updatedQty,S.reason,U.username "
                 + "FROM blend B, blendstockhistory S, user U "
                 + "WHERE S.updatedBy=U.userID AND S.blendID=B.blendID";
 
@@ -54,7 +54,7 @@ public class StockHistory {
     public void populateStockIngredientHistoryTableByDate(DefaultTableModel tableModel, String startdate, String enddate) {
         ResultArray res = null;
 
-        String query = "SELECT S.date,I.ingName,S.oldQty,S.updatedQty,S.reason,U.username "
+        String query = "SELECT datetime(S.date, 'localtime'),I.ingName,S.oldQty,S.updatedQty,S.reason,U.username "
                 + "FROM ingredient I, ingredientstockhistory S, user U "
                 + "WHERE S.updatedBy=U.userID AND S.ingID=I.ingID AND s.date BETWEEN '" + startdate + "' and '" + enddate + "'";
         
@@ -77,7 +77,7 @@ public class StockHistory {
     public void populateStockIngredientHistoryTableForDate(DefaultTableModel tableModel, String startdate,String endDate) {
         ResultArray res = null;
 
-        String query = "SELECT S.date,I.ingName,S.oldQty,S.updatedQty,S.reason,U.username "
+        String query = "SELECT datetime(S.date, 'localtime'),I.ingName,S.oldQty,S.updatedQty,S.reason,U.username "
                 + "FROM ingredient I, ingredientstockhistory S, user U "
                 + "WHERE S.updatedBy=U.userID AND S.ingID=I.ingID AND s.dateS.date Between '" + startdate + "' AND '"+endDate+"'";
         
@@ -100,7 +100,7 @@ public class StockHistory {
     public void populateStockBlendHistoryTableByDate(DefaultTableModel tableModel, String startdate, String enddate) {
         ResultArray res = null;
 
-        String query = "SELECT S.date,B.blendName,S.oldQty,S.updatedQty,S.reason,U.username FROM blend B, "
+        String query = "SELECT datetime(S.date, 'localtime'),B.blendName,S.oldQty,S.updatedQty,S.reason,U.username FROM blend B, "
                 + "blendstockhistory S, user U WHERE S.updatedBy=U.userID AND "
                 + "S.blendID=B.blendID AND S.date Between '" + startdate + "' and  '" + enddate + "'";
         
@@ -124,7 +124,7 @@ public class StockHistory {
         String date;
         ResultArray res = null;
 
-        String query = "SELECT S.date,B.blendName,S.oldQty,S.updatedQty,S.reason,U.username "
+        String query = "SELECT datetime(S.date, 'localtime'),B.blendName,S.oldQty,S.updatedQty,S.reason,U.username "
                 + "FROM blend B, blendstockhistory S, user U "
                 + "WHERE S.updatedBy=U.userID AND S.blendID=B.blendID AND S.date Between '" + startdate + "' AND '"+endDate+"'";
         

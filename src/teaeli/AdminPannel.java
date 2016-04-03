@@ -770,7 +770,7 @@ public class AdminPannel extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel5.setText("Start typing ingredient name to update");
 
-        searchIngredientBtn.setText("Go");
+        searchIngredientBtn.setText("Edit");
         searchIngredientBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 searchIngredientBtnActionPerformed(evt);
@@ -831,9 +831,9 @@ public class AdminPannel extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(settingsIngPanelLayout.createSequentialGroup()
                                 .addComponent(searchIngredientComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(searchIngredientBtn)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 711, Short.MAX_VALUE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 723, Short.MAX_VALUE)))
                         .addComponent(addItemBtn)))
                 .addContainerGap())
         );
@@ -853,7 +853,7 @@ public class AdminPannel extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        settingsTabbedPane.addTab("    Ingredients    ", settingsIngPanel);
+        settingsTabbedPane.addTab("    Ingredients Edit    ", settingsIngPanel);
 
         settingsBlendPanel.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -884,7 +884,7 @@ public class AdminPannel extends javax.swing.JFrame {
             productTable.getColumnModel().getColumn(2).setPreferredWidth(240);
         }
 
-        searchProductBtn.setText("Go");
+        searchProductBtn.setText("Edit");
         searchProductBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 searchProductBtnActionPerformed(evt);
@@ -1021,7 +1021,7 @@ public class AdminPannel extends javax.swing.JFrame {
                 .addGap(102, 102, 102))
         );
 
-        settingsTabbedPane.addTab("    Blends    ", settingsBlendPanel);
+        settingsTabbedPane.addTab("    Blends Edit    ", settingsBlendPanel);
 
         settingsIngHistoryPanel.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -1463,7 +1463,7 @@ public class AdminPannel extends javax.swing.JFrame {
 
     private void logoutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutBtnActionPerformed
         this.setVisible(false);
-        //loginFrame = new LoginFrame();
+        loginFrame = new LoginFrame();
         loginFrame.setVisible(true);
         loginFrame.setSize(740, 400);
         this.dispose();

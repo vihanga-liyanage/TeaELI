@@ -357,7 +357,7 @@ public class OrderDetails extends javax.swing.JFrame {
 
     private void updateOrderBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateOrderBtnActionPerformed
         String fileName = "RM_Order_Master_Plan-" + orderIDLabel.getText() + ".pdf";
-        String tempPath = "C:\\Teaeli\\RM-Orders\\" + orderIDLabel.getText() + "\\" + fileName;
+        String tempPath = "C:\\TFlex\\RM-Orders\\" + orderIDLabel.getText() + "\\" + fileName;
         File file = new File(tempPath);
         File sameFileName = new File(tempPath);
         if (!file.renameTo(sameFileName)) {

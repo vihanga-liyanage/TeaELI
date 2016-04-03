@@ -36,7 +36,7 @@ import javax.swing.JTable;
 public class PDF {
 
     private String font = "Segoe UI Light";
-    private String path = "C:\\Teaeli\\";
+    private String path = "C:\\TFlex\\";
 
     public PDF() {
     }
@@ -253,7 +253,7 @@ public class PDF {
             masterTable.setWidthPercentage(100);
 
             //Adding logo
-            PdfPCell logoCell = new PdfPCell(Image.getInstance("C:\\Teaeli\\Logos\\logo-new (Custom).png"));
+            PdfPCell logoCell = new PdfPCell(Image.getInstance(".\\src\\teaeli\\logo-new (Custom).png"));
 
             logoCell.setColspan(3);
             masterTable.addCell(logoCell);
@@ -363,13 +363,13 @@ public class PDF {
             try {
 
                 //Adding logo and topic
-                String fileName = "C:\\Teaeli\\Logos\\POHeader.jpg";
+                String fileName = ".\\src\\teaeli\\POHeader.jpg";
 
                 PdfPTable POHeadertable = new PdfPTable(2);
                 POHeadertable.setWidthPercentage(100);
                 POHeadertable.setWidths(new int[]{1, 1});
                 POHeadertable.addCell(POLogo(fileName));
-                POHeadertable.addCell(POHeader("Purchse Order"));
+                POHeadertable.addCell(POHeader("Purchase Order"));
                 doc.add(POHeadertable);
 
                 //sup name and po details
@@ -504,7 +504,7 @@ public class PDF {
             masterTable.setWidthPercentage(100);
 
             //Adding logo
-            PdfPCell logoCell = new PdfPCell(Image.getInstance("C:\\Teaeli\\Logos\\logo-new (Custom).png"));
+            PdfPCell logoCell = new PdfPCell(Image.getInstance(".\\src\\teaeli\\logo-new (Custom).png"));
 
             logoCell.setColspan(3);
             masterTable.addCell(logoCell);
@@ -512,7 +512,7 @@ public class PDF {
             //Adding master plan header data as another table
             coloumWidths = new float[]{5.2f, 5};
             PdfPTable headerTable = new PdfPTable(coloumWidths);
-            PdfPCell titleCell = new PdfPCell(new Paragraph("Ingredient Stock History ", FontFactory.getFont(font, 11, Font.BOLD)));
+            PdfPCell titleCell = new PdfPCell(new Paragraph("Ingredient Stock History ", FontFactory.getFont(font, 15, Font.BOLD)));
             titleCell.setPadding(15);
             titleCell.setColspan(10);
             titleCell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -590,7 +590,7 @@ public class PDF {
             masterTable.setWidthPercentage(100);
 
             //Adding logo
-            PdfPCell logoCell = new PdfPCell(Image.getInstance("C:\\Teaeli\\Logos\\logo-new (Custom).png"));
+            PdfPCell logoCell = new PdfPCell(Image.getInstance(".\\src\\teaeli\\logo-new (Custom).png"));
 
             logoCell.setColspan(3);
             masterTable.addCell(logoCell);
@@ -598,7 +598,7 @@ public class PDF {
             //Adding master plan header data as another table
             coloumWidths = new float[]{5.2f, 5};
             PdfPTable headerTable = new PdfPTable(coloumWidths);
-            PdfPCell titleCell = new PdfPCell(new Paragraph("Blend Stock History ", FontFactory.getFont(font, 11, Font.BOLD)));
+            PdfPCell titleCell = new PdfPCell(new Paragraph("Blend Stock History ", FontFactory.getFont(font, 15, Font.BOLD)));
             titleCell.setPadding(15);
             titleCell.setColspan(10);
             titleCell.setHorizontalAlignment(Element.ALIGN_CENTER);

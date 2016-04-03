@@ -662,6 +662,21 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
         int dialogResult = JOptionPane.showConfirmDialog(this, "Are you sure you want to place this order?\nYou cannot undo after the confirmation.", "Confirm order placing", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
         if (dialogResult == JOptionPane.YES_OPTION) {
 
+            //waiting screen
+            /*
+            Thread t = new Thread(new Runnable() {
+                WaitingScreen ws = new WaitingScreen();
+                @Override
+                public void run() {
+                    ws.setVisible(true);
+                }
+                
+                public void stop(){
+                    ws.dispose();
+                }
+            });
+            t.start();
+            */
             //placing the order in order table
             if (!order.placeOrder(orderIDLabel.getText())) {
                 JOptionPane.showMessageDialog(rootPane, "There were some issues with the database. Please contact developers.\n\nError code : CreatNewBlendOrder2 684", "Error", JOptionPane.ERROR_MESSAGE);
