@@ -1463,10 +1463,10 @@ public class AdminPannel extends javax.swing.JFrame {
 
     private void logoutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutBtnActionPerformed
         this.setVisible(false);
-        loginFrame.dispose();
-        loginFrame = new LoginFrame();
+        //loginFrame = new LoginFrame();
         loginFrame.setVisible(true);
         loginFrame.setSize(740, 400);
+        this.dispose();
     }//GEN-LAST:event_logoutBtnActionPerformed
 
     private void searchOrderBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchOrderBtnActionPerformed

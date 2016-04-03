@@ -16,6 +16,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import classes.User;
 import javax.swing.ImageIcon;
+import static teaeli.TeaELI.loginFrame;
 
 
 public class LoginFrame extends javax.swing.JFrame {
@@ -175,6 +176,7 @@ public class LoginFrame extends javax.swing.JFrame {
         
         if (loginResponse == 1) {
             user = userName;
+            loginFrame.user = userName;
             User us = new User();
             
             AdminPannel adminPannel = new AdminPannel();//the provided username & password matched
@@ -189,6 +191,7 @@ public class LoginFrame extends javax.swing.JFrame {
 
         } else if (loginResponse == 2) {
             user = userName;
+            loginFrame.user = userName;
             User us = new User();
             
             ManagerPannel managerPannel = new ManagerPannel();//the provided username & password matched
