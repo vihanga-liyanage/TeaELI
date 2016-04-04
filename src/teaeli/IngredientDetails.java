@@ -118,7 +118,7 @@ public class IngredientDetails extends javax.swing.JFrame {
             }
         });
 
-        itemTypeCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] {"Tea", "Flavour" , "Herbs", "Flowers", "Fruits", "Leaves", "Other"}));
+        itemTypeCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Tea", "Flavour", "Herbs", "Flowers", "Fruits", "Leaves", "Granule Flavour", "Other" }));
         itemTypeCombo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 itemTypeComboActionPerformed(evt);
@@ -312,6 +312,8 @@ public class IngredientDetails extends javax.swing.JFrame {
                         if (updateOK == 1) {
                             //Re-generating the admin panel since the data is changed
 
+                            JOptionPane.showMessageDialog(this, "Updated Successfuly !", "Update Success", 1);
+                            
                             if ("teaeli.AdminPannel".equals(pannel.getClass().getName())) {
                                 AdminPannel adminPannel = new AdminPannel();
                                 adminPannel.mainTabbedPane.setSelectedIndex(2);

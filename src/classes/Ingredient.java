@@ -150,7 +150,7 @@ public class Ingredient {
     /* Get blend data when ing name is given -thisara */
     public ResultArray getIngDataByIngName(String ingName) {
         ResultArray res = null;
-        this.setIngName(ingName.replace("'", "\\'"));
+        this.setIngName(ingName.replace("'", "''"));
         String query = "SELECT * FROM ingredient WHERE ingName='" + this.getIngName() + "'";
         res = dbConn.getResultArray(query);
         return res;
@@ -244,7 +244,7 @@ public class Ingredient {
     public boolean checkAndLoadIngredientStockDetails(String selectedIngName) {
         boolean validIngName = false;
         ResultArray resultArray;
-        this.setIngName(selectedIngName.replace("'", "\\'"));
+        this.setIngName(selectedIngName.replace("'", "''"));
 
         try {
             //query to load ingredient details
@@ -269,7 +269,7 @@ public class Ingredient {
 
     /* start of getIngIDFromIngName method */
     public void getIngIDFromIngName() {
-        this.setIngName(this.getIngName().replace("'", "\\'"));
+        this.setIngName(this.getIngName().replace("'", "''"));
         ResultArray resultArray;
         try {
             String query = "SELECT ingID FROM ingredient WHERE ingName = '" + this.getIngName() + "'";
@@ -330,7 +330,7 @@ public class Ingredient {
     public String getUnitPriceByIngName(String ingName) {
         String unitPrice = "";
         ResultArray res = null;
-        this.setIngName(ingName.replace("'", "\\'"));
+        this.setIngName(ingName.replace("'", "''"));
         String query = "SELECT unitPrice FROM ingredient where ingredient.ingName = '" + this.getIngName() + "' ";
         res = dbConn.getResultArray(query);
         if (res.next()) {
@@ -346,10 +346,14 @@ public class Ingredient {
         //set name of the ingredient
         resultArray[0] = ingredientName;
 
+        String ingName = ingredientName.replace("'", "''");
+        
         String query = "SELECT ingID,categoryName,supName,unitPrice "
                 + "FROM ingredient I,supplier S,ingredientcategory IC "
-                + "where I.ingName = '" + ingredientName + "' and I.supID = S.supID and I.ingCategoryID = IC.ingCategoryID;";
+                + "where I.ingName = '" + ingName + "' and I.supID = S.supID and I.ingCategoryID = IC.ingCategoryID;";
+        
         res = dbConn.getResultArray(query);
+        
         while (res.next()) {
             for (int i = 1; i <= 4; i++) {
                 resultArray[i] = res.getString(i-1);
@@ -361,8 +365,11 @@ public class Ingredient {
     //start of update ingredient method
     public int updateIngredient(int ingredientID, String ingredientName, int ingCategory, int supID, float unitPrice) throws SQLException {
         int insertOK = 0;
+        
         //set name of the ingredient
-        String query = "Update ingredient SET ingName = '" + ingredientName + "', ingCategoryID = '" + ingCategory + "',supID= '" + supID + "',unitPrice = '" + unitPrice + "' WHERE ingID = '" + ingredientID + "'";
+        String replacedIngName = ingredientName.replace("'", "''");
+        
+        String query = "Update ingredient SET ingName = '" + replacedIngName + "', ingCategoryID = '" + ingCategory + "',supID= '" + supID + "',unitPrice = '" + unitPrice + "' WHERE ingID = '" + ingredientID + "'";
         insertOK = dbConn.updateResult(query);
         return insertOK;
     }
@@ -384,13 +391,17 @@ public class Ingredient {
         rs1.next();
         rslt1 = rs1.getString(0);
         
-        String query2 = "SELECT supID FROM supplier WHERE supName = '" + supplier + "' ";
+        String supplierName = supplier.replace("'", "''");
+        
+        String query2 = "SELECT supID FROM supplier WHERE supName = '" + supplierName + "' ";
         
         ResultArray rs2 = dbConn.getResultArray(query2);
         rs2.next();
         rslt2 = rs2.getString(0);
 
-        String query3 = "INSERT INTO ingredient(ingName,ingCategoryID,visibleStock,alocatedStock,invisibleStock,supID,unitPrice) values('" + Name + "','" + rslt1 + "',0,0,0,'" + rslt2 + "','" + price + "') ";
+        String replacedIngName = Name.replace("'", "''");
+        
+        String query3 = "INSERT INTO ingredient(ingName,ingCategoryID,visibleStock,alocatedStock,invisibleStock,supID,unitPrice) values('" + replacedIngName + "','" + rslt1 + "',0,0,0,'" + rslt2 + "','" + price + "') ";
         
         int rslt3 = dbConn.updateResult(query3);
         return rslt3;
@@ -406,7 +417,11 @@ public class Ingredient {
     }
 
     public String getIngIDByIngName(String base) {
-        String query = "SELECT ingID FROM ingredient WHERE ingName = '" + base + "' ";
+        
+        String baseName = base.replace("'", "''");
+        
+        String query = "SELECT ingID FROM ingredient WHERE ingName = '" + baseName + "' ";
+        
         ResultArray res = dbConn.getResultArray(query);
         res.next();
         return res.getString(0);
@@ -420,21 +435,23 @@ public class Ingredient {
     
     /* start of updateIngredientStock method -- for orderRecieved when no pending */
     public boolean updateIngredientStockWithoutPending(){
-        String ingName = this.getIngName().replace("'", "\\'");
+        String replacedIngName = this.getIngName().replace("'", "''");
+        
         String query = "UPDATE ingredient SET "
                 + "visibleStock = visibleStock + '" + this.getOrderExcessQty() + "' "
                 + " , invisibleStock = invisibleStock - '" + this.getOrderExcessQty() + "' "
-                + " WHERE ingName = '" + ingName + "' ";
+                + " WHERE ingName = '" + replacedIngName + "' ";
         
         return (dbConn.updateResult(query) == 1);
     }
     
     /* start of updateIngredientStock method -- for orderRecieved */
     public boolean updateIngredientStockWithPending(){
-        String ingName = this.getIngName().replace("'", "\\'");
+        String replacedIngName = this.getIngName().replace("'", "''");
+        
         String query = "UPDATE ingredient SET "
                 + "visibleStock = '" + this.getVisibleStock() + "', invisibleStock = '" + this.getInvisibleStock() + "' "
-                + " WHERE ingName = '" + ingName + "' ";
+                + " WHERE ingName = '" + replacedIngName + "' ";
         
         return (dbConn.updateResult(query) == 1);
     }

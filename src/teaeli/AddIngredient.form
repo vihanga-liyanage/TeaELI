@@ -202,14 +202,15 @@
         <Component class="javax.swing.JComboBox" name="itemTypeCombo">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="7">
-                <StringItem index="0" value="Herbs"/>
-                <StringItem index="1" value="Flowers"/>
-                <StringItem index="2" value="Fruits"/>
-                <StringItem index="3" value="Leaves"/>
-                <StringItem index="4" value="Other"/>
-                <StringItem index="5" value="Tea"/>
-                <StringItem index="6" value="Flavour"/>
+              <StringArray count="8">
+                <StringItem index="0" value="Tea"/>
+                <StringItem index="1" value="Flavour"/>
+                <StringItem index="2" value="Herbs"/>
+                <StringItem index="3" value="Flowers"/>
+                <StringItem index="4" value="Fruits"/>
+                <StringItem index="5" value="Leaves"/>
+                <StringItem index="6" value="Granule Flavour"/>
+                <StringItem index="7" value="Other"/>
               </StringArray>
             </Property>
           </Properties>

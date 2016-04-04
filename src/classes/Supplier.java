@@ -1,9 +1,6 @@
 package classes;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 public class Supplier {
 
@@ -51,7 +48,7 @@ public class Supplier {
 
     public int addNewSupplier(String Name) throws SQLException {
         int insertOk = 0;
-        this.setSupplierName(Name.replace("'", "\\'"));
+        this.setSupplierName(Name.replace("'", "''"));
         String query = "INSERT INTO supplier(supName) values('" + this.getSupplierName() + "')";
         insertOk = dbConn.updateResult(query);
         return insertOk;
@@ -67,7 +64,7 @@ public class Supplier {
 
         ResultArray resultArray;
 
-        this.setSupplierName(supplierName.replace("'", "\\'"));
+        this.setSupplierName(supplierName.replace("'", "''"));
 
         //set name of the ingredient
         String query = "SELECT supID from supplier WHERE supplier.supName= '" + this.getSupplierName() + "' ";

@@ -656,6 +656,7 @@ public class AddNewBlend extends javax.swing.JFrame {
     String blendID, blendName, blendCategory, base;
 
     private void addNewBlendBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addNewBlendBtnActionPerformed
+        
         //validation
         if (blendCodeTxt.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please add a blend code.", "Empty Fields", 2);
@@ -689,8 +690,10 @@ public class AddNewBlend extends javax.swing.JFrame {
             return;
         }
         
+        
         blendID = blendCodeTxt.getText();
         blendName = blendNameTxt.getText();
+        
         blendCategory = blendCategoryCombo.getSelectedItem().toString();
         base = baseCombo.getSelectedItem().toString();
 
