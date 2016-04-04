@@ -430,16 +430,11 @@
         <Component class="javax.swing.JComboBox" name="blendCategoryCombo">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="9">
+              <StringArray count="4">
                 <StringItem index="0" value="Artisian Special V1"/>
-                <StringItem index="1" value="Artisian Special V2"/>
-                <StringItem index="2" value="Black"/>
-                <StringItem index="3" value="Green Tea"/>
-                <StringItem index="4" value="Organic Black"/>
-                <StringItem index="5" value="Organic Green"/>
-                <StringItem index="6" value="Organic Infusion"/>
-                <StringItem index="7" value="Infusions"/>
-                <StringItem index="8" value="Iced Teas"/>
+                <StringItem index="1" value="Teaeli Organic"/>
+                <StringItem index="2" value="Teaeli Iced Teas"/>
+                <StringItem index="3" value="TFM"/>
               </StringArray>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value=""/>

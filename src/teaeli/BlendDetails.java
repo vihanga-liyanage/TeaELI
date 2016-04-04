@@ -353,7 +353,7 @@ public class BlendDetails extends javax.swing.JFrame {
         category.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         category.setText("Category");
 
-        blendCategoryCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Artisian Special V1", "Artisian Special V2", "Black", "Green Tea", "Organic Black", "Organic Green", "Organic Infusion", "Infusions", "Iced Teas" }));
+        blendCategoryCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Artisian Special V1", "Teaeli Organic", "Teaeli Iced Teas", "TFM" }));
         blendCategoryCombo.setToolTipText("");
         blendCategoryCombo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

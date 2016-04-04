@@ -670,7 +670,7 @@ public class AdminPannel extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Blend Category", "Blend Name", "Visible Stock (g)", "Invisible Stock (g)"
+                "Blend Category", "Blend Name", "Buffer Stock (g)", "Invisible Stock (g)"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -770,7 +770,7 @@ public class AdminPannel extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel5.setText("Start typing ingredient name to update");
 
-        searchIngredientBtn.setText("Go");
+        searchIngredientBtn.setText("Edit");
         searchIngredientBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 searchIngredientBtnActionPerformed(evt);
@@ -853,7 +853,7 @@ public class AdminPannel extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        settingsTabbedPane.addTab("    Ingredients    ", settingsIngPanel);
+        settingsTabbedPane.addTab("    Ingredient Edit    ", settingsIngPanel);
 
         settingsBlendPanel.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -884,7 +884,8 @@ public class AdminPannel extends javax.swing.JFrame {
             productTable.getColumnModel().getColumn(2).setPreferredWidth(240);
         }
 
-        searchProductBtn.setText("Go");
+        searchProductBtn.setText("Edit");
+        searchProductBtn.setToolTipText("");
         searchProductBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 searchProductBtnActionPerformed(evt);
@@ -1021,7 +1022,7 @@ public class AdminPannel extends javax.swing.JFrame {
                 .addGap(102, 102, 102))
         );
 
-        settingsTabbedPane.addTab("    Blends    ", settingsBlendPanel);
+        settingsTabbedPane.addTab("    Blend Edit    ", settingsBlendPanel);
 
         settingsIngHistoryPanel.setBackground(new java.awt.Color(255, 255, 255));
 

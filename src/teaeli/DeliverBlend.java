@@ -202,7 +202,7 @@ public class DeliverBlend extends javax.swing.JFrame {
         freeQtyLbl.setText("50 g");
 
         freeStockQty.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        freeStockQty.setText("Free Qty In Stock");
+        freeStockQty.setText("Buffer Stock");
 
         allocatedQty.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         allocatedQty.setText("Allocated Qty In Stock");
@@ -224,7 +224,7 @@ public class DeliverBlend extends javax.swing.JFrame {
         });
 
         unallocatingQty.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        unallocatingQty.setText("Allocate left to free stock ?");
+        unallocatingQty.setText("Allocate buffer to free stock ?");
 
         unallocateQtyTxt.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         unallocateQtyTxt.setToolTipText("");
