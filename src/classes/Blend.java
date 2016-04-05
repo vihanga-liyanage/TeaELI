@@ -595,8 +595,8 @@ public class Blend {
     //Method for updating the recipies
     public int updateRecipie(String blendID, int ingID, double per, int type){
         String query = "INSERT INTO recipie (blendID, ingID, ingPercent, type) values('"+blendID+"', '"+ingID+"', '"+per+"', '"+type+"')";
-           int rslt = dbConn.updateResult(query);
-           return rslt;       
+        int rslt = dbConn.updateResult(query);
+        return rslt;       
     }
     
     //Method to delete the recepie before updating
