@@ -47,7 +47,7 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
      */
     public CreateNewBlendOrder2(CreateNewBlendOrder1 cNBO1) {
         //Setting icon
-        ImageIcon img = new ImageIcon(".\\src\\teaeli\\icon-1.png");
+        ImageIcon img = new ImageIcon(".\\img\\icon-1.png");
         this.setIconImage(img.getImage());
         
         //Add windows look and feel

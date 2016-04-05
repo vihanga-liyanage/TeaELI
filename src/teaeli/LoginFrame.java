@@ -30,7 +30,7 @@ public class LoginFrame extends javax.swing.JFrame {
     public LoginFrame() {
 
         //Setting icon
-        ImageIcon img = new ImageIcon(".\\src\\teaeli\\icon-1.png");
+        ImageIcon img = new ImageIcon(".\\img\\icon-1.png");
         this.setIconImage(img.getImage());
         
         //Add windows look and feel
@@ -154,7 +154,7 @@ public class LoginFrame extends javax.swing.JFrame {
         getContentPane().add(jPanel1);
         jPanel1.setBounds(220, 110, 290, 160);
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/teaeli/login background.jpg"))); // NOI18N
+        jLabel4.setIcon(new javax.swing.ImageIcon("D:\\Developer\\My Projects\\TeaELI\\TeaELI\\img\\login background.jpg")); // NOI18N
         getContentPane().add(jLabel4);
         jLabel4.setBounds(0, 0, 740, 400);
 

@@ -32,7 +32,7 @@ public class BlendDetails extends javax.swing.JFrame {
 
     public BlendDetails() {
         //Setting icon
-        ImageIcon img = new ImageIcon(".\\src\\teaeli\\icon-1.png");
+        ImageIcon img = new ImageIcon(".\\img\\icon-1.png");
         this.setIconImage(img.getImage());
         
         initComponents();

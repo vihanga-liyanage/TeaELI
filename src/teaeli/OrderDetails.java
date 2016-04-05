@@ -36,7 +36,7 @@ public class OrderDetails extends javax.swing.JFrame {
 
     public OrderDetails() {
         //Setting icon
-        ImageIcon img = new ImageIcon(".\\src\\teaeli\\icon-1.png");
+        ImageIcon img = new ImageIcon(".\\img\\icon-1.png");
         this.setIconImage(img.getImage());
         
         //Add windows look and feel

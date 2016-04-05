@@ -115,7 +115,7 @@ public class PDF {
 
     private PdfPCell SupName(String text) {
         PdfPCell cell = new PdfPCell();
-        Paragraph p = new Paragraph(text, FontFactory.getFont(font, 15, Font.BOLD));
+        Paragraph p = new Paragraph(text, FontFactory.getFont(font, 13, Font.BOLD));
         p.setAlignment(Element.ALIGN_LEFT);
         cell.addElement(p);
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -253,7 +253,7 @@ public class PDF {
             masterTable.setWidthPercentage(100);
 
             //Adding logo
-            PdfPCell logoCell = new PdfPCell(Image.getInstance(".\\src\\teaeli\\logo-new (Custom).png"));
+            PdfPCell logoCell = new PdfPCell(Image.getInstance(".\\img\\logo.png"));
 
             logoCell.setColspan(3);
             masterTable.addCell(logoCell);
@@ -363,7 +363,7 @@ public class PDF {
             try {
 
                 //Adding logo and topic
-                String fileName = ".\\src\\teaeli\\POHeader.jpg";
+                String fileName = ".\\img\\POHeader.jpg";
 
                 PdfPTable POHeadertable = new PdfPTable(2);
                 POHeadertable.setWidthPercentage(100);
@@ -504,7 +504,7 @@ public class PDF {
             masterTable.setWidthPercentage(100);
 
             //Adding logo
-            PdfPCell logoCell = new PdfPCell(Image.getInstance(".\\src\\teaeli\\logo-new (Custom).png"));
+            PdfPCell logoCell = new PdfPCell(Image.getInstance(".\\img\\logo.png"));
 
             logoCell.setColspan(3);
             masterTable.addCell(logoCell);
@@ -590,7 +590,7 @@ public class PDF {
             masterTable.setWidthPercentage(100);
 
             //Adding logo
-            PdfPCell logoCell = new PdfPCell(Image.getInstance(".\\src\\teaeli\\logo-new (Custom).png"));
+            PdfPCell logoCell = new PdfPCell(Image.getInstance(".\\img\\logo.png"));
 
             logoCell.setColspan(3);
             masterTable.addCell(logoCell);

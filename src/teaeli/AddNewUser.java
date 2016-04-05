@@ -24,7 +24,7 @@ public class AddNewUser extends javax.swing.JFrame {
 
     public AddNewUser() {
         //Setting icon
-        ImageIcon img = new ImageIcon(".\\src\\teaeli\\icon-1.png");
+        ImageIcon img = new ImageIcon(".\\img\\icon-1.png");
         this.setIconImage(img.getImage());
         
         //Add windows look and feel

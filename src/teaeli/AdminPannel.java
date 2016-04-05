@@ -55,7 +55,7 @@ public class AdminPannel extends javax.swing.JFrame {
      */
     public AdminPannel() {
         //Setting icon
-        ImageIcon img = new ImageIcon(".\\src\\teaeli\\icon-1.png");
+        ImageIcon img = new ImageIcon(".\\img\\icon-1.png");
         this.setIconImage(img.getImage());
         
         try {
@@ -1281,7 +1281,7 @@ public class AdminPannel extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        userTable.setRowHeight(20);
+        userTable.setRowHeight(24);
         jScrollPane1.setViewportView(userTable);
 
         addUserBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -1349,7 +1349,7 @@ public class AdminPannel extends javax.swing.JFrame {
 
         mainTabbedPane.addTab("    Settings    ", settingsPanel);
 
-        logoLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/teaeli/logo-new (Custom).png"))); // NOI18N
+        logoLabel.setIcon(new javax.swing.ImageIcon("D:\\Developer\\My Projects\\TeaELI\\TeaELI\\img\\logo-new (Custom).png")); // NOI18N
 
         timeLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         timeLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);

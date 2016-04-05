@@ -19,7 +19,7 @@ public class UpdateBlendStock extends javax.swing.JFrame {
     public UpdateBlendStock() {
         initComponents();
         //Setting icon
-        ImageIcon img = new ImageIcon(".\\src\\teaeli\\icon-1.png");
+        ImageIcon img = new ImageIcon(".\\img\\icon-1.png");
         this.setIconImage(img.getImage());
         
         Dimension screenSize, frameSize;
