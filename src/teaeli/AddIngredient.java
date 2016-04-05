@@ -126,7 +126,7 @@ public class AddIngredient extends javax.swing.JFrame {
             }
         });
 
-        itemTypeCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Herbs", "Flowers", "Fruits", "Leaves", "Other", "Tea", "Flavour" }));
+        itemTypeCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Tea", "Flavour", "Herbs", "Flowers", "Fruits", "Leaves", "Granule Flavour", "Other" }));
         itemTypeCombo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 itemTypeComboActionPerformed(evt);
@@ -239,8 +239,6 @@ public class AddIngredient extends javax.swing.JFrame {
         type = itemTypeCombo.getSelectedItem().toString();
         supname = supliercombo.getSelectedItem().toString();
         
-        System.out.println(name + " " + type + " " + supname);
-
         if (name.isEmpty() || supname.isEmpty() || txtPrice.getText().isEmpty()) {
 
             JOptionPane.showMessageDialog(this, "Every field must be filled.", "Empty fields", 2);

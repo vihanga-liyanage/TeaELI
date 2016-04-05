@@ -670,7 +670,7 @@ public class AdminPannel extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Blend Category", "Blend Name", "Visible Stock (g)", "Invisible Stock (g)"
+                "Blend Category", "Blend Name", "Buffer Stock (g)", "Invisible Stock (g)"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -1700,19 +1700,6 @@ public class AdminPannel extends javax.swing.JFrame {
                 blendDetails.blendCodeTxt.setText(blendID);
                 blendDetails.blendCodeTxt.setEditable(false);
                 blendDetails.blendNameTxt.setEditable(false);
-                blendDetails.ingPerAddBtn.setEnabled(false);
-                blendDetails.flavoursPerAddBtn.setEnabled(false);
-                blendDetails.blendUpdateBtn.setEnabled(false);
-                blendDetails.blendAddnewBtn.setEnabled(false);
-                blendDetails.blendCategoryCombo.setEnabled(false);
-                blendDetails.baseCombo.setEnabled(false);
-
-                blendDetails.ingCombo.setEnabled(false);
-                blendDetails.ingPerTxt.setEnabled(false);
-                blendDetails.flavoursCombo.setEnabled(false);
-                blendDetails.flavoursPerTxt.setEnabled(false);
-                blendDetails.ingTable.setEnabled(false);
-                blendDetails.flavourTable.setEnabled(false);
 
                 Blend blend = new Blend();
                 ResultArray res = blend.getDataByBlendID(blendID);

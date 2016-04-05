@@ -185,9 +185,13 @@ public class Blend {
     /* start of checkAndLoadBlendStockDetails method */
     public boolean checkAndLoadBlendStockDetails(String selectedBlendName) {
         boolean validBlendName = false;
+        
+        String repBlendName = selectedBlendName.replace("'", "''");
+        
         ResultArray resultArray;
         try {
-            String query = "SELECT blendName, visibleStock, blendCategory FROM blend WHERE blendName = '" + selectedBlendName + "'";
+            String query = "SELECT blendName, visibleStock, blendCategory FROM blend WHERE blendName = '" + repBlendName + "'";
+            
             resultArray = dbConn.getResultArray(query);
             if (resultArray.next()) {
                 //set blend details
@@ -208,6 +212,9 @@ public class Blend {
     /* start of getBlendIDFromBlendName method */
     public void getBlendIDFromBlendName() {
         ResultArray resultArray;
+        
+        this.setBlendName(this.getBaseName().replace("'","''"));
+        
         String query = "SELECT blendID FROM blend WHERE blendName = '" + this.getBlendName() + "'";
         resultArray = dbConn.getResultArray(query);
         if (resultArray.next()) {
@@ -254,7 +261,10 @@ public class Blend {
 
     /* Get blend data when blend name is given */
     public ResultArray getBlendDataByBlendName(String blendName) {
-        String query = "SELECT * FROM blend WHERE blendName='" + blendName + "'";
+        
+        String repBlendName = blendName.replace("'", "''");
+        
+        String query = "SELECT * FROM blend WHERE blendName='" + repBlendName + "'";
         return dbConn.getResultArray(query);
     }
 
@@ -279,7 +289,10 @@ public class Blend {
     }
 
     public String getBlendIDByBlendName(String blendName) {
-        String query = "SELECT blendID FROM blend WHERE blendName = '" + blendName + "' ";
+        
+        String repBlendName = blendName.replace("'", "''");
+        
+        String query = "SELECT blendID FROM blend WHERE blendName = '" + repBlendName + "' ";
         ResultArray res = dbConn.getResultArray(query);
         res.next();
         return res.getString(0);
@@ -297,7 +310,11 @@ public class Blend {
     }
 
     public int checkExistingBlendName(String blendName) {
-        String query = "SELECT blendID FROM blend WHERE blendName = '" + blendName + "' ";
+        
+        String replacedBlendName = blendName.replace("'", "''");
+        
+        String query = "SELECT blendID FROM blend WHERE blendName = '" + replacedBlendName + "' ";
+        
         ResultArray res = dbConn.getResultArray(query);
 
         if (res.next() == true) {
@@ -308,7 +325,11 @@ public class Blend {
     }
 
     public int getIngIDRecByIngName(String ingName) {
-        String query = "SELECT ingID FROM ingredient WHERE ingName = '" + ingName + "' ";
+        
+        String replacedIngName = ingName.replace("'", "''");
+        
+        String query = "SELECT ingID FROM ingredient WHERE ingName = '" + replacedIngName + "' ";
+        
         int ID = 0;
         ResultArray res = new ResultArray();
         res = dbConn.getResultArray(query);
@@ -331,8 +352,12 @@ public class Blend {
 
     //Add new blend method
     public int addNewBlend(String blendID, String blendName, String base, String blendCategory) {
+        
         String baseCom = ingredient.getIngIDByIngName(base);
-        String query = "INSERT INTO blend values('" + blendID + "','" + blendName + "','" + baseCom + "',0,0,0,'" + blendCategory + "') ";
+        
+        String replacedBlendName = blendName.replace("'", "''");
+        
+        String query = "INSERT INTO blend values('" + blendID + "','" + replacedBlendName + "','" + baseCom + "',0,0,0,'" + blendCategory + "') ";
         int ret = dbConn.updateResult(query);
         return ret;
     }
@@ -346,6 +371,9 @@ public class Blend {
 
     //Update Blend when Change the base/category or both
     public int updateBlend(String blendID, String blendName, String base, String blendCategory) {
+        
+        String repBlendName = blendName.replace("'", "''");
+        
         String baseCom = ingredient.getIngIDByIngName(base);
         String query = "UPDATE blend SET baseID = '" + baseCom + "', blendCategory = '" + blendCategory + "' WHERE blendID = '" + blendID + "' ";
         int ret = dbConn.updateResult(query);
@@ -356,8 +384,11 @@ public class Blend {
     public boolean checkAndLoadBlendDeliverDetails(String selectedBlendName) {
         boolean validBlendName = false;
         ResultArray resultArray;
+        
+        String repBlendName = selectedBlendName.replace("'", "''");
+        
         try {
-            String query = "SELECT blendName, visibleStock, alocatedStock, blendCategory FROM blend WHERE blendName = '" + selectedBlendName + "'";
+            String query = "SELECT blendName, visibleStock, alocatedStock, blendCategory FROM blend WHERE blendName = '" + repBlendName + "'";
             resultArray = dbConn.getResultArray(query);
             if (resultArray.next()) {
                 //set blend details
@@ -450,10 +481,13 @@ public class Blend {
 
     //getting recipie data for blend
     public ResultArray getRecipie(String blendName) {
+        
+        String repBlendName = blendName.replace("'", "''");
+        
         String query = "SELECT b.baseID, r.ingID, r.ingPercent, r.type \n"
                 + "FROM blend b \n"
                 + "INNER JOIN recipie r on b.blendID=r.blendID \n"
-                + "WHERE b.blendName='" + blendName + "'";
+                + "WHERE b.blendName='" + repBlendName + "'";
         return dbConn.getResultArray(query);
     }
 
@@ -467,6 +501,7 @@ public class Blend {
     public boolean loadBlendIngredientDetails(DefaultTableModel defaultTableModel) {
         ResultArray resultArray;
         boolean load = false;
+        
         String query = "SELECT i.ingName, r.ingPercent FROM ingredient i JOIN "
                 + "recipie r ON i.ingID = r.ingID WHERE r.blendID = '" + this.getBlendID() + "' AND type = '0'";
 
@@ -516,6 +551,9 @@ public class Blend {
     /* start of getBlendCatgFromBlendName method */
     public void getBlendCatgFromBlendName() {
         ResultArray resultArray;
+        
+        this.setBlendName(this.getBlendName().replace("'", "''"));
+        
         String query = "SELECT blendCategory FROM blend WHERE blendName = '" + this.getBlendName() + "'";
         resultArray = dbConn.getResultArray(query);
         if (resultArray.next()) {
@@ -535,22 +573,36 @@ public class Blend {
 
     /* start of updateBlendStock method -- for orderRecieved when no pending */
     public boolean updateBlendStockWithoutPending() {
-        String blendName = this.getBlendName().replace("'", "\\'");
+        String repBlendName = this.getBlendName().replace("'", "''");
         String query = "UPDATE blend SET alocatedStock = alocatedStock + '" + this.getOrderReqQty() + "'"
                 + " , visibleStock = visibleStock + '" + this.getOrderExcessQty() + "' "
                 + " , invisibleStock = invisibleStock - '" + this.getOrderExcessQty() + "' "
-                + " WHERE blendName = '" + blendName + "' ";
+                + " WHERE blendName = '" + repBlendName + "' ";
 
         return (dbConn.updateResult(query) == 1);
     }
 
     /* start of updateBlendStock method -- for orderRecieved */
     public boolean updateBlendStockWithPending() {
-        String blendName = this.getBlendName().replace("'", "\\'");
+        String repBlendName = this.getBlendName().replace("'", "''");
         String query = "UPDATE blend SET alocatedStock = '" + this.getAlocatedStock() + "'"
                 + " , visibleStock = '" + this.getVisibleStock() + "', invisibleStock = '" + this.getInvisibleStock() + "' "
-                + " WHERE blendName = '" + blendName + "' ";
+                + " WHERE blendName = '" + repBlendName + "' ";
 
         return (dbConn.updateResult(query) == 1);
+    }
+    
+    //Method for updating the recipies
+    public int updateRecipie(String blendID, int ingID, double per, int type){
+        String query = "INSERT INTO recipie (blendID, ingID, ingPercent, type) values('"+blendID+"', '"+ingID+"', '"+per+"', '"+type+"')";
+           int rslt = dbConn.updateResult(query);
+           return rslt;       
+    }
+    
+    //Method to delete the recepie before updating
+    public int deleteRecepie(String blendID){
+        String query = "DELETE FROM recipie WHERE blendID = '" + blendID + "' ";
+        int rslt = dbConn.updateResult(query);
+        return rslt;
     }
 }
