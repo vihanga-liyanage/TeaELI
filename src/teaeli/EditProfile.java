@@ -45,7 +45,7 @@ public class EditProfile extends javax.swing.JFrame {
         setResizable(false);
     }
 
-    DBConnection dbcon = new DBConnection();
+    DBConnection dbcon = DBConnection.getInstance();
     Connection con = null;
     PreparedStatement pst = null;
     ResultSet rs = null;

@@ -24,7 +24,7 @@ public class AddNewBlend extends javax.swing.JFrame {
     private Blend blend;
     public AdminPannel adminpanel;
 
-    DBConnection dbConn = new DBConnection();
+    DBConnection dbConn = DBConnection.getInstance();
 
     public AddNewBlend() {
 

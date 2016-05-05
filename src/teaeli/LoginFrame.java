@@ -25,7 +25,7 @@ public class LoginFrame extends javax.swing.JFrame {
     private String userName, password;
     private int passwrdCount = 0;
 
-    DBConnection dbConn = new DBConnection();
+    DBConnection dbConn = DBConnection.getInstance();
     
     public LoginFrame() {
 

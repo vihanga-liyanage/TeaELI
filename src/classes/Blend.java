@@ -14,7 +14,7 @@ public class Blend {
     private int deliverQty, delRemoveQty, sampleQty;
 
     Ingredient ingredient;
-    DBConnection dbConn = new DBConnection();
+    DBConnection dbConn = DBConnection.getInstance();
 
     //constructor
     public Blend() {

@@ -14,7 +14,7 @@ public class Ingredient {
     private String ingName, ingCategoryName, stockUpdateReason;
     private float unitPrice, visibleStock, alocatedStock, invisibleStock;
 
-    DBConnection dbConn = new DBConnection();
+    DBConnection dbConn = DBConnection.getInstance();
 
     //constructor
     public Ingredient() {

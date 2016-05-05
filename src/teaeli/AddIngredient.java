@@ -18,7 +18,7 @@ import static teaeli.IngredientDetails.supplierCombobox;
 
 public class AddIngredient extends javax.swing.JFrame {
 
-    DBConnection dbcon = new DBConnection();
+    DBConnection dbcon = DBConnection.getInstance();
 
     Ingredient ingr = new Ingredient();
 

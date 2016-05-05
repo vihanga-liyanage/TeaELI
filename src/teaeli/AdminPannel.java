@@ -1349,7 +1349,7 @@ public class AdminPannel extends javax.swing.JFrame {
 
         mainTabbedPane.addTab("    Settings    ", settingsPanel);
 
-        logoLabel.setIcon(new javax.swing.ImageIcon(".\\img\\logo-new (Custom).png")); // NOI18N
+        logoLabel.setIcon(new javax.swing.ImageIcon("D:\\Developer\\My Projects\\TeaELI\\TeaELI\\img\\logo-new (Custom).png")); // NOI18N
 
         timeLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         timeLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);

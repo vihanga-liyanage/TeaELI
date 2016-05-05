@@ -8,7 +8,7 @@ public class Order {
     //attributes
     private String date, orderID;
 
-    DBConnection dbConn = new DBConnection();
+    DBConnection dbConn = DBConnection.getInstance();
 
     //constructor
     public Order() {

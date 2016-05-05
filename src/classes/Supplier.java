@@ -7,7 +7,7 @@ public class Supplier {
     private int supplierID;
     private String SupplierName;
 
-    DBConnection dbConn = new DBConnection();
+    DBConnection dbConn = DBConnection.getInstance();
 
     public Supplier() {
         this.supplierID = 0;

@@ -6,7 +6,7 @@ import javax.swing.JOptionPane;
 
 public class StockHistory {
 
-    DBConnection dbConn = new DBConnection();
+    DBConnection dbConn = DBConnection.getInstance();
 
     public StockHistory() { }
 

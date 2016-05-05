@@ -11,7 +11,7 @@ public class User {
     private String userName, Password, firstName, lastName, designation;
     private int userID;
 
-    DBConnection dbConn = new DBConnection();
+    DBConnection dbConn = DBConnection.getInstance();
 
     public User() {
         this.userName = "";
