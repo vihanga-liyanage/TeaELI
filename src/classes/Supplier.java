@@ -1,6 +1,8 @@
 package classes;
 
+import static classes.DBConnection.logger;
 import java.sql.SQLException;
+import java.util.logging.Level;
 
 public class Supplier {
 
@@ -39,7 +41,7 @@ public class Supplier {
 
             resultArray = dbConn.getResultArray(query);
         } catch (Exception e) {
-            System.err.println("SQL error : " + e);
+            logger.log(Level.WARNING, e.getMessage());
         }
         return resultArray;
 
@@ -76,7 +78,7 @@ public class Supplier {
             }
 
         } catch (NumberFormatException e) {
-            System.err.println("sup 104 err : " + e);
+            logger.log(Level.WARNING, e.getMessage());
         }
         return supplierID;
     }

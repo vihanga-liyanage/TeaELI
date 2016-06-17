@@ -1,5 +1,6 @@
 package classes;
 
+import static classes.DBConnection.logger;
 import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
@@ -26,6 +27,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
@@ -35,8 +37,9 @@ import javax.swing.JTable;
  */
 public class PDF {
 
-    private String font = "Segoe UI Light";
-    private String path = "C:\\TFlex\\";
+    private final String font = "Segoe UI Light";
+    private final String path = "C:\\TFlex\\";
+    private final String imgPath = "src\\img\\";
 
     public PDF() {
     }
@@ -89,7 +92,7 @@ public class PDF {
         try {
             img = Image.getInstance(path);
         } catch (BadElementException | IOException ex) {
-            System.out.println("BadElementException | IOException : " + ex.getMessage());
+            logger.log(Level.WARNING, "BadElementException | IOException : " + ex.getMessage());
         }
         img.scaleToFit(300f, 150f);
         PdfPCell cell = new PdfPCell();
@@ -253,7 +256,7 @@ public class PDF {
             masterTable.setWidthPercentage(100);
 
             //Adding logo
-            PdfPCell logoCell = new PdfPCell(Image.getInstance(".\\img\\logo.png"));
+            PdfPCell logoCell = new PdfPCell(Image.getInstance(imgPath + "logo.png"));
 
             logoCell.setColspan(3);
             masterTable.addCell(logoCell);
@@ -326,11 +329,11 @@ public class PDF {
             doc.close();
 
         } catch (FileNotFoundException | DocumentException ex) {
-            System.out.println(ex.getMessage());
+            logger.log(Level.WARNING, ex.getMessage());
             JOptionPane.showMessageDialog(null, "There were some issues with the database. Please contact developers.\n\nError code : PDF 314", "Error", 0);
             System.exit(0);
         } catch (IOException ex) {
-            System.out.println(ex.getMessage());
+            logger.log(Level.WARNING, ex.getMessage());
             JOptionPane.showMessageDialog(null, "There were some issues with the database. Please contact developers.\n\nError code : PDF 317", "Error", 0);
             System.exit(0);
         }
@@ -363,7 +366,7 @@ public class PDF {
             try {
 
                 //Adding logo and topic
-                String fileName = ".\\img\\POHeader.jpg";
+                String fileName = imgPath + "POHeader.jpg";
 
                 PdfPTable POHeadertable = new PdfPTable(2);
                 POHeadertable.setWidthPercentage(100);
@@ -474,7 +477,7 @@ public class PDF {
 
             } catch (DocumentException ex) {
                 //Logger.getLogger(OrderConfirmation.class.getName()).log(Level.SEVERE, null, ex);
-                System.out.println("DocumentException : " + ex);
+                logger.log(Level.WARNING, ex.getMessage());
                 pdfOK = 0;
             }
             doc.close();
@@ -504,7 +507,7 @@ public class PDF {
             masterTable.setWidthPercentage(100);
 
             //Adding logo
-            PdfPCell logoCell = new PdfPCell(Image.getInstance(".\\img\\logo.png"));
+            PdfPCell logoCell = new PdfPCell(Image.getInstance(imgPath + "logo.png"));
 
             logoCell.setColspan(3);
             masterTable.addCell(logoCell);
@@ -559,16 +562,16 @@ public class PDF {
                     //Opening the new directory
                     Desktop.getDesktop().open(new File(tempPath));
                 } catch (IOException ex) {
-                    System.out.println("IOException : " + ex.getMessage());
+                    logger.log(Level.WARNING, ex.getMessage());
                 }
             }
             
         } catch (FileNotFoundException | DocumentException ex) {
-            System.out.println(ex.getMessage());
+            logger.log(Level.WARNING, ex.getMessage());
             JOptionPane.showMessageDialog(null, "There were some issues with the database. Please contact developers.\n\nError code : PDF 540", "Error", 0);
             System.exit(0);
         } catch (IOException ex) {
-            System.out.println(ex.getMessage());
+            logger.log(Level.WARNING, ex.getMessage());
             JOptionPane.showMessageDialog(null, "There were some issues with the database. Please contact developers.\n\nError code : PDF 543", "Error", 0);
             System.exit(0);
         }
@@ -590,7 +593,7 @@ public class PDF {
             masterTable.setWidthPercentage(100);
 
             //Adding logo
-            PdfPCell logoCell = new PdfPCell(Image.getInstance(".\\img\\logo.png"));
+            PdfPCell logoCell = new PdfPCell(Image.getInstance(imgPath + "logo.png"));
 
             logoCell.setColspan(3);
             masterTable.addCell(logoCell);
@@ -645,16 +648,16 @@ public class PDF {
                     //Opening the new directory
                     Desktop.getDesktop().open(new File(tempPath));
                 } catch (IOException ex) {
-                    System.out.println("IOException : " + ex.getMessage());
+                    logger.log(Level.WARNING, ex.getMessage());
                 }
             }
             
         } catch (FileNotFoundException | DocumentException ex) {
-            System.out.println(ex.getMessage());
+            logger.log(Level.WARNING, ex.getMessage());
             JOptionPane.showMessageDialog(null, "There were some issues with the database. Please contact developers.\n\nError code : PDF 611", "Error", 0);
             System.exit(0);
         } catch (IOException ex) {
-            System.out.println(ex.getMessage());
+            logger.log(Level.WARNING, ex.getMessage());
             JOptionPane.showMessageDialog(null, "There were some issues with the database. Please contact developers.\n\nError code : PDF 614", "Error", 0);
             System.exit(0);
         }

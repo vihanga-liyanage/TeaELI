@@ -1,6 +1,8 @@
 package classes;
 
+import static classes.DBConnection.logger;
 import java.util.ArrayList;
+import java.util.logging.Level;
 import javax.swing.table.DefaultTableModel;
 
 public class Order {
@@ -286,7 +288,7 @@ public class Order {
                 nextOrderID = resultArray.getString(0);
             }
         } catch (Exception e) {
-            System.err.println("Exception : " + e);
+            logger.log(Level.WARNING, e.getMessage());
         }
         return nextOrderID;
     }

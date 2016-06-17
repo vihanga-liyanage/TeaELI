@@ -206,6 +206,7 @@ public class LoginFrame extends javax.swing.JFrame {
             managerPannel.setGreetings("Welcome, Mr. " + name);
             
             setVisible(false);
+            logger.log(Level.INFO, "{0} logged in as a manager.", name);
 
         } else if (loginResponse == 4 | loginResponse == 3) {
 
@@ -220,7 +221,6 @@ public class LoginFrame extends javax.swing.JFrame {
                 System.exit(0);
             }
         }
-
     }//GEN-LAST:event_btnSubmitActionPerformed
 
     private void txtPasswordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPasswordKeyPressed

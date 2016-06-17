@@ -1,5 +1,7 @@
 package classes;
 
+import static classes.DBConnection.logger;
+import java.util.logging.Level;
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 import teaeli.EditProfile;
@@ -121,7 +123,7 @@ public class User {
                 this.setUserID(Integer.parseInt(resultArray.getString(0)));
             }
         } catch (NumberFormatException e) {
-            System.out.println("Exception : " + e);
+            logger.log(Level.WARNING, e.getMessage());
         } 
     }
     
