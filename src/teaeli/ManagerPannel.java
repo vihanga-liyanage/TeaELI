@@ -591,7 +591,7 @@ public class ManagerPannel extends javax.swing.JFrame {
 
         mainTabbedPane.addTab("    Inventory Management    ", inventoryPanel);
 
-        logoLabel.setIcon(new javax.swing.ImageIcon("D:\\Developer\\My Projects\\TeaELI\\TeaELI\\img\\logo-new (Custom).png")); // NOI18N
+        logoLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/logo-new (Custom).png"))); // NOI18N
 
         timeLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         timeLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);

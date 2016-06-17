@@ -2,6 +2,7 @@
 package teaeli;
 
 import classes.DBConnection;
+import static classes.DBConnection.logger;
 import classes.PswrdEncrypt;
 import classes.ResultArray;
 import java.awt.Color;
@@ -154,7 +155,7 @@ public class LoginFrame extends javax.swing.JFrame {
         getContentPane().add(jPanel1);
         jPanel1.setBounds(220, 110, 290, 160);
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(".\\img\\login background.jpg")); // NOI18N
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/login background.jpg"))); // NOI18N
         getContentPane().add(jLabel4);
         jLabel4.setBounds(0, 0, 740, 400);
 
@@ -188,7 +189,8 @@ public class LoginFrame extends javax.swing.JFrame {
             adminPannel.setGreetings("Welcome, Mr. " + name);
             
             setVisible(false);
-
+            logger.log(Level.INFO, "{0} logged in as an admin.", name);
+            
         } else if (loginResponse == 2) {
             user = userName;
             loginFrame.user = userName;
