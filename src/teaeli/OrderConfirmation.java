@@ -44,7 +44,7 @@ public class OrderConfirmation extends javax.swing.JFrame {
      */
     public OrderConfirmation(CreateNewBlendOrder2 cnb, String orderID) { // pass CreateNewBlendOrder2 object to get the master list in the interface
         //Setting icon
-        ImageIcon img = new ImageIcon(".\\img\\icon-1.png");
+        ImageIcon img = new ImageIcon("src\\img\\icon-1.png");
         this.setIconImage(img.getImage());
         
         initComponents();

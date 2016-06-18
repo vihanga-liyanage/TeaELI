@@ -21,7 +21,7 @@ public class IngredientDetails extends javax.swing.JFrame {
 
     public IngredientDetails() {
         //Setting icon
-        ImageIcon img = new ImageIcon(".\\img\\icon-1.png");
+        ImageIcon img = new ImageIcon("src\\img\\icon-1.png");
         this.setIconImage(img.getImage());
 
         //Add windows look and feel

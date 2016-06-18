@@ -55,7 +55,7 @@ public class AdminPannel extends javax.swing.JFrame {
      */
     public AdminPannel() {
         //Setting icon
-        ImageIcon img = new ImageIcon(".\\img\\icon-1.png");
+        ImageIcon img = new ImageIcon("src\\img\\icon-1.png");
         this.setIconImage(img.getImage());
         
         try {

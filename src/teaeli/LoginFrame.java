@@ -31,7 +31,7 @@ public class LoginFrame extends javax.swing.JFrame {
     public LoginFrame() {
 
         //Setting icon
-        ImageIcon img = new ImageIcon(".\\img\\icon-1.png");
+        ImageIcon img = new ImageIcon("src\\img\\icon-1.png");
         this.setIconImage(img.getImage());
         
         //Add windows look and feel
