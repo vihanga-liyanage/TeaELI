@@ -48,6 +48,7 @@ public class OrderConfirmation extends javax.swing.JFrame {
         this.setIconImage(img.getImage());
         
         initComponents();
+        setSize(1058, 580);
         Dimension screenSize, frameSize;
         int x, y;
         screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -261,7 +262,7 @@ public class OrderConfirmation extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Order Confirmation");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, " Order Confirmation ", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI Semibold", 0, 16))); // NOI18N
@@ -315,22 +316,23 @@ public class OrderConfirmation extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-
         supplierWiseOrderDetailsTbl.setRowHeight(24);
-        
         supplierWiseOrderDetailsTbl.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 supplierWiseOrderDetailsTblPropertyChange(evt);
             }
         });
-
         tblMasterPlanScrollPane1.setViewportView(supplierWiseOrderDetailsTbl);
         if (supplierWiseOrderDetailsTbl.getColumnModel().getColumnCount() > 0) {
+            supplierWiseOrderDetailsTbl.getColumnModel().getColumn(1).setMinWidth(80);
             supplierWiseOrderDetailsTbl.getColumnModel().getColumn(1).setPreferredWidth(2);
+            supplierWiseOrderDetailsTbl.getColumnModel().getColumn(1).setMaxWidth(80);
+            supplierWiseOrderDetailsTbl.getColumnModel().getColumn(2).setMinWidth(80);
             supplierWiseOrderDetailsTbl.getColumnModel().getColumn(2).setPreferredWidth(20);
+            supplierWiseOrderDetailsTbl.getColumnModel().getColumn(2).setMaxWidth(80);
+            supplierWiseOrderDetailsTbl.getColumnModel().getColumn(3).setMinWidth(80);
             supplierWiseOrderDetailsTbl.getColumnModel().getColumn(3).setPreferredWidth(20);
-
+            supplierWiseOrderDetailsTbl.getColumnModel().getColumn(3).setMaxWidth(80);
         }
 
         generatePdfBtn.setText("Generate PDF");
@@ -365,7 +367,7 @@ public class OrderConfirmation extends javax.swing.JFrame {
                         .addComponent(generatePdfBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tblMasterPlanScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 395, Short.MAX_VALUE)
+                            .addComponent(tblMasterPlanScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 377, Short.MAX_VALUE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -385,7 +387,7 @@ public class OrderConfirmation extends javax.swing.JFrame {
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(tblMasterPlanScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 379, Short.MAX_VALUE)
                     .addComponent(tblMasterPlanScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))

@@ -8,6 +8,7 @@ import classes.PDF;
 import classes.ResultArray;
 import classes.Validation;
 import java.awt.Cursor;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
@@ -749,6 +750,14 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame implements Property
     public javax.swing.JScrollPane tblMasterPlanScrollPane;
     // End of variables declaration//GEN-END:variables
 
+    private void openOrderConfirmation(){
+        String orderId = orderIDLabel.getText();
+            OrderConfirmation oc = new OrderConfirmation(this, orderId);
+            oc.setVisible(true);
+            oc.pannel = this.pannel;
+            createNewBlendOrder1.dispose();
+            this.setVisible(false);
+    }
     //inner class to carry out order placement process
     class Task extends SwingWorker<Void, Void> {
 
@@ -792,12 +801,7 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame implements Property
             setProgress(100);
             
             //Move into order confirmation
-            String orderId = orderIDLabel.getText();
-            OrderConfirmation oc = new OrderConfirmation(CreateNewBlendOrder2.this, orderId);
-            oc.setVisible(true);
-            oc.pannel = CreateNewBlendOrder2.this.pannel;
-            createNewBlendOrder1.dispose();
-            CreateNewBlendOrder2.this.setVisible(false);
+            openOrderConfirmation();
             
             return null;
         }
