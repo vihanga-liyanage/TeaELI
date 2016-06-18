@@ -7,9 +7,13 @@ import classes.Order;
 import classes.PDF;
 import classes.ResultArray;
 import classes.Validation;
+import java.awt.Cursor;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DateFormat;
@@ -23,6 +27,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingWorker;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.ListSelectionEvent;
@@ -30,7 +35,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 
-public class CreateNewBlendOrder2 extends javax.swing.JFrame {
+public class CreateNewBlendOrder2 extends javax.swing.JFrame implements PropertyChangeListener{
 
     private Blend blend;
     private Ingredient ingredient;
@@ -39,6 +44,7 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
     public Object pannel;
     public CreateNewBlendOrder1 createNewBlendOrder1;
     public List<List<String>> blendList;
+    private Task task;
 
     /**
      * Creates new form AddNewOrder
@@ -124,6 +130,8 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
         //enabling sorting
         blendListTbl.setAutoCreateRowSorter(true);
         masterPlanTbl.setAutoCreateRowSorter(true);
+        
+        progressBar.setVisible(false);
     }
 
     private void confirmClose(){
@@ -424,6 +432,7 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
         orderIDLabel = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+        progressBar = new javax.swing.JProgressBar();
 
         jLabel1.setText("jLabel1");
 
@@ -581,6 +590,10 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel6.setText("Please edit final qty column to add excess amounts.");
 
+        progressBar.setEnabled(false);
+        progressBar.setPreferredSize(new java.awt.Dimension(146, 10));
+        progressBar.setStringPainted(true);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -588,7 +601,7 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tblMasterPlanScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 819, Short.MAX_VALUE)
+                    .addComponent(tblMasterPlanScrollPane)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -596,7 +609,9 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
                                 .addGap(30, 30, 30))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                                .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(cancelBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -618,10 +633,12 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(tblMasterPlanScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 389, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(confirmBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cancelBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(confirmBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cancelBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel6))
+                    .addComponent(progressBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -652,7 +669,7 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
     private void masterPlanTblPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_masterPlanTblPropertyChange
         // TODO add your handling code here:
     }//GEN-LAST:event_masterPlanTblPropertyChange
-
+    
     private void confirmBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmBtnActionPerformed
         
         int count = blendListTbl.getRowCount();
@@ -661,59 +678,12 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
         }
         int dialogResult = JOptionPane.showConfirmDialog(this, "Are you sure you want to place this order?\nYou cannot undo after the confirmation.", "Confirm order placing", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
         if (dialogResult == JOptionPane.YES_OPTION) {
-
-            //waiting screen
-            /*
-            Thread t = new Thread(new Runnable() {
-                WaitingScreen ws = new WaitingScreen();
-                @Override
-                public void run() {
-                    ws.setVisible(true);
-                }
-                
-                public void stop(){
-                    ws.dispose();
-                }
-            });
-            t.start();
-            */
-            //placing the order in order table
-            if (!order.placeOrder(orderIDLabel.getText())) {
-                JOptionPane.showMessageDialog(rootPane, "There were some issues with the database. Please contact developers.\n\nError code : CreatNewBlendOrder2 684", "Error", JOptionPane.ERROR_MESSAGE);
-                System.exit(0);
-            }
-            //placing orderBlends and updating blend table
-            readBlendListTbl();
-
-            //placing orderIngredients and updating ingredient table
-            readMasterPlanTbl();
-
-            DefaultTableModel model = (DefaultTableModel) masterPlanTbl.getModel();
-
-            //Generating master plan PDF
-            JTable temp = new JTable(model);
-            temp.setAutoCreateRowSorter(true);
-            temp.getRowSorter().toggleSortOrder(8);
-            DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
-            Date today = new Date();
-            String[] data = {orderIDLabel.getText(), formatter.format(today)};
-            pdf.generateMasterPlanPDF(temp, data);
-
-            //Removing entries of 0 balance
-            for (int i=0; i<model.getRowCount(); i++) {
-                if (parseFloat(model.getValueAt(i, 6).toString()) <= 0) {
-                    model.removeRow(i);
-                    i -= 1;
-                }
-            }
             
-            //Move into order confirmation
-            String orderId = orderIDLabel.getText();
-            OrderConfirmation oc = new OrderConfirmation(this, orderId);
-            oc.setVisible(true);
-            oc.pannel = this.pannel;
-            createNewBlendOrder1.dispose();
-            this.setVisible(false);
+            this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+            progressBar.setVisible(true);
+            task = new Task();
+            task.addPropertyChangeListener(this);
+            task.execute();
         }
     }//GEN-LAST:event_confirmBtnActionPerformed
 
@@ -775,6 +745,75 @@ public class CreateNewBlendOrder2 extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JTable masterPlanTbl;
     private javax.swing.JLabel orderIDLabel;
+    private javax.swing.JProgressBar progressBar;
     public javax.swing.JScrollPane tblMasterPlanScrollPane;
     // End of variables declaration//GEN-END:variables
+
+    //inner class to carry out order placement process
+    class Task extends SwingWorker<Void, Void> {
+
+        @Override
+        public Void doInBackground() {
+            
+            //placing the order in order table
+            if (!order.placeOrder(orderIDLabel.getText())) {
+                JOptionPane.showMessageDialog(rootPane, "There were some issues with the database. Please contact developers.\n\nError code : CreatNewBlendOrder2 684", "Error", JOptionPane.ERROR_MESSAGE);
+                System.exit(0);
+            }
+            setProgress(10);
+            
+            //placing orderBlends and updating blend table
+            readBlendListTbl();
+            setProgress(45);
+
+            //placing orderIngredients and updating ingredient table
+            readMasterPlanTbl();
+            setProgress(80);
+
+            DefaultTableModel model = (DefaultTableModel) masterPlanTbl.getModel();
+
+            //Generating master plan PDF
+            JTable temp = new JTable(model);
+            temp.setAutoCreateRowSorter(true);
+            temp.getRowSorter().toggleSortOrder(8);
+            DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+            Date today = new Date();
+            String[] data = {orderIDLabel.getText(), formatter.format(today)};
+            pdf.generateMasterPlanPDF(temp, data);
+            setProgress(90);
+            
+            //Removing entries of 0 balance
+            for (int i=0; i<model.getRowCount(); i++) {
+                if (parseFloat(model.getValueAt(i, 6).toString()) <= 0) {
+                    model.removeRow(i);
+                    i -= 1;
+                }
+            }
+            setProgress(100);
+            
+            //Move into order confirmation
+            String orderId = orderIDLabel.getText();
+            OrderConfirmation oc = new OrderConfirmation(CreateNewBlendOrder2.this, orderId);
+            oc.setVisible(true);
+            oc.pannel = CreateNewBlendOrder2.this.pannel;
+            createNewBlendOrder1.dispose();
+            CreateNewBlendOrder2.this.setVisible(false);
+            
+            return null;
+        }
+
+        @Override
+        public void done() {
+            Toolkit.getDefaultToolkit().beep();
+            setCursor(null); //turn off the wait cursor
+        }
+    }
+    
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        if ("progress" == evt.getPropertyName()) {
+            int progress = (Integer) evt.getNewValue();
+            progressBar.setValue(progress);
+        } 
+    }
 }
