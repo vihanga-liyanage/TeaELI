@@ -169,6 +169,7 @@ public class LoginFrame extends javax.swing.JFrame {
 
     private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
 
+        btnSubmit.setEnabled(false);
         userName = txtUsername.getText();
         password = txtPassword.getText();
         String encriptedPass = PswrdEncrypt.main2(password);
@@ -220,6 +221,8 @@ public class LoginFrame extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Maximum Three Attempts are allowed for login","Login Error",0);
                 System.exit(0);
             }
+            
+            btnSubmit.setEnabled(true);
         }
     }//GEN-LAST:event_btnSubmitActionPerformed
 
